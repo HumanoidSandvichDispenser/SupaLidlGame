@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbsosmpnenfwu"]
+
+[ext_resource type="PackedScene" uid="uid://bncaar8vp3b84" path="res://Characters/Player.tscn" id="1_m35hr"]
+[ext_resource type="PackedScene" uid="uid://dymwd5ihpwyqm" path="res://Characters/ExampleEnemy.tscn" id="2_uti3y"]
+
+[node name="Level" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+y_sort_enabled = true
+format = 2
+
+[node name="Player" parent="TileMap" instance=ExtResource("1_m35hr")]
+position = Vector2(206, 94)
+motion_mode = 1
+
+[node name="ExampleEnemy" parent="TileMap" instance=ExtResource("2_uti3y")]
+position = Vector2(680, 261)
+
+[node name="ExampleEnemy2" parent="TileMap" instance=ExtResource("2_uti3y")]
+position = Vector2(842, 459)
+
+[node name="ExampleEnemy3" parent="TileMap" instance=ExtResource("2_uti3y")]
+position = Vector2(297, 354)
+
+[node name="ExampleEnemy4" parent="TileMap" instance=ExtResource("2_uti3y")]
+position = Vector2(675, 78)

@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dymwd5ihpwyqm"]
+
+[ext_resource type="Script" path="res://Characters/NPC.cs" id="1_4x3dm"]
+[ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="2_ujqd7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uict5"]
+size = Vector2(32, 16)
+
+[node name="ExampleEnemy" type="CharacterBody2D"]
+script = ExtResource("1_4x3dm")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_ujqd7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_uict5")
