@@ -5,20 +5,29 @@ namespace SupaLidlGame.Characters
 {
     public partial class NPC : Character
     {
-        /// <summary>Time in seconds it takes for the NPC to think</summary>
-        public const float ThinkTime = 0.25f;
+        /// <summary>
+        /// Time in seconds it takes for the NPC to think FeelsDankCube
+        /// </summary>
+        public const float ThinkTime = 0.125f;
 
         public Character Target { get; protected set; }
         public float[] Weights => _weights;
 
-        protected float[] _weights = new float[16];
-        protected int _dirIdx = 0;
+        float[] _weights = new float[16];
+        Vector2[] _weightDirs = new Vector2[16];
+        int _bestWeightIdx;
         protected double _thinkTimeElapsed = 0;
 
         public override void _Ready()
         {
             base._Ready();
             Array.Fill(_weights, 0);
+            for (int i = 0; i < 16; i++)
+            {
+                float y = Mathf.Sin(Mathf.Pi * i * 2 / 16);
+                float x = Mathf.Cos(Mathf.Pi * i * 2 / 16);
+                _weightDirs[i] = new Vector2(x, y);
+            }
         }
 
         public override void _Process(double delta)
@@ -29,43 +38,39 @@ namespace SupaLidlGame.Characters
                 Think();
             }
 
+            Direction = _weightDirs[_bestWeightIdx];
             //Direction = (Target.GlobalPosition - GlobalPosition).Normalized();
             base._Process(delta);
         }
 
         public override void _Draw()
         {
-            for (byte i = 0; i < 16; i++)
+            for (int i = 0; i < 16; i++)
             {
-                Vector2 diff = WeightVec(i) * 128;
-                Color c = _dirIdx == i ? new Color(0, 255, 64) : new Color(0, 128, 24);
-                DrawLine(Vector2.Zero, diff, c, 2.0f);
+                Vector2 vec = _weightDirs[i] * _weights[i] * 128;
+                Color c = Colors.Green;
+                if (_bestWeightIdx == i)
+                {
+                    c = Colors.Blue;
+                }
+                else if (_weights[i] < 0)
+                {
+                    c = Colors.Red;
+                    vec = -vec;
+                }
+                DrawLine(Vector2.Zero, vec, c);
             }
 
             base._Draw();
         }
 
-        private Vector2 WeightVec(int idx)
-        {
-            //GD.Print(_weights[idx]);
-            return WeightVecNorm(idx) * _weights[idx];
-        }
-
-        private Vector2 WeightVecNorm(int idx)
-        {
-            // sin(2pix/16)
-            float x = Mathf.Cos(Mathf.Pi * idx / 8);
-            float y = Mathf.Sin(Mathf.Pi * idx / 8);
-            return new Vector2(x, y);
-        }
-
-        private Character FindBestTarget()
+        protected virtual Character FindBestTarget()
         {
             float bestDist = float.MaxValue;
             Character bestChar = null;
             foreach (Node node in GetParent().GetChildren())
             {
-                if (node != this && node is Character character)
+                if (node != this && node is Player character)
                 {
                     float dist = Position.DistanceTo(character.Position);
                     if (dist < bestDist)
@@ -80,59 +85,97 @@ namespace SupaLidlGame.Characters
 
         private void Think()
         {
-            Target = FindBestTarget();
-            float bestWeight = 0;
+            Vector2 pos = FindBestTarget().GlobalPosition;
+            Vector2 dir = GlobalPosition.DirectionTo(pos);
+            float dist = GlobalPosition.DistanceSquaredTo(pos);
 
-            Vector2 want = GlobalPosition.DirectionTo(Target.GlobalPosition);
-            float dist = GlobalPosition.DistanceSquaredTo(Target.GlobalPosition);
-            for (byte i = 0; i < 16; i++)
+            for (int i = 0; i < 16; i++)
             {
-                Vector2 dir = WeightVecNorm(i);
-                // if close enough, _weights[i] will be instead calculated dot to a perpendicular weight
-                if (dist < 16384)
+                float directDot = _weightDirs[i].Dot(dir);
+                directDot = (directDot + 1) / 2;
+
+                // this dot product resembles values of sine rather than cosine
+                // use it to weigh direction horizontally
+                Vector2 rotatedDir = new Vector2(-dir.y, dir.x);
+                float horizDot = Math.Abs(_weightDirs[i].Dot(rotatedDir));
+
+                // this is a smaller weight so they are more likely to
+                // pick the direction they are currently heading when
+                // choosing between two horizontal weights
+                float currDirDot = (_weightDirs[i].Dot(Direction) + 1) / 16;
+
+                // square so lower values are even lower
+                horizDot = Mathf.Pow((horizDot + 1) / 2, 2) + currDirDot;
+
+                // "When will I use math in the real world" Clueful
+
+
+                if (dist > 1024)
                 {
-                    Vector2 dirA = WeightVecNorm((i + 4) % 16);
-                    Vector2 dirB = WeightVecNorm((i - 4) % 16);
-                    float dot = Mathf.Max(dirA.Dot(want) + dirA.Dot(Direction),
-                                          dirB.Dot(want) + dirB.Dot(Direction));
-                    _weights[i] = (dot + 1) / 2;
+                    _weights[i] = directDot;
+                }
+                else if (dist > 64)
+                {
+                    float directDotWeighting = (dist - 64) / 960;
+                    float horizDotWeighting = 1 - directDotWeighting;
+
+                    _weights[i] = (directDot * directDotWeighting) +
+                        (horizDot * horizDotWeighting);
                 }
                 else
                 {
-                    _weights[i] = (dir.Dot(want) + 1) / 2;
+                    // shorter than 64
+                    _weights[i] = horizDot;
                 }
 
-                // check each weight with a raycast to see if it will hit any object
-                // if it hits an object, subtract the weight by how close the ray is
-                if (_weights[i] > 0)
+                // now we shall subtract weights whose rays collide
+                // with something
+
                 {
-                    GD.Print("casting...");
                     var spaceState = GetWorld2d().DirectSpaceState;
-                    var args = new PhysicsRayQueryParameters2D();
-                    args.From = GlobalPosition;
-                    args.To = GlobalPosition + dir * 256 * _weights[i];
-                    args.CollideWithBodies = true;
-                    args.Exclude.Add(this.GetRid());
-                    var result = spaceState.IntersectRay(args);
-                    GD.Print(result.Count);
+                    var exclude = new Godot.Collections.Array<RID>();
+                    exclude.Add(this.GetRid());
+                    var rayParams = new PhysicsRayQueryParameters2D
+                    {
+                        Exclude = exclude,
+                        CollideWithBodies = true,
+                        From = GlobalPosition,
+                        To = GlobalPosition + (_weightDirs[i] * 16)
+                    };
+
+                    var result = spaceState.IntersectRay(rayParams);
+
+                    // if our ray cast hits something
                     if (result.Count > 0)
                     {
-                        var pos = result["position"].AsVector2();
-                        var sub = pos.DistanceTo(GlobalPosition + dir);
-                        _weights[i] -= sub;
-                        GD.Print("hit!");
+                        // then we subtract the dot product of other directions
+                        for (int j = 0; j < 16; j++)
+                        {
+                            if (i == j)
+                            {
+                                _weights[i] = 0;
+                            }
+                            else
+                            {
+                                float dot = _weightDirs[i].Dot(_weightDirs[j]);
+                                _weights[j] -= (dot + 1) / 4;
+                            }
+                        }
                     }
                 }
+            }
 
+            float bestWeight = 0;
+
+            for (int i = 0; i < 16; i++)
+            {
                 if (_weights[i] > bestWeight)
                 {
                     bestWeight = _weights[i];
-                    _dirIdx = i;
+                    _bestWeightIdx = i;
                 }
-
-                //GD.Print(_weights[i]);
             }
-            Direction = WeightVecNorm((byte)_dirIdx);
+
             QueueRedraw();
         }
     }

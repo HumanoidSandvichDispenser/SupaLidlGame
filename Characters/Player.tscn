@@ -19,3 +19,6 @@ shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
+zoom = Vector2(4, 4)
+
+[node name="StateManager" type="Node" parent="."]
