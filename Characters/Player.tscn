@@ -1,13 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bncaar8vp3b84"]
+[gd_scene load_steps=9 format=3 uid="uid://bncaar8vp3b84"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="2_xmgd1"]
+[ext_resource type="Script" path="res://Characters/States/Machine.cs" id="3_npkjp"]
+[ext_resource type="Script" path="res://Characters/States/PlayerIdleState.cs" id="4_4k4mb"]
+[ext_resource type="Script" path="res://Characters/States/PlayerMoveState.cs" id="5_tx5rw"]
+[ext_resource type="Script" path="res://Characters/States/PlayerRollState.cs" id="6_6bgrj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
 size = Vector2(32, 16)
 
-[node name="Node2D" type="CharacterBody2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_q5h1n"]
+font_size = 24
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StateMachine")]
 script = ExtResource("1_flygr")
+StateMachine = NodePath("StateMachine")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.25, 0.25)
@@ -21,4 +29,36 @@ shape = SubResource("RectangleShape2D_bfqew")
 current = true
 zoom = Vector2(4, 4)
 
-[node name="StateManager" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
+script = ExtResource("3_npkjp")
+InitialState = NodePath("Idle")
+Character = NodePath("..")
+DebugLevel = 2
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState")]
+script = ExtResource("4_4k4mb")
+MoveState = NodePath("../Move")
+
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "RollState")]
+script = ExtResource("5_tx5rw")
+IdleState = NodePath("../Idle")
+RollState = NodePath("../Roll")
+
+[node name="Roll" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState")]
+script = ExtResource("6_6bgrj")
+IdleState = NodePath("../Idle")
+
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="State" type="Label" parent="Debug"]
+offset_left = -20.0
+offset_top = -60.0
+offset_right = 20.0
+offset_bottom = -34.0
+text = "lol"
+label_settings = SubResource("LabelSettings_q5h1n")
+horizontal_alignment = 1
+
+[node name="Node" type="Node" parent="."]

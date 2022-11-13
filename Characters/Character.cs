@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace SupaLidlGame.Characters
 {
@@ -16,17 +15,35 @@ namespace SupaLidlGame.Characters
         // Get the gravity from the project settings to be synced with RigidBody nodes.
         public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
-        public Vector2 Direction { get; protected set; } = Vector2.Zero;
+        public Vector2 Direction { get; set; } = Vector2.Zero;
+
+        public Vector2 Target { get; set; } = Vector2.Zero;
+
+        [Export]
+        public State.Machine StateMachine { get; set; }
 
         public override void _Process(double delta)
         {
+            if (StateMachine != null)
+            {
+                StateMachine.Process(delta);
+            }
+        }
+
+        public override void _Input(InputEvent @event)
+        {
+            if (StateMachine != null)
+            {
+                StateMachine.Input(@event);
+            }
         }
 
         public override void _PhysicsProcess(double delta)
         {
-            // movement would be more crisp with no acceleration
-            Velocity = Direction * Speed;
-            MoveAndSlide();
+            if (StateMachine != null)
+            {
+                StateMachine.PhysicsProcess(delta);
+            }
         }
     }
 }

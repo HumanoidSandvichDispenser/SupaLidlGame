@@ -8,9 +8,8 @@ namespace SupaLidlGame.Characters
         /// <summary>
         /// Time in seconds it takes for the NPC to think FeelsDankCube
         /// </summary>
-        public const float ThinkTime = 0.125f;
+        public const float ThinkTime = 0.25f;
 
-        public Character Target { get; protected set; }
         public float[] Weights => _weights;
 
         float[] _weights = new float[16];
@@ -30,6 +29,7 @@ namespace SupaLidlGame.Characters
             }
         }
 
+        /*
         public override void _Process(double delta)
         {
             if ((_thinkTimeElapsed += delta) > ThinkTime)
@@ -42,6 +42,7 @@ namespace SupaLidlGame.Characters
             //Direction = (Target.GlobalPosition - GlobalPosition).Normalized();
             base._Process(delta);
         }
+        */
 
         public override void _Draw()
         {
@@ -83,10 +84,21 @@ namespace SupaLidlGame.Characters
             return bestChar;
         }
 
+        public void ThinkProcess(double delta)
+        {
+            if ((_thinkTimeElapsed += delta) > ThinkTime)
+            {
+                _thinkTimeElapsed = 0;
+                Think();
+            }
+
+            Direction = _weightDirs[_bestWeightIdx];
+        }
+
         private void Think()
         {
             Vector2 pos = FindBestTarget().GlobalPosition;
-            Vector2 dir = GlobalPosition.DirectionTo(pos);
+            Vector2 dir = Target = GlobalPosition.DirectionTo(pos);
             float dist = GlobalPosition.DistanceSquaredTo(pos);
 
             for (int i = 0; i < 16; i++)
@@ -99,9 +111,9 @@ namespace SupaLidlGame.Characters
                 Vector2 rotatedDir = new Vector2(-dir.y, dir.x);
                 float horizDot = Math.Abs(_weightDirs[i].Dot(rotatedDir));
 
-                // this is a smaller weight so they are more likely to
-                // pick the direction they are currently heading when
-                // choosing between two horizontal weights
+                // this is a smaller weight so they are more likely to pick the
+                // direction they are currently heading when choosing between two
+                // horizontal weights
                 float currDirDot = (_weightDirs[i].Dot(Direction) + 1) / 16;
 
                 // square so lower values are even lower
@@ -158,7 +170,7 @@ namespace SupaLidlGame.Characters
                             else
                             {
                                 float dot = _weightDirs[i].Dot(_weightDirs[j]);
-                                _weights[j] -= (dot + 1) / 4;
+                                _weights[j] -= (dot + 1) / 2;
                             }
                         }
                     }
