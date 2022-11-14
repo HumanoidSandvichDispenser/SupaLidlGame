@@ -12,9 +12,9 @@ namespace SupaLidlGame.Characters
 
         public float[] Weights => _weights;
 
-        float[] _weights = new float[16];
-        Vector2[] _weightDirs = new Vector2[16];
-        int _bestWeightIdx;
+        protected float[] _weights = new float[16];
+        protected Vector2[] _weightDirs = new Vector2[16];
+        protected int _bestWeightIdx;
         protected double _thinkTimeElapsed = 0;
 
         public override void _Ready()

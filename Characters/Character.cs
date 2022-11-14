@@ -7,17 +7,30 @@ namespace SupaLidlGame.Characters
         [Export]
         public float Speed { get; protected set; } = 128.0f;
 
+        [Export]
+        public float Mass
+        {
+            get => _mass;
+            set
+            {
+                if (value > 0)
+                    _mass = value;
+            }
+        }
+
+        protected float _mass = 1.0f;
+
         public float JumpVelocity { get; protected set; } = -400.0f;
+
         public float AccelerationMagnitude { get; protected set; } = 256.0f;
 
         public Vector2 Acceleration => Direction * AccelerationMagnitude;
 
-        // Get the gravity from the project settings to be synced with RigidBody nodes.
-        public float Gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
-
         public Vector2 Direction { get; set; } = Vector2.Zero;
 
         public Vector2 Target { get; set; } = Vector2.Zero;
+
+        public float Health { get; set; }
 
         [Export]
         public State.Machine StateMachine { get; set; }
@@ -44,6 +57,19 @@ namespace SupaLidlGame.Characters
             {
                 StateMachine.PhysicsProcess(delta);
             }
+        }
+
+        public void ApplyImpulse(Vector2 impulse, bool resetVelocity = false)
+        {
+            // delta p = F delta t
+            if (resetVelocity)
+                Velocity = Vector2.Zero;
+            Velocity += impulse / Mass;
+        }
+
+        public void _on_hurtbox_received_damage(float damage)
+        {
+            Health -= damage;
         }
     }
 }

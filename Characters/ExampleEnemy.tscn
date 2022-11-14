@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://dymwd5ihpwyqm"]
+[gd_scene load_steps=9 format=3 uid="uid://dymwd5ihpwyqm"]
 
 [ext_resource type="Script" path="res://Characters/NPC.cs" id="1_4x3dm"]
 [ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="2_ujqd7"]
 [ext_resource type="Script" path="res://Characters/States/Machine.cs" id="3_k4ypw"]
 [ext_resource type="Script" path="res://Characters/States/NPCIdleState.cs" id="4_8r2qn"]
 [ext_resource type="Script" path="res://Characters/States/NPCMoveState.cs" id="5_utogm"]
+[ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="6_jo0cg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uict5"]
 size = Vector2(32, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
+size = Vector2(32, 32)
 
 [node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("StateMachine")]
 script = ExtResource("1_4x3dm")
@@ -34,3 +38,12 @@ MoveState = NodePath("../Move")
 [node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState")]
 script = ExtResource("5_utogm")
 IdleState = NodePath("../Idle")
+
+[node name="Hurtbox" parent="." instance=ExtResource("6_jo0cg")]
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource("RectangleShape2D_8lxmf")
+
+[connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
+
+[editable path="Hurtbox"]

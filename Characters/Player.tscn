@@ -62,3 +62,5 @@ label_settings = SubResource("LabelSettings_q5h1n")
 horizontal_alignment = 1
 
 [node name="Node" type="Node" parent="."]
+
+[node name="Inventory" type="Node2D" parent="."]
