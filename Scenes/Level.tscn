@@ -1136,7 +1136,6 @@ layer_3/tile_data = PackedInt32Array(-458765, 393216, 1, -393229, 327680, 0, -39
 position = Vector2(-81, -34)
 scale = Vector2(0.25, 0.25)
 motion_mode = 1
-Speed = 64.0
 
 [node name="ExampleEnemy" parent="TileMap" instance=ExtResource("2_uti3y")]
 position = Vector2(-4, 60)

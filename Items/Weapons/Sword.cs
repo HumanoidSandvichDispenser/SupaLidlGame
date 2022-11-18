@@ -1,11 +1,13 @@
+using Godot;
+using SupaLidlGame.BoundingBoxes;
 using SupaLidlGame.Characters;
 
 namespace SupaLidlGame.Items.Weapons
 {
     public partial class Sword : Weapon
     {
-        //[Export]
-        //public Damagebox
+        [Export]
+        public Hitbox Hitbox { get; set; }
 
         public override void Equip(Character character)
         {
@@ -14,7 +16,12 @@ namespace SupaLidlGame.Items.Weapons
 
         public override void Use()
         {
-            //base.Use();
+            Hitbox.IsEnabled = true;
+        }
+
+        public override void Deuse()
+        {
+            Hitbox.IsEnabled = false;
         }
     }
 }

@@ -15,7 +15,6 @@ size = Vector2(32, 32)
 
 [node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("StateMachine")]
 script = ExtResource("1_4x3dm")
-Speed = 32.0
 StateMachine = NodePath("StateMachine")
 
 [node name="Icon" type="Sprite2D" parent="."]

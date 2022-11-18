@@ -5,7 +5,7 @@ namespace SupaLidlGame.Characters
     public partial class Character : CharacterBody2D
     {
         [Export]
-        public float Speed { get; protected set; } = 128.0f;
+        public float Speed { get; protected set; } = 32.0f;
 
         [Export]
         public float Mass

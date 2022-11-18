@@ -55,6 +55,13 @@ namespace SupaLidlGame.Items
         public override void _Ready()
         {
             Owner = GetParent<Character>();
+            foreach (Node child in GetChildren())
+            {
+                if (child is Item item)
+                {
+                    Items.Add(item);
+                }
+            }
             base._Ready();
         }
     }

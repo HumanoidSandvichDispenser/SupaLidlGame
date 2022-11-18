@@ -26,13 +26,12 @@ namespace SupaLidlGame.Characters.State
             return null;
         }
 
-        public override CharacterState Input(Godot.InputEvent @event)
+        public override CharacterState Input(InputEvent @event)
         {
             if (@event.IsActionPressed("roll"))
             {
                 return RollState;
             }
-
             return null;
         }
     }

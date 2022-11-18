@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bncaar8vp3b84"]
+[gd_scene load_steps=11 format=3 uid="uid://bncaar8vp3b84"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="2_xmgd1"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://Characters/States/PlayerIdleState.cs" id="4_4k4mb"]
 [ext_resource type="Script" path="res://Characters/States/PlayerMoveState.cs" id="5_tx5rw"]
 [ext_resource type="Script" path="res://Characters/States/PlayerRollState.cs" id="6_6bgrj"]
+[ext_resource type="PackedScene" uid="uid://cajlwb67xenfy" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
+[ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
 size = Vector2(32, 16)
@@ -15,6 +17,7 @@ font_size = 24
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("StateMachine")]
 script = ExtResource("1_flygr")
+Speed = 64.0
 StateMachine = NodePath("StateMachine")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -64,3 +67,7 @@ horizontal_alignment = 1
 [node name="Node" type="Node" parent="."]
 
 [node name="Inventory" type="Node2D" parent="."]
+script = ExtResource("7_xyenu")
+
+[node name="Sword" parent="Inventory" instance=ExtResource("7_4rxuv")]
+position = Vector2(21, 0)

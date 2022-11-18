@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cajlwb67xenfy"]
+
+[ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
+[ext_resource type="Texture2D" uid="uid://dt6u8p4h6g7le" path="res://Sprites/knife.png" id="2_dmsp2"]
+[ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="3_up3ob"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yln58"]
+radius = 8.0
+height = 24.0
+
+[node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox")]
+texture_filter = 3
+script = ExtResource("1_mlo73")
+Hitbox = NodePath("Hitbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dmsp2")
+
+[node name="Hitbox" parent="." instance=ExtResource("3_up3ob")]
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("CapsuleShape2D_yln58")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[editable path="Hitbox"]
