@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Items;
 using System;
 
 namespace SupaLidlGame.Characters
@@ -8,7 +9,7 @@ namespace SupaLidlGame.Characters
         /// <summary>
         /// Time in seconds it takes for the NPC to think FeelsDankCube
         /// </summary>
-        public const float ThinkTime = 0.25f;
+        public const float ThinkTime = 0.125f;
 
         public float[] Weights => _weights;
 
@@ -71,7 +72,7 @@ namespace SupaLidlGame.Characters
             Character bestChar = null;
             foreach (Node node in GetParent().GetChildren())
             {
-                if (node != this && node is Player character)
+                if (node is Character character && character.Faction != Faction)
                 {
                     float dist = Position.DistanceTo(character.Position);
                     if (dist < bestDist)
@@ -95,11 +96,22 @@ namespace SupaLidlGame.Characters
             Direction = _weightDirs[_bestWeightIdx];
         }
 
-        private void Think()
+        protected virtual void Think()
         {
             Vector2 pos = FindBestTarget().GlobalPosition;
-            Vector2 dir = Target = GlobalPosition.DirectionTo(pos);
+            Target = pos - GlobalPosition;//GlobalPosition.DirectionTo(pos);
+            Vector2 dir = Target.Normalized();
             float dist = GlobalPosition.DistanceSquaredTo(pos);
+
+            if (Target.LengthSquared() < 1024)
+            {
+                GD.Print("lol");
+                if (Inventory.SelectedItem is Weapon weapon)
+                {
+                    GD.Print("use");
+                    weapon.Use();
+                }
+            }
 
             for (int i = 0; i < 16; i++)
             {
@@ -122,17 +134,19 @@ namespace SupaLidlGame.Characters
                 // "When will I use math in the real world" Clueful
 
 
-                if (dist > 1024)
+                if (dist > 4096)
                 {
                     _weights[i] = directDot;
                 }
                 else if (dist > 64)
                 {
-                    float directDotWeighting = (dist - 64) / 960;
+                    //float directDotWeighting = dist / 4096;
+                    //float directDotWeighting = Mathf.Log(dist) / _log1024;
+                    float directDotWeighting = Mathf.Sqrt(dist / 4096);
                     float horizDotWeighting = 1 - directDotWeighting;
 
                     _weights[i] = (directDot * directDotWeighting) +
-                        (horizDot * horizDotWeighting);
+                        (horizDot * horizDotWeighting * 0.5f);
                 }
                 else
                 {
@@ -169,7 +183,7 @@ namespace SupaLidlGame.Characters
                             }
                             else
                             {
-                                float dot = _weightDirs[i].Dot(_weightDirs[j]);
+                                float dot = _weightDirs[i].Dot(_weightDirs[j]) / 2;
                                 _weights[j] -= (dot + 1) / 2;
                             }
                         }

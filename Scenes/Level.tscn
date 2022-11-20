@@ -1109,7 +1109,7 @@ tile_set = SubResource("TileSet_18c7j")
 format = 2
 layer_0/name = "Walls"
 layer_0/y_sort_enabled = true
-layer_0/tile_data = PackedInt32Array(-131067, 458752, 0, 131065, 458752, 0)
+layer_0/tile_data = PackedInt32Array(131065, 458752, 0, -65531, 458752, 0)
 layer_1/name = "Ground 2"
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 1)
@@ -1134,17 +1134,16 @@ layer_3/tile_data = PackedInt32Array(-458765, 393216, 1, -393229, 327680, 0, -39
 
 [node name="Player" parent="TileMap" instance=ExtResource("1_m35hr")]
 position = Vector2(-81, -34)
-scale = Vector2(0.25, 0.25)
 motion_mode = 1
 
 [node name="ExampleEnemy" parent="TileMap" instance=ExtResource("2_uti3y")]
-position = Vector2(-4, 60)
-scale = Vector2(0.25, 0.25)
+position = Vector2(38, 42)
+scale = Vector2(1.00571, 1)
 
 [node name="ExampleEnemy2" parent="TileMap" instance=ExtResource("2_uti3y")]
-position = Vector2(-17, -4)
-scale = Vector2(0.25, 0.25)
+position = Vector2(156, 58)
+scale = Vector2(1.00571, 1)
 
 [node name="ExampleEnemy3" parent="TileMap" instance=ExtResource("2_uti3y")]
-position = Vector2(34, 25)
-scale = Vector2(0.25, 0.25)
+position = Vector2(175, -15)
+scale = Vector2(1.00571, 1)

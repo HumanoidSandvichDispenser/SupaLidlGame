@@ -17,7 +17,6 @@ position = Vector2(377, 214)
 texture = ExtResource("1_jh0yt")
 
 [node name="Hitbox" parent="Node2D" instance=ExtResource("2_gtebh")]
-IsEnabled = true
 
 [node name="OscillatingBody" type="CharacterBody2D" parent="."]
 script = ExtResource("3_exvxj")

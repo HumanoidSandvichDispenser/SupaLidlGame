@@ -1,25 +1,38 @@
 using Godot;
-using Godot.Collections;
-using Godot.NativeInterop;
+using SupaLidlGame.Items;
 
 namespace SupaLidlGame.Characters.State
 {
     public partial class PlayerAttackState : PlayerState
     {
-        [Export]
-        public CharacterState IdleState { get; set; }
-
-        private float _attackTime = 0;
+        private double _attackTime = 0;
 
         public override CharacterState Enter(CharacterState previousState)
         {
-            _attackTime = 0;
+            if (Character.Inventory.SelectedItem is Weapon weapon)
+            {
+                _attackTime = weapon.UseTime;
+                weapon.Visible = true;
+                Character.Inventory.SelectedItem.Use();
+            }
+            else
+            {
+                return IdleState;
+            }
             return base.Enter(previousState);
         }
 
         public override void Exit(CharacterState nextState)
         {
-            _attackTime = 0;
+            if (Character.Inventory.SelectedItem is null)
+            {
+
+            }
+            Character.Inventory.SelectedItem.Deuse();
+            if (Character.Inventory.SelectedItem is Weapon weapon)
+            {
+                //weapon.Visible = false;
+            }
             base.Exit(nextState);
         }
 
@@ -30,11 +43,16 @@ namespace SupaLidlGame.Characters.State
 
         public override CharacterState PhysicsProcess(double delta)
         {
+            Character.Velocity *= 0.5f;
             return base.PhysicsProcess(delta);
         }
 
         public override CharacterState Process(double delta)
         {
+            if ((_attackTime -= delta) <= 0)
+            {
+                return IdleState;
+            }
             return base.Process(delta);
         }
     }

@@ -4,9 +4,6 @@ namespace SupaLidlGame.Characters.State
 {
     public partial class PlayerRollState : PlayerState
     {
-        [Export]
-        public CharacterState IdleState { get; set; }
-
         private double _timeLeftToRoll = 0;
 
         private Vector2 _rollDirection = Vector2.Zero;
@@ -16,6 +13,7 @@ namespace SupaLidlGame.Characters.State
             _timeLeftToRoll = 0.5;
             // roll the direction we were previously moving in
             _rollDirection = Character.Direction;
+            Character.Target = Character.Direction;
             return base.Enter(previousState);
         }
 
@@ -38,11 +36,13 @@ namespace SupaLidlGame.Characters.State
             return null;
         }
 
+        /*
         public override CharacterState PhysicsProcess(double delta)
         {
             Character.Velocity = Character.Direction * Character.Speed * 1.5f;
             Character.MoveAndSlide();
             return null;
         }
+        */
     }
 }

@@ -12,7 +12,7 @@ namespace SupaLidlGame.Characters.State
             GD.Print("Entered idle state");
             if (previousState is not PlayerMoveState)
             {
-                if (Character.Direction.LengthSquared() > 0)
+                if (Character.Direction.LengthSquared() > 0.01f)
                 {
                     // other states like attacking or rolling can just delegate
                     // the work of checking if the player is moving to this idle
@@ -21,6 +21,7 @@ namespace SupaLidlGame.Characters.State
                     return MoveState;
                 }
             }
+            _player.Animation = "idle";
             return base.Enter(previousState);
         }
 

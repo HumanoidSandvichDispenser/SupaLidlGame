@@ -7,7 +7,7 @@ namespace SupaLidlGame.Items
     {
         public double RemainingUseTime { get; protected set; } = 0;
 
-        public bool CanStartAttack => RemainingUseTime <= 0;
+        public bool IsUsing => RemainingUseTime > 0;
 
         /// <summary>
         /// How much damage in HP that this weapon deals.
@@ -46,9 +46,25 @@ namespace SupaLidlGame.Items
             Character = null;
         }
 
+        public override void Use()
+        {
+            RemainingUseTime = UseTime;
+        }
+
         public override void Deuse()
         {
 
+        }
+
+        public override void _Process(double delta)
+        {
+            if (RemainingUseTime > 0)
+            {
+                if ((RemainingUseTime -= delta) <= 0)
+                {
+                    Deuse();
+                }
+            }
         }
     }
 }

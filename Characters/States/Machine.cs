@@ -24,6 +24,9 @@ namespace SupaLidlGame.Characters.State
 
         public void ChangeState(CharacterState nextState, bool isProxied = false)
         {
+            if (nextState is null)
+                return;
+
             if (DebugLevel >= 2)
             {
                 if (State is not null)

@@ -32,7 +32,11 @@ namespace SupaLidlGame.Items
 
                 _selectedItem = value;
 
-                _selectedItem.Equip(Character);
+                // this is to handle if item was manually unequipped
+                if (_selectedItem is not null)
+                {
+                    _selectedItem.Equip(Character);
+                }
             }
         }
 
@@ -43,23 +47,27 @@ namespace SupaLidlGame.Items
                 return null;
             }
 
+            item.CharacterOwner = Character;
+            item.Visible = false;
             Items.Add(item);
             return item;
         }
 
         public Item DropItem(Item item)
         {
+            item.CharacterOwner = null;
+            item.Visible = true;
             throw new System.NotImplementedException();
         }
 
         public override void _Ready()
         {
-            Owner = GetParent<Character>();
+            Character = GetParent<Character>();
             foreach (Node child in GetChildren())
             {
                 if (child is Item item)
                 {
-                    Items.Add(item);
+                    AddItem(item);
                 }
             }
             base._Ready();

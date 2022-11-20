@@ -27,6 +27,7 @@ namespace SupaLidlGame.Characters.State
         public virtual CharacterState PhysicsProcess(double delta)
         {
             Character.Velocity = Character.Direction * Character.Speed;
+            Character.ModifyVelocity();
             Character.MoveAndSlide();
             return null;
         }

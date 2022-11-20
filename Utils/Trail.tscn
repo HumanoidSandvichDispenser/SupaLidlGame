@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cojxmcin13ihm"]
+
+[ext_resource type="Script" path="res://Utils/Trail.cs" id="1_t42kk"]
+
+[node name="Trail" type="Line2D"]
+show_behind_parent = true
+script = ExtResource("1_t42kk")
+MaximumPoints = 16

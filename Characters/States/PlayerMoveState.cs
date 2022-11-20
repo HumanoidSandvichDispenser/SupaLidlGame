@@ -1,18 +1,17 @@
 using Godot;
+using SupaLidlGame.Items;
 
 namespace SupaLidlGame.Characters.State
 {
     public partial class PlayerMoveState : PlayerState
     {
         [Export]
-        public CharacterState IdleState { get; set; }
-
-        [Export]
-        public CharacterState RollState { get; set; }
+        public PlayerRollState RollState { get; set; }
 
         public override CharacterState Enter(CharacterState previousState)
         {
             Godot.GD.Print("Started moving");
+            _player.Animation = "move";
             return base.Enter(previousState);
         }
 
@@ -30,9 +29,19 @@ namespace SupaLidlGame.Characters.State
         {
             if (@event.IsActionPressed("roll"))
             {
-                return RollState;
+                if (Character.Inventory.SelectedItem is Weapon weapon)
+                {
+                    if (!weapon.IsUsing)
+                    {
+                        return RollState;
+                    }
+                }
+                else
+                {
+                    return RollState;
+                }
             }
-            return null;
+            return base.Input(@event);
         }
     }
 }

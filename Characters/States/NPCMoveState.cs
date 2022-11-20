@@ -16,5 +16,11 @@ namespace SupaLidlGame.Characters.State
             }
             return null;
         }
+
+        public override CharacterState Enter(CharacterState previousState)
+        {
+            Character.Sprite.Play("move");
+            return base.Enter(previousState);
+        }
     }
 }

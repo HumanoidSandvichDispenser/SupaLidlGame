@@ -8,6 +8,8 @@ namespace SupaLidlGame.Items
         [Export]
         public string Description { get; set; }
 
+        public Character CharacterOwner { get; set; }
+
         public abstract void Equip(Character character);
 
         public abstract void Unequip(Character character);

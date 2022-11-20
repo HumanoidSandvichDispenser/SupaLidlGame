@@ -1,25 +1,74 @@
-[gd_scene load_steps=9 format=3 uid="uid://dymwd5ihpwyqm"]
+[gd_scene load_steps=19 format=3 uid="uid://dymwd5ihpwyqm"]
 
-[ext_resource type="Script" path="res://Characters/NPC.cs" id="1_4x3dm"]
-[ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="2_ujqd7"]
+[ext_resource type="Script" path="res://Characters/Enemy.cs" id="1_2yopk"]
+[ext_resource type="Texture2D" uid="uid://dxymfduyrbuvx" path="res://Sprites/Characters/forsen.png" id="2_jfku3"]
 [ext_resource type="Script" path="res://Characters/States/Machine.cs" id="3_k4ypw"]
 [ext_resource type="Script" path="res://Characters/States/NPCIdleState.cs" id="4_8r2qn"]
 [ext_resource type="Script" path="res://Characters/States/NPCMoveState.cs" id="5_utogm"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="6_jo0cg"]
+[ext_resource type="Script" path="res://Items/Inventory.cs" id="7_43gq8"]
+[ext_resource type="PackedScene" uid="uid://cajlwb67xenfy" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6d2tf"]
+atlas = ExtResource("2_jfku3")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bdyma"]
+atlas = ExtResource("2_jfku3")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dwbr"]
+atlas = ExtResource("2_jfku3")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7fn6"]
+atlas = ExtResource("2_jfku3")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_py8k0"]
+atlas = ExtResource("2_jfku3")
+region = Rect2(96, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3nb2"]
+atlas = ExtResource("2_jfku3")
+region = Rect2(120, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jauql"]
+atlas = ExtResource("2_jfku3")
+region = Rect2(144, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4tm2b"]
+animations = [{
+"frames": [SubResource("AtlasTexture_6d2tf"), SubResource("AtlasTexture_bdyma")],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_0dwbr"), SubResource("AtlasTexture_r7fn6"), SubResource("AtlasTexture_py8k0"), SubResource("AtlasTexture_g3nb2"), SubResource("AtlasTexture_jauql")],
+"loop": true,
+"name": &"move",
+"speed": 12.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uict5"]
-size = Vector2(32, 16)
+size = Vector2(16, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
-size = Vector2(32, 32)
+size = Vector2(16, 24)
 
-[node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("StateMachine")]
-script = ExtResource("1_4x3dm")
+[node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine")]
+texture_filter = 3
+y_sort_enabled = true
+script = ExtResource("1_2yopk")
+Sprite = NodePath("Sprite")
+Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
+Faction = 2
 
-[node name="Icon" type="Sprite2D" parent="."]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_ujqd7")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+frames = SubResource("SpriteFrames_4tm2b")
+animation = &"move"
+playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
@@ -39,9 +88,16 @@ script = ExtResource("5_utogm")
 IdleState = NodePath("../Idle")
 
 [node name="Hurtbox" parent="." instance=ExtResource("6_jo0cg")]
+Faction = 2
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource("RectangleShape2D_8lxmf")
+
+[node name="Inventory" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("7_43gq8")
+
+[node name="Sword" parent="Inventory" instance=ExtResource("8_s3c8r")]
 
 [connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
 
