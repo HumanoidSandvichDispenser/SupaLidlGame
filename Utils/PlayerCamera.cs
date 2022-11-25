@@ -21,6 +21,10 @@ namespace SupaLidlGame.Utils
                 _timeLeft -= delta;
                 Offset = RandomOffset(_intensity);
             }
+            else
+            {
+                Offset = Vector2.Zero;
+            }
 
             if (_intensity > 0)
             {
@@ -30,8 +34,8 @@ namespace SupaLidlGame.Utils
 
         public void Shake(float intensity, double time)
         {
-            _intensity += intensity;
-            _timeLeft += time;
+            _intensity = Mathf.Max(_intensity, intensity);
+            _timeLeft = Math.Max(_timeLeft, time);
         }
 
         private Vector2 RandomOffset(float intensity)
