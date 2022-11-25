@@ -53,6 +53,7 @@ namespace SupaLidlGame.Items.Weapons
             IsParried = false;
 
             AnimationPlayer.Stop();
+            IsParryable = true;
 
             if (GetNode<Node2D>("Anchor").Rotation < Mathf.DegToRad(50))
             {
@@ -76,7 +77,6 @@ namespace SupaLidlGame.Items.Weapons
         public void Attack()
         {
             ParryTimeOrigin = Time.GetTicksMsec();
-            IsParryable = true;
             //RemainingAttackTime = AttackTime;
             IsAttacking = true;
             Hitbox.IsDisabled = false;

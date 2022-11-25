@@ -24,5 +24,13 @@ namespace SupaLidlGame.Extensions
 
             return null;
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        public static T GetNode<T>(this Node node, string name) where T : Node
+        {
+            return node.GetNode(name) as T;
+        }
     }
 }

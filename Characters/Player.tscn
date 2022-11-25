@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=27 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
 [ext_resource type="Texture2D" uid="uid://dxymfduyrbuvx" path="res://Assets/Sprites/Characters/forsen.png" id="3_ig4hs"]
 [ext_resource type="Script" path="res://Characters/States/Machine.cs" id="3_npkjp"]
 [ext_resource type="Script" path="res://Characters/States/PlayerIdleState.cs" id="4_4k4mb"]
+[ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
 [ext_resource type="Script" path="res://Characters/States/PlayerMoveState.cs" id="5_tx5rw"]
 [ext_resource type="Script" path="res://Characters/States/PlayerRollState.cs" id="6_6bgrj"]
 [ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
@@ -103,12 +104,13 @@ _data = {
 "RESET": SubResource("Animation_k6l16")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Sprite", "Inventory", "StateMachine")]
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
 y_sort_enabled = true
 collision_layer = 2
 script = ExtResource("1_flygr")
+Camera = NodePath("Camera2D")
 Speed = 64.0
 Mass = 1.0
 Health = 100.0
@@ -127,9 +129,7 @@ playing = true
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_bfqew")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-zoom = Vector2(4, 4)
+[node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_npkjp")
@@ -167,6 +167,7 @@ horizontal_alignment = 1
 [node name="Node" type="Node" parent="."]
 
 [node name="Inventory" type="Node2D" parent="."]
+position = Vector2(0, 2)
 y_sort_enabled = true
 script = ExtResource("7_xyenu")
 

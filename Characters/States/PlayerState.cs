@@ -13,38 +13,12 @@ namespace SupaLidlGame.Characters.State
 
         public override CharacterState Input(InputEvent @event)
         {
-            /*
-            if (@event is InputEventKey inputEventKey)
-            {
-                GD.Print("hello");
-                if (inputEventKey.Keycode == Key.G)
-                {
-                    GD.Print("hi");
-                }
-                }*/
+            #if DEBUG
             if (@event.IsActionPressed("equip"))
             {
                 Character.Inventory.SelectedItem = Character.Inventory.GetNode<Items.Item>("Sword");
-                //Character.Inventory.AddItem();
             }
-
-            if (@event.IsActionPressed("attack1"))
-            {
-                if (Character.Inventory.SelectedItem is not null)
-                {
-                    Character.UseCurrentItem();
-                    //Character.Inventory.SelectedItem.Use();
-                    //return AttackState;
-                }
-            }
-
-            //if (this is PlayerAttackState)
-            //{
-            //    if (@event.IsActionReleased("attack1"))
-            //    {
-            //        return IdleState;
-            //    }
-            //}
+            #endif
 
             return base.Input(@event);
         }
@@ -60,6 +34,16 @@ namespace SupaLidlGame.Characters.State
                 if (!weapon.IsUsing)
                 {
                     Character.Target = dirToMouse;
+                }
+            }
+
+            if (Godot.Input.IsActionPressed("attack1"))
+            {
+                if (Character.Inventory.SelectedItem is not null)
+                {
+                    Character.UseCurrentItem();
+                    //Character.Inventory.SelectedItem.Use();
+                    //return AttackState;
                 }
             }
 

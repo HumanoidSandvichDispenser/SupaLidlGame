@@ -165,7 +165,8 @@ namespace SupaLidlGame.Characters
             }
         }
 
-        public void _on_hurtbox_received_damage(float damage,
+        public virtual void _on_hurtbox_received_damage(
+            float damage,
             Character inflictor,
             float knockback,
             Vector2 knockbackOrigin = default,
@@ -173,12 +174,14 @@ namespace SupaLidlGame.Characters
         {
             Health -= damage;
 
+            // create damage text
             var textScene = GD.Load<PackedScene>("res://UI/FloatingText.tscn");
             var instance = textScene.Instantiate<UI.FloatingText>();
             instance.Text = Mathf.Round(damage).ToString();
             instance.GlobalPosition = GlobalPosition;
             this.GetAncestor<TileMap>().AddChild(instance);
 
+            // apply knockback
             Vector2 knockbackDir = knockbackVector;
             if (knockbackDir == default)
             {
@@ -190,14 +193,22 @@ namespace SupaLidlGame.Characters
                 knockbackDir = knockbackOrigin.DirectionTo(GlobalPosition);
             }
 
-            var player = GetNode<AnimationPlayer>("FlashAnimation");
-            if (player != null)
+            ApplyImpulse(knockbackDir.Normalized() * knockback);
+
+            // play damage animation
+            var anim = GetNode<AnimationPlayer>("FlashAnimation");
+            if (anim != null)
             {
-                player.Stop();
-                player.Play("Hurt");
+                anim.Stop();
+                anim.Play("Hurt");
             }
 
-            ApplyImpulse(knockbackDir.Normalized() * knockback);
+            // if anyone involved is a player, shake their screen
+            Player plr = inflictor as Player ?? this as Player;
+            if (plr is not null)
+            {
+                plr.Camera.Shake(0.75f, 0.25f);
+            }
         }
     }
 }

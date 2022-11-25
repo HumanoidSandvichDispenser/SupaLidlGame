@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Utils;
 
 namespace SupaLidlGame.Characters
 {
@@ -6,6 +7,9 @@ namespace SupaLidlGame.Characters
     {
         private AnimatedSprite2D _sprite;
         private string _spriteAnim;
+
+        [Export]
+        public PlayerCamera Camera { get; set; }
 
         public string Animation
         {
