@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cl56eadpklnbo"]
+
+[ext_resource type="Script" path="res://Utils/PlayerCamera.cs" id="1_jabhk"]
+
+[node name="Camera2D" type="Camera2D"]
+current = true
+zoom = Vector2(4, 4)
+script = ExtResource("1_jabhk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
