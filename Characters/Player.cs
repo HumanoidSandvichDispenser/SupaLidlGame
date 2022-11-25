@@ -1,5 +1,4 @@
 using Godot;
-using SupaLidlGame.Items;
 
 namespace SupaLidlGame.Characters
 {
@@ -43,21 +42,18 @@ namespace SupaLidlGame.Characters
                 Velocity *= 2;
             }
 
-            if (Inventory.SelectedItem is Weapon weapon)
-            {
-                /*if (weapon is Sword sword)
-                {
-                    if (sword.IsAttacking)
-                    {
-                        Velocity *= 0.5f;
-                    }
-                }
-                else*/
-                if (weapon.IsUsing)
-                {
-                    Velocity *= 0.75f;
-                }
-            }
+            base.ModifyVelocity();
+        }
+
+        public override void Stun(float time)
+        {
+            base.Stun(time);
+            // TODO: implement visual effects for stun
+        }
+
+        public override void Die()
+        {
+            //base.Die();
         }
     }
 }

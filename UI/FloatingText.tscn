@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://be80n7mxp62jd"]
+
+[ext_resource type="Script" path="res://UI/FloatingText.cs" id="1_yejq1"]
+[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="1_yns15"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gs6ch"]
+font = ExtResource("1_yns15")
+font_color = Color(1, 0.792157, 0, 1)
+outline_size = 2
+outline_color = Color(0.635294, 0.415686, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="FloatingText" type="Node2D"]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_yejq1")
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 3
+offset_left = -128.0
+offset_top = -16.0
+offset_right = 128.0
+offset_bottom = 16.0
+text = "gruppa krovi"
+label_settings = SubResource("LabelSettings_gs6ch")
+horizontal_alignment = 1
+vertical_alignment = 1

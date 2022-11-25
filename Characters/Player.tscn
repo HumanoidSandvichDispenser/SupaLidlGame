@@ -1,42 +1,47 @@
-[gd_scene load_steps=22 format=3 uid="uid://bncaar8vp3b84"]
+[gd_scene load_steps=26 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
-[ext_resource type="Texture2D" uid="uid://dxymfduyrbuvx" path="res://Sprites/Characters/forsen.png" id="2_swjho"]
+[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
+[ext_resource type="Texture2D" uid="uid://dxymfduyrbuvx" path="res://Assets/Sprites/Characters/forsen.png" id="3_ig4hs"]
 [ext_resource type="Script" path="res://Characters/States/Machine.cs" id="3_npkjp"]
 [ext_resource type="Script" path="res://Characters/States/PlayerIdleState.cs" id="4_4k4mb"]
 [ext_resource type="Script" path="res://Characters/States/PlayerMoveState.cs" id="5_tx5rw"]
 [ext_resource type="Script" path="res://Characters/States/PlayerRollState.cs" id="6_6bgrj"]
-[ext_resource type="Script" path="res://Characters/States/PlayerAttackState.cs" id="7_4cuhw"]
-[ext_resource type="PackedScene" uid="uid://cajlwb67xenfy" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
+[ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
+shader = ExtResource("2_ngsgt")
+shader_parameter/color = null
+shader_parameter/intensity = 0.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_us1ce"]
-atlas = ExtResource("2_swjho")
+atlas = ExtResource("3_ig4hs")
 region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hn4kf"]
-atlas = ExtResource("2_swjho")
+atlas = ExtResource("3_ig4hs")
 region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wfbeq"]
-atlas = ExtResource("2_swjho")
+atlas = ExtResource("3_ig4hs")
 region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qlmwk"]
-atlas = ExtResource("2_swjho")
+atlas = ExtResource("3_ig4hs")
 region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l1vgu"]
-atlas = ExtResource("2_swjho")
+atlas = ExtResource("3_ig4hs")
 region = Rect2(96, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ytlaa"]
-atlas = ExtResource("2_swjho")
+atlas = ExtResource("3_ig4hs")
 region = Rect2(120, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1q30d"]
-atlas = ExtResource("2_swjho")
+atlas = ExtResource("3_ig4hs")
 region = Rect2(144, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2h7cf"]
@@ -61,18 +66,59 @@ font_size = 24
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cjk6b"]
 size = Vector2(16, 24)
 
+[sub_resource type="Animation" id="Animation_dxevc"]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/intensity")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(4, 4, 4, 4, 4, 4, 4),
+"update": 0,
+"values": [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_k6l16"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xe5eq"]
+_data = {
+"Hurt": SubResource("Animation_dxevc"),
+"RESET": SubResource("Animation_k6l16")
+}
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine")]
 texture_filter = 3
+material = SubResource("ShaderMaterial_h78y7")
 y_sort_enabled = true
+collision_layer = 2
 script = ExtResource("1_flygr")
 Speed = 64.0
 Mass = 1.0
+Health = 100.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Faction = 1
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
 frames = SubResource("SpriteFrames_2h7cf")
 animation = &"move"
 playing = true
@@ -105,10 +151,6 @@ IdleState = NodePath("../Idle")
 script = ExtResource("6_6bgrj")
 IdleState = NodePath("../Idle")
 
-[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState")]
-script = ExtResource("7_4cuhw")
-IdleState = NodePath("../Idle")
-
 [node name="Debug" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -135,6 +177,11 @@ Faction = 1
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource("RectangleShape2D_cjk6b")
+
+[node name="FlashAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xe5eq")
+}
 
 [connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
 

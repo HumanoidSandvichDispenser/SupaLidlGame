@@ -5,6 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3w20g"]
 
 [node name="Hitbox" type="Area2D"]
+priority = 5.0
 script = ExtResource("1_44i8j")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

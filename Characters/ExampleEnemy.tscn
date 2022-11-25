@@ -1,40 +1,47 @@
-[gd_scene load_steps=19 format=3 uid="uid://dymwd5ihpwyqm"]
+[gd_scene load_steps=24 format=3 uid="uid://ddcf6bfv212wj"]
 
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="1_2yopk"]
-[ext_resource type="Texture2D" uid="uid://dxymfduyrbuvx" path="res://Sprites/Characters/forsen.png" id="2_jfku3"]
+[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_fx1w5"]
 [ext_resource type="Script" path="res://Characters/States/Machine.cs" id="3_k4ypw"]
+[ext_resource type="Texture2D" uid="uid://dxymfduyrbuvx" path="res://Assets/Sprites/Characters/forsen.png" id="3_oxsgl"]
 [ext_resource type="Script" path="res://Characters/States/NPCIdleState.cs" id="4_8r2qn"]
 [ext_resource type="Script" path="res://Characters/States/NPCMoveState.cs" id="5_utogm"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="6_jo0cg"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_43gq8"]
-[ext_resource type="PackedScene" uid="uid://cajlwb67xenfy" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
+[ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jbxb"]
+resource_local_to_scene = true
+shader = ExtResource("1_fx1w5")
+shader_parameter/color = null
+shader_parameter/intensity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6d2tf"]
-atlas = ExtResource("2_jfku3")
+atlas = ExtResource("3_oxsgl")
 region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bdyma"]
-atlas = ExtResource("2_jfku3")
+atlas = ExtResource("3_oxsgl")
 region = Rect2(24, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0dwbr"]
-atlas = ExtResource("2_jfku3")
+atlas = ExtResource("3_oxsgl")
 region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r7fn6"]
-atlas = ExtResource("2_jfku3")
+atlas = ExtResource("3_oxsgl")
 region = Rect2(72, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_py8k0"]
-atlas = ExtResource("2_jfku3")
+atlas = ExtResource("3_oxsgl")
 region = Rect2(96, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g3nb2"]
-atlas = ExtResource("2_jfku3")
+atlas = ExtResource("3_oxsgl")
 region = Rect2(120, 0, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jauql"]
-atlas = ExtResource("2_jfku3")
+atlas = ExtResource("3_oxsgl")
 region = Rect2(144, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4tm2b"]
@@ -56,16 +63,57 @@ size = Vector2(16, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
 size = Vector2(16, 24)
 
+[sub_resource type="Animation" id="Animation_dxevc"]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/intensity")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(4, 4, 4, 4, 4, 4, 4),
+"update": 0,
+"values": [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_k6l16"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xe5eq"]
+_data = {
+"Hurt": SubResource("Animation_dxevc"),
+"RESET": SubResource("Animation_k6l16")
+}
+
 [node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine")]
 texture_filter = 3
+material = SubResource("ShaderMaterial_8jbxb")
 y_sort_enabled = true
+collision_layer = 2
 script = ExtResource("1_2yopk")
+Health = 50.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Faction = 2
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+use_parent_material = true
 frames = SubResource("SpriteFrames_4tm2b")
 animation = &"move"
 playing = true
@@ -98,6 +146,12 @@ y_sort_enabled = true
 script = ExtResource("7_43gq8")
 
 [node name="Sword" parent="Inventory" instance=ExtResource("8_s3c8r")]
+Knockback = 40.0
+
+[node name="FlashAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xe5eq")
+}
 
 [connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
 

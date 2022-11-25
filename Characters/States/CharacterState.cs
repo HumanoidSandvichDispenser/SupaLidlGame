@@ -22,13 +22,32 @@ namespace SupaLidlGame.Characters.State
         /// </summary>
         public virtual void Exit(CharacterState nextState) { }
 
-        public virtual CharacterState Process(double delta) => null;
+        public virtual CharacterState Process(double delta)
+        {
+            if (Character.StunTime > 0)
+            {
+                Character.StunTime -= delta;
+            }
+            return null;
+        }
 
         public virtual CharacterState PhysicsProcess(double delta)
         {
-            Character.Velocity = Character.Direction * Character.Speed;
+            Character.Velocity = Character.NetImpulse;
+
+            if (Character.NetImpulse.LengthSquared() < Mathf.Pow(Character.Speed, 2))
+            {
+                Character.Velocity += Character.Direction.Normalized()
+                    * Character.Speed;
+            }
+
+            Character.NetImpulse = Character.NetImpulse.MoveToward(
+                Vector2.Zero,
+                (float)delta * Character.Speed * Character.Friction);
+
             Character.ModifyVelocity();
             Character.MoveAndSlide();
+
             return null;
         }
 

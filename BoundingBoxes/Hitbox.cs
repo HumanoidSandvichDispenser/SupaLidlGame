@@ -1,13 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using SupaLidlGame.Characters;
-using SupaLidlGame.Utils;
+using SupaLidlGame.Items;
 
 namespace SupaLidlGame.BoundingBoxes
 {
-    public partial class Hitbox : Area2D, IFaction
+    public partial class Hitbox : BoundingBox
     {
-        private HashSet<Hurtbox> _ignoreList = new HashSet<Hurtbox>();
+        private HashSet<BoundingBox> _ignoreList = new HashSet<BoundingBox>();
+
+        [Signal]
+        public delegate void HitEventHandler(BoundingBox box);
 
         [Export]
         public float Damage { get; set; }
@@ -19,40 +23,76 @@ namespace SupaLidlGame.BoundingBoxes
         public bool IsDisabled
         {
             get => _collisionShape.Disabled;
-            set => _collisionShape.Disabled = value;
+            set
+            {
+                _collisionShape.Disabled = value;
+                if (value)
+                {
+                    DamageStartTime = Time.GetTicksMsec();
+                }
+            }
         }
 
         [Export]
         public float Knockback { get; set; }
 
-        [Export]
-        public ushort Faction { get; set; }
-
         public Character Inflictor { get; set; }
 
+        public ulong DamageStartTime { get; set; }
+
         private CollisionShape2D _collisionShape;
+
+        private bool _isParrying = false;
 
         public override void _Ready()
         {
             _collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
         }
 
+        private bool ShouldParry(Hitbox box)
+        {
+            Node parent = GetParent<Node>();
+
+            // if this hitbox does not even belong to a weapon, skip
+            if (parent is not Weapon)
+            {
+                return false;
+            }
+
+            var weapon = parent as Weapon;
+
+            // if we hit a hitbox, we can parry if it can be parried
+            if (box.GetParent<Node>() is Weapon other)
+            {
+                return weapon.IsParryable && other.IsParryable;
+            }
+
+            return false;
+        }
+
         public void _on_area_entered(Area2D area)
         {
-            if (area is Hurtbox hurtbox)
+            if (area is BoundingBox box)
             {
                 // we don't want to hurt teammates
-                if (Faction != hurtbox.Faction)
+                if (Faction != box.Faction)
                 {
-                    if (!_ignoreList.Contains(hurtbox))
+                    if (!_ignoreList.Contains(box))
                     {
-                        _ignoreList.Add(hurtbox);
-                        hurtbox.InflictDamage(Damage, Inflictor, Knockback);
+                        _ignoreList.Add(box);
+                        EmitSignal(SignalName.Hit, box);
                     }
                 }
             }
         }
 
         public void ResetIgnoreList() => _ignoreList.Clear();
+
+        public bool HasHit(BoundingBox box) => _ignoreList.Contains(box);
+
+        public HashSet<BoundingBox> Hits
+        {
+            get => _ignoreList;
+        }
     }
 }

@@ -1,13 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://cajlwb67xenfy"]
+[gd_scene load_steps=16 format=3 uid="uid://d72ehtv1ks0e"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
-[ext_resource type="Texture2D" uid="uid://dt6u8p4h6g7le" path="res://Sprites/knife.png" id="2_dmsp2"]
+[ext_resource type="Texture2D" uid="uid://dt6u8p4h6g7le" path="res://Assets/Sprites/knife.png" id="2_rnfo4"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="3_up3ob"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="4_pt6lq"]
+[ext_resource type="Texture2D" uid="uid://do1bui3bblkk7" path="res://Assets/Sprites/sword-swing.png" id="5_pywek"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yln58"]
-radius = 8.0
-height = 32.0
+[sub_resource type="Gradient" id="Gradient_jjxq2"]
+offsets = PackedFloat32Array(0, 0.945312)
+colors = PackedColorArray(1, 1, 1, 1, 0.687215, 0.687215, 0.687215, 0)
 
 [sub_resource type="Curve" id="Curve_4cxtp"]
 _data = [Vector2(0.00687286, 1), 0.0, 0.0, 0, 0, Vector2(0.879725, 0.190909), -2.93145, -2.93145, 0, 0, Vector2(1, 0.0454545), 0.0483926, 0.0, 0, 0]
@@ -29,31 +30,19 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-0.785398]
+"values": [-1.0472]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Anchor/Sprite2D:rotation")
+tracks/1/path = NodePath("SwingSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [-1.19209e-07]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Anchor/Sprite2D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(8, 1)]
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_mv7y2"]
@@ -61,8 +50,7 @@ resource_name = "idle"
 
 [sub_resource type="Animation" id="Animation_orc8t"]
 resource_name = "use"
-length = 0.5
-loop_mode = 1
+length = 0.75
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -71,77 +59,142 @@ tracks/0/path = NodePath("Anchor:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.05, 0.1, 0.2, 0.4, 0.75),
+"transitions": PackedFloat32Array(1, 4, 1, 2, 1),
 "update": 0,
-"values": [-0.785398, 1.5708, 1.5708, -0.785398]
+"values": [-0.610865, -0.959931, 3.92699, 3.92699, 3.75246]
 }
-tracks/1/type = "value"
+tracks/1/type = "method"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Anchor/Sprite2D:rotation")
+tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [-1.19209e-07, 0.785398, 0.785398, -1.19209e-07]
+"times": PackedFloat32Array(0.05, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"Attack"
+}, {
+"args": [],
+"method": &"Deattack"
+}]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Anchor/Sprite2D:position")
+tracks/2/path = NodePath("SwingSprite:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3, 0.5),
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
+}
+
+[sub_resource type="Animation" id="Animation_y4mj3"]
+resource_name = "use2"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05, 0.1, 0.2, 0.4, 0.75),
+"transitions": PackedFloat32Array(1, 4, 1, 2, 1),
 "update": 0,
-"values": [Vector2(8, 1), Vector2(12, -1), Vector2(12, -1), Vector2(8, 1)]
+"values": [3.75246, 4.10152, -0.785398, -0.785398, -0.610865]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"Attack"
+}, {
+"args": [],
+"method": &"Deattack"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SwingSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 3, 0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tao4k"]
 _data = {
 "RESET": SubResource("Animation_b7327"),
 "idle": SubResource("Animation_mv7y2"),
-"use": SubResource("Animation_orc8t")
+"use": SubResource("Animation_orc8t"),
+"use2": SubResource("Animation_y4mj3")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1lid1"]
 
-[node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer")]
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_tv0o2"]
+points = PackedVector2Array(-11.314, -11.314, 0, -16, 11.314, -11.314, 16, 0, 11.314, 11.314, 0, 16, -11.314, 11.314, 0, 0)
+
+[node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles")]
 texture_filter = 3
 y_sort_enabled = true
 script = ExtResource("1_mlo73")
-Hitbox = NodePath("Anchor/Sprite2D/Hitbox")
+Hitbox = NodePath("Hitbox")
 AnimationPlayer = NodePath("AnimationPlayer")
 AttackTime = 0.1
-Damage = 20.0
-UseTime = 0.5
+ParryParticles = NodePath("Anchor/Sprite2D/ParryParticles")
+Damage = 30.0
+UseTime = 0.8
+Knockback = 80.0
 Description = "A basic sword."
 
 [node name="Anchor" type="Node2D" parent="."]
-rotation = -0.785398
+rotation = -1.0472
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Anchor"]
-position = Vector2(8, 1)
+position = Vector2(0, -8)
 y_sort_enabled = true
-texture = ExtResource("2_dmsp2")
+texture = ExtResource("2_rnfo4")
 
-[node name="Hitbox" parent="Anchor/Sprite2D" instance=ExtResource("3_up3ob")]
-IsDisabled = true
-
-[node name="CollisionShape2D" parent="Anchor/Sprite2D/Hitbox" index="0"]
-position = Vector2(0, -4)
-shape = SubResource("CapsuleShape2D_yln58")
-disabled = true
+[node name="ParryParticles" type="CPUParticles2D" parent="Anchor/Sprite2D"]
+position = Vector2(-0.221825, -3.12132)
+rotation = 0.785398
+emitting = false
+amount = 12
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 8.0
+initial_velocity_max = 64.0
+color_ramp = SubResource("Gradient_jjxq2")
 
 [node name="Trail" parent="Anchor" node_paths=PackedStringArray("Tracking") instance=ExtResource("4_pt6lq")]
 position = Vector2(2.40734, -0.55655)
 rotation = 0.945464
-scale = Vector2(1, 1)
 width_curve = SubResource("Curve_4cxtp")
 gradient = SubResource("Gradient_2ablm")
 Tracking = NodePath("../Sprite2D")
@@ -156,4 +209,21 @@ tree_root = SubResource("AnimationNodeAnimation_1lid1")
 anim_player = NodePath("../AnimationPlayer")
 active = true
 
-[editable path="Anchor/Sprite2D/Hitbox"]
+[node name="Hitbox" parent="." instance=ExtResource("3_up3ob")]
+IsDisabled = true
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("ConvexPolygonShape2D_tv0o2")
+disabled = true
+
+[node name="SwingSprite" type="Sprite2D" parent="."]
+texture = ExtResource("5_pywek")
+hframes = 4
+
+[node name="SwingSound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="ParrySound" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="Hit" from="Hitbox" to="." method="_on_hitbox_hit"]
+
+[editable path="Hitbox"]

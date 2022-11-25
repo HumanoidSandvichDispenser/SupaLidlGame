@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbsosmpnenfwu"]
+[gd_scene load_steps=8 format=3 uid="uid://dd6xy1y0m8smm"]
 
-[ext_resource type="Texture2D" uid="uid://gm2pcnfg7h8j" path="res://Sprites/tileset.png" id="1_k6myx"]
-[ext_resource type="PackedScene" uid="uid://bncaar8vp3b84" path="res://Characters/Player.tscn" id="1_m35hr"]
-[ext_resource type="PackedScene" uid="uid://dymwd5ihpwyqm" path="res://Characters/ExampleEnemy.tscn" id="2_uti3y"]
+[ext_resource type="Texture2D" uid="uid://gm2pcnfg7h8j" path="res://Assets/Sprites/tileset.png" id="1_k6myx"]
+[ext_resource type="PackedScene" uid="uid://b2254pup8k161" path="res://Characters/Player.tscn" id="1_m35hr"]
+[ext_resource type="PackedScene" uid="uid://ddcf6bfv212wj" path="res://Characters/ExampleEnemy.tscn" id="2_uti3y"]
+[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="4_056cf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1pa1q"]
 texture = ExtResource("1_k6myx")
@@ -1100,6 +1101,12 @@ texture = ExtResource("1_k6myx")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1pa1q")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mq5wa"]
+resource_local_to_scene = true
+shader = ExtResource("4_056cf")
+shader_parameter/color = null
+shader_parameter/intensity = 0.0
+
 [node name="Level" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -1137,13 +1144,11 @@ position = Vector2(-81, -34)
 motion_mode = 1
 
 [node name="ExampleEnemy" parent="TileMap" instance=ExtResource("2_uti3y")]
+material = SubResource("ShaderMaterial_mq5wa")
 position = Vector2(38, 42)
 scale = Vector2(1.00571, 1)
 
 [node name="ExampleEnemy2" parent="TileMap" instance=ExtResource("2_uti3y")]
-position = Vector2(156, 58)
-scale = Vector2(1.00571, 1)
-
-[node name="ExampleEnemy3" parent="TileMap" instance=ExtResource("2_uti3y")]
-position = Vector2(175, -15)
+material = SubResource("ShaderMaterial_mq5wa")
+position = Vector2(190, 99)
 scale = Vector2(1.00571, 1)

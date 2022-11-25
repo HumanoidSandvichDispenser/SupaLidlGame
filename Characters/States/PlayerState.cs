@@ -32,7 +32,8 @@ namespace SupaLidlGame.Characters.State
             {
                 if (Character.Inventory.SelectedItem is not null)
                 {
-                    Character.Inventory.SelectedItem.Use();
+                    Character.UseCurrentItem();
+                    //Character.Inventory.SelectedItem.Use();
                     //return AttackState;
                 }
             }
@@ -61,6 +62,7 @@ namespace SupaLidlGame.Characters.State
                     Character.Target = dirToMouse;
                 }
             }
+
             return base.Process(delta);
         }
     }

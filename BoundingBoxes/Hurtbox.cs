@@ -4,7 +4,7 @@ using SupaLidlGame.Utils;
 
 namespace SupaLidlGame.BoundingBoxes
 {
-    public partial class Hurtbox : Area2D, IFaction
+    public partial class Hurtbox : BoundingBox, IFaction
     {
         [Signal]
         public delegate void ReceivedDamageEventHandler(
@@ -13,9 +13,6 @@ namespace SupaLidlGame.BoundingBoxes
             float knockback,
             Vector2 knockbackOrigin = default,
             Vector2 knockbackVector = default);
-
-        [Export]
-        public ushort Faction { get; set; }
 
         public override void _Ready()
         {

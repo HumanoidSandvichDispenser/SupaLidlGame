@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxymfduyrbuvx"
-path="res://.godot/imported/forsen.png-fce73bdb02d4ae9ad3a1c7a29f120a10.ctex"
+uid="uid://gm2pcnfg7h8j"
+path="res://.godot/imported/tileset.png-f52e8e44f74a535dd898a49592afe6d9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Characters/forsen.png"
-dest_files=["res://.godot/imported/forsen.png-fce73bdb02d4ae9ad3a1c7a29f120a10.ctex"]
+source_file="res://Assets/Sprites/tileset.png"
+dest_files=["res://.godot/imported/tileset.png-f52e8e44f74a535dd898a49592afe6d9.ctex"]
 
 [params]
 

@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 using SupaLidlGame.Items;
 using SupaLidlGame.Utils;
 
@@ -8,6 +9,9 @@ namespace SupaLidlGame.Characters
     {
         [Export]
         public float Speed { get; protected set; } = 32.0f;
+
+        [Export]
+        public float Friction { get; protected set; } = 4.0f;
 
         [Export]
         public float Mass
@@ -28,10 +32,13 @@ namespace SupaLidlGame.Characters
 
         public Vector2 Acceleration => Direction * AccelerationMagnitude;
 
+        public Vector2 NetImpulse { get; set; } = Vector2.Zero;
+
         public Vector2 Direction { get; set; } = Vector2.Zero;
 
         public Vector2 Target { get; set; } = Vector2.Zero;
 
+        [Export]
         public float Health
         {
             get => _health;
@@ -51,9 +58,11 @@ namespace SupaLidlGame.Characters
             }
         }
 
+        public bool IsAlive => Health > 0;
+
         protected float _health = 100f;
 
-        public bool IsAlive => Health > 0;
+        public double StunTime { get; set; }
 
         [Export]
         public AnimatedSprite2D Sprite { get; set; }
@@ -99,7 +108,10 @@ namespace SupaLidlGame.Characters
         /// </summary>
         public virtual void ModifyVelocity()
         {
-
+            if (StunTime > 0)
+            {
+                Velocity *= 0.25f;
+            }
         }
 
         public virtual void Die()
@@ -113,7 +125,12 @@ namespace SupaLidlGame.Characters
             // delta p = F delta t
             if (resetVelocity)
                 Velocity = Vector2.Zero;
-            Velocity += impulse / Mass;
+            NetImpulse += impulse / Mass;
+        }
+
+        public virtual void Stun(float time)
+        {
+            StunTime += time;
         }
 
         protected void DrawTarget()
@@ -134,6 +151,20 @@ namespace SupaLidlGame.Characters
             Inventory.Rotation = angle;
         }
 
+        public void UseCurrentItem()
+        {
+            if (StunTime > 0)
+            {
+                GD.Print("tried to use weapon but stunned");
+                return;
+            }
+
+            if (Inventory.SelectedItem is Weapon weapon)
+            {
+                weapon.Use();
+            }
+        }
+
         public void _on_hurtbox_received_damage(float damage,
             Character inflictor,
             float knockback,
@@ -141,7 +172,13 @@ namespace SupaLidlGame.Characters
             Vector2 knockbackVector = default)
         {
             Health -= damage;
-            /*
+
+            var textScene = GD.Load<PackedScene>("res://UI/FloatingText.tscn");
+            var instance = textScene.Instantiate<UI.FloatingText>();
+            instance.Text = Mathf.Round(damage).ToString();
+            instance.GlobalPosition = GlobalPosition;
+            this.GetAncestor<TileMap>().AddChild(instance);
+
             Vector2 knockbackDir = knockbackVector;
             if (knockbackDir == default)
             {
@@ -153,8 +190,14 @@ namespace SupaLidlGame.Characters
                 knockbackDir = knockbackOrigin.DirectionTo(GlobalPosition);
             }
 
-            ApplyImpulse(knockback.)
-            */
+            var player = GetNode<AnimationPlayer>("FlashAnimation");
+            if (player != null)
+            {
+                player.Stop();
+                player.Play("Hurt");
+            }
+
+            ApplyImpulse(knockbackDir.Normalized() * knockback);
         }
     }
 }

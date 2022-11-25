@@ -47,6 +47,7 @@ namespace SupaLidlGame.Characters
 
         public override void _Draw()
         {
+            #if DEBUG
             for (int i = 0; i < 16; i++)
             {
                 Vector2 vec = _weightDirs[i] * _weights[i] * 128;
@@ -62,6 +63,7 @@ namespace SupaLidlGame.Characters
                 }
                 DrawLine(Vector2.Zero, vec, c);
             }
+            #endif
 
             base._Draw();
         }
@@ -93,7 +95,8 @@ namespace SupaLidlGame.Characters
                 Think();
             }
 
-            Direction = _weightDirs[_bestWeightIdx];
+            Direction = Target;
+            //Direction = _weightDirs[_bestWeightIdx];
         }
 
         protected virtual void Think()
@@ -105,14 +108,13 @@ namespace SupaLidlGame.Characters
 
             if (Target.LengthSquared() < 1024)
             {
-                GD.Print("lol");
                 if (Inventory.SelectedItem is Weapon weapon)
                 {
-                    GD.Print("use");
-                    weapon.Use();
+                    UseCurrentItem();
                 }
             }
 
+            #if DEBUGs
             for (int i = 0; i < 16; i++)
             {
                 float directDot = _weightDirs[i].Dot(dir);
@@ -203,6 +205,7 @@ namespace SupaLidlGame.Characters
             }
 
             QueueRedraw();
+            #endif
         }
     }
 }

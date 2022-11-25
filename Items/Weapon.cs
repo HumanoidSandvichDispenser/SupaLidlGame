@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.BoundingBoxes;
 using SupaLidlGame.Characters;
 
 namespace SupaLidlGame.Items
@@ -34,6 +35,16 @@ namespace SupaLidlGame.Items
         [Export]
         public float InitialVelocity { get; set; } = 0;
 
+        /// <summary>
+        /// Whether or not the weapon can parry other weapons and is
+        /// parryable by other weapons.
+        /// </summary>
+        public virtual bool IsParryable { get; protected set; } = false;
+
+        public bool IsParried { get; set; }
+
+        public ulong ParryTimeOrigin { get; protected set; }
+
         public Character Character { get; set; }
 
         public override void Equip(Character character)
@@ -64,6 +75,14 @@ namespace SupaLidlGame.Items
                 {
                     Deuse();
                 }
+            }
+        }
+
+        public virtual void _on_hitbox_hit(BoundingBox box)
+        {
+            if (box is Hurtbox hurtbox)
+            {
+                hurtbox.InflictDamage(Damage, Character, Knockback);
             }
         }
     }
