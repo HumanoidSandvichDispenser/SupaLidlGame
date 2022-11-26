@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ddcf6bfv212wj"]
+[gd_scene load_steps=25 format=3 uid="uid://ddcf6bfv212wj"]
 
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="1_2yopk"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_fx1w5"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="6_jo0cg"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_43gq8"]
 [ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
+[ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="10_n1e64"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8jbxb"]
 resource_local_to_scene = true
@@ -152,6 +153,9 @@ Knockback = 40.0
 libraries = {
 "": SubResource("AnimationLibrary_xe5eq")
 }
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_n1e64")
 
 [connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
 

@@ -54,6 +54,7 @@ namespace SupaLidlGame.Items.Weapons
             // reset state of the weapon
             IsParried = false;
             IsParryable = true;
+            ParryTimeOrigin = Time.GetTicksMsec();
 
             AnimationPlayer.Stop();
 
@@ -85,7 +86,6 @@ namespace SupaLidlGame.Items.Weapons
 
         public void Attack()
         {
-            ParryTimeOrigin = Time.GetTicksMsec();
             //RemainingAttackTime = AttackTime;
             IsAttacking = true;
             Hitbox.IsDisabled = false;
@@ -148,6 +148,7 @@ namespace SupaLidlGame.Items.Weapons
                     IsParried = true;
                     AnimationPlayer.PlaybackSpeed = 0.25f;
                     Character.Stun(1.5f);
+                    GetNode<AudioStreamPlayer2D>("ParrySound").Play();
                 }
             }
             //this.GetAncestor<TileMap>().AddChild(instance);
@@ -181,8 +182,6 @@ namespace SupaLidlGame.Items.Weapons
                     }
                 }
             }
-
-            //base._on_hitbox_hit(box);
         }
     }
 }

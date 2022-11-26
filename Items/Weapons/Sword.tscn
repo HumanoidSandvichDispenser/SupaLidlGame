@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://d72ehtv1ks0e"]
+[gd_scene load_steps=20 format=3 uid="uid://d72ehtv1ks0e"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
 [ext_resource type="Texture2D" uid="uid://dt6u8p4h6g7le" path="res://Assets/Sprites/knife.png" id="2_rnfo4"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="3_up3ob"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="4_pt6lq"]
 [ext_resource type="Texture2D" uid="uid://do1bui3bblkk7" path="res://Assets/Sprites/sword-swing.png" id="5_pywek"]
+[ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="6_8nxjm"]
 
 [sub_resource type="Gradient" id="Gradient_jjxq2"]
 offsets = PackedFloat32Array(0, 0.945312)
@@ -364,6 +365,7 @@ hframes = 4
 [node name="SwingSound" type="AudioStreamPlayer2D" parent="."]
 
 [node name="ParrySound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_8nxjm")
 
 [connection signal="Hit" from="Hitbox" to="." method="_on_hitbox_hit"]
 

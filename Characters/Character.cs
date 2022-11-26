@@ -207,7 +207,12 @@ namespace SupaLidlGame.Characters
             Player plr = inflictor as Player ?? this as Player;
             if (plr is not null)
             {
-                plr.Camera.Shake(0.75f, 0.25f);
+                plr.Camera.Shake(1, 0.4f);
+            }
+
+            if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)
+            {
+                sound.Play();
             }
         }
     }
