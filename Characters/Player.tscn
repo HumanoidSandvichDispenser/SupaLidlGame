@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=28 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -104,6 +104,10 @@ _data = {
 "RESET": SubResource("Animation_k6l16")
 }
 
+[sub_resource type="Environment" id="Environment_rs2vs"]
+background_mode = 3
+background_energy_multiplier = 16.0
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Sprite", "Inventory", "StateMachine")]
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
@@ -119,6 +123,8 @@ Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Faction = 1
 
+[node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 use_parent_material = true
 frames = SubResource("SpriteFrames_2h7cf")
@@ -128,8 +134,6 @@ playing = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_bfqew")
-
-[node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_npkjp")
@@ -142,20 +146,19 @@ script = ExtResource("4_4k4mb")
 MoveState = NodePath("../Move")
 IdleState = NodePath("")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("RollState", "IdleState")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("RollState")]
 script = ExtResource("5_tx5rw")
 RollState = NodePath("../Roll")
-IdleState = NodePath("../Idle")
 
-[node name="Roll" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState")]
+[node name="Roll" type="Node" parent="StateMachine"]
 script = ExtResource("6_6bgrj")
-IdleState = NodePath("../Idle")
 
 [node name="Debug" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 
 [node name="State" type="Label" parent="Debug"]
+layout_mode = 0
 offset_left = -20.0
 offset_top = -60.0
 offset_right = 20.0
@@ -183,6 +186,9 @@ shape = SubResource("RectangleShape2D_cjk6b")
 libraries = {
 "": SubResource("AnimationLibrary_xe5eq")
 }
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rs2vs")
 
 [connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
 
