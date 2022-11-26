@@ -45,24 +45,33 @@ namespace SupaLidlGame.Items.Weapons
 
         public override void Use()
         {
+            // we can't use if we're still using the weapon
             if (RemainingUseTime > 0)
             {
                 return;
             }
 
+            // reset state of the weapon
             IsParried = false;
-
-            AnimationPlayer.Stop();
             IsParryable = true;
 
-            if (GetNode<Node2D>("Anchor").Rotation < Mathf.DegToRad(50))
+            AnimationPlayer.Stop();
+
+            // play animation depending on rotation of weapon
+            string anim = "use";
+
+            if (GetNode<Node2D>("Anchor").Rotation > Mathf.DegToRad(50))
             {
-                AnimationPlayer.Play("use");
+                anim = "use2";
             }
-            else
+
+            if (Character is NPC)
             {
-                AnimationPlayer.Play("use2");
+                // NPCs have a slower attack
+                anim += "-npc";
             }
+
+            AnimationPlayer.Play(anim);
 
             base.Use();
         }

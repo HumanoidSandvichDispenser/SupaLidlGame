@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d72ehtv1ks0e"]
+[gd_scene load_steps=19 format=3 uid="uid://d72ehtv1ks0e"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
 [ext_resource type="Texture2D" uid="uid://dt6u8p4h6g7le" path="res://Assets/Sprites/knife.png" id="2_rnfo4"]
@@ -30,7 +30,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-1.0472]
+"values": [-0.610865]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -43,6 +43,52 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_r58x0"]
+resource_name = "attack"
+length = 1.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05, 0.1, 0.2, 0.25, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 4, 1, 2, 4, 1),
+"update": 3,
+"values": [-0.610865, -0.959931, 3.92699, 3.92699, 3.75246, -0.785398]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"Attack"
+}, {
+"args": [],
+"method": &"Deattack"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SwingSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
 }
 
 [sub_resource type="Animation" id="Animation_mv7y2"]
@@ -71,7 +117,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.05, 0.25),
+"times": PackedFloat32Array(0.1, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -117,7 +163,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.05, 0.25),
+"times": PackedFloat32Array(0.1, 0.25),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
@@ -140,12 +186,107 @@ tracks/2/keys = {
 "values": [0, 1, 3, 0]
 }
 
+[sub_resource type="Animation" id="Animation_nivo8"]
+resource_name = "use-npc"
+length = 1.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05, 0.3, 0.4, 0.45, 0.75, 1.5),
+"transitions": PackedFloat32Array(1, 4, 1, 2, 4, 1),
+"update": 3,
+"values": [-0.610865, -0.959931, 3.92699, 3.92699, 3.75246, -0.785398]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"Attack"
+}, {
+"args": [],
+"method": &"Deattack"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SwingSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 0]
+}
+
+[sub_resource type="Animation" id="Animation_2k2er"]
+resource_name = "use2-npc"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.05, 0.3, 0.4, 0.45, 0.75),
+"transitions": PackedFloat32Array(1, 4, 1, 2, 1),
+"update": 3,
+"values": [3.75246, 4.10152, -0.785398, -0.785398, -0.610865]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"Attack"
+}, {
+"args": [],
+"method": &"Deattack"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SwingSprite:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 3, 0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tao4k"]
 _data = {
 "RESET": SubResource("Animation_b7327"),
+"attack": SubResource("Animation_r58x0"),
 "idle": SubResource("Animation_mv7y2"),
 "use": SubResource("Animation_orc8t"),
-"use2": SubResource("Animation_y4mj3")
+"use-npc": SubResource("Animation_nivo8"),
+"use2": SubResource("Animation_y4mj3"),
+"use2-npc": SubResource("Animation_2k2er")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1lid1"]
@@ -162,13 +303,12 @@ Hitbox = NodePath("Hitbox")
 AnimationPlayer = NodePath("AnimationPlayer")
 AttackTime = 0.1
 ParryParticles = NodePath("Anchor/Sprite2D/ParryParticles")
-Damage = 30.0
 UseTime = 0.8
 Knockback = 80.0
 Description = "A basic sword."
 
 [node name="Anchor" type="Node2D" parent="."]
-rotation = -1.0472
+rotation = -0.610865
 y_sort_enabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Anchor"]
