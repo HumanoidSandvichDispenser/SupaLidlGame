@@ -42,8 +42,6 @@ namespace SupaLidlGame.Characters.State
                 if (Character.Inventory.SelectedItem is not null)
                 {
                     Character.UseCurrentItem();
-                    //Character.Inventory.SelectedItem.Use();
-                    //return AttackState;
                 }
             }
 

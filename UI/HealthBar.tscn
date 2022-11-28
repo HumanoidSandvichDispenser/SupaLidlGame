@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxo553hblp6nf"]
+
+[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="1_700b8"]
+
+[node name="HealthBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_right = 128.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("1_700b8")
+step = 1.0
+value = 84.0

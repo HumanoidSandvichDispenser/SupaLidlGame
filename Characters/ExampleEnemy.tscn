@@ -11,8 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
 [ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="10_n1e64"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jbxb"]
-resource_local_to_scene = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ms3xg"]
 shader = ExtResource("1_fx1w5")
 shader_parameter/color = null
 shader_parameter/intensity = 0.0
@@ -103,9 +102,9 @@ _data = {
 
 [node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine")]
 texture_filter = 3
-material = SubResource("ShaderMaterial_8jbxb")
+material = SubResource("ShaderMaterial_ms3xg")
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 10
 script = ExtResource("1_2yopk")
 Health = 50.0
 Sprite = NodePath("Sprite")
@@ -114,7 +113,6 @@ StateMachine = NodePath("StateMachine")
 Faction = 2
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-use_parent_material = true
 frames = SubResource("SpriteFrames_4tm2b")
 animation = &"move"
 playing = true

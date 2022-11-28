@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2d4dmf4yg481"]
+[gd_scene load_steps=3 format=3 uid="uid://c2d4dmf4yg481"]
 
 [ext_resource type="Script" path="res://Tests/ContextBasedSteering.cs" id="1_g16e3"]
+[ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="2_cvdwc"]
 
 [node name="ContextBasedSteeringTest" type="Node2D"]
 
 [node name="ContextBasedSteering" type="Node2D" parent="."]
 position = Vector2(410, 242)
 script = ExtResource("1_g16e3")
+
+[node name="Icon" type="Sprite2D" parent="ContextBasedSteering"]
+texture = ExtResource("2_cvdwc")

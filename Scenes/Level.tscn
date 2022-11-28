@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dd6xy1y0m8smm"]
+[gd_scene load_steps=6 format=3 uid="uid://dd6xy1y0m8smm"]
 
 [ext_resource type="Texture2D" uid="uid://gm2pcnfg7h8j" path="res://Assets/Sprites/tileset.png" id="1_k6myx"]
 [ext_resource type="PackedScene" uid="uid://b2254pup8k161" path="res://Characters/Player.tscn" id="1_m35hr"]
 [ext_resource type="PackedScene" uid="uid://ddcf6bfv212wj" path="res://Characters/ExampleEnemy.tscn" id="2_uti3y"]
-[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="4_056cf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1pa1q"]
 texture = ExtResource("1_k6myx")
@@ -233,6 +232,7 @@ texture = ExtResource("1_k6myx")
 7:3/0 = 0
 7:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 7:3/0/physics_layer_0/angular_velocity = 0.0
+7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 2, 8, 2, 8, 12, -8, 12)
 8:3/0 = 0
 8:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:3/0/physics_layer_0/angular_velocity = 0.0
@@ -308,6 +308,7 @@ texture = ExtResource("1_k6myx")
 6:4/0 = 0
 6:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 6:4/0/physics_layer_0/angular_velocity = 0.0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -1, 8, -1, 8, 8, -8, 8)
 8:4/0 = 0
 8:4/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:4/0/physics_layer_0/angular_velocity = 0.0
@@ -1101,18 +1102,6 @@ texture = ExtResource("1_k6myx")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1pa1q")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_whp32"]
-resource_local_to_scene = true
-shader = ExtResource("4_056cf")
-shader_parameter/color = null
-shader_parameter/intensity = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rthg0"]
-resource_local_to_scene = true
-shader = ExtResource("4_056cf")
-shader_parameter/color = null
-shader_parameter/intensity = 0.0
-
 [node name="Level" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -1122,7 +1111,7 @@ tile_set = SubResource("TileSet_18c7j")
 format = 2
 layer_0/name = "Walls"
 layer_0/y_sort_enabled = true
-layer_0/tile_data = PackedInt32Array(131065, 458752, 0, -65531, 458752, 0)
+layer_0/tile_data = PackedInt32Array(131065, 458752, 0, -65531, 458752, 0, 327679, 458752, 3, 327687, 458752, 3)
 layer_1/name = "Ground 2"
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 1)
@@ -1150,11 +1139,21 @@ position = Vector2(-81, -34)
 motion_mode = 1
 
 [node name="ExampleEnemy" parent="TileMap" instance=ExtResource("2_uti3y")]
-material = SubResource("ShaderMaterial_whp32")
 position = Vector2(38, 42)
 scale = Vector2(1.00571, 1)
 
 [node name="ExampleEnemy2" parent="TileMap" instance=ExtResource("2_uti3y")]
-material = SubResource("ShaderMaterial_rthg0")
 position = Vector2(190, 99)
+scale = Vector2(1.00571, 1)
+
+[node name="ExampleEnemy3" parent="TileMap" instance=ExtResource("2_uti3y")]
+position = Vector2(175, 2)
+scale = Vector2(1.00571, 1)
+
+[node name="ExampleEnemy4" parent="TileMap" instance=ExtResource("2_uti3y")]
+position = Vector2(122, 36)
+scale = Vector2(1.00571, 1)
+
+[node name="ExampleEnemy5" parent="TileMap" instance=ExtResource("2_uti3y")]
+position = Vector2(207, 56)
 scale = Vector2(1.00571, 1)

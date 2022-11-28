@@ -26,9 +26,14 @@ namespace SupaLidlGame.Extensions
         }
 
         /// <summary>
-        ///
+        /// A version <c>GetNode</c> that returns null rather than cause an
+        /// exception if the node is not found or is not the same type.
         /// </summary>
-        public static T GetNode<T>(this Node node, string name) where T : Node
+        /// <returns>
+        /// <see langword="null">null</see> if <param>name</param> does not match
+        /// a valid Node
+        /// </returns>
+        public static T GetN<T>(this Node node, string name) where T : Node
         {
             return node.GetNode(name) as T;
         }

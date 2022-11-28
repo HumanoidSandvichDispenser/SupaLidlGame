@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=28 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -105,19 +105,11 @@ _data = {
 "RESET": SubResource("Animation_k6l16")
 }
 
-[sub_resource type="Environment" id="Environment_rs2vs"]
-background_mode = 3
-background_energy_multiplier = 16.0
-ambient_light_source = 3
-ambient_light_energy = 2.68
-glow_enabled = true
-glow_intensity = 8.0
-
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Sprite", "Inventory", "StateMachine")]
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
 y_sort_enabled = true
-collision_layer = 2
+collision_layer = 6
 script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
 Speed = 64.0
@@ -192,9 +184,6 @@ shape = SubResource("RectangleShape2D_cjk6b")
 libraries = {
 "": SubResource("AnimationLibrary_xe5eq")
 }
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_rs2vs")
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_h0x0g")
