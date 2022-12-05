@@ -296,25 +296,26 @@ _data = {
 points = PackedVector2Array(-11.314, -11.314, 0, -16, 11.314, -11.314, 16, 0, 11.314, 11.314, 0, 16, -11.314, 11.314, 0, 0)
 
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles")]
+y_sort_enabled = true
 texture_filter = 3
 position = Vector2(2, 0)
-y_sort_enabled = true
 script = ExtResource("1_mlo73")
 Hitbox = NodePath("Hitbox")
 AnimationPlayer = NodePath("AnimationPlayer")
 AttackTime = 0.1
 ParryParticles = NodePath("Anchor/Sprite2D/ParryParticles")
+Damage = 20.0
 UseTime = 0.8
 Knockback = 80.0
 Description = "A basic sword."
 
 [node name="Anchor" type="Node2D" parent="."]
-rotation = -0.610865
 y_sort_enabled = true
+rotation = -0.610865
 
 [node name="Sprite2D" type="Sprite2D" parent="Anchor"]
-position = Vector2(0, -10)
 y_sort_enabled = true
+position = Vector2(0, -10)
 texture = ExtResource("2_rnfo4")
 
 [node name="ParryParticles" type="CPUParticles2D" parent="Anchor/Sprite2D"]

@@ -101,9 +101,9 @@ _data = {
 }
 
 [node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine")]
+y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_ms3xg")
-y_sort_enabled = true
 collision_layer = 10
 script = ExtResource("1_2yopk")
 Health = 50.0

@@ -106,21 +106,22 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Sprite", "Inventory", "StateMachine")]
+y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
-y_sort_enabled = true
+position = Vector2(0, -12)
 collision_layer = 6
 script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
 Speed = 64.0
-Mass = 1.0
-Health = 100.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Faction = 1
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 use_parent_material = true
@@ -168,8 +169,8 @@ horizontal_alignment = 1
 [node name="Node" type="Node" parent="."]
 
 [node name="Inventory" type="Node2D" parent="."]
-position = Vector2(0, 2)
 y_sort_enabled = true
+position = Vector2(0, 2)
 script = ExtResource("7_xyenu")
 
 [node name="Sword" parent="Inventory" instance=ExtResource("7_4rxuv")]

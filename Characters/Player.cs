@@ -57,6 +57,7 @@ namespace SupaLidlGame.Characters
 
         public override void Die()
         {
+            GD.Print("died");
             //base.Die();
         }
     }

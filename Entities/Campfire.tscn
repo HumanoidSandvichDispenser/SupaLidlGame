@@ -1,0 +1,62 @@
+[gd_scene load_steps=11 format=3 uid="uid://dhl071rj5wyvx"]
+
+[ext_resource type="Texture2D" uid="uid://yqet0b22i70d" path="res://Assets/Sprites/campfire.png" id="1_7eor7"]
+[ext_resource type="Script" path="res://Entities/Campfire.cs" id="1_w4gfp"]
+[ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="3_lm3vq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_68qj1"]
+atlas = ExtResource("1_7eor7")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rt0be"]
+atlas = ExtResource("1_7eor7")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0embb"]
+atlas = ExtResource("1_7eor7")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_victi"]
+atlas = ExtResource("1_7eor7")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jg745"]
+atlas = ExtResource("1_7eor7")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o6lfi"]
+animations = [{
+"frames": [SubResource("AtlasTexture_68qj1"), SubResource("AtlasTexture_rt0be"), SubResource("AtlasTexture_0embb"), SubResource("AtlasTexture_victi")],
+"loop": true,
+"name": &"active",
+"speed": 5.0
+}, {
+"frames": [SubResource("AtlasTexture_jg745")],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubam4"]
+size = Vector2(16, 4)
+
+[node name="Campfire" type="StaticBody2D"]
+texture_filter = 3
+position = Vector2(0, -8)
+script = ExtResource("1_w4gfp")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+frames = SubResource("SpriteFrames_o6lfi")
+animation = &"active"
+playing = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0.976471, 0.564706, 0.168627, 1)
+energy = 2.0
+blend_mode = 2
+texture = ExtResource("3_lm3vq")
+texture_scale = 0.25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_ubam4")

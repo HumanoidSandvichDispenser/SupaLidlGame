@@ -3,3 +3,9 @@
 
 # old files
 *.old*
+
+# build
+Build/
+
+# cache
+.cache/
