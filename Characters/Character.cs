@@ -83,7 +83,7 @@ namespace SupaLidlGame.Characters
                 StateMachine.Process(delta);
             }
 
-            Sprite.FlipH = Target.x < 0;
+            Sprite.FlipH = Target.X < 0;
             DrawTarget();
         }
 
@@ -136,16 +136,16 @@ namespace SupaLidlGame.Characters
         protected void DrawTarget()
         {
             Vector2 target = Target;
-            float angle = Mathf.Atan2(target.y, Mathf.Abs(target.x));
+            float angle = Mathf.Atan2(target.Y, Mathf.Abs(target.X));
             Vector2 scale = Inventory.Scale;
-            if (target.x < 0)
+            if (target.X < 0)
             {
-                scale.y = -1;
+                scale.Y = -1;
                 angle = Mathf.Pi - angle;
             }
             else
             {
-                scale.y = 1;
+                scale.Y = 1;
             }
             Inventory.Scale = scale;
             Inventory.Rotation = angle;

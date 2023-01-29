@@ -120,8 +120,8 @@ namespace SupaLidlGame.Characters
             Vector2 dir = Target.Normalized();
             float dist = GlobalPosition.DistanceSquaredTo(pos);
 
-            var spaceState = GetWorld2d().DirectSpaceState;
-            var exclude = new Godot.Collections.Array<RID>();
+            var spaceState = GetWorld2D().DirectSpaceState;
+            var exclude = new Godot.Collections.Array<Godot.Rid>();
             exclude.Add(this.GetRid());
 
             for (int i = 0; i < 16; i++)
@@ -243,7 +243,7 @@ namespace SupaLidlGame.Characters
 
         public Vector2 GetBlocking()
         {
-            var spaceState = GetWorld2d().DirectSpaceState;
+            var spaceState = GetWorld2D().DirectSpaceState;
             int rayLength = 16;
             float[] weights = new float[16];
             Vector2[] rays = new Vector2[16];
@@ -254,7 +254,7 @@ namespace SupaLidlGame.Characters
                 // the length determines its strength
 
                 // exclude itself from raycasts
-                var exclude = new Godot.Collections.Array<RID>();
+                var exclude = new Godot.Collections.Array<Godot.Rid>();
                 exclude.Add(GetRid());
 
                 var rayParams = new PhysicsRayQueryParameters2D

@@ -1,5 +1,4 @@
 using Godot;
-using System.Linq;
 
 namespace SupaLidlGame.Extensions
 {
@@ -7,8 +6,8 @@ namespace SupaLidlGame.Extensions
     {
         public static Vector2 Midpoint(this Vector2 vector, Vector2 other)
         {
-            return new Vector2((vector.x + other.x) / 2,
-                               (vector.y + other.y) / 2);
+            return new Vector2((vector.X + other.X) / 2,
+                               (vector.Y + other.Y) / 2);
         }
 
         public static Vector2 Midpoints(params Vector2[] vectors)
@@ -19,8 +18,8 @@ namespace SupaLidlGame.Extensions
 
             for (int i = 0; i < length; i++)
             {
-                x += vectors[i].x;
-                y += vectors[i].y;
+                x += vectors[i].X;
+                y += vectors[i].Y;
             }
 
             return new Vector2(x / length, y / length);
@@ -28,12 +27,12 @@ namespace SupaLidlGame.Extensions
 
         public static Vector2 Counterclockwise90(this Vector2 vector)
         {
-            return new Vector2(-vector.y, vector.x);
+            return new Vector2(-vector.Y, vector.X);
         }
 
         public static Vector2 Clockwise90(this Vector2 vector)
         {
-            return new Vector2(vector.y, -vector.x);
+            return new Vector2(vector.Y, -vector.X);
         }
     }
 }

@@ -42,8 +42,8 @@ namespace SupaLidlGame.Utils
         {
             Vector2 ret = Vector2.Zero;
             var rng = new RandomNumberGenerator();
-            ret.x = (rng.Randf() - 0.5f) * intensity;
-            ret.y = (rng.Randf() - 0.5f) * intensity;
+            ret.X = (rng.Randf() - 0.5f) * intensity;
+            ret.Y = (rng.Randf() - 0.5f) * intensity;
             return ret;
         }
     }
