@@ -39,13 +39,14 @@ namespace SupaLidlGame.Characters.State
             {
                 Character.Velocity += Character.Direction.Normalized()
                     * Character.Speed;
+                // we should only modify velocity that is in the player's control
+                Character.ModifyVelocity();
             }
 
             Character.NetImpulse = Character.NetImpulse.MoveToward(
                 Vector2.Zero,
                 (float)delta * Character.Speed * Character.Friction);
 
-            Character.ModifyVelocity();
             Character.MoveAndSlide();
 
             return null;
