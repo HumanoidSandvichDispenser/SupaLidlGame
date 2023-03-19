@@ -15,7 +15,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
-shader_parameter/color = null
+shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_us1ce"]
@@ -48,12 +48,33 @@ region = Rect2(144, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2h7cf"]
 animations = [{
-"frames": [SubResource("AtlasTexture_us1ce"), SubResource("AtlasTexture_hn4kf")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_us1ce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hn4kf")
+}],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [SubResource("AtlasTexture_wfbeq"), SubResource("AtlasTexture_qlmwk"), SubResource("AtlasTexture_l1vgu"), SubResource("AtlasTexture_ytlaa"), SubResource("AtlasTexture_1q30d")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfbeq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlmwk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l1vgu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytlaa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1q30d")
+}],
 "loop": true,
 "name": &"move",
 "speed": 12.0
@@ -125,9 +146,8 @@ position_smoothing_speed = 8.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 use_parent_material = true
-frames = SubResource("SpriteFrames_2h7cf")
-animation = &"move"
-playing = true
+sprite_frames = SubResource("SpriteFrames_2h7cf")
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
@@ -158,6 +178,7 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="State" type="Label" parent="Debug"]
+layout_mode = 0
 offset_left = -20.0
 offset_top = -60.0
 offset_right = 20.0

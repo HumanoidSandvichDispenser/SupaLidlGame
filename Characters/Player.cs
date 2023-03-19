@@ -26,7 +26,7 @@ namespace SupaLidlGame.Characters
                     return;
                 }
 
-                _sprite.Animation = value;
+                _sprite.Play(value);
             }
         }
 

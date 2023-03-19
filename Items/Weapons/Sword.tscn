@@ -307,6 +307,7 @@ ParryParticles = NodePath("Anchor/Sprite2D/ParryParticles")
 Damage = 20.0
 UseTime = 0.8
 Knockback = 80.0
+ItemName = "Sword"
 Description = "A basic sword."
 
 [node name="Anchor" type="Node2D" parent="."]

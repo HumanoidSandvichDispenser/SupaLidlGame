@@ -108,15 +108,6 @@ namespace SupaLidlGame.Items.Weapons
 
 		public override void _Process(double delta)
 		{
-			/*
-			if (RemainingAttackTime > 0)
-			{
-				if ((RemainingAttackTime -= delta) <= 0)
-				{
-					Deattack();
-				}
-			}
-			*/
 			base._Process(delta);
 		}
 
@@ -148,7 +139,7 @@ namespace SupaLidlGame.Items.Weapons
 					IsParried = true;
 					AnimationPlayer.SpeedScale = 0.25f;
 					Character.Stun(1.5f);
-					GetNode<AudioStreamPlayer2D>("ParrySound").Play();
+					GetNode<AudioStreamPlayer2D>("ParrySound").PlayOnRoot();
 				}
 			}
 			//this.GetAncestor<TileMap>().AddChild(instance);
@@ -166,7 +157,6 @@ namespace SupaLidlGame.Items.Weapons
 				Weapon w = hb.GetAncestor<Weapon>();
 				if (w is not null)
 				{
-					//Vector2 a = new Vector2(2, 2) * new Vector2(5, 2);
 					AttemptParry(w);
 				}
 			}

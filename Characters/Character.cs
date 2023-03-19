@@ -212,7 +212,7 @@ namespace SupaLidlGame.Characters
 
             if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)
             {
-                sound.Play();
+                sound.PlayOnRoot();
             }
         }
     }

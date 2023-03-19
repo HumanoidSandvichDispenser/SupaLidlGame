@@ -72,11 +72,6 @@ namespace SupaLidlGame.Characters
                 }
                 DrawLine(Vector2.Zero, vec, c);
             }
-            /*
-            DrawLine(Vector2.Zero, Direction * 32, new Color(0, 1, 0));
-            DrawLine(Vector2.Zero, Target * 32, Colors.Blue);
-            DrawLine(Vector2.Zero, _blockingDir, Colors.Red, 2);
-            */
 #endif
 
             base._Draw();
@@ -110,7 +105,6 @@ namespace SupaLidlGame.Characters
                 QueueRedraw();
             }
 
-            //Direction = GetDirection(Target);
             Direction = _weightDirs[_bestWeightIdx];
         }
 
@@ -228,10 +222,6 @@ namespace SupaLidlGame.Characters
             directWeight = 1 - Mathf.Pow(Mathf.E, -(dist / PreferredDistance));
             strafeWeight = 1 - directWeight;
 
-            /*
-            Vector2 midpoint = (strafeDir * strafeWeight)
-                .Midpoint(directDir * directWeight);
-            */
             Vector2 midpoint = (directDir * directWeight)
                 .Midpoint(strafeDir * strafeWeight);
 
@@ -269,9 +259,6 @@ namespace SupaLidlGame.Characters
                 {
                     Vector2 position = (Vector2)result["position"];
                     float hitDist = GlobalPosition.DistanceTo(position);
-                    //float hitDist = GlobalPosition.DistanceSquaredTo(position);
-                    //float rayDist = Mathf.Pow(rayLength, 2);
-                    //float weight = rayDist - hitDist;
                     float weight = rayLength - hitDist;
                     GD.Print(weight);
                     rays[i] = _weightDirs[i] * weight;
@@ -289,8 +276,9 @@ namespace SupaLidlGame.Characters
 
         protected virtual void Think()
         {
+            // TODO: the entity should wander if it doesn't find a best target
             Vector2 pos = FindBestTarget().GlobalPosition;
-            Target = pos - GlobalPosition;//GlobalPosition.DirectionTo(pos);
+            Target = pos - GlobalPosition;
             Vector2 dir = Target;
             float dist = GlobalPosition.DistanceSquaredTo(pos);
             UpdateWeights(pos);

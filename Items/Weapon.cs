@@ -47,6 +47,8 @@ namespace SupaLidlGame.Items
 
         public Character Character { get; set; }
 
+        public override bool StacksWith(Item item) => false;
+
         public override void Equip(Character character)
         {
             Character = character;
