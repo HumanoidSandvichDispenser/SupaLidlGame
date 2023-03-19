@@ -16,7 +16,7 @@ namespace SupaLidlGame.BoundingBoxes
 
         public override void _Ready()
         {
-            if (Faction == default && GetParent() is IFaction factionEntity)
+            if (GetParent() is IFaction factionEntity)
             {
                 Faction = factionEntity.Faction;
             }
