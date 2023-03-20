@@ -12,30 +12,32 @@ namespace SupaLidlGame.Items
         public string Description { get; set; }
 
         [Export]
-        public int StackSize { get; set; }
+        public bool CanStack { get; set; } = false;
 
         public int Count { get; set; } = 1;
 
         public Character CharacterOwner { get; set; }
 
+        public bool IsOneHanded { get; set; } = false;
+
         /// <summary>
-        /// Determines if this item can stack with other items
+        /// Determines if this item can directly stack with other items
         /// </summary>
         public virtual bool StacksWith(Item item)
         {
+            if (!CanStack)
+            {
+                return false;
+            }
+
             if (ItemName != item.ItemName)
             {
                 return false;
             }
 
-            if (Count + item.Count <= StackSize)
-            {
-                return true;
-            }
-
             // several more conditions may be added soon
 
-            return false;
+            return true;
         }
 
         public abstract void Equip(Character character);

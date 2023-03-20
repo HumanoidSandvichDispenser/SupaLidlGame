@@ -209,6 +209,7 @@ libraries = {
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("12_h0x0g")
+max_distance = 64.0
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true

@@ -14,30 +14,57 @@ namespace SupaLidlGame.Items
 
         private Item _selectedItem;
 
+        private Item _offhandItem;
+
         public Item SelectedItem
         {
             get => _selectedItem;
-            set
+            set => EquipItem(value, ref _selectedItem);
+        }
+
+        public Item OffhandItem
+        {
+            get => _selectedItem;
+            set => EquipItem(value, ref _offhandItem);
+        }
+
+        private bool EquipItem(Item item, ref Item slot)
+        {
+            if (item is not null && item.IsOneHanded)
             {
-                if (!Items.Contains(value))
+                // we can not equip this if either hand is occupied by
+                // two-handed item
+
+                if (_selectedItem is not null && !_selectedItem.IsOneHanded)
                 {
-                    GD.PrintErr("Tried to equip an item not in the inventory.");
-                    return;
+                    return false;
                 }
 
-                if (_selectedItem is not null)
+                if (_offhandItem is not null && !_offhandItem.IsOneHanded)
                 {
-                    _selectedItem.Unequip(Character);
-                }
-
-                _selectedItem = value;
-
-                // this is to handle if item was manually unequipped
-                if (_selectedItem is not null)
-                {
-                    _selectedItem.Equip(Character);
+                    return false;
                 }
             }
+
+            if (!Items.Contains(item))
+            {
+                GD.PrintErr("Tried to equip an item not in the inventory.");
+                return false;
+            }
+
+            if (slot is not null)
+            {
+                slot.Unequip(Character);
+            }
+
+            slot = item;
+
+            if (item is not null)
+            {
+                item.Equip(Character);
+            }
+
+            return true;
         }
 
         public Item AddItem(Item item)
@@ -57,6 +84,7 @@ namespace SupaLidlGame.Items
         {
             item.CharacterOwner = null;
             item.Visible = true;
+            var e = SelectedItem = item;
             throw new System.NotImplementedException();
         }
 

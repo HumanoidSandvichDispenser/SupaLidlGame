@@ -277,17 +277,21 @@ namespace SupaLidlGame.Characters
         protected virtual void Think()
         {
             // TODO: the entity should wander if it doesn't find a best target
-            Vector2 pos = FindBestTarget().GlobalPosition;
-            Target = pos - GlobalPosition;
-            Vector2 dir = Target;
-            float dist = GlobalPosition.DistanceSquaredTo(pos);
-            UpdateWeights(pos);
-
-            if (Target.LengthSquared() < 1024)
+            Character bestTarget = FindBestTarget();
+            if (bestTarget is not null)
             {
-                if (Inventory.SelectedItem is Weapon weapon)
+                Vector2 pos = FindBestTarget().GlobalPosition;
+                Target = pos - GlobalPosition;
+                Vector2 dir = Target;
+                float dist = GlobalPosition.DistanceSquaredTo(pos);
+                UpdateWeights(pos);
+
+                if (Target.LengthSquared() < 1024)
                 {
-                    UseCurrentItem();
+                    if (Inventory.SelectedItem is Weapon weapon)
+                    {
+                        UseCurrentItem();
+                    }
                 }
             }
         }

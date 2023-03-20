@@ -52,6 +52,7 @@ namespace SupaLidlGame.Characters
         public override void Stun(float time)
         {
             base.Stun(time);
+            Camera.Shake(2, 0.8f);
             // TODO: implement visual effects for stun
         }
 

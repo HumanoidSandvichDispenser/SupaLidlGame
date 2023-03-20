@@ -323,7 +323,7 @@ texture = ExtResource("2_rnfo4")
 position = Vector2(-0.221825, -3.12132)
 rotation = 0.785398
 emitting = false
-amount = 12
+amount = 24
 lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
@@ -365,9 +365,11 @@ texture = ExtResource("5_pywek")
 hframes = 4
 
 [node name="SwingSound" type="AudioStreamPlayer2D" parent="."]
+max_distance = 256.0
 
 [node name="ParrySound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_8nxjm")
+max_distance = 256.0
 
 [connection signal="Hit" from="Hitbox" to="." method="_on_hitbox_hit"]
 

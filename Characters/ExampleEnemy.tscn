@@ -13,7 +13,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ms3xg"]
 shader = ExtResource("1_fx1w5")
-shader_parameter/color = null
+shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6d2tf"]
@@ -46,12 +46,33 @@ region = Rect2(144, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4tm2b"]
 animations = [{
-"frames": [SubResource("AtlasTexture_6d2tf"), SubResource("AtlasTexture_bdyma")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6d2tf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bdyma")
+}],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [SubResource("AtlasTexture_0dwbr"), SubResource("AtlasTexture_r7fn6"), SubResource("AtlasTexture_py8k0"), SubResource("AtlasTexture_g3nb2"), SubResource("AtlasTexture_jauql")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dwbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7fn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_py8k0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g3nb2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jauql")
+}],
 "loop": true,
 "name": &"move",
 "speed": 12.0
@@ -113,9 +134,8 @@ StateMachine = NodePath("StateMachine")
 Faction = 2
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-frames = SubResource("SpriteFrames_4tm2b")
+sprite_frames = SubResource("SpriteFrames_4tm2b")
 animation = &"move"
-playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)

@@ -26,12 +26,27 @@ region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_o6lfi"]
 animations = [{
-"frames": [SubResource("AtlasTexture_68qj1"), SubResource("AtlasTexture_rt0be"), SubResource("AtlasTexture_0embb"), SubResource("AtlasTexture_victi")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_68qj1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rt0be")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0embb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_victi")
+}],
 "loop": true,
 "name": &"active",
 "speed": 5.0
 }, {
-"frames": [SubResource("AtlasTexture_jg745")],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jg745")
+}],
 "loop": true,
 "name": &"default",
 "speed": 8.0
@@ -46,9 +61,8 @@ position = Vector2(0, -8)
 script = ExtResource("1_w4gfp")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
-frames = SubResource("SpriteFrames_o6lfi")
+sprite_frames = SubResource("SpriteFrames_o6lfi")
 animation = &"active"
-playing = true
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(0.976471, 0.564706, 0.168627, 1)

@@ -25,6 +25,9 @@ namespace SupaLidlGame.Extensions
             return new Vector2(x / length, y / length);
         }
 
+        /// <summary>
+        /// Returns this vector 90 degrees counter clockwise (x, y) -> (-y, x)
+        /// </summary>
         public static Vector2 Counterclockwise90(this Vector2 vector)
         {
             return new Vector2(-vector.Y, vector.X);

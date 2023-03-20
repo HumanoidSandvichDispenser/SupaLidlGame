@@ -212,7 +212,8 @@ namespace SupaLidlGame.Characters
 
             if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)
             {
-                sound.PlayOnRoot();
+                // very small pitch deviation
+                sound.At(GlobalPosition).WithPitchDeviation(0.125f).Play();
             }
         }
     }

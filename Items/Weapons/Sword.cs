@@ -139,7 +139,7 @@ namespace SupaLidlGame.Items.Weapons
                     IsParried = true;
                     AnimationPlayer.SpeedScale = 0.25f;
                     Character.Stun(1.5f);
-                    GetNode<AudioStreamPlayer2D>("ParrySound").PlayOnRoot();
+                    GetNode<AudioStreamPlayer2D>("ParrySound").OnWorld().Play();
                 }
             }
             //this.GetAncestor<TileMap>().AddChild(instance);
