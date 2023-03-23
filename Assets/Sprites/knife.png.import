@@ -16,9 +16,9 @@ dest_files=["res://.godot/imported/knife.png-29bc4ddc148b964cb9b086eec2187a96.ct
 [params]
 
 compress/mode=0
+compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/bptc_ldr=0
 compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=false

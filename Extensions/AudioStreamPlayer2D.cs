@@ -6,16 +6,6 @@ namespace SupaLidlGame.Extensions
 {
     public static class AudioStreamPlayer2DExtensions
     {
-        public static AudioBuilder Derive(this AudioStreamPlayer2D audio)
-        {
-            var clone = audio.Duplicate() as AudioStreamPlayer2D;
-            clone.Finished += () =>
-            {
-                clone.QueueFree();
-            };
-            return new AudioBuilder(clone);
-        }
-
         public static AudioStreamPlayer2D Clone(
             this AudioStreamPlayer2D audio)
         {
