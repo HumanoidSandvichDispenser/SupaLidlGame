@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dd6xy1y0m8smm"]
+[gd_scene load_steps=10 format=3 uid="uid://dd6xy1y0m8smm"]
 
 [ext_resource type="Script" path="res://Utils/World.cs" id="1_1k6ew"]
 [ext_resource type="Texture2D" uid="uid://gm2pcnfg7h8j" path="res://Assets/Sprites/tileset.png" id="1_k6myx"]
 [ext_resource type="PackedScene" uid="uid://b2254pup8k161" path="res://Characters/Player.tscn" id="1_m35hr"]
 [ext_resource type="PackedScene" uid="uid://ddcf6bfv212wj" path="res://Characters/ExampleEnemy.tscn" id="2_uti3y"]
 [ext_resource type="PackedScene" uid="uid://dhl071rj5wyvx" path="res://Entities/Campfire.tscn" id="4_6awvs"]
+[ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="6_eol7a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1pa1q"]
 texture = ExtResource("1_k6myx")
@@ -1110,6 +1111,9 @@ texture = ExtResource("1_k6myx")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_1pa1q")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_drg0k"]
+size = Vector2(34, 14)
+
 [node name="World" type="Node2D"]
 script = ExtResource("1_1k6ew")
 
@@ -1177,3 +1181,13 @@ scale = Vector2(1.00571, 1)
 Faction = 1
 
 [node name="Spawners" type="Node2D" parent="TileMap/Entities"]
+
+[node name="Areas" type="Node2D" parent="TileMap"]
+
+[node name="Area2D" type="Area2D" parent="TileMap/Areas" node_paths=PackedStringArray("Collision")]
+script = ExtResource("6_eol7a")
+Collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Areas/Area2D"]
+position = Vector2(158, -24)
+shape = SubResource("RectangleShape2D_drg0k")

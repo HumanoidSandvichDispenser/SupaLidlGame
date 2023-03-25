@@ -34,7 +34,7 @@ namespace SupaLidlGame.Utils
             base._Process(delta);
         }
 
-        public void MoveToArea(string area, string connector)
+        public void MoveToArea(string area, string connector, Player player)
         {
             if (area != CurrentArea)
             {
@@ -44,6 +44,13 @@ namespace SupaLidlGame.Utils
             }
 
             _currentConnector = connector;
+        }
+
+        public void _on_area_2d_requested_enter(
+            BoundingBoxes.ConnectorBox box,
+            Player player)
+        {
+            MoveToArea(box.ToArea, box.ToConnector, player);
         }
     }
 }
