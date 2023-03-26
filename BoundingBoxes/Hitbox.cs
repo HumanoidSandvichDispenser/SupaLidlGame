@@ -16,6 +16,8 @@ namespace SupaLidlGame.BoundingBoxes
         [Export]
         public float Damage { get; set; }
 
+        private bool _isDisabled = false;
+
         /// <summary>
         /// Getter/setter for the CollisionShape2D's Disabled property.
         /// </summary>
@@ -25,10 +27,14 @@ namespace SupaLidlGame.BoundingBoxes
             get => _collisionShape.Disabled;
             set
             {
-                _collisionShape.Disabled = value;
-                if (value)
+                _isDisabled = value;
+                if (_collisionShape is not null)
                 {
-                    DamageStartTime = Time.GetTicksMsec();
+                    _collisionShape.Disabled = value;
+                    if (value)
+                    {
+                        DamageStartTime = Time.GetTicksMsec();
+                    }
                 }
             }
         }
@@ -47,6 +53,7 @@ namespace SupaLidlGame.BoundingBoxes
         public override void _Ready()
         {
             _collisionShape = GetNode<CollisionShape2D>("CollisionShape2D");
+            IsDisabled = _isDisabled; // sets _collisionShape.Disabled
         }
 
         private bool ShouldParry(Hitbox box)

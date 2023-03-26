@@ -141,7 +141,6 @@ StateMachine = NodePath("StateMachine")
 Faction = 1
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
-position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
@@ -174,6 +173,7 @@ script = ExtResource("6_6bgrj")
 IdleState = NodePath("../Idle")
 
 [node name="Debug" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 
