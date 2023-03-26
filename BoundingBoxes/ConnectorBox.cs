@@ -17,12 +17,15 @@ namespace SupaLidlGame.BoundingBoxes
         [Export]
         public string ToConnector { get; set; }
 
+        [Export]
+        public string Identifier { get; set; }
+
         /// <summary>
         /// Determines if the connector requires the user to interact to enter
         /// the connector
         /// </summary>
         [Export]
-        public bool RequiresInteraction { get; set; } = true;
+        public bool RequiresInteraction { get; set; } = false;
 
         [Export]
         public CollisionShape2D Collision { get; set; }
@@ -55,9 +58,12 @@ namespace SupaLidlGame.BoundingBoxes
 
         public override void _Process(double delta)
         {
-            if (Input.IsActionJustPressed("interact"))
+            if (Input.IsActionJustReleased("interact"))
             {
-                EmitSignal(SignalName.RequestedEnter, this, _player);
+                if (_player is not null)
+                {
+                    EmitSignal(SignalName.RequestedEnter, this, _player);
+                }
             }
 
             base._Process(delta);
