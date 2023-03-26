@@ -16,9 +16,9 @@ namespace SupaLidlGame.Items
 
         public int Count { get; set; } = 1;
 
-        public Character CharacterOwner { get; set; }
-
         public bool IsOneHanded { get; set; } = false;
+
+        public Character CharacterOwner { get; set; }
 
         /// <summary>
         /// Determines if this item can directly stack with other items

@@ -48,12 +48,7 @@ namespace SupaLidlGame.Utils
 
         public void LoadScene(PackedScene scene)
         {
-            if (CurrentMap is not null)
-            {
-                CurrentMap.Entities.RemoveChild(CurrentPlayer);
-                RemoveChild(CurrentMap);
-                CurrentMap.Active = false;
-            }
+            GD.Print("Loading map " + scene.ResourcePath);
 
             Map map;
             if (_maps.ContainsKey(scene.ResourcePath))
@@ -66,11 +61,17 @@ namespace SupaLidlGame.Utils
                 _maps.Add(scene.ResourcePath, map);
             }
 
-            GD.Print("Loading " + scene.ResourcePath);
+            if (CurrentMap is not null)
+            {
+                CurrentMap.Entities.RemoveChild(CurrentPlayer);
+                RemoveChild(CurrentMap);
+                CurrentMap.Active = false;
+            }
 
-            CurrentMap = map;
             AddChild(map);
             InitTilemap(map);
+
+            CurrentMap = map;
             CurrentMap.Active = true;
 
             if (CurrentPlayer is not null)
