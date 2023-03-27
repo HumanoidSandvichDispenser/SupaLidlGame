@@ -9,11 +9,11 @@ namespace SupaLidlGame.Characters.State
 
         public override CharacterState Enter(CharacterState previousState)
         {
-            if (Character.Inventory.SelectedItem is Weapon weapon)
+            if (Character.Inventory.PrimaryItem is Weapon weapon)
             {
-                _attackTime = weapon.UseTime;
+                _attackTime = weapon.Info.UseTime;
                 weapon.Visible = true;
-                Character.Inventory.SelectedItem.Use();
+                Character.Inventory.PrimaryItem.Use();
             }
             else
             {
@@ -24,12 +24,12 @@ namespace SupaLidlGame.Characters.State
 
         public override void Exit(CharacterState nextState)
         {
-            if (Character.Inventory.SelectedItem is null)
+            if (Character.Inventory.PrimaryItem is null)
             {
 
             }
-            Character.Inventory.SelectedItem.Deuse();
-            if (Character.Inventory.SelectedItem is Weapon weapon)
+            Character.Inventory.PrimaryItem.Deuse();
+            if (Character.Inventory.PrimaryItem is Weapon weapon)
             {
                 //weapon.Visible = false;
             }

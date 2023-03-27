@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://d72ehtv1ks0e"]
+[gd_scene load_steps=21 format=3 uid="uid://d72ehtv1ks0e"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
+[ext_resource type="Resource" uid="uid://dbqk11m54e72e" path="res://Items/Weapons/Sword.tres" id="2_5vlf6"]
 [ext_resource type="Texture2D" uid="uid://dt6u8p4h6g7le" path="res://Assets/Sprites/knife.png" id="2_rnfo4"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="3_up3ob"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="4_pt6lq"]
@@ -302,13 +303,8 @@ position = Vector2(2, 0)
 script = ExtResource("1_mlo73")
 Hitbox = NodePath("Hitbox")
 AnimationPlayer = NodePath("AnimationPlayer")
-AttackTime = 0.1
 ParryParticles = NodePath("Anchor/Sprite2D/ParryParticles")
-Damage = 20.0
-UseTime = 0.8
-Knockback = 80.0
-ItemName = "Sword"
-Description = "A basic sword."
+Info = ExtResource("2_5vlf6")
 
 [node name="Anchor" type="Node2D" parent="."]
 y_sort_enabled = true

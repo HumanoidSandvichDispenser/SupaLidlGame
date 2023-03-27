@@ -165,7 +165,6 @@ y_sort_enabled = true
 script = ExtResource("7_43gq8")
 
 [node name="Sword" parent="Inventory" instance=ExtResource("8_s3c8r")]
-Knockback = 40.0
 
 [node name="FlashAnimation" type="AnimationPlayer" parent="."]
 libraries = {

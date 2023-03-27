@@ -29,14 +29,7 @@ namespace SupaLidlGame.Characters.State
         {
             if (@event.IsActionPressed("roll"))
             {
-                if (Character.Inventory.SelectedItem is Weapon weapon)
-                {
-                    if (!weapon.IsUsing)
-                    {
-                        return RollState;
-                    }
-                }
-                else
+                if (!_player.IsUsingAnyWeapon())
                 {
                     return RollState;
                 }

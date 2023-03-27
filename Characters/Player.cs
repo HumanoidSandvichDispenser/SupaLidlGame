@@ -61,5 +61,19 @@ namespace SupaLidlGame.Characters
             GD.Print("died");
             //base.Die();
         }
+
+        public bool IsUsingAnyWeapon()
+        {
+            bool checkItem(Items.Item item)
+            {
+                if (item is Items.Weapon weapon)
+                {
+                    return weapon.IsUsing;
+                }
+                return false;
+            }
+            return checkItem(Inventory.PrimaryItem) ||
+                checkItem(Inventory.OffhandItem);
+        }
     }
 }

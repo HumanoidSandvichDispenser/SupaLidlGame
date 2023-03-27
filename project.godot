@@ -8,6 +8,12 @@
 
 config_version=5
 
+[MonoCustomResourceRegistry]
+
+ClassPrefix=""
+SearchType=0
+ResourceScriptDirectories=["res://"]
+
 [application]
 
 config/name="SupaLidlGame"
@@ -18,6 +24,10 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="SupaLidlGame"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/MonoCustomResourceRegistry/plugin.cfg")
 
 [input]
 

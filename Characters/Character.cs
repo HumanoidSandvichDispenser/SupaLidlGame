@@ -159,7 +159,8 @@ namespace SupaLidlGame.Characters
                 return;
             }
 
-            if (Inventory.SelectedItem is Weapon weapon)
+            // TODO: support for offhand items
+            if (Inventory.PrimaryItem is Weapon weapon)
             {
                 weapon.Use();
             }

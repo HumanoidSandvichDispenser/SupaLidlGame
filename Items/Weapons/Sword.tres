@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dbqk11m54e72e"]
+
+[ext_resource type="Script" path="res://Items/MeleeInfo.cs" id="1_w5yvw"]
+
+[resource]
+script = ExtResource("1_w5yvw")
+AttackTime = 0.1
+Damage = 20.0
+UseTime = 0.8
+Knockback = 80.0
+InitialVelocity = 0.0
+ItemName = "Sword"
+Description = "A basic sword."
+CanStack = false
+Count = 1
+IsOneHanded = false
+ScenePath = ""

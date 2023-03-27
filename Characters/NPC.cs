@@ -288,7 +288,8 @@ namespace SupaLidlGame.Characters
 
                 if (Target.LengthSquared() < 1024)
                 {
-                    if (Inventory.SelectedItem is Weapon weapon)
+                    // TODO: offhand items
+                    if (Inventory.PrimaryItem is Weapon weapon)
                     {
                         UseCurrentItem();
                     }

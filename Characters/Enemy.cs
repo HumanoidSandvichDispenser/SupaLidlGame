@@ -7,7 +7,8 @@ namespace SupaLidlGame.Characters
     {
         public override void _Ready()
         {
-            Inventory.SelectedItem = Inventory.GetNode<Items.Item>("Sword");
+            //Inventory.SelectedItem = Inventory.GetNode<Items.Item>("Sword");
+            Inventory.SelectFirstItem();
             base._Ready();
         }
 

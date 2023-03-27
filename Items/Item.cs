@@ -6,17 +6,7 @@ namespace SupaLidlGame.Items
     public abstract partial class Item : Node2D
     {
         [Export]
-        public string ItemName { get; set; }
-
-        [Export]
-        public string Description { get; set; }
-
-        [Export]
-        public bool CanStack { get; set; } = false;
-
-        public int Count { get; set; } = 1;
-
-        public bool IsOneHanded { get; set; } = false;
+        public ItemInfo Info { get; set; }
 
         public Character CharacterOwner { get; set; }
 
@@ -25,12 +15,12 @@ namespace SupaLidlGame.Items
         /// </summary>
         public virtual bool StacksWith(Item item)
         {
-            if (!CanStack)
+            if (!Info.CanStack)
             {
                 return false;
             }
 
-            if (ItemName != item.ItemName)
+            if (Info.ItemName != item.Info.ItemName)
             {
                 return false;
             }

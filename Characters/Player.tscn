@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
 [ext_resource type="Script" path="res://Characters/States/PlayerMoveState.cs" id="5_tx5rw"]
 [ext_resource type="Script" path="res://Characters/States/PlayerRollState.cs" id="6_6bgrj"]
-[ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
 [ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="12_h0x0g"]
@@ -85,6 +84,69 @@ size = Vector2(16, 8)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5h1n"]
 font_size = 24
+
+[sub_resource type="CSharpScript" id="CSharpScript_rcje3"]
+script/source = "using Godot;
+using SupaLidlGame.Characters;
+
+namespace SupaLidlGame.Items
+{
+    public partial class ItemInfo : Resource
+    {
+        [Export]
+        public string ItemName { get; set; } = \"Item Name\";
+
+        [Export]
+        public string Description { get; set; } = \"Item description.\";
+
+        [Export]
+        public bool CanStack { get; set; } = false;
+
+        [Export]
+        public int Count { get; set; } = 1;
+
+        [Export]
+        public bool IsOneHanded { get; set; } = false;
+
+        [Export]
+        public Character CharacterOwner { get; set; } = null;
+
+        [Export]
+        public Texture2D Texture { get; set; }
+
+        [Export]
+        public string ScenePath { get; set; }
+
+        /// <summary>
+        /// Determines if this item can directly stack with other items
+        /// </summary>
+        public virtual bool StacksWith(ItemInfo itemInfo)
+        {
+            if (!CanStack)
+            {
+                return false;
+            }
+
+            if (ItemName != itemInfo.ItemName)
+            {
+                return false;
+            }
+
+            // several more conditions may be added soon
+
+            return true;
+        }
+
+        public Item InstantiateItem(string name = \"Primary\")
+        {
+            var scene = ResourceLoader.Load<PackedScene>(ScenePath);
+            var instance = scene.Instantiate<Item>();
+            instance.Name = name;
+            return instance;
+        }
+    }
+}
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cjk6b"]
 size = Vector2(16, 24)
@@ -193,8 +255,7 @@ horizontal_alignment = 1
 y_sort_enabled = true
 position = Vector2(0, 2)
 script = ExtResource("7_xyenu")
-
-[node name="Sword" parent="Inventory" instance=ExtResource("7_4rxuv")]
+Items = Array[Resource]([SubResource("CSharpScript_rcje3")])
 
 [node name="Hurtbox" parent="." instance=ExtResource("9_avyu4")]
 Faction = 1

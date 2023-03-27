@@ -16,7 +16,9 @@ namespace SupaLidlGame.Characters.State
             #if DEBUG
             if (@event.IsActionPressed("equip"))
             {
-                Character.Inventory.SelectedItem = Character.Inventory.GetNode<Items.Item>("Sword");
+                //Character.Inventory.SelectedItem = Character.Inventory.GetNode<Items.Item>("Sword");
+                //Character.Inventory.SelectedItem = Character.
+                Character.Inventory.SelectFirstItem();
             }
             #endif
 
@@ -29,7 +31,7 @@ namespace SupaLidlGame.Characters.State
                                                         "ui_up", "ui_down");
             Vector2 mousePos = Character.GetGlobalMousePosition();
             Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
-            if (Character.Inventory.SelectedItem is Weapon weapon)
+            if (Character.Inventory.PrimaryItem is Weapon weapon)
             {
                 if (!weapon.IsUsing)
                 {
@@ -39,7 +41,7 @@ namespace SupaLidlGame.Characters.State
 
             if (Godot.Input.IsActionPressed("attack1"))
             {
-                if (Character.Inventory.SelectedItem is not null)
+                if (Character.Inventory.PrimaryItem is not null)
                 {
                     Character.UseCurrentItem();
                 }

@@ -15,16 +15,6 @@ namespace SupaLidlGame.Items.Weapons
         [Export]
         public AnimationPlayer AnimationPlayer { get; set; }
 
-        /// <summary>
-        /// The time frame in seconds for which the weapon will deal damage.
-        /// </summary>
-        /// <remarks>
-        /// The value of <c>AttackTime</c> should be less than the
-        /// value of <c>UseTime</c>
-        /// </remarks>
-        [Export]
-        public double AttackTime { get; set; } = 0;
-
         [Export]
         public CpuParticles2D ParryParticles { get; set; }
 
@@ -103,7 +93,7 @@ namespace SupaLidlGame.Items.Weapons
 
         public override void _Ready()
         {
-            Hitbox.Damage = Damage;
+            Hitbox.Damage = Info.Damage;
         }
 
         public override void _Process(double delta)
@@ -123,7 +113,10 @@ namespace SupaLidlGame.Items.Weapons
                 GD.Print("processing hit");
                 if (box is Hurtbox hurtbox)
                 {
-                    hurtbox.InflictDamage(Damage, Character, Knockback);
+                    hurtbox.InflictDamage(
+                        Info.Damage,
+                        Character,
+                        Info.Knockback);
                 }
             }
         }
@@ -165,10 +158,13 @@ namespace SupaLidlGame.Items.Weapons
             {
                 if (hurt.GetParent() is Character c)
                 {
-                    var item = c.Inventory.SelectedItem;
-                    if (item is Weapon w)
+                    if (c.Inventory.PrimaryItem is Weapon primary)
                     {
-                        AttemptParry(w);
+                        AttemptParry(primary);
+                    }
+                    if (c.Inventory.OffhandItem is Weapon offhand)
+                    {
+                        AttemptParry(offhand);
                     }
                 }
             }
