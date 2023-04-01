@@ -14,8 +14,32 @@ namespace SupaLidlGame.Characters
 
         public float[] Weights => _weights;
 
+        protected float _preferredWeightDistance = 64.0f;
+        protected float _maxWeightDistance = 8.0f;
+        protected float _preferredWeightDistanceSq = 4096.0f;
+        protected float _maxWeightDistanceSq = 64.0f;
+
         [Export]
-        public float PreferredDistance { get; protected set; } = 64.0f;
+        public float PreferredWeightDistance
+        { 
+            get => _preferredWeightDistance;
+            protected set
+            {
+                _preferredWeightDistance = value;
+                _preferredWeightDistanceSq = value * value;
+            }
+        }
+
+        [Export]
+        public float MaxWeightDistance
+        { 
+            get => _maxWeightDistance;
+            protected set
+            {
+                _maxWeightDistance = value;
+                _maxWeightDistanceSq = value * value;
+            }
+        }
 
         protected float[] _weights = new float[16];
         protected int _bestWeightIdx;
@@ -38,21 +62,6 @@ namespace SupaLidlGame.Characters
             base._Ready();
             Array.Fill(_weights, 0);
         }
-
-        /*
-        public override void _Process(double delta)
-        {
-            if ((_thinkTimeElapsed += delta) > ThinkTime)
-            {
-                _thinkTimeElapsed = 0;
-                Think();
-            }
-
-            Direction = _weightDirs[_bestWeightIdx];
-            //Direction = (Target.GlobalPosition - GlobalPosition).Normalized();
-            base._Process(delta);
-        }
-        */
 
         public override void _Draw()
         {
@@ -102,7 +111,9 @@ namespace SupaLidlGame.Characters
             {
                 _thinkTimeElapsed = 0;
                 Think();
+#if DEBUG
                 QueueRedraw();
+#endif
             }
 
             Direction = _weightDirs[_bestWeightIdx];
@@ -112,12 +123,13 @@ namespace SupaLidlGame.Characters
         {
             // FIXME: TODO: remove all the spaghetti
             Vector2 dir = Target.Normalized();
-            float dist = GlobalPosition.DistanceSquaredTo(pos);
+            float distSq = GlobalPosition.DistanceSquaredTo(pos);
 
             var spaceState = GetWorld2D().DirectSpaceState;
             var exclude = new Godot.Collections.Array<Godot.Rid>();
             exclude.Add(this.GetRid());
 
+            // calculate weights based on distance
             for (int i = 0; i < 16; i++)
             {
                 float directDot = _weightDirs[i].Dot(dir);
@@ -128,23 +140,25 @@ namespace SupaLidlGame.Characters
                 float currDirDot = (_weightDirs[i].Dot(Direction) + 1) / 16;
                 strafeDot = Mathf.Pow((strafeDot + 1) / 2, 2) + currDirDot;
 
-                if (dist > 4096)
+                // favor strafing when getting closer
+                if (distSq > _preferredWeightDistanceSq)
                 {
                     _weights[i] = directDot;
                 }
-                else if (dist > 64)
+                else if (distSq > _maxWeightDistanceSq)
                 {
-                    float dDotWeight = Mathf.Sqrt(dist / 4096);
+                    float dDotWeight = Mathf.Sqrt(distSq / 4096);
                     float sDotWeight = 1 - dDotWeight;
-                    _weights[i] = (dDotWeight * directDot) + (sDotWeight * strafeDot);
+                    _weights[i] = (dDotWeight * directDot) +
+                        (sDotWeight * strafeDot);
                 }
                 else
                 {
                     _weights[i] = strafeDot;
                 }
-
             }
 
+            // subtract weights that collide
             for (int i = 0; i < 16; i++)
             {
                 var rayParams = new PhysicsRayQueryParameters2D
@@ -188,90 +202,6 @@ namespace SupaLidlGame.Characters
                     bestWeight = _weights[i];
                 }
             }
-        }
-
-        public Vector2 GetDirection(Vector2 towards)
-        {
-            float directWeight;
-            float strafeWeight;
-
-            float dist = towards.Length();
-
-            Vector2 directDir = towards.Normalized();
-            Vector2 strafeDir;
-            float crossProduct = towards.Cross(Direction);
-
-            // strafeDir is either counter clockwise or clockwise depending on
-            // the direction the NPC is already traveling
-
-            // enemies might rapidly change direction if compared to 0
-            if (crossProduct < -1)
-            {
-                strafeDir = directDir.Counterclockwise90();
-            }
-            else
-            {
-                strafeDir = directDir.Counterclockwise90();
-                //strafeDir = directDir.Clockwise90();
-            }
-
-            // weights approach 1
-            // dy/dx = 1 - y
-            // y = 1 - e^(-x)
-
-            directWeight = 1 - Mathf.Pow(Mathf.E, -(dist / PreferredDistance));
-            strafeWeight = 1 - directWeight;
-
-            Vector2 midpoint = (directDir * directWeight)
-                .Midpoint(strafeDir * strafeWeight);
-
-            _blockingDir = GetBlocking();
-            midpoint += _blockingDir;
-
-            return midpoint.Normalized();
-        }
-
-        public Vector2 GetBlocking()
-        {
-            var spaceState = GetWorld2D().DirectSpaceState;
-            int rayLength = 16;
-            float[] weights = new float[16];
-            Vector2[] rays = new Vector2[16];
-            Vector2 net = Vector2.Zero;
-            for (int i = 0; i < 16; i++)
-            {
-                // cast ray and gets its length
-                // the length determines its strength
-
-                // exclude itself from raycasts
-                var exclude = new Godot.Collections.Array<Godot.Rid>();
-                exclude.Add(GetRid());
-
-                var rayParams = new PhysicsRayQueryParameters2D
-                {
-                    CollisionMask = 9,
-                    From = GlobalPosition,
-                    To = _weightDirs[i] * rayLength,
-                    Exclude = exclude
-                };
-                var result = spaceState.IntersectRay(rayParams);
-                if (result.Count > 0)
-                {
-                    Vector2 position = (Vector2)result["position"];
-                    float hitDist = GlobalPosition.DistanceTo(position);
-                    float weight = rayLength - hitDist;
-                    GD.Print(weight);
-                    rays[i] = _weightDirs[i] * weight;
-                    net += rays[i];
-                }
-                else
-                {
-                    rays[i] = Vector2.Zero;
-                }
-            }
-
-            return net;
-            //return -Vector2Extensions.Midpoints(rays);
         }
 
         protected virtual void Think()
