@@ -47,6 +47,12 @@ namespace SupaLidlGame.Items
 
         public Character Character { get; set; }
 
+        [Export]
+        public float MinDistanceHint { get; set; }
+
+        [Export]
+        public float MaxDistanceHint { get; set; }
+
         public override bool StacksWith(Item item) => false;
 
         public override void Equip(Character character)

@@ -293,7 +293,7 @@ _data = {
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_1lid1"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_tv0o2"]
-points = PackedVector2Array(-11.314, -11.314, 0, -16, 11.314, -11.314, 16, 0, 11.314, 11.314, 0, 16, -11.314, 11.314, 0, 0)
+points = PackedVector2Array(-14.142, -14.142, 0, -20, 14.142, -14.142, 20, 0, 14.142, 14.142, 0, 20, -14.142, 14.142, 0, 0)
 
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles")]
 y_sort_enabled = true
@@ -302,13 +302,10 @@ position = Vector2(2, 0)
 script = ExtResource("1_mlo73")
 Hitbox = NodePath("Hitbox")
 AnimationPlayer = NodePath("AnimationPlayer")
-AttackTime = 0.1
 ParryParticles = NodePath("Anchor/Sprite2D/ParryParticles")
 Damage = 20.0
-UseTime = 0.8
-Knockback = 80.0
-ItemName = "Sword"
-Description = "A basic sword."
+UseTime = 0.5
+Knockback = 20.0
 
 [node name="Anchor" type="Node2D" parent="."]
 y_sort_enabled = true
