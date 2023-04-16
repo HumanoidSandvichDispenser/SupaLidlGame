@@ -163,8 +163,10 @@ shape = SubResource("RectangleShape2D_8lxmf")
 [node name="Inventory" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("7_43gq8")
+Items = [null]
 
 [node name="Sword" parent="Inventory" instance=ExtResource("8_s3c8r")]
+Knockback = 100.0
 
 [node name="FlashAnimation" type="AnimationPlayer" parent="."]
 libraries = {

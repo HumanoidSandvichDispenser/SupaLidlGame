@@ -8,7 +8,7 @@ namespace SupaLidlGame.Items
     {
         public double RemainingUseTime { get; protected set; } = 0;
 
-        public bool IsUsing => RemainingUseTime > 0;
+        public override bool IsUsing => RemainingUseTime > 0;
 
         /// <summary>
         /// How much damage in HP that this weapon deals.

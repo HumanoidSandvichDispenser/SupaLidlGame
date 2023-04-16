@@ -193,6 +193,10 @@ horizontal_alignment = 1
 y_sort_enabled = true
 position = Vector2(0, 2)
 script = ExtResource("7_xyenu")
+InventoryMap = {
+"equip_1": 0,
+"equip_2": 1
+}
 
 [node name="Sword" parent="Inventory" instance=ExtResource("7_4rxuv")]
 

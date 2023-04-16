@@ -20,6 +20,8 @@ namespace SupaLidlGame.Items
 
         public Character CharacterOwner { get; set; }
 
+        public virtual bool IsUsing => false;
+
         /// <summary>
         /// Determines if this item can directly stack with other items
         /// </summary>

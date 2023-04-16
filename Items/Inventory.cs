@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Godot;
 using SupaLidlGame.Characters;
+using Godot.Collections;
 
 namespace SupaLidlGame.Items
 {
@@ -8,7 +8,11 @@ namespace SupaLidlGame.Items
     {
         public Character Character { get; private set; }
 
-        public List<Item> Items { get; private set; } = new List<Item>();
+        [Export]
+        public Array<Item> Items { get; private set; } = new Array<Item>();
+
+        [Export]
+        public Dictionary<string, int> InventoryMap { get; set; }
 
         public const int MaxCapacity = 32;
 
@@ -28,28 +32,42 @@ namespace SupaLidlGame.Items
             set => EquipItem(value, ref _offhandItem);
         }
 
+        public bool IsUsingItem => (SelectedItem?.IsUsing ?? false) ||
+                (OffhandItem?.IsUsing ?? false);
+
+        public Inventory()
+        {
+            InventoryMap = new Dictionary<string, int>();
+            InventoryMap.Add("equip_1", 0);
+            InventoryMap.Add("equip_2", 1);
+            InventoryMap.Add("equip_3", 2);
+        }
+
         private bool EquipItem(Item item, ref Item slot)
         {
-            if (item is not null && item.IsOneHanded)
+            if (item is not null)
             {
-                // we can not equip this if either hand is occupied by
-                // two-handed item
-
-                if (_selectedItem is not null && !_selectedItem.IsOneHanded)
+                if (item.IsOneHanded)
                 {
-                    return false;
+                    // we can not equip this if either hand is occupied by
+                    // two-handed item
+
+                    if (_selectedItem is not null && !_selectedItem.IsOneHanded)
+                    {
+                        return false;
+                    }
+
+                    if (_offhandItem is not null && !_offhandItem.IsOneHanded)
+                    {
+                        return false;
+                    }
                 }
 
-                if (_offhandItem is not null && !_offhandItem.IsOneHanded)
+                if (!Items.Contains(item))
                 {
+                    GD.PrintErr("Tried to equip an item not in the inventory.");
                     return false;
                 }
-            }
-
-            if (!Items.Contains(item))
-            {
-                GD.PrintErr("Tried to equip an item not in the inventory.");
-                return false;
             }
 
             if (slot is not null)
@@ -67,6 +85,20 @@ namespace SupaLidlGame.Items
             return true;
         }
 
+        public Item GetItemByMap(string keymap)
+        {
+            if (InventoryMap.ContainsKey(keymap))
+            {
+                int idx = InventoryMap[keymap];
+                if (idx < Items.Count)
+                {
+                    return Items[InventoryMap[keymap]];
+                }
+            }
+            else GD.Print(keymap + " does not exist");
+            return null;
+        }
+
         public Item AddItem(Item item)
         {
             if (Items.Count >= MaxCapacity)
@@ -76,7 +108,10 @@ namespace SupaLidlGame.Items
 
             item.CharacterOwner = Character;
             item.Visible = false;
-            Items.Add(item);
+            if (!Items.Contains(item))
+            {
+                Items.Add(item);
+            }
             return item;
         }
 
