@@ -1,9 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://ddcf6bfv212wj"]
+[gd_scene load_steps=26 format=3 uid="uid://ddcf6bfv212wj"]
 
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="1_2yopk"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_fx1w5"]
 [ext_resource type="Script" path="res://Characters/States/Machine.cs" id="3_k4ypw"]
-[ext_resource type="Texture2D" uid="uid://dxymfduyrbuvx" path="res://Assets/Sprites/Characters/forsen.png" id="3_oxsgl"]
+[ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="3_ocaae"]
 [ext_resource type="Script" path="res://Characters/States/NPCIdleState.cs" id="4_8r2qn"]
 [ext_resource type="Script" path="res://Characters/States/NPCMoveState.cs" id="5_utogm"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="6_jo0cg"]
@@ -16,42 +16,46 @@ shader = ExtResource("1_fx1w5")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_6d2tf"]
-atlas = ExtResource("3_oxsgl")
+[sub_resource type="AtlasTexture" id="AtlasTexture_55yt4"]
+atlas = ExtResource("3_ocaae")
 region = Rect2(0, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bdyma"]
-atlas = ExtResource("3_oxsgl")
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa1bi"]
+atlas = ExtResource("3_ocaae")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0dwbr"]
-atlas = ExtResource("3_oxsgl")
+[sub_resource type="AtlasTexture" id="AtlasTexture_hiodl"]
+atlas = ExtResource("3_ocaae")
 region = Rect2(48, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r7fn6"]
-atlas = ExtResource("3_oxsgl")
+[sub_resource type="AtlasTexture" id="AtlasTexture_tok7d"]
+atlas = ExtResource("3_ocaae")
 region = Rect2(72, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_py8k0"]
-atlas = ExtResource("3_oxsgl")
+[sub_resource type="AtlasTexture" id="AtlasTexture_dp8x6"]
+atlas = ExtResource("3_ocaae")
 region = Rect2(96, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_g3nb2"]
-atlas = ExtResource("3_oxsgl")
+[sub_resource type="AtlasTexture" id="AtlasTexture_sglor"]
+atlas = ExtResource("3_ocaae")
 region = Rect2(120, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jauql"]
-atlas = ExtResource("3_oxsgl")
+[sub_resource type="AtlasTexture" id="AtlasTexture_gb41o"]
+atlas = ExtResource("3_ocaae")
 region = Rect2(144, 0, 24, 24)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_4tm2b"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bx6qq"]
+atlas = ExtResource("3_ocaae")
+region = Rect2(168, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6pejo"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6d2tf")
+"texture": SubResource("AtlasTexture_55yt4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bdyma")
+"texture": SubResource("AtlasTexture_xa1bi")
 }],
 "loop": true,
 "name": &"idle",
@@ -59,19 +63,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0dwbr")
+"texture": SubResource("AtlasTexture_hiodl")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r7fn6")
+"texture": SubResource("AtlasTexture_tok7d")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_py8k0")
+"texture": SubResource("AtlasTexture_dp8x6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_g3nb2")
+"texture": SubResource("AtlasTexture_sglor")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jauql")
+"texture": SubResource("AtlasTexture_gb41o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bx6qq")
 }],
 "loop": true,
 "name": &"move",
@@ -82,7 +89,7 @@ animations = [{
 size = Vector2(16, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
-size = Vector2(16, 24)
+size = Vector2(16, 18)
 
 [sub_resource type="Animation" id="Animation_dxevc"]
 resource_name = "Hurt"
@@ -134,7 +141,8 @@ StateMachine = NodePath("StateMachine")
 Faction = 2
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_4tm2b")
+use_parent_material = true
+sprite_frames = SubResource("SpriteFrames_6pejo")
 animation = &"move"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -158,6 +166,7 @@ IdleState = NodePath("../Idle")
 Faction = 2
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_8lxmf")
 
 [node name="Inventory" type="Node2D" parent="."]
