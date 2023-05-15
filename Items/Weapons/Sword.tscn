@@ -298,7 +298,6 @@ points = PackedVector2Array(-14.142, -14.142, 0, -20, 14.142, -14.142, 20, 0, 14
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles")]
 y_sort_enabled = true
 texture_filter = 3
-position = Vector2(2, 0)
 script = ExtResource("1_mlo73")
 Hitbox = NodePath("Hitbox")
 AnimationPlayer = NodePath("AnimationPlayer")
@@ -319,11 +318,11 @@ gradient = SubResource("Gradient_2ablm")
 Tracking = NodePath("../Node2D/Sprite2D")
 
 [node name="Node2D" type="Node2D" parent="Anchor"]
-position = Vector2(0, -4)
+rotation = -0.846485
 
 [node name="Sprite2D" type="Sprite2D" parent="Anchor/Node2D"]
 y_sort_enabled = true
-position = Vector2(-1.19209e-07, -10)
+position = Vector2(0, -12)
 texture = ExtResource("2_rnfo4")
 
 [node name="ParryParticles" type="CPUParticles2D" parent="Anchor/Node2D/Sprite2D"]

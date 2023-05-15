@@ -30,6 +30,25 @@ namespace SupaLidlGame.Items.Weapons
 
         public override bool IsParryable { get; protected set; }
 
+        [Export]
+        public float AnticipationAngle { get; set; }
+
+        [Export]
+        public float OvershootAngle { get; set; }
+
+        [Export]
+        public float RecoveryAngle { get; set; }
+
+        [Export]
+        public float AnticipationDuration { get; set; }
+
+        [Export]
+        public float OvershootDuration { get; set; }
+
+        [Export]
+        public float RecoveryDuration { get; set; }
+
+
         public override void Equip(Character character)
         {
             Visible = true;
