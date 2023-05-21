@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://1pb3mpmrl7lc"]
 
 [ext_resource type="Script" path="res://Utils/World.cs" id="1_1k6ew"]
-[ext_resource type="PackedScene" uid="uid://di38llxv4a6w0" path="res://Scenes/Maps/Forest.tscn" id="2_11ef1"]
+[ext_resource type="PackedScene" uid="uid://bxtpv6jqodj4v" path="res://Scenes/Maps/Hills.tscn" id="2_juio7"]
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("CurrentPlayer")]
 script = ExtResource("1_1k6ew")
-StartingArea = ExtResource("2_11ef1")
+StartingArea = ExtResource("2_juio7")
 CurrentPlayer = NodePath("")
