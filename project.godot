@@ -88,6 +88,7 @@ equip_3={
 2d_physics/layer_2="Character"
 2d_physics/layer_3="Player"
 2d_physics/layer_4="NPC"
+2d_physics/layer_5="World Clip"
 
 [physics]
 

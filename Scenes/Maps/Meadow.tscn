@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://k4pkkaitpnv8"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_hpj8x"]
-[ext_resource type="PackedScene" uid="uid://ddcf6bfv212wj" path="res://Characters/ExampleEnemy.tscn" id="2_4dkyx"]
+[ext_resource type="PackedScene" uid="uid://bf55wbq7m1gpp" path="res://Characters/ExampleEnemy.tscn" id="2_4dkyx"]
 [ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="2_7ucgi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v7m2q"]
