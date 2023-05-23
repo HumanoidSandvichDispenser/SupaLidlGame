@@ -2,18 +2,25 @@ using Godot;
 using SupaLidlGame.BoundingBoxes;
 using SupaLidlGame.Characters;
 using SupaLidlGame.Extensions;
+using SupaLidlGame.State.Sword;
 
 namespace SupaLidlGame.Items.Weapons
 {
-    public partial class Sword : Weapon
+    public partial class Sword : Weapon, IParryable
     {
         public bool IsAttacking { get; protected set; }
+
+        public override bool IsUsing => StateMachine.CurrentState
+            is SwordAttackState;
 
         [Export]
         public Hitbox Hitbox { get; set; }
 
         [Export]
         public AnimationPlayer AnimationPlayer { get; set; }
+
+        [Export]
+        public AnimationTree AnimationTree { get; set; }
 
         /// <summary>
         /// The time frame in seconds for which the weapon will deal damage.
@@ -26,28 +33,24 @@ namespace SupaLidlGame.Items.Weapons
         public double AttackTime { get; set; } = 0;
 
         [Export]
+        public double AttackAnimationDuration { get; set; }
+
+        [Export]
         public CpuParticles2D ParryParticles { get; set; }
+
+        [Export]
+        public double NPCAnticipateTime { get; set; }
+
+        [Export]
+        public SwordStateMachine StateMachine { get; set; }
 
         public override bool IsParryable { get; protected set; }
 
-        [Export]
-        public float AnticipationAngle { get; set; }
+        public ulong ParryTimeOrigin { get; protected set; }
 
-        [Export]
-        public float OvershootAngle { get; set; }
+        private Tween _currentTween;
 
-        [Export]
-        public float RecoveryAngle { get; set; }
-
-        [Export]
-        public float AnticipationDuration { get; set; }
-
-        [Export]
-        public float OvershootDuration { get; set; }
-
-        [Export]
-        public float RecoveryDuration { get; set; }
-
+        private AnimationNodeStateMachinePlayback _playback;
 
         public override void Equip(Character character)
         {
@@ -67,17 +70,22 @@ namespace SupaLidlGame.Items.Weapons
             // we can't use if we're still using the weapon
             if (RemainingUseTime > 0)
             {
-                return;
+                //return;
             }
 
+            StateMachine.Use();
+
+            /*
             // reset state of the weapon
             IsParried = false;
             IsParryable = true;
             ParryTimeOrigin = Time.GetTicksMsec();
 
-            AnimationPlayer.Stop();
+            _playback.Travel("use");
+            */
 
             // play animation depending on rotation of weapon
+            /*
             string anim = "use";
 
             if (GetNode<Node2D>("Anchor").Rotation > Mathf.DegToRad(50))
@@ -92,8 +100,22 @@ namespace SupaLidlGame.Items.Weapons
             }
 
             AnimationPlayer.Play(anim);
+            */
 
             base.Use();
+        }
+
+        public void EnableParry()
+        {
+            IsParried = false;
+            IsParryable = true;
+            ParryTimeOrigin = Time.GetTicksMsec();
+            GD.Print(Character.Name);
+        }
+
+        public void DisableParry()
+        {
+            IsParryable = false;
         }
 
         public override void Deuse()
@@ -113,7 +135,7 @@ namespace SupaLidlGame.Items.Weapons
         public void Deattack()
         {
             IsAttacking = false;
-            IsParryable = false;
+            DisableParry();
             Hitbox.IsDisabled = true;
             ProcessHits();
             Hitbox.ResetIgnoreList();
@@ -123,10 +145,13 @@ namespace SupaLidlGame.Items.Weapons
         public override void _Ready()
         {
             Hitbox.Damage = Damage;
+            _playback = (AnimationNodeStateMachinePlayback)AnimationTree
+                .Get("parameters/playback");
         }
 
         public override void _Process(double delta)
         {
+            StateMachine.Process(delta);
             base._Process(delta);
         }
 
@@ -149,21 +174,29 @@ namespace SupaLidlGame.Items.Weapons
 
         public void AttemptParry(Weapon otherWeapon)
         {
-            if (IsParryable && otherWeapon.IsParryable)
+            //if (IsParryable && otherWeapon.IsParryable)
+            if (otherWeapon.IsParryable &&
+                    otherWeapon is IParryable otherParryable)
             {
                 ParryParticles.Emitting = true;
-                if (ParryTimeOrigin < otherWeapon.ParryTimeOrigin)
+                if (ParryTimeOrigin < otherParryable.ParryTimeOrigin)
                 {
                     // our character was parried
-                    IsParried = true;
-                    AnimationPlayer.SpeedScale = 0.25f;
-                    Character.Stun(1.5f);
-                    GD.Print(ParryTimeOrigin);
-                    GD.Print(otherWeapon.ParryTimeOrigin);
-                    GetNode<AudioStreamPlayer2D>("ParrySound").OnWorld().Play();
+                }
+                else
+                {
+                    otherParryable.Stun();
                 }
             }
             //this.GetAncestor<TileMap>().AddChild(instance);
+        }
+
+        public void Stun()
+        {
+            IsParried = true;
+            AnimationPlayer.SpeedScale = 0.25f;
+            Character.Stun(1.5f);
+            GetNode<AudioStreamPlayer2D>("ParrySound").OnWorld().Play();
         }
 
         public override void _on_hitbox_hit(BoundingBox box)
@@ -193,6 +226,11 @@ namespace SupaLidlGame.Items.Weapons
                     }
                 }
             }
+        }
+
+        protected void SetAnimationCondition(string condition, bool value)
+        {
+            AnimationTree.Set("parameters/conditions/" + condition, value);
         }
     }
 }
