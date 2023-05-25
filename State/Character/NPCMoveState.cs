@@ -1,6 +1,6 @@
 using Godot;
 
-namespace SupaLidlGame.Characters.State
+namespace SupaLidlGame.State.Character
 {
     public partial class NPCMoveState : NPCState
     {
@@ -17,10 +17,10 @@ namespace SupaLidlGame.Characters.State
             return null;
         }
 
-        public override CharacterState Enter(CharacterState previousState)
+        public override IState<CharacterState> Enter(IState<CharacterState> prev)
         {
             Character.Sprite.Play("move");
-            return base.Enter(previousState);
+            return base.Enter(prev);
         }
     }
 }

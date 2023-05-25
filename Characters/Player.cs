@@ -1,5 +1,6 @@
 using Godot;
 using SupaLidlGame.Utils;
+using SupaLidlGame.State;
 
 namespace SupaLidlGame.Characters
 {
@@ -41,7 +42,7 @@ namespace SupaLidlGame.Characters
 
         public override void ModifyVelocity()
         {
-            if (StateMachine.State is State.PlayerRollState)
+            if (StateMachine.CurrentState is SupaLidlGame.State.Character.PlayerRollState)
             {
                 Velocity *= 2;
             }

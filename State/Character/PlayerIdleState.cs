@@ -1,13 +1,13 @@
 using Godot;
 
-namespace SupaLidlGame.Characters.State
+namespace SupaLidlGame.State.Character
 {
     public partial class PlayerIdleState : PlayerState
     {
         [Export]
         public CharacterState MoveState { get; set; }
 
-        public override CharacterState Enter(CharacterState previousState)
+        public override IState<CharacterState> Enter(IState<CharacterState> previousState)
         {
             GD.Print("Entered idle state");
             if (previousState is not PlayerMoveState)

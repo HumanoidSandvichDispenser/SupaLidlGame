@@ -1,6 +1,6 @@
 using Godot;
 
-namespace SupaLidlGame.Characters.State
+namespace SupaLidlGame.State.Character
 {
     public partial class NPCIdleState : NPCState
     {
@@ -17,7 +17,7 @@ namespace SupaLidlGame.Characters.State
             return null;
         }
 
-        public override CharacterState Enter(CharacterState previousState)
+        public override IState<CharacterState> Enter(IState<CharacterState> previousState)
         {
             Character.Sprite.Play("idle");
             return base.Enter(previousState);

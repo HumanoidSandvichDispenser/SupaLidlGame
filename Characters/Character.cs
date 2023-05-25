@@ -2,6 +2,7 @@ using Godot;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Items;
 using SupaLidlGame.Utils;
+using SupaLidlGame.State.Character;
 
 namespace SupaLidlGame.Characters
 {
@@ -26,12 +27,6 @@ namespace SupaLidlGame.Characters
 
         protected float _mass = 1.0f;
 
-        public float JumpVelocity { get; protected set; } = -400.0f;
-
-        public float AccelerationMagnitude { get; protected set; } = 256.0f;
-
-        public Vector2 Acceleration => Direction * AccelerationMagnitude;
-
         public Vector2 NetImpulse { get; set; } = Vector2.Zero;
 
         public Vector2 Direction { get; set; } = Vector2.Zero;
@@ -50,7 +45,6 @@ namespace SupaLidlGame.Characters
                 }
 
                 _health = value;
-                GD.Print(_health);
                 if (_health <= 0)
                 {
                     Die();
@@ -71,7 +65,7 @@ namespace SupaLidlGame.Characters
         public Inventory Inventory { get; set; }
 
         [Export]
-        public State.Machine StateMachine { get; set; }
+        public CharacterStateMachine StateMachine { get; set; }
 
         [Export]
         public ushort Faction { get; set; }

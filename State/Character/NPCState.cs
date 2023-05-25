@@ -1,8 +1,8 @@
-namespace SupaLidlGame.Characters.State
+namespace SupaLidlGame.State.Character
 {
-    public partial class NPCState : CharacterState
+    public abstract partial class NPCState : CharacterState
     {
-        protected NPC _npc => Character as NPC;
+        protected Characters.NPC _npc => Character as Characters.NPC;
 
         public override CharacterState Process(double delta)
         {

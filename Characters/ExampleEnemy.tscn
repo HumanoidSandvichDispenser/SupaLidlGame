@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="1_2yopk"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_fx1w5"]
 [ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="3_ocaae"]
-[ext_resource type="Script" path="res://State/Machine.cs" id="4_4nwgr"]
-[ext_resource type="Script" path="res://Characters/States/NPCIdleState.cs" id="4_8r2qn"]
-[ext_resource type="Script" path="res://Characters/States/NPCMoveState.cs" id="5_utogm"]
+[ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="4_424ux"]
+[ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="5_tn4cf"]
+[ext_resource type="Script" path="res://State/Character/NPCMoveState.cs" id="6_73mr6"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="6_jo0cg"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_43gq8"]
 [ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
@@ -141,6 +141,21 @@ Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Faction = 2
 
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
+script = ExtResource("4_424ux")
+InitialState = NodePath("Idle")
+Character = NodePath("..")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "Character")]
+script = ExtResource("5_tn4cf")
+MoveState = NodePath("../Move")
+Character = NodePath("../..")
+
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("6_73mr6")
+IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 use_parent_material = true
 position = Vector2(0, -4)
@@ -150,19 +165,6 @@ animation = &"move"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_uict5")
-
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
-script = ExtResource("4_4nwgr")
-InitialState = NodePath("Idle")
-Character = NodePath("..")
-
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState")]
-script = ExtResource("4_8r2qn")
-MoveState = NodePath("../Move")
-
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState")]
-script = ExtResource("5_utogm")
-IdleState = NodePath("../Idle")
 
 [node name="Hurtbox" parent="." instance=ExtResource("6_jo0cg")]
 position = Vector2(0, -4)

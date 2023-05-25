@@ -1,14 +1,14 @@
 using Godot;
 using SupaLidlGame.Items;
 
-namespace SupaLidlGame.Characters.State
+namespace SupaLidlGame.State.Character
 {
     public partial class PlayerMoveState : PlayerState
     {
         [Export]
         public PlayerRollState RollState { get; set; }
 
-        public override CharacterState Enter(CharacterState previousState)
+        public override IState<CharacterState> Enter(IState<CharacterState> previousState)
         {
             Godot.GD.Print("Started moving");
             _player.Animation = "move";

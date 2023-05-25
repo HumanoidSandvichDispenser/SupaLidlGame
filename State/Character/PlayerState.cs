@@ -1,11 +1,11 @@
 using Godot;
 using SupaLidlGame.Items;
+using SupaLidlGame.Characters;
 
-namespace SupaLidlGame.Characters.State
+namespace SupaLidlGame.State.Character
 {
-    public partial class PlayerState : CharacterState
+    public abstract partial class PlayerState : CharacterState
     {
-        //public PlayerMachine PlayerMachine => Machine as PlayerMachine;
         protected Player _player => Character as Player;
 
         [Export]
@@ -15,27 +15,12 @@ namespace SupaLidlGame.Characters.State
         {
             var inventory = Character.Inventory;
 
-            #if DEBUG
-            //if (@event.IsActionPressed("equip"))
-            //{
-            //    inventory.SelectedItem = inventory.GetNode<Items.Item>("Sword");
-            //}
-            #endif
-
-            if (this is PlayerIdleState or PlayerMoveState
-                    && !_player.Inventory.IsUsingItem)
+            if (this is PlayerIdleState or PlayerMoveState &&
+                    !_player.Inventory.IsUsingItem)
             {
                 if (@event.IsActionPressed("equip_1"))
                 {
                     inventory.SelectedItem = inventory.GetItemByMap("equip_1");
-                }
-                else if (@event.IsActionPressed("equip_2"))
-                {
-                    inventory.SelectedItem = inventory.GetItemByMap("equip_2");
-                }
-                else if (@event.IsActionPressed("equip_3"))
-                {
-                    inventory.SelectedItem = inventory.GetItemByMap("equip_3");
                 }
             }
 

@@ -1,6 +1,6 @@
 using Godot;
 
-namespace SupaLidlGame.Characters.State
+namespace SupaLidlGame.State.Character
 {
     public partial class PlayerRollState : PlayerState
     {
@@ -8,7 +8,7 @@ namespace SupaLidlGame.Characters.State
 
         private Vector2 _rollDirection = Vector2.Zero;
 
-        public override CharacterState Enter(CharacterState previousState)
+        public override IState<CharacterState> Enter(IState<CharacterState> previousState)
         {
             _timeLeftToRoll = 0.5;
             // roll the direction we were previously moving in
@@ -17,7 +17,7 @@ namespace SupaLidlGame.Characters.State
             return base.Enter(previousState);
         }
 
-        public override void Exit(CharacterState nextState)
+        public override void Exit(IState<CharacterState> nextState)
         {
             // we want to reset our state variables in case we are forced out of
             // this state (e.g. from death)
@@ -35,14 +35,5 @@ namespace SupaLidlGame.Characters.State
             }
             return null;
         }
-
-        /*
-        public override CharacterState PhysicsProcess(double delta)
-        {
-            Character.Velocity = Character.Direction * Character.Speed * 1.5f;
-            Character.MoveAndSlide();
-            return null;
-        }
-        */
     }
 }

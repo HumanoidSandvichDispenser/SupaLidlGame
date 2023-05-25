@@ -8,7 +8,7 @@ namespace SupaLidlGame.State.Sword
 
         public abstract IState<SwordState> Enter(IState<SwordState> previousState);
 
-        public virtual void Exit(IState<SwordState> previousState)
+        public virtual void Exit(IState<SwordState> nextState)
         {
 
         }

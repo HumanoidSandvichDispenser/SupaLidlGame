@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
-[ext_resource type="Script" path="res://Characters/States/PlayerIdleState.cs" id="4_4k4mb"]
 [ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="4_5vird"]
 [ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
-[ext_resource type="Script" path="res://State/Machine.cs" id="5_glslt"]
-[ext_resource type="Script" path="res://Characters/States/PlayerMoveState.cs" id="5_tx5rw"]
-[ext_resource type="Script" path="res://Characters/States/PlayerRollState.cs" id="6_6bgrj"]
+[ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="5_rgckv"]
+[ext_resource type="Script" path="res://State/Character/PlayerIdleState.cs" id="6_wkfdm"]
 [ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
+[ext_resource type="Script" path="res://State/Character/PlayerMoveState.cs" id="7_dfqd8"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
+[ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
 [ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="12_h0x0g"]
 
@@ -148,6 +148,28 @@ Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Faction = 1
 
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
+script = ExtResource("5_rgckv")
+InitialState = NodePath("Idle")
+Character = NodePath("..")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "IdleState", "Character")]
+script = ExtResource("6_wkfdm")
+MoveState = NodePath("../Move")
+IdleState = NodePath(".")
+Character = NodePath("../..")
+
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("RollState", "IdleState", "Character")]
+script = ExtResource("7_dfqd8")
+RollState = NodePath("../Roll")
+IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
+[node name="Roll" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("8_fy0v5")
+IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 position_smoothing_speed = 8.0
 
@@ -159,26 +181,6 @@ animation = &"idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_bfqew")
-
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
-script = ExtResource("5_glslt")
-InitialState = NodePath("Idle")
-Character = NodePath("..")
-DebugLevel = 2
-
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "IdleState")]
-script = ExtResource("4_4k4mb")
-MoveState = NodePath("../Move")
-IdleState = NodePath(".")
-
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("RollState", "IdleState")]
-script = ExtResource("5_tx5rw")
-RollState = NodePath("../Roll")
-IdleState = NodePath("../Idle")
-
-[node name="Roll" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState")]
-script = ExtResource("6_6bgrj")
-IdleState = NodePath("../Idle")
 
 [node name="Debug" type="Control" parent="."]
 visible = false
