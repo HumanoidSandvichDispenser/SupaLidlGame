@@ -346,7 +346,7 @@ NPCAnticipateTime = 0.4
 StateMachine = NodePath("State")
 Damage = 20.0
 UseTime = 0.4
-Knockback = 20.0
+Knockback = 64.0
 Anchor = NodePath("Anchor")
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
