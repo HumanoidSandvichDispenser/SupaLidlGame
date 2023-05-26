@@ -384,6 +384,7 @@ gradient = SubResource("Gradient_2ablm")
 Tracking = NodePath("../Node2D/Sprite2D")
 
 [node name="Node2D" type="Node2D" parent="Anchor"]
+y_sort_enabled = true
 position = Vector2(8, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="Anchor/Node2D"]
@@ -392,6 +393,7 @@ position = Vector2(0, -8)
 texture = ExtResource("3_r75ni")
 
 [node name="ParryParticles" type="CPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
+modulate = Color(1.2, 1.2, 1.2, 1)
 position = Vector2(-0.221825, -3.12132)
 rotation = 0.785398
 emitting = false
@@ -432,7 +434,7 @@ disabled = true
 [node name="SwingSprite" type="Sprite2D" parent="."]
 modulate = Color(2, 2, 2, 1)
 texture = ExtResource("5_pywek")
-offset = Vector2(4, 0)
+offset = Vector2(8, 0)
 hframes = 4
 
 [node name="SwingSound" type="AudioStreamPlayer2D" parent="."]

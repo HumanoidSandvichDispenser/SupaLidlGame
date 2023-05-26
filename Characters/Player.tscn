@@ -209,7 +209,6 @@ InventoryMap = {
 }
 
 [node name="Sword" parent="Inventory" instance=ExtResource("7_4rxuv")]
-z_index = -1
 position = Vector2(0, 2)
 
 [node name="Hurtbox" parent="." instance=ExtResource("9_avyu4")]
