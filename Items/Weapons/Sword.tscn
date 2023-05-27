@@ -1,13 +1,13 @@
-[gd_scene load_steps=35 format=3 uid="uid://d72ehtv1ks0e"]
+[gd_scene load_steps=35 format=3 uid="uid://dvqap2uhcah63"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
-[ext_resource type="Script" path="res://State/Sword/SwordStateMachine.cs" id="2_rje2m"]
-[ext_resource type="Script" path="res://State/Sword/SwordIdleState.cs" id="3_qh2cs"]
+[ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_vwirq"]
+[ext_resource type="Script" path="res://State/Weapon/SwordIdleState.cs" id="3_nw6r0"]
 [ext_resource type="Texture2D" uid="uid://dp7osg05ip5oo" path="res://Assets/Sprites/sword.png" id="3_r75ni"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="3_up3ob"]
+[ext_resource type="Script" path="res://State/Weapon/SwordAnticipateState.cs" id="4_j3cud"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="4_pt6lq"]
-[ext_resource type="Script" path="res://State/Sword/SwordAnticipateState.cs" id="4_ycuhw"]
-[ext_resource type="Script" path="res://State/Sword/SwordAttackState.cs" id="5_30003"]
+[ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_hmisb"]
 [ext_resource type="Texture2D" uid="uid://do1bui3bblkk7" path="res://Assets/Sprites/sword-swing.png" id="5_pywek"]
 [ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="6_8nxjm"]
 
@@ -350,21 +350,21 @@ Knockback = 64.0
 Anchor = NodePath("Anchor")
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
-script = ExtResource("2_rje2m")
+script = ExtResource("2_vwirq")
 InitialState = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("AnticipateState", "Sword")]
-script = ExtResource("3_qh2cs")
+script = ExtResource("3_nw6r0")
 AnticipateState = NodePath("../Anticipate")
 Sword = NodePath("../..")
 
 [node name="Anticipate" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AttackState")]
-script = ExtResource("4_ycuhw")
+script = ExtResource("4_j3cud")
 Sword = NodePath("../..")
 AttackState = NodePath("../Attack")
 
 [node name="Attack" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AnticipateState", "IdleState")]
-script = ExtResource("5_30003")
+script = ExtResource("5_hmisb")
 Sword = NodePath("../..")
 AnticipateState = NodePath("../Anticipate")
 IdleState = NodePath("../Idle")

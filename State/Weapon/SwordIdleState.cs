@@ -1,8 +1,8 @@
 using Godot;
 
-namespace SupaLidlGame.State.Sword
+namespace SupaLidlGame.State.Weapon
 {
-    public partial class SwordIdleState : SwordState
+    public partial class SwordIdleState : WeaponState
     {
         [Export]
         public SwordAnticipateState AnticipateState { get; set; }
@@ -12,7 +12,7 @@ namespace SupaLidlGame.State.Sword
 
         private double _attackCooldown;
 
-        public override SwordState Enter(IState<SwordState> prevState)
+        public override WeaponState Enter(IState<WeaponState> prevState)
         {
             if (prevState is SwordAttackState)
             {
@@ -21,7 +21,7 @@ namespace SupaLidlGame.State.Sword
             return null;
         }
 
-        public override SwordState Use()
+        public override WeaponState Use()
         {
             if (_attackCooldown <= 0)
             {
@@ -31,7 +31,7 @@ namespace SupaLidlGame.State.Sword
             return AnticipateState;
         }
 
-        public override SwordState Process(double delta)
+        public override WeaponState Process(double delta)
         {
             if (_attackCooldown > 0)
             {

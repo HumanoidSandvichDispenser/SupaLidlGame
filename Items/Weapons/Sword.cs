@@ -2,7 +2,7 @@ using Godot;
 using SupaLidlGame.BoundingBoxes;
 using SupaLidlGame.Characters;
 using SupaLidlGame.Extensions;
-using SupaLidlGame.State.Sword;
+using SupaLidlGame.State.Weapon;
 
 namespace SupaLidlGame.Items.Weapons
 {
@@ -42,7 +42,7 @@ namespace SupaLidlGame.Items.Weapons
         public double NPCAnticipateTime { get; set; }
 
         [Export]
-        public SwordStateMachine StateMachine { get; set; }
+        public WeaponStateMachine StateMachine { get; set; }
 
         public override bool IsParryable { get; protected set; }
 

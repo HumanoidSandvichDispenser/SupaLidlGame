@@ -1,5 +1,4 @@
 using Godot;
-using SupaLidlGame.Items;
 
 namespace SupaLidlGame.State.Character
 {
@@ -29,7 +28,7 @@ namespace SupaLidlGame.State.Character
         {
             if (@event.IsActionPressed("roll"))
             {
-                if (Character.Inventory.SelectedItem is Weapon weapon)
+                if (Character.Inventory.SelectedItem is Items.Weapon weapon)
                 {
                     if (!weapon.IsUsing)
                     {

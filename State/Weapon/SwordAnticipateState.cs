@@ -1,8 +1,8 @@
 using Godot;
 
-namespace SupaLidlGame.State.Sword
+namespace SupaLidlGame.State.Weapon
 {
-    public partial class SwordAnticipateState : SwordState
+    public partial class SwordAnticipateState : WeaponState
     {
         [Export]
         public SupaLidlGame.Items.Weapons.Sword Sword { get; set; }
@@ -12,7 +12,7 @@ namespace SupaLidlGame.State.Sword
 
         private double _anticipateTime;
 
-        public override SwordState Enter(IState<SwordState> prevState)
+        public override WeaponState Enter(IState<WeaponState> prevState)
         {
             Sword.EnableParry();
 
@@ -33,7 +33,7 @@ namespace SupaLidlGame.State.Sword
             return null;
         }
 
-        public override SwordState Process(double delta)
+        public override WeaponState Process(double delta)
         {
             // go into attack state if anticipation time is delta
             if ((_anticipateTime -= delta) <= 0)

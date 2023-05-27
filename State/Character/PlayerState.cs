@@ -1,5 +1,4 @@
 using Godot;
-using SupaLidlGame.Items;
 using SupaLidlGame.Characters;
 
 namespace SupaLidlGame.State.Character
@@ -33,7 +32,7 @@ namespace SupaLidlGame.State.Character
                                                         "ui_up", "ui_down");
             Vector2 mousePos = Character.GetGlobalMousePosition();
             Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
-            if (Character.Inventory.SelectedItem is Weapon weapon)
+            if (Character.Inventory.SelectedItem is Items.Weapon weapon)
             {
                 if (!weapon.IsUsing)
                 {

@@ -1,12 +1,11 @@
 using Godot;
 
-namespace SupaLidlGame.State.Sword
+namespace SupaLidlGame.State.Weapon
 {
-    public partial class SwordStateMachine : StateMachine<SwordState>
-    {
-        [Export]
-        public override SwordState InitialState { get; set; }
+}
 
+/*
+ 
         public void Use()
         {
             var state = CurrentState.Use();
@@ -24,5 +23,5 @@ namespace SupaLidlGame.State.Sword
                 ChangeState(s);
             }
         }
-    }
-}
+
+        */

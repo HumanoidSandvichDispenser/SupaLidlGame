@@ -1,8 +1,8 @@
 using Godot;
 
-namespace SupaLidlGame.State.Sword
+namespace SupaLidlGame.State.Weapon
 {
-    public partial class SwordAttackState : SwordState
+    public partial class SwordAttackState : WeaponState
     {
         [Export]
         public SupaLidlGame.Items.Weapons.Sword Sword { get; set; }
@@ -21,7 +21,7 @@ namespace SupaLidlGame.State.Sword
 
         private bool _isAlternate = false;
 
-        public override SwordState Enter(IState<SwordState> prevState)
+        public override WeaponState Enter(IState<WeaponState> prevState)
         {
             //Sword.AnimationPlayer.Stop();
             Sword.Attack();
@@ -46,12 +46,12 @@ namespace SupaLidlGame.State.Sword
             return null;
         }
 
-        public override void Exit(IState<SwordState> nextState)
+        public override void Exit(IState<WeaponState> nextState)
         {
             Sword.Deattack();
         }
 
-        public override SwordState Use()
+        public override WeaponState Use()
         {
             if (_useDuration <= 0)
             {
@@ -66,7 +66,7 @@ namespace SupaLidlGame.State.Sword
             return null;
         }
 
-        public override SwordState Process(double delta)
+        public override WeaponState Process(double delta)
         {
             if (_attackDuration > 0)
             {
