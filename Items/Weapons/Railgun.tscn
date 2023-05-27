@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://g7wfcubs6bdd"]
+
+[ext_resource type="Texture2D" uid="uid://bdidfdee6rhv4" path="res://Assets/Sprites/railgun.png" id="1_4lqn3"]
+[ext_resource type="Script" path="res://Items/Weapons/Railgun.cs" id="1_pami3"]
+[ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="1_xynim"]
+[ext_resource type="Script" path="res://State/Weapon/RangedIdleState.cs" id="2_a4hhy"]
+[ext_resource type="Script" path="res://State/Weapon/RangedFireState.cs" id="3_dcbnq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wjqqh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_4lqn3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Railgun" type="Node2D" node_paths=PackedStringArray("StateMachine")]
+script = ExtResource("1_pami3")
+StateMachine = NodePath("State")
+Damage = 50.0
+UseTime = 1.0
+
+[node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("1_xynim")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("FireState")]
+script = ExtResource("2_a4hhy")
+FireState = NodePath("../Fire")
+
+[node name="Fire" type="Node" parent="State" node_paths=PackedStringArray("Weapon", "IdleState")]
+script = ExtResource("3_dcbnq")
+Weapon = NodePath("../..")
+IdleState = NodePath("../Idle")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(8, 0)
+sprite_frames = SubResource("SpriteFrames_wjqqh")

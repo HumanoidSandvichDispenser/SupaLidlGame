@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://8hqnkll3x7tr"]
+
+[ext_resource type="PackedScene" uid="uid://bqvseo3sbs1aj" path="res://Entities/RailBeam.tscn" id="1_os4wy"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="RailBeam" parent="." instance=ExtResource("1_os4wy")]
+gravity_scale = 0.0

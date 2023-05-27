@@ -47,18 +47,17 @@ namespace SupaLidlGame.Items
         [Export]
         public float MaxDistanceHint { get; set; }
 
-        [Export]
-        public Node2D Anchor { get; set; }
-
         public override bool StacksWith(Item item) => false;
 
         public override void Equip(Character character)
         {
+            Visible = true;
             Character = character;
         }
 
         public override void Unequip(Character character)
         {
+            Visible = false;
             Character = null;
         }
 
@@ -78,7 +77,7 @@ namespace SupaLidlGame.Items
             {
                 if ((RemainingUseTime -= delta) <= 0)
                 {
-                    Deuse();
+                    //Deuse();
                 }
             }
         }

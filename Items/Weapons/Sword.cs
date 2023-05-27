@@ -44,6 +44,9 @@ namespace SupaLidlGame.Items.Weapons
         [Export]
         public WeaponStateMachine StateMachine { get; set; }
 
+        [Export]
+        public Node2D Anchor { get; set; }
+
         public override bool IsParryable { get; protected set; }
 
         public ulong ParryTimeOrigin { get; protected set; }
@@ -54,14 +57,12 @@ namespace SupaLidlGame.Items.Weapons
 
         public override void Equip(Character character)
         {
-            Visible = true;
             base.Equip(character);
             Hitbox.Faction = character.Faction; // character is null before base
         }
 
         public override void Unequip(Character character)
         {
-            Visible = false;
             base.Unequip(character);
         }
 

@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqvseo3sbs1aj"]
+
+[ext_resource type="Script" path="res://Entities/Projectile.cs" id="1_hhb4t"]
+[ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="2_pcf4i"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_cc88g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j0tne"]
+size = Vector2(16, 4)
+
+[node name="RailBeam" type="RigidBody2D" node_paths=PackedStringArray("Hitbox")]
+script = ExtResource("1_hhb4t")
+Speed = 512.0
+Direction = Vector2(1, 0)
+Hitbox = NodePath("Hitbox")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1.4, 0, 1.2, 1)
+self_modulate = Color(2, 2, 2, 1)
+scale = Vector2(8, 4)
+texture = SubResource("CanvasTexture_cc88g")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_pcf4i")]
+Damage = 25.0
+Knockback = 256.0
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("RectangleShape2D_j0tne")
+
+[connection signal="Hit" from="Hitbox" to="." method="_on_hitbox_hit"]
+
+[editable path="Hitbox"]

@@ -10,7 +10,16 @@ namespace SupaLidlGame.State.Weapon
         public void Use()
         {
             var state = CurrentState.Use();
-            if (state is not null)
+            if (state is WeaponState)
+            {
+                ChangeState(state);
+            }
+        }
+
+        public void Deuse()
+        {
+            var state = CurrentState.Deuse();
+            if (state is WeaponState)
             {
                 ChangeState(state);
             }

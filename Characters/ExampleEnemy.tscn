@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://State/Character/NPCMoveState.cs" id="6_73mr6"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="6_jo0cg"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_43gq8"]
-[ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
+[ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="8_s3c8r"]
 [ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="10_n1e64"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ms3xg"]

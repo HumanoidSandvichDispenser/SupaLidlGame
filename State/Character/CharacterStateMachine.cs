@@ -31,7 +31,7 @@ namespace SupaLidlGame.State.Character
         public void Input(InputEvent @event)
         {
             var state = CurrentState.Input(@event);
-            if (state is not null)
+            if (state is CharacterState)
             {
                 ChangeState(state);
             }

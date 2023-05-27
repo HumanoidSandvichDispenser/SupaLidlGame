@@ -342,12 +342,12 @@ AnimationTree = NodePath("AnimationTree")
 AttackTime = 0.2
 AttackAnimationDuration = 1.0
 ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
-NPCAnticipateTime = 0.4
+NPCAnticipateTime = 0.3
 StateMachine = NodePath("State")
-Damage = 20.0
-UseTime = 0.4
-Knockback = 64.0
 Anchor = NodePath("Anchor")
+Damage = 20.0
+UseTime = 0.8
+Knockback = 64.0
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_vwirq")

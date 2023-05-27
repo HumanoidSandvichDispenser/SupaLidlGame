@@ -10,49 +10,31 @@ namespace SupaLidlGame.Items.Weapons
         [Export]
         public float ChargeTime { get; set; }
 
-        public bool IsChargeable => ChargeTime > 0;
+        [Export]
+        public State.Weapon.WeaponStateMachine StateMachine { get; set; }
 
-        public double ChargeProgress { get; protected set; }
+        public override bool IsUsing => StateMachine.CurrentState
+            is State.Weapon.RangedFireState;
+
+        public bool IsChargeable => ChargeTime > 0;
 
         public bool IsCharging { get; protected set; }
 
         public override void Use()
         {
-            if (RemainingUseTime > 0)
-            {
-                return;
-            }
-
-            if (IsChargeable)
-            {
-                IsCharging = true;
-            }
-            else
-            {
-                Attack();
-            }
-
+            StateMachine.Use();
             base.Use();
         }
 
         public override void Deuse()
         {
-            if (IsChargeable && IsCharging)
-            {
-                Attack();
-                IsCharging = false;
-            }
-
+            StateMachine.Deuse();
             base.Deuse();
         }
 
         public override void _Process(double delta)
         {
-            if (IsCharging)
-            {
-                ChargeProgress += delta;
-            }
-
+            StateMachine.Process(delta);
             base._Process(delta);
         }
 

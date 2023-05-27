@@ -46,8 +46,14 @@ namespace SupaLidlGame.State.Character
 
             if (Godot.Input.IsActionPressed("attack1"))
             {
-                if (Character.Inventory.SelectedItem is not null)
+                var item = Character.Inventory.SelectedItem;
+                if (item is not null)
                 {
+                    if (!item.IsUsing)
+                    {
+                        Character.Target = dirToMouse;
+                    }
+                    Character.Target = dirToMouse;
                     Character.UseCurrentItem();
                 }
             }

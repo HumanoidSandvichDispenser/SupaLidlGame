@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="5_rgckv"]
 [ext_resource type="Script" path="res://State/Character/PlayerIdleState.cs" id="6_wkfdm"]
-[ext_resource type="PackedScene" uid="uid://d72ehtv1ks0e" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
+[ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
 [ext_resource type="Script" path="res://State/Character/PlayerMoveState.cs" id="7_dfqd8"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
@@ -208,8 +208,7 @@ InventoryMap = {
 "equip_2": 1
 }
 
-[node name="Sword" parent="Inventory" instance=ExtResource("7_4rxuv")]
-position = Vector2(0, 2)
+[node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
 
 [node name="Hurtbox" parent="." instance=ExtResource("9_avyu4")]
 Faction = 1

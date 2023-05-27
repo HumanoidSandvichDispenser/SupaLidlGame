@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using SupaLidlGame.Characters;
 using SupaLidlGame.Items;
@@ -81,6 +80,7 @@ namespace SupaLidlGame.BoundingBoxes
         {
             if (area is BoundingBox box)
             {
+                GD.Print("hit");
                 // we don't want to hurt teammates
                 if (Faction != box.Faction)
                 {

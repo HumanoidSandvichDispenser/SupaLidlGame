@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bxtpv6jqodj4v"]
+[gd_scene load_steps=7 format=3 uid="uid://bxtpv6jqodj4v"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_vly6f"]
 [ext_resource type="Texture2D" uid="uid://dl2h266oa2x31" path="res://Assets/Sprites/night-grass.png" id="2_ote21"]
 [ext_resource type="PackedScene" uid="uid://bf55wbq7m1gpp" path="res://Characters/ExampleEnemy.tscn" id="3_hwof6"]
+[ext_resource type="PackedScene" uid="uid://bqvseo3sbs1aj" path="res://Entities/RailBeam.tscn" id="4_vxueq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvbe3"]
 texture = ExtResource("2_ote21")
@@ -217,3 +218,6 @@ layer_5/tile_data = PackedInt32Array(786438, 262144, 3, 720899, 262144, 3, 85197
 
 [node name="ExampleEnemy" parent="Entities" index="0" instance=ExtResource("3_hwof6")]
 position = Vector2(169, 115)
+
+[node name="RailBeam" parent="." index="6" instance=ExtResource("4_vxueq")]
+position = Vector2(55, 8)
