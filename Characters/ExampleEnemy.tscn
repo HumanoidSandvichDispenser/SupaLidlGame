@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="10_n1e64"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ms3xg"]
+resource_local_to_scene = true
 shader = ExtResource("1_fx1w5")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
@@ -49,6 +50,7 @@ atlas = ExtResource("3_ocaae")
 region = Rect2(168, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6pejo"]
+resource_local_to_scene = true
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -177,7 +179,6 @@ shape = SubResource("RectangleShape2D_8lxmf")
 [node name="Inventory" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("7_43gq8")
-Items = [null]
 
 [node name="Sword" parent="Inventory" instance=ExtResource("8_s3c8r")]
 Knockback = 100.0

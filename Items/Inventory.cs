@@ -9,7 +9,7 @@ namespace SupaLidlGame.Items
         public Character Character { get; private set; }
 
         [Export]
-        public Array<Item> Items { get; private set; } = new Array<Item>();
+        public Array<Item> Items { get; private set; }
 
         [Export]
         public Dictionary<string, int> InventoryMap { get; set; }
@@ -41,6 +41,26 @@ namespace SupaLidlGame.Items
             InventoryMap.Add("equip_1", 0);
             InventoryMap.Add("equip_2", 1);
             InventoryMap.Add("equip_3", 2);
+        }
+
+        public override void _Ready()
+        {
+            if (Items is null)
+            {
+                // instantiating a new array will prevent characters from
+                // sharing inventories
+                Items = new Array<Item>();
+            }
+            Character = GetParent<Character>();
+            foreach (Node child in GetChildren())
+            {
+                if (child is Item item)
+                {
+                    GD.Print("Adding item " + item.Name);
+                    AddItem(item);
+                }
+            }
+            base._Ready();
         }
 
         private bool EquipItem(Item item, ref Item slot)
@@ -121,20 +141,6 @@ namespace SupaLidlGame.Items
             item.Visible = true;
             var e = SelectedItem = item;
             throw new System.NotImplementedException();
-        }
-
-        public override void _Ready()
-        {
-            Character = GetParent<Character>();
-            foreach (Node child in GetChildren())
-            {
-                if (child is Item item)
-                {
-                    GD.Print("Adding item " + item.Name);
-                    AddItem(item);
-                }
-            }
-            base._Ready();
         }
     }
 }
