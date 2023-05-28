@@ -130,6 +130,7 @@ namespace SupaLidlGame.Items
             {
                 if (child is Item item)
                 {
+                    GD.Print("Adding item " + item.Name);
                     AddItem(item);
                 }
             }

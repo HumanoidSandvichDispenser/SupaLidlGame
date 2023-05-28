@@ -167,7 +167,7 @@ namespace SupaLidlGame.Characters
                     CollideWithBodies = true,
                     From = GlobalPosition,
                     To = GlobalPosition + (_weightDirs[i] * 24),
-                    CollisionMask = 1 + 8
+                    CollisionMask = 1 + 2 + 16
                 };
 
                 var result = spaceState.IntersectRay(rayParams);

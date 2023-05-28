@@ -18,7 +18,15 @@ namespace SupaLidlGame.State.Weapon
             {
                 _attackCooldown = Sword.UseTime - Sword.AttackTime;
             }
+
+            Sword.Visible = !Sword.ShouldHideIdle;
+
             return null;
+        }
+
+        public override void Exit(IState<WeaponState> nextState)
+        {
+            Sword.Visible = true;
         }
 
         public override WeaponState Use()

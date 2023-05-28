@@ -35,6 +35,9 @@ namespace SupaLidlGame.Items
         [Export]
         public float InitialVelocity { get; set; } = 0;
 
+        [Export]
+        public bool ShouldHideIdle { get; set; } = false;
+
         public virtual bool IsParryable { get; protected set; } = false;
 
         public bool IsParried { get; set; }
@@ -51,7 +54,10 @@ namespace SupaLidlGame.Items
 
         public override void Equip(Character character)
         {
-            Visible = true;
+            if (!ShouldHideIdle || IsUsing)
+            {
+                Visible = true;
+            }
             Character = character;
         }
 

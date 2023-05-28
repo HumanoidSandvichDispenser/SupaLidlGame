@@ -332,7 +332,7 @@ graph_offset = Vector2(0, -104.073)
 radius = 20.0
 height = 48.0
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "AnimationTree", "ParryParticles", "StateMachine", "Anchor")]
+[node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "AnimationTree", "ParryParticles", "StateMachine", "Anchor")]
 y_sort_enabled = true
 texture_filter = 3
 script = ExtResource("1_mlo73")
@@ -348,6 +348,7 @@ Anchor = NodePath("Anchor")
 Damage = 20.0
 UseTime = 0.8
 Knockback = 64.0
+ShouldHideIdle = true
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_vwirq")

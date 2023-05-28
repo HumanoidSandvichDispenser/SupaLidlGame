@@ -32,14 +32,29 @@ namespace SupaLidlGame.State.Character
                                                         "ui_up", "ui_down");
             Vector2 mousePos = Character.GetGlobalMousePosition();
             Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
+
+            bool faceToDir = !Character.Direction.IsZeroApprox();
+
             if (Character.Inventory.SelectedItem is Items.Weapon weapon)
             {
                 if (!weapon.IsUsing)
                 {
-                    Character.Target = dirToMouse;
+                    if (weapon.ShouldHideIdle)
+                    {
+                        faceToDir = true;
+                    }
+                    else
+                    {
+                        Character.Target = dirToMouse;
+                    }
+                }
+                else
+                {
+                    faceToDir = false;
                 }
             }
-            else if (!Character.Direction.IsZeroApprox())
+
+            if (faceToDir)
             {
                 Character.Target = Character.Direction;
             }
@@ -53,7 +68,6 @@ namespace SupaLidlGame.State.Character
                     {
                         Character.Target = dirToMouse;
                     }
-                    Character.Target = dirToMouse;
                     Character.UseCurrentItem();
                 }
             }

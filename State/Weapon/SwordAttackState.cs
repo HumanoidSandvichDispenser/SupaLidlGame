@@ -39,9 +39,7 @@ namespace SupaLidlGame.State.Weapon
             _useDuration = Sword.UseTime;
             _attackAnimDuration = Sword.AttackAnimationDuration;
 
-            GD.Print(_attackDuration);
-            GD.Print(_useDuration);
-            GD.Print(_attackAnimDuration);
+            Sword.Visible = true;
 
             return null;
         }
@@ -60,7 +58,7 @@ namespace SupaLidlGame.State.Weapon
                 {
                     _isAlternate = !_isAlternate;
                 }
-                return AnticipateState;
+                return IdleState;
             }
 
             return null;

@@ -7,7 +7,14 @@ namespace SupaLidlGame.State.Weapon
         [Export]
         public RangedFireState FireState { get; set; }
 
-        public override IState<WeaponState> Enter(IState<WeaponState> prev) => null;
+        [Export]
+        public Items.Weapons.Ranged Weapon { get; set; }
+
+        public override IState<WeaponState> Enter(IState<WeaponState> prev)
+        {
+            Weapon.Visible = !Weapon.ShouldHideIdle;
+            return null;
+        }
 
         public override WeaponState Use()
         {
@@ -16,7 +23,7 @@ namespace SupaLidlGame.State.Weapon
 
         public override void Exit(IState<WeaponState> nextState)
         {
-
+            Weapon.Visible = true;
         }
     }
 }

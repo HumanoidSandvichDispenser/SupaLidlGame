@@ -189,6 +189,8 @@ namespace SupaLidlGame.Characters
 
             ApplyImpulse(knockbackDir.Normalized() * knockback);
 
+            GD.Print("lol");
+
             // play damage animation
             var anim = GetNode<AnimationPlayer>("FlashAnimation");
             if (anim != null)
