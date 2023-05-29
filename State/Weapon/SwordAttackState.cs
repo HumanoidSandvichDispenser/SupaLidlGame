@@ -40,7 +40,7 @@ namespace SupaLidlGame.State.Weapon
             _attackAnimDuration = Sword.AttackAnimationDuration;
 
             Sword.Visible = true;
-
+            Sword.UseDirection = Sword.Character.Target;
             return null;
         }
 

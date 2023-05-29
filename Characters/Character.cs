@@ -159,6 +159,14 @@ namespace SupaLidlGame.Characters
             }
         }
 
+        public void LookTowardsDirection()
+        {
+            if (!Direction.IsZeroApprox())
+            {
+                Target = Direction;
+            }
+        }
+
         public virtual void _on_hurtbox_received_damage(
             float damage,
             Character inflictor,

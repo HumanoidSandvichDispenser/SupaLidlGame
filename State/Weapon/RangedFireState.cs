@@ -17,6 +17,7 @@ namespace SupaLidlGame.State.Weapon
             //_timeLeft
             _timeLeft = Weapon.UseTime;
             Weapon.Attack();
+            Weapon.UseDirection = Weapon.Character.Target;
             return null;
         }
 

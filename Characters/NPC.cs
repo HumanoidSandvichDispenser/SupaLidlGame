@@ -216,7 +216,7 @@ namespace SupaLidlGame.Characters
                 float dist = GlobalPosition.DistanceSquaredTo(pos);
                 UpdateWeights(pos);
 
-                if (Target.LengthSquared() < 1024)
+                if (dist < 1024)
                 {
                     if (Inventory.SelectedItem is Weapon weapon)
                     {

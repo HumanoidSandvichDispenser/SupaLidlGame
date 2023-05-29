@@ -27,9 +27,10 @@ UseTime = 1.0
 script = ExtResource("1_xynim")
 InitialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("FireState")]
+[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("FireState", "Weapon")]
 script = ExtResource("2_a4hhy")
 FireState = NodePath("../Fire")
+Weapon = NodePath("../..")
 
 [node name="Fire" type="Node" parent="State" node_paths=PackedStringArray("Weapon", "IdleState")]
 script = ExtResource("3_dcbnq")

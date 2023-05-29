@@ -30,47 +30,41 @@ namespace SupaLidlGame.State.Character
         {
             Character.Direction = Godot.Input.GetVector("ui_left", "ui_right",
                                                         "ui_up", "ui_down");
+            Character.LookTowardsDirection();
+
             Vector2 mousePos = Character.GetGlobalMousePosition();
             Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
 
-            bool faceToDir = !Character.Direction.IsZeroApprox();
-
-            if (Character.Inventory.SelectedItem is Items.Weapon weapon)
+            bool targetTowards(Items.Item item)
             {
-                if (!weapon.IsUsing)
+                if (Character.Inventory.SelectedItem is Items.Weapon weapon)
                 {
-                    if (weapon.ShouldHideIdle)
+                    if (!weapon.IsUsing)
                     {
-                        faceToDir = true;
-                    }
-                    else
-                    {
-                        Character.Target = dirToMouse;
+                        var isPressed = Godot.Input.IsActionPressed("attack1");
+                        var ret = false;
+
+                        if (!weapon.ShouldHideIdle || isPressed)
+                        {
+                            Character.Target = dirToMouse;
+                            ret = true;
+                        }
+
+                        if (isPressed)
+                        {
+                            Character.UseCurrentItem();
+                        }
+
+                        return ret;
                     }
                 }
-                else
-                {
-                    faceToDir = false;
-                }
+                return false;
             }
 
-            if (faceToDir)
-            {
-                Character.Target = Character.Direction;
-            }
+            var item = Character.Inventory.SelectedItem;
+            var offhand = Character.Inventory.OffhandItem;
 
-            if (Godot.Input.IsActionPressed("attack1"))
-            {
-                var item = Character.Inventory.SelectedItem;
-                if (item is not null)
-                {
-                    if (!item.IsUsing)
-                    {
-                        Character.Target = dirToMouse;
-                    }
-                    Character.UseCurrentItem();
-                }
-            }
+            var _ = targetTowards(item) || targetTowards(offhand);
 
             return base.Process(delta);
         }

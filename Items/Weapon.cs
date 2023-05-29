@@ -35,8 +35,23 @@ namespace SupaLidlGame.Items
         [Export]
         public float InitialVelocity { get; set; } = 0;
 
+        /// <summary>
+        /// Hides the weapon if it is idle (i.e. not being used).
+        /// </summary>
         [Export]
         public bool ShouldHideIdle { get; set; } = false;
+
+        /// <summary>
+        /// Freezes the player's target angle if this weapon is being used.
+        /// </summary>
+        [Export]
+        public bool ShouldFreezeAngleOnUse { get; set; } = true;
+
+        [Export]
+        public float MinDistanceHint { get; set; }
+
+        [Export]
+        public float MaxDistanceHint { get; set; }
 
         public virtual bool IsParryable { get; protected set; } = false;
 
@@ -44,11 +59,7 @@ namespace SupaLidlGame.Items
 
         public Character Character { get; set; }
 
-        [Export]
-        public float MinDistanceHint { get; set; }
-
-        [Export]
-        public float MaxDistanceHint { get; set; }
+        public Vector2 UseDirection { get; set; }
 
         public override bool StacksWith(Item item) => false;
 
