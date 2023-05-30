@@ -62,10 +62,10 @@ script = ExtResource("1_w4gfp")
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_o6lfi")
-animation = &"active"
+frame_progress = 0.387757
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(0.976471, 0.564706, 0.168627, 1)
+color = Color(0.996078, 0.780392, 0.615686, 1)
 energy = 2.0
 blend_mode = 2
 texture = ExtResource("3_lm3vq")

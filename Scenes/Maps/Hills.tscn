@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bxtpv6jqodj4v"]
+[gd_scene load_steps=14 format=3 uid="uid://bxtpv6jqodj4v"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_vly6f"]
 [ext_resource type="Texture2D" uid="uid://dl2h266oa2x31" path="res://Assets/Sprites/night-grass.png" id="2_ote21"]
 [ext_resource type="PackedScene" uid="uid://bf55wbq7m1gpp" path="res://Characters/ExampleEnemy.tscn" id="3_hwof6"]
+[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="4_mwgaq"]
 [ext_resource type="PackedScene" uid="uid://5nvn1tw56m8e" path="res://Utils/Spawner.tscn" id="4_pi4df"]
-[ext_resource type="PackedScene" uid="uid://bqvseo3sbs1aj" path="res://Entities/RailBeam.tscn" id="4_vxueq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvbe3"]
 texture = ExtResource("2_ote21")
@@ -211,6 +211,36 @@ physics_layer_0/collision_mask = 16
 physics_layer_1/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dvbe3")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kq7i3"]
+resource_local_to_scene = true
+shader = ExtResource("4_mwgaq")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ck37u"]
+resource_local_to_scene = true
+shader = ExtResource("4_mwgaq")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3i2mi"]
+resource_local_to_scene = true
+shader = ExtResource("4_mwgaq")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_trolh"]
+resource_local_to_scene = true
+shader = ExtResource("4_mwgaq")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vuv4g"]
+resource_local_to_scene = true
+shader = ExtResource("4_mwgaq")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oods2"]
 size = Vector2(128, 64)
 
@@ -221,18 +251,23 @@ layer_4/tile_data = PackedInt32Array(1114105, 196608, 3, 1114106, 262144, 3, 111
 layer_5/tile_data = PackedInt32Array(786438, 262144, 3, 720899, 262144, 3, 851971, 458752, 3, 196611, 458752, 3, 1835019, 262144, 3, 1835034, 458752, 3)
 
 [node name="ExampleEnemy" parent="Entities" index="0" instance=ExtResource("3_hwof6")]
+material = SubResource("ShaderMaterial_kq7i3")
 position = Vector2(169, 115)
 
 [node name="ExampleEnemy2" parent="Entities" index="1" instance=ExtResource("3_hwof6")]
+material = SubResource("ShaderMaterial_ck37u")
 position = Vector2(75, 130)
 
 [node name="ExampleEnemy3" parent="Entities" index="2" instance=ExtResource("3_hwof6")]
+material = SubResource("ShaderMaterial_3i2mi")
 position = Vector2(140, 177)
 
 [node name="ExampleEnemy4" parent="Entities" index="3" instance=ExtResource("3_hwof6")]
+material = SubResource("ShaderMaterial_trolh")
 position = Vector2(14, 159)
 
 [node name="ExampleEnemy5" parent="Entities" index="4" instance=ExtResource("3_hwof6")]
+material = SubResource("ShaderMaterial_vuv4g")
 position = Vector2(10, 22)
 Faction = 1
 
@@ -243,8 +278,5 @@ SpawnTime = 5.0
 
 [node name="CollisionShape2D" parent="Spawners/Spawner/Area2D" index="0"]
 shape = SubResource("RectangleShape2D_oods2")
-
-[node name="RailBeam" parent="." index="6" instance=ExtResource("4_vxueq")]
-position = Vector2(55, 8)
 
 [editable path="Spawners/Spawner"]
