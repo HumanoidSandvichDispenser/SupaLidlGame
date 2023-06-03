@@ -17,7 +17,18 @@ namespace SupaLidlGame.Entities
         [Export]
         public Hitbox Hitbox { get; set; }
 
+        [Export]
+        public double Lifetime { get; set; } = 10;
+
         public Character Character { get; set; }
+
+        public override void _Process(double delta)
+        {
+            if ((Lifetime -= delta) <= 0)
+            {
+                QueueFree();
+            }
+        }
 
         public override void _PhysicsProcess(double delta)
         {
