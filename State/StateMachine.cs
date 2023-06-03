@@ -20,7 +20,7 @@ namespace SupaLidlGame.State
                 return false;
             }
 
-            if (CurrentState != null)
+            if (CurrentState is not null)
             {
                 CurrentState.Exit(nextState);
             }

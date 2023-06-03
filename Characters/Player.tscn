@@ -204,7 +204,6 @@ horizontal_alignment = 1
 y_sort_enabled = true
 position = Vector2(0, 4)
 script = ExtResource("7_xyenu")
-Items = Array[Node2D]([])
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1
@@ -213,6 +212,7 @@ InventoryMap = {
 [node name="Railgun" parent="Inventory" instance=ExtResource("10_7kb8b")]
 
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
+ShouldHideIdle = false
 
 [node name="Hurtbox" parent="." instance=ExtResource("9_avyu4")]
 Faction = 1

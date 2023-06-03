@@ -1,6 +1,5 @@
 using Godot;
 using SupaLidlGame.Utils;
-using SupaLidlGame.State;
 
 namespace SupaLidlGame.Characters
 {

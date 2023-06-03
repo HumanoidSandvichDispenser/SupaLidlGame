@@ -8,7 +8,7 @@ namespace SupaLidlGame.Entities
         private PointLight2D _light;
 
         [Signal]
-        public delegate void OnCampfireUse();
+        public delegate void OnCampfireUseEventHandler();
 
         public override void _Ready()
         {
