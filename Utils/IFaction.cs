@@ -1,13 +1,12 @@
 using Godot;
 
-namespace SupaLidlGame.Utils
+namespace SupaLidlGame.Utils;
+
+public interface IFaction
 {
-    public interface IFaction
-    {
-        /// <summary>
-        /// The faction index that this entity belongs to.
-        /// </summary>
-        [Export]
-        public ushort Faction { get; set; }
-    }
+    /// <summary>
+    /// The faction index that this entity belongs to.
+    /// </summary>
+    [Export]
+    public ushort Faction { get; set; }
 }

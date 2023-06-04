@@ -1,26 +1,25 @@
 using Godot;
 
-namespace SupaLidlGame.State.Character
+namespace SupaLidlGame.State.Character;
+
+public partial class NPCIdleState : NPCState
 {
-    public partial class NPCIdleState : NPCState
+    [Export]
+    public CharacterState MoveState { get; set; }
+
+    public override CharacterState Process(double delta)
     {
-        [Export]
-        public CharacterState MoveState { get; set; }
-
-        public override CharacterState Process(double delta)
+        base.Process(delta);
+        if (Character.Direction.LengthSquared() > 0)
         {
-            base.Process(delta);
-            if (Character.Direction.LengthSquared() > 0)
-            {
-                return MoveState;
-            }
-            return null;
+            return MoveState;
         }
+        return null;
+    }
 
-        public override IState<CharacterState> Enter(IState<CharacterState> previousState)
-        {
-            Character.Sprite.Play("idle");
-            return base.Enter(previousState);
-        }
+    public override IState<CharacterState> Enter(IState<CharacterState> previousState)
+    {
+        Character.Sprite.Play("idle");
+        return base.Enter(previousState);
     }
 }

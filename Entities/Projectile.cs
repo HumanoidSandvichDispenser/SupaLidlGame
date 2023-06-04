@@ -2,51 +2,50 @@ using Godot;
 using SupaLidlGame.Characters;
 using SupaLidlGame.BoundingBoxes;
 
-namespace SupaLidlGame.Entities
+namespace SupaLidlGame.Entities;
+
+public partial class Projectile : RigidBody2D
 {
-    public partial class Projectile : RigidBody2D
+    public Vector2 Velocity => Direction * Speed;
+
+    [Export]
+    public float Speed { get; set; }
+
+    [Export]
+    public Vector2 Direction { get; set; }
+
+    [Export]
+    public Hitbox Hitbox { get; set; }
+
+    [Export]
+    public double Lifetime { get; set; } = 10;
+
+    public Character Character { get; set; }
+
+    public override void _Process(double delta)
     {
-        public Vector2 Velocity => Direction * Speed;
-
-        [Export]
-        public float Speed { get; set; }
-
-        [Export]
-        public Vector2 Direction { get; set; }
-
-        [Export]
-        public Hitbox Hitbox { get; set; }
-
-        [Export]
-        public double Lifetime { get; set; } = 10;
-
-        public Character Character { get; set; }
-
-        public override void _Process(double delta)
+        if ((Lifetime -= delta) <= 0)
         {
-            if ((Lifetime -= delta) <= 0)
-            {
-                QueueFree();
-            }
+            QueueFree();
         }
+    }
 
-        public override void _PhysicsProcess(double delta)
-        {
-            Vector2 velocity = Velocity;
-            MoveAndCollide(velocity * (float)delta);
-        }
+    public override void _PhysicsProcess(double delta)
+    {
+        Vector2 velocity = Velocity;
+        MoveAndCollide(velocity * (float)delta);
+    }
 
-        public void _on_hitbox_hit(BoundingBox box)
+    public void _on_hitbox_hit(BoundingBox box)
+    {
+        if (box is Hurtbox hurtbox)
         {
-            if (box is Hurtbox hurtbox)
-            {
-                hurtbox.InflictDamage(
-                    Hitbox.Damage,
-                    Character,
-                    Hitbox.Knockback,
-                    knockbackVector: Direction
-                );
-            }
+            hurtbox.InflictDamage(
+                Hitbox.Damage,
+                Character,
+                Hitbox.Knockback,
+                knockbackVector: Direction
+            );
         }
     }
 }

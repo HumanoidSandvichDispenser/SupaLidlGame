@@ -1,38 +1,37 @@
 using Godot;
 
-namespace SupaLidlGame.State.Weapon
+namespace SupaLidlGame.State.Weapon;
+
+public partial class RangedFireState : WeaponState
 {
-    public partial class RangedFireState : WeaponState
+    [Export]
+    public Items.Weapons.Ranged Weapon { get; set; }
+
+    [Export]
+    public RangedIdleState IdleState { get; set; }
+
+    private double _timeLeft = 0;
+
+    public override IState<WeaponState> Enter(IState<WeaponState> prev)
     {
-        [Export]
-        public Items.Weapons.Ranged Weapon { get; set; }
+        //_timeLeft
+        _timeLeft = Weapon.UseTime;
+        Weapon.Attack();
+        Weapon.UseDirection = Weapon.Character.Target;
+        return null;
+    }
 
-        [Export]
-        public RangedIdleState IdleState { get; set; }
-
-        private double _timeLeft = 0;
-
-        public override IState<WeaponState> Enter(IState<WeaponState> prev)
+    public override WeaponState Process(double delta)
+    {
+        if ((_timeLeft -= delta) <= 0)
         {
-            //_timeLeft
-            _timeLeft = Weapon.UseTime;
-            Weapon.Attack();
-            Weapon.UseDirection = Weapon.Character.Target;
-            return null;
+            return IdleState;
         }
+        return null;
+    }
 
-        public override WeaponState Process(double delta)
-        {
-            if ((_timeLeft -= delta) <= 0)
-            {
-                return IdleState;
-            }
-            return null;
-        }
+    public override void Exit(IState<WeaponState> nextState)
+    {
 
-        public override void Exit(IState<WeaponState> nextState)
-        {
-
-        }
     }
 }

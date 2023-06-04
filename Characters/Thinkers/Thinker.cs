@@ -1,10 +1,9 @@
-namespace SupaLidlGame.Characters.Thinkers
-{
-    public class Thinker
-    {
-        public virtual void Think()
-        {
+namespace SupaLidlGame.Characters.Thinkers;
 
-        }
+public class Thinker
+{
+    public virtual void Think()
+    {
+
     }
 }

@@ -1,41 +1,40 @@
 using Godot;
 
-namespace SupaLidlGame.Extensions
+namespace SupaLidlGame.Extensions;
+
+public static class Vector2Extensions
 {
-    public static class Vector2Extensions
+    public static Vector2 Midpoint(this Vector2 vector, Vector2 other)
     {
-        public static Vector2 Midpoint(this Vector2 vector, Vector2 other)
+        return new Vector2((vector.X + other.X) / 2,
+                           (vector.Y + other.Y) / 2);
+    }
+
+    public static Vector2 Midpoints(params Vector2[] vectors)
+    {
+        int length = vectors.Length;
+        float x = 0;
+        float y = 0;
+
+        for (int i = 0; i < length; i++)
         {
-            return new Vector2((vector.X + other.X) / 2,
-                               (vector.Y + other.Y) / 2);
+            x += vectors[i].X;
+            y += vectors[i].Y;
         }
 
-        public static Vector2 Midpoints(params Vector2[] vectors)
-        {
-            int length = vectors.Length;
-            float x = 0;
-            float y = 0;
+        return new Vector2(x / length, y / length);
+    }
 
-            for (int i = 0; i < length; i++)
-            {
-                x += vectors[i].X;
-                y += vectors[i].Y;
-            }
+    /// <summary>
+    /// Returns this vector 90 degrees counter clockwise (x, y) -> (-y, x)
+    /// </summary>
+    public static Vector2 Counterclockwise90(this Vector2 vector)
+    {
+        return new Vector2(-vector.Y, vector.X);
+    }
 
-            return new Vector2(x / length, y / length);
-        }
-
-        /// <summary>
-        /// Returns this vector 90 degrees counter clockwise (x, y) -> (-y, x)
-        /// </summary>
-        public static Vector2 Counterclockwise90(this Vector2 vector)
-        {
-            return new Vector2(-vector.Y, vector.X);
-        }
-
-        public static Vector2 Clockwise90(this Vector2 vector)
-        {
-            return new Vector2(vector.Y, -vector.X);
-        }
+    public static Vector2 Clockwise90(this Vector2 vector)
+    {
+        return new Vector2(vector.Y, -vector.X);
     }
 }

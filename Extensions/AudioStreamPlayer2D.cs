@@ -2,72 +2,71 @@ using Godot;
 using System;
 using SupaLidlGame.Utils;
 
-namespace SupaLidlGame.Extensions
+namespace SupaLidlGame.Extensions;
+
+public static class AudioStreamPlayer2DExtensions
 {
-    public static class AudioStreamPlayer2DExtensions
+    public static AudioStreamPlayer2D Clone(
+        this AudioStreamPlayer2D audio)
     {
-        public static AudioStreamPlayer2D Clone(
-            this AudioStreamPlayer2D audio)
+        var clone = audio.Duplicate() as AudioStreamPlayer2D;
+        clone.Finished += () =>
         {
-            var clone = audio.Duplicate() as AudioStreamPlayer2D;
-            clone.Finished += () =>
-            {
-                clone.QueueFree();
-            };
-            return clone;
+            clone.QueueFree();
+        };
+        return clone;
+    }
+
+    public static AudioStreamPlayer2D On(
+        this AudioStreamPlayer2D audio,
+        Node parent)
+    {
+        var clone = audio.Clone();
+        parent.AddChild(clone);
+        clone.GlobalPosition = audio.GlobalPosition;
+        return clone;
+    }
+
+    public static AudioStreamPlayer2D OnWorld(
+        this AudioStreamPlayer2D audio)
+    {
+        var world = audio.GetTree().Root.GetNode("World/TileMap");
+        if (world is null)
+        {
+            throw new NullReferenceException("World does not exist");
+        }
+        var clone = audio.On(world);
+        clone.GlobalPosition = audio.GlobalPosition;
+        return clone;
+    }
+
+    public static AudioStreamPlayer2D At(
+        this AudioStreamPlayer2D audio,
+        Vector2 globalPosition)
+    {
+        var world = audio.GetTree().Root.GetNode("World/TileMap");
+        if (world is null)
+        {
+            throw new NullReferenceException("World does not exist");
         }
 
-        public static AudioStreamPlayer2D On(
-            this AudioStreamPlayer2D audio,
-            Node parent)
+        var parent = new Node2D();
+        world.AddChild(parent);
+        parent.GlobalPosition = globalPosition;
+
+        var clone = audio.On(world);
+        clone.Finished += () =>
         {
-            var clone = audio.Clone();
-            parent.AddChild(clone);
-            clone.GlobalPosition = audio.GlobalPosition;
-            return clone;
-        }
+            parent.QueueFree();
+        };
+        return clone;
+    }
 
-        public static AudioStreamPlayer2D OnWorld(
-            this AudioStreamPlayer2D audio)
-        {
-            var world = audio.GetTree().Root.GetNode("World/TileMap");
-            if (world is null)
-            {
-                throw new NullReferenceException("World does not exist");
-            }
-            var clone = audio.On(world);
-            clone.GlobalPosition = audio.GlobalPosition;
-            return clone;
-        }
-
-        public static AudioStreamPlayer2D At(
-            this AudioStreamPlayer2D audio,
-            Vector2 globalPosition)
-        {
-            var world = audio.GetTree().Root.GetNode("World/TileMap");
-            if (world is null)
-            {
-                throw new NullReferenceException("World does not exist");
-            }
-
-            var parent = new Node2D();
-            world.AddChild(parent);
-            parent.GlobalPosition = globalPosition;
-
-            var clone = audio.On(world);
-            clone.Finished += () =>
-            {
-                parent.QueueFree();
-            };
-            return clone;
-        }
-
-        public static AudioStreamPlayer2D WithPitchDeviation(
-            this AudioStreamPlayer2D audio,
-            float deviation)
-        {
-            audio.PitchScale = (float)GD.Randfn(audio.PitchScale, deviation);
-            return audio;
-        }
+    public static AudioStreamPlayer2D WithPitchDeviation(
+        this AudioStreamPlayer2D audio,
+        float deviation)
+    {
+        audio.PitchScale = (float)GD.Randfn(audio.PitchScale, deviation);
+        return audio;
     }
 }

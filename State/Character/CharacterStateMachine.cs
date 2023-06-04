@@ -1,40 +1,39 @@
 using Godot;
 
-namespace SupaLidlGame.State.Character
+namespace SupaLidlGame.State.Character;
+
+public partial class CharacterStateMachine : StateMachine<CharacterState>
 {
-    public partial class CharacterStateMachine : StateMachine<CharacterState>
+    [Export]
+    public override CharacterState InitialState { get; set; }
+
+    [Export]
+    public Characters.Character Character { get; set; }
+
+    public void Process(double delta)
     {
-        [Export]
-        public override CharacterState InitialState { get; set; }
-
-        [Export]
-        public Characters.Character Character { get; set; }
-
-        public void Process(double delta)
+        var state = CurrentState.Process(delta);
+        if (state is CharacterState)
         {
-            var state = CurrentState.Process(delta);
-            if (state is CharacterState)
-            {
-                ChangeState(state);
-            }
+            ChangeState(state);
         }
+    }
 
-        public void PhysicsProcess(double delta)
+    public void PhysicsProcess(double delta)
+    {
+        var state = CurrentState.PhysicsProcess(delta);
+        if (state is CharacterState)
         {
-            var state = CurrentState.PhysicsProcess(delta);
-            if (state is CharacterState)
-            {
-                ChangeState(state);
-            }
+            ChangeState(state);
         }
+    }
 
-        public void Input(InputEvent @event)
+    public void Input(InputEvent @event)
+    {
+        var state = CurrentState.Input(@event);
+        if (state is CharacterState)
         {
-            var state = CurrentState.Input(@event);
-            if (state is CharacterState)
-            {
-                ChangeState(state);
-            }
+            ChangeState(state);
         }
     }
 }

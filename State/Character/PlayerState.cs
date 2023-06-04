@@ -1,72 +1,71 @@
 using Godot;
 using SupaLidlGame.Characters;
 
-namespace SupaLidlGame.State.Character
+namespace SupaLidlGame.State.Character;
+
+public abstract partial class PlayerState : CharacterState
 {
-    public abstract partial class PlayerState : CharacterState
+    protected Player _player => Character as Player;
+
+    [Export]
+    public PlayerIdleState IdleState { get; set; }
+
+    public override CharacterState Input(InputEvent @event)
     {
-        protected Player _player => Character as Player;
+        var inventory = Character.Inventory;
 
-        [Export]
-        public PlayerIdleState IdleState { get; set; }
-
-        public override CharacterState Input(InputEvent @event)
+        if (this is PlayerIdleState or PlayerMoveState &&
+                !_player.Inventory.IsUsingItem)
         {
-            var inventory = Character.Inventory;
-
-            if (this is PlayerIdleState or PlayerMoveState &&
-                    !_player.Inventory.IsUsingItem)
+            if (@event.IsActionPressed("equip_1"))
             {
-                if (@event.IsActionPressed("equip_1"))
-                {
-                    inventory.SelectedItem = inventory.GetItemByMap("equip_1");
-                }
+                inventory.SelectedItem = inventory.GetItemByMap("equip_1");
             }
-
-            return base.Input(@event);
         }
 
-        public override CharacterState Process(double delta)
+        return base.Input(@event);
+    }
+
+    public override CharacterState Process(double delta)
+    {
+        Character.Direction = Godot.Input.GetVector("ui_left", "ui_right",
+                                                    "ui_up", "ui_down");
+        Character.LookTowardsDirection();
+
+        Vector2 mousePos = Character.GetGlobalMousePosition();
+        Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
+
+        bool targetTowards(Items.Item item)
         {
-            Character.Direction = Godot.Input.GetVector("ui_left", "ui_right",
-                                                        "ui_up", "ui_down");
-            Character.LookTowardsDirection();
-
-            Vector2 mousePos = Character.GetGlobalMousePosition();
-            Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
-
-            bool targetTowards(Items.Item item)
+            if (Character.Inventory.SelectedItem is Items.Weapon weapon)
             {
-                if (Character.Inventory.SelectedItem is Items.Weapon weapon)
+                if (!weapon.IsUsing)
                 {
-                    if (!weapon.IsUsing)
+                    var isPressed = Godot.Input.IsActionPressed("attack1");
+                    var ret = false;
+
+                    if (!weapon.ShouldHideIdle || isPressed)
                     {
-                        var isPressed = Godot.Input.IsActionPressed("attack1");
-                        var ret = false;
-
-                        if (!weapon.ShouldHideIdle || isPressed)
-                        {
-                            Character.Target = dirToMouse;
-                            ret = true;
-                        }
-
-                        if (isPressed)
-                        {
-                            Character.UseCurrentItem();
-                        }
-
-                        return ret;
+                        Character.Target = dirToMouse;
+                        ret = true;
                     }
+
+                    if (isPressed)
+                    {
+                        Character.UseCurrentItem();
+                    }
+
+                    return ret;
                 }
-                return false;
             }
-
-            var item = Character.Inventory.SelectedItem;
-            var offhand = Character.Inventory.OffhandItem;
-
-            var _ = targetTowards(item) || targetTowards(offhand);
-
-            return base.Process(delta);
+            return false;
         }
+
+        var item = Character.Inventory.SelectedItem;
+        var offhand = Character.Inventory.OffhandItem;
+
+        var _ = targetTowards(item) || targetTowards(offhand);
+
+        return base.Process(delta);
     }
 }

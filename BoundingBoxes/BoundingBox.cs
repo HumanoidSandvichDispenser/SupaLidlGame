@@ -1,11 +1,10 @@
 using Godot;
 using SupaLidlGame.Utils;
 
-namespace SupaLidlGame.BoundingBoxes
+namespace SupaLidlGame.BoundingBoxes;
+
+public abstract partial class BoundingBox : Area2D, IFaction
 {
-    public abstract partial class BoundingBox : Area2D, IFaction
-    {
-        [Export]
-        public ushort Faction { get; set; }
-    }
+    [Export]
+    public ushort Faction { get; set; }
 }

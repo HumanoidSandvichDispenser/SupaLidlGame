@@ -1,10 +1,9 @@
-namespace SupaLidlGame.Items.Weapons
+namespace SupaLidlGame.Items.Weapons;
+
+public interface IParryable
 {
-    public interface IParryable
-    {
-        public bool IsParryable { get; }
-        public bool IsParried { get; }
-        public ulong ParryTimeOrigin { get; }
-        public void Stun();
-    }
+    public bool IsParryable { get; }
+    public bool IsParried { get; }
+    public ulong ParryTimeOrigin { get; }
+    public void Stun();
 }

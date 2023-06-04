@@ -1,46 +1,45 @@
 using Godot;
 
-namespace SupaLidlGame.State.Character
+namespace SupaLidlGame.State.Character;
+
+public partial class PlayerMoveState : PlayerState
 {
-    public partial class PlayerMoveState : PlayerState
+    [Export]
+    public PlayerRollState RollState { get; set; }
+
+    public override IState<CharacterState> Enter(IState<CharacterState> previousState)
     {
-        [Export]
-        public PlayerRollState RollState { get; set; }
+        Godot.GD.Print("Started moving");
+        _player.Animation = "move";
+        return base.Enter(previousState);
+    }
 
-        public override IState<CharacterState> Enter(IState<CharacterState> previousState)
+    public override CharacterState Process(double delta)
+    {
+        base.Process(delta);
+        if (Character.Direction.LengthSquared() == 0)
         {
-            Godot.GD.Print("Started moving");
-            _player.Animation = "move";
-            return base.Enter(previousState);
+            return IdleState;
         }
+        return null;
+    }
 
-        public override CharacterState Process(double delta)
+    public override CharacterState Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("roll"))
         {
-            base.Process(delta);
-            if (Character.Direction.LengthSquared() == 0)
+            if (Character.Inventory.SelectedItem is Items.Weapon weapon)
             {
-                return IdleState;
-            }
-            return null;
-        }
-
-        public override CharacterState Input(InputEvent @event)
-        {
-            if (@event.IsActionPressed("roll"))
-            {
-                if (Character.Inventory.SelectedItem is Items.Weapon weapon)
-                {
-                    if (!weapon.IsUsing)
-                    {
-                        return RollState;
-                    }
-                }
-                else
+                if (!weapon.IsUsing)
                 {
                     return RollState;
                 }
             }
-            return base.Input(@event);
+            else
+            {
+                return RollState;
+            }
         }
+        return base.Input(@event);
     }
 }

@@ -1,41 +1,40 @@
 using Godot;
 
-namespace SupaLidlGame.State
+namespace SupaLidlGame.State;
+
+public abstract partial class StateMachine<T> : Node where T : IState<T>
 {
-    public abstract partial class StateMachine<T> : Node where T : IState<T>
+    public T CurrentState { get; protected set; }
+
+    public abstract T InitialState { get; set; }
+
+    public override void _Ready()
     {
-        public T CurrentState { get; protected set; }
+        ChangeState(InitialState);
+    }
 
-        public abstract T InitialState { get; set; }
-
-        public override void _Ready()
+    public virtual bool ChangeState(T nextState, bool isProxied = false)
+    {
+        if (nextState is null)
         {
-            ChangeState(InitialState);
+            return false;
         }
 
-        public virtual bool ChangeState(T nextState, bool isProxied = false)
+        if (CurrentState is not null)
         {
-            if (nextState is null)
-            {
-                return false;
-            }
-
-            if (CurrentState is not null)
-            {
-                CurrentState.Exit(nextState);
-            }
-
-            CurrentState = nextState;
-
-            // if the next state decides it should enter a different state,
-            // then we enter that different state instead
-            var nextNextState = nextState.Enter(CurrentState);
-            if (nextNextState is T t)
-            {
-                return ChangeState(t, true);
-            }
-
-            return true;
+            CurrentState.Exit(nextState);
         }
+
+        CurrentState = nextState;
+
+        // if the next state decides it should enter a different state,
+        // then we enter that different state instead
+        var nextNextState = nextState.Enter(CurrentState);
+        if (nextNextState is T t)
+        {
+            return ChangeState(t, true);
+        }
+
+        return true;
     }
 }
