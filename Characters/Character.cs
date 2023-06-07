@@ -25,6 +25,12 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
+    [Signal]
+    public delegate void HurtEventHandler(Events.HealthChangedArgs args);
+
+    [Signal]
+    public delegate void DeathEventHandler(Events.HealthChangedArgs args);
+
     protected float _mass = 1.0f;
 
     public Vector2 NetImpulse { get; set; } = Vector2.Zero;

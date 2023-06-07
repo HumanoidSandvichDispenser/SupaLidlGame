@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdxiutj5jdnvo"]
+
+[ext_resource type="Script" path="res://BoundingBoxes/InteractionReceiver.cs" id="1_y2pab"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vcbnn"]
+radius = 16.0
+
+[node name="InteractionReceiver" type="Area2D"]
+collision_layer = 32
+collision_mask = 64
+script = ExtResource("1_y2pab")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vcbnn")
+debug_color = Color(0.792157, 0.0705882, 1, 0.419608)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]

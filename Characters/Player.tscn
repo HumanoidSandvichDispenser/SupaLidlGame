@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=29 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -11,7 +11,6 @@
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
-[ext_resource type="PackedScene" uid="uid://g7wfcubs6bdd" path="res://Items/Weapons/Railgun.tscn" id="10_7kb8b"]
 [ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="12_h0x0g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
@@ -209,9 +208,8 @@ InventoryMap = {
 "equip_2": 1
 }
 
-[node name="Railgun" parent="Inventory" instance=ExtResource("10_7kb8b")]
-
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
+visible = false
 ShouldHideIdle = false
 
 [node name="Hurtbox" parent="." instance=ExtResource("9_avyu4")]

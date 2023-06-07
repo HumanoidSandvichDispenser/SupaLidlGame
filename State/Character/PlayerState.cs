@@ -15,11 +15,15 @@ public abstract partial class PlayerState : CharacterState
         var inventory = Character.Inventory;
 
         if (this is PlayerIdleState or PlayerMoveState &&
-                !_player.Inventory.IsUsingItem)
+            !_player.Inventory.IsUsingItem)
         {
             if (@event.IsActionPressed("equip_1"))
             {
                 inventory.SelectedItem = inventory.GetItemByMap("equip_1");
+            }
+            else if (@event.IsActionPressed("equip_2"))
+            {
+                inventory.SelectedItem = inventory.GetItemByMap("equip_2");
             }
         }
 

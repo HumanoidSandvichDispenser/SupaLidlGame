@@ -1,7 +1,6 @@
 using Godot;
 using SupaLidlGame.Characters;
 using SupaLidlGame.Scenes;
-using SupaLidlGame.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,6 +23,8 @@ public partial class World : Node2D
 
     private string _currentMapResourcePath;
 
+    private Entities.Campfire _lastCampfire = null;
+
     private const string PLAYER_PATH = "res://Characters/Player.tscn";
     private PackedScene _playerScene;
 
@@ -42,6 +43,11 @@ public partial class World : Node2D
 
         // spawn the player in
         CreatePlayer();
+
+        CurrentPlayer.Death += (Events.HealthChangedArgs args) =>
+        {
+            // TODO: respawn the player at the last campfire.
+        };
 
         base._Ready();
     }
