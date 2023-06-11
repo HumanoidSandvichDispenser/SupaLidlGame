@@ -13,9 +13,10 @@ public abstract partial class PlayerState : CharacterState
     public override CharacterState Input(InputEvent @event)
     {
         var inventory = Character.Inventory;
+        var player = _player;
 
         if (this is PlayerIdleState or PlayerMoveState &&
-            !_player.Inventory.IsUsingItem)
+            !player.Inventory.IsUsingItem)
         {
             if (@event.IsActionPressed("equip_1"))
             {
@@ -24,6 +25,13 @@ public abstract partial class PlayerState : CharacterState
             else if (@event.IsActionPressed("equip_2"))
             {
                 inventory.SelectedItem = inventory.GetItemByMap("equip_2");
+            }
+
+            if (@event.IsActionPressed("interact"))
+            {
+                // if looking at a trigger then interact with it
+                GD.Print("interacting");
+                player.InteractionRay.Trigger?.InvokeInteraction();
             }
         }
 

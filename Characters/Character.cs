@@ -74,7 +74,15 @@ public partial class Character : CharacterBody2D, IFaction
     public CharacterStateMachine StateMachine { get; set; }
 
     [Export]
+    public BoundingBoxes.Hurtbox Hurtbox { get; set; }
+
+    [Export]
     public ushort Faction { get; set; }
+
+    public override void _Ready()
+    {
+        Hurtbox.ReceivedDamage += OnReceivedDamage;
+    }
 
     public override void _Process(double delta)
     {
@@ -133,7 +141,7 @@ public partial class Character : CharacterBody2D, IFaction
         StunTime += time;
     }
 
-    protected void DrawTarget()
+    protected virtual void DrawTarget()
     {
         Vector2 target = Target;
         float angle = Mathf.Atan2(target.Y, Mathf.Abs(target.X));
@@ -173,13 +181,14 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
-    public virtual void _on_hurtbox_received_damage(
+    public virtual void OnReceivedDamage(
         float damage,
         Character inflictor,
         float knockback,
         Vector2 knockbackOrigin = default,
         Vector2 knockbackVector = default)
     {
+        float oldHealth = Health;
         Health -= damage;
 
         // create damage text
@@ -224,6 +233,20 @@ public partial class Character : CharacterBody2D, IFaction
         {
             // very small pitch deviation
             sound.At(GlobalPosition).WithPitchDeviation(0.125f).Play();
+        }
+
+        Events.HealthChangedArgs args = new Events.HealthChangedArgs
+        {
+            Attacker = inflictor,
+            OldHealth = oldHealth,
+            NewHealth = Health,
+            Damage = damage,
+        };
+        EmitSignal(SignalName.Hurt, args);
+
+        if (Health <= 0)
+        {
+            EmitSignal(SignalName.Death, args);
         }
     }
 }

@@ -130,7 +130,7 @@ _data = {
 "RESET": SubResource("Animation_k6l16")
 }
 
-[node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine")]
+[node name="ExampleEnemy" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_ms3xg")
@@ -141,6 +141,7 @@ Health = 50.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
+Hurtbox = NodePath("Hurtbox")
 Faction = 2
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
@@ -190,7 +191,5 @@ libraries = {
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_n1e64")
-
-[connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
 
 [editable path="Hurtbox"]

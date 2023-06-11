@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dhl071rj5wyvx"]
+[gd_scene load_steps=13 format=3 uid="uid://dhl071rj5wyvx"]
 
 [ext_resource type="Texture2D" uid="uid://yqet0b22i70d" path="res://Assets/Sprites/campfire.png" id="1_7eor7"]
 [ext_resource type="Script" path="res://Entities/Campfire.cs" id="1_w4gfp"]
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="3_lm3vq"]
+[ext_resource type="Script" path="res://BoundingBoxes/InteractionTrigger.cs" id="4_h1bqe"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_68qj1"]
 atlas = ExtResource("1_7eor7")
@@ -55,6 +56,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ubam4"]
 size = Vector2(16, 4)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dfj3a"]
+size = Vector2(20, 10)
+
 [node name="Campfire" type="StaticBody2D"]
 texture_filter = 3
 position = Vector2(0, -8)
@@ -74,3 +78,12 @@ texture_scale = 0.25
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_ubam4")
+
+[node name="InteractionTrigger" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("4_h1bqe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionTrigger"]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_dfj3a")

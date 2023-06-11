@@ -1,15 +1,23 @@
 using Godot;
+using GodotUtilities;
 using SupaLidlGame.Utils;
+using SupaLidlGame.BoundingBoxes;
 
 namespace SupaLidlGame.Characters;
 
-public partial class Player : Character
+[Scene]
+public sealed partial class Player : Character
 {
     private AnimatedSprite2D _sprite;
     private string _spriteAnim;
 
     [Export]
     public PlayerCamera Camera { get; set; }
+
+    [Export]
+    public Marker2D DirectionMarker { get; private set; }
+
+    public InteractionRay InteractionRay { get; private set; }
 
     public string Animation
     {
@@ -32,11 +40,13 @@ public partial class Player : Character
 
     public override void _Ready()
     {
+        InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
         _sprite = GetNode<AnimatedSprite2D>("Sprite");
         if (_spriteAnim != default)
         {
             _sprite.Animation = _spriteAnim;
         }
+        base._Ready();
     }
 
     public override void ModifyVelocity()
@@ -60,5 +70,13 @@ public partial class Player : Character
     {
         GD.Print("died");
         //base.Die();
+    }
+
+    protected override void DrawTarget()
+    {
+        base.DrawTarget();
+        DirectionMarker.GlobalRotation = DirectionMarker.GlobalPosition
+            .DirectionTo(GetGlobalMousePosition())
+            .Angle();
     }
 }

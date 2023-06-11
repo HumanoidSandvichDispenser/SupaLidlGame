@@ -23,7 +23,9 @@ public partial class World : Node2D
 
     private string _currentMapResourcePath;
 
-    private Entities.Campfire _lastCampfire = null;
+    //private Entities.Campfire _lastCampfire = null;
+    public Vector2 SaveLocation { get; set; }
+    public string SaveMapKey { get; set; }
 
     private const string PLAYER_PATH = "res://Characters/Player.tscn";
     private PackedScene _playerScene;
@@ -47,25 +49,15 @@ public partial class World : Node2D
         CurrentPlayer.Death += (Events.HealthChangedArgs args) =>
         {
             // TODO: respawn the player at the last campfire.
+            SpawnPlayer();
         };
 
         base._Ready();
     }
 
-    public void LoadScene(PackedScene scene)
+    private void LoadMap(Map map)
     {
-        GD.Print("Loading map " + scene.ResourcePath);
-
-        Map map;
-        if (_maps.ContainsKey(scene.ResourcePath))
-        {
-            map = _maps[scene.ResourcePath];
-        }
-        else
-        {
-            map = scene.Instantiate<Map>();
-            _maps.Add(scene.ResourcePath, map);
-        }
+        GD.Print("Loading map " + map.Name);
 
         if (CurrentMap is not null)
         {
@@ -84,6 +76,39 @@ public partial class World : Node2D
         {
             CurrentMap.Entities.AddChild(CurrentPlayer);
         }
+    }
+
+    public void LoadScene(PackedScene scene)
+    {
+        Map map;
+        if (_maps.ContainsKey(scene.ResourcePath))
+        {
+            map = _maps[scene.ResourcePath];
+        }
+        else
+        {
+            map = scene.Instantiate<Map>();
+            _maps.Add(scene.ResourcePath, map);
+        }
+
+        LoadMap(map);
+    }
+
+    public void LoadScene(string path)
+    {
+        Map map;
+        if (_maps.ContainsKey(path))
+        {
+            map = _maps[path];
+        }
+        else
+        {
+            var scene = ResourceLoader.Load<PackedScene>(path);
+            map = scene.Instantiate<Map>();
+            _maps.Add(scene.ResourcePath, map);
+        }
+
+        LoadMap(map);
     }
 
     public void CreatePlayer()
@@ -117,7 +142,7 @@ public partial class World : Node2D
             }
             return false;
         }) as BoundingBoxes.ConnectorBox;
-        
+
         CurrentPlayer.GlobalPosition = connector.GlobalPosition;
     }
 
@@ -151,5 +176,35 @@ public partial class World : Node2D
     public void LoadGame()
     {
         throw new System.NotImplementedException();
+    }
+
+    /// <summary>
+    /// Sets the player's saved spawn position.
+    /// </summary>
+    /// <param name="position">The position to save and spawn the player in</param>
+    /// <param name="mapKey">
+    /// The map to spawn the player in. If <see langword="null" />, use the
+    /// <c>World</c>'s <c>CurrentMap</c>
+    /// </param>
+    public void SetSpawn(Vector2 position, string mapKey = null)
+    {
+        GD.Print("Set spawn");
+        if (mapKey is null)
+        {
+            mapKey = CurrentMap.SceneFilePath;
+            SaveLocation = position;
+            SaveMapKey = mapKey;
+        }
+    }
+
+    public void SpawnPlayer()
+    {
+        // TODO: add max health property
+        CurrentPlayer.Health = 100;
+        CurrentPlayer.GlobalPosition = SaveLocation;
+        if (CurrentMap.SceneFilePath != SaveMapKey)
+        {
+            LoadScene(SaveMapKey);
+        }
     }
 }

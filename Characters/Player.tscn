@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=30 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
 [ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="12_h0x0g"]
+[ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -133,19 +134,21 @@ _data = {
 "RESET": SubResource("Animation_k6l16")
 }
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "Sprite", "Inventory", "StateMachine")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "DirectionMarker", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
-position = Vector2(0, -12)
+position = Vector2(1, -12)
 collision_layer = 6
 collision_mask = 17
 script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
+DirectionMarker = NodePath("Direction2D")
 Speed = 64.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
+Hurtbox = NodePath("Hurtbox")
 Faction = 1
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
@@ -231,6 +234,13 @@ max_distance = 64.0
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
 
-[connection signal="ReceivedDamage" from="Hurtbox" to="." method="_on_hurtbox_received_damage"]
+[node name="Direction2D" type="Marker2D" parent="."]
+position = Vector2(0, 6)
+
+[node name="InteractionRay" type="RayCast2D" parent="Direction2D"]
+target_position = Vector2(16, 0)
+collision_mask = 64
+collide_with_areas = true
+script = ExtResource("13_hs3u1")
 
 [editable path="Hurtbox"]
