@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=37 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -172,6 +172,30 @@ _data = {
 "roll": SubResource("Animation_rx2pj")
 }
 
+[sub_resource type="Gradient" id="Gradient_3tax5"]
+offsets = PackedFloat32Array(0.533333, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pjeh8"]
+gradient = SubResource("Gradient_3tax5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_humq0"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+particle_flag_disable_z = true
+direction = Vector3(0, 0, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.1
+tangential_accel_min = 64.0
+tangential_accel_max = 64.0
+color_ramp = SubResource("GradientTexture1D_pjeh8")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_pited"]
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "DirectionMarker", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
@@ -288,5 +312,13 @@ target_position = Vector2(16, 0)
 collision_mask = 64
 collide_with_areas = true
 script = ExtResource("13_hs3u1")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_humq0")
+texture = SubResource("CanvasTexture_pited")
+one_shot = true
+explosiveness = 0.9
 
 [editable path="Hurtbox"]

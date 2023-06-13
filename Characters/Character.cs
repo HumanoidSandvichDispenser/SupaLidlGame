@@ -1,4 +1,5 @@
 using Godot;
+using GodotUtilities;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Items;
 using SupaLidlGame.Utils;
@@ -95,14 +96,6 @@ public partial class Character : CharacterBody2D, IFaction
         DrawTarget();
     }
 
-    public override void _Input(InputEvent @event)
-    {
-        if (StateMachine != null)
-        {
-            StateMachine.Input(@event);
-        }
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         if (StateMachine != null)
@@ -188,6 +181,11 @@ public partial class Character : CharacterBody2D, IFaction
         Vector2 knockbackOrigin = default,
         Vector2 knockbackVector = default)
     {
+        if (Health <= 0)
+        {
+            return;
+        }
+
         float oldHealth = Health;
         Health -= damage;
 
@@ -232,7 +230,7 @@ public partial class Character : CharacterBody2D, IFaction
         if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)
         {
             // very small pitch deviation
-            sound.At(GlobalPosition).WithPitchDeviation(0.125f).Play();
+            sound.At(GlobalPosition).WithPitchDeviation(0.125f).PlayOneShot();
         }
 
         Events.HealthChangedArgs args = new Events.HealthChangedArgs
@@ -242,11 +240,15 @@ public partial class Character : CharacterBody2D, IFaction
             NewHealth = Health,
             Damage = damage,
         };
+
         EmitSignal(SignalName.Hurt, args);
 
         if (Health <= 0)
         {
             EmitSignal(SignalName.Death, args);
+            GetNode<GpuParticles2D>("DeathParticles")
+                .CloneOnWorld<GpuParticles2D>()
+                .EmitOneShot();
         }
     }
 }

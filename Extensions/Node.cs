@@ -8,7 +8,8 @@ public static class NodeExtensions
     /// Iterates through each ancestor until it finds an ancestor of type
     /// <c>T</c>
     /// </summary>
-    public static T GetAncestor<T>(this Node node) where T : Node
+    [System.Obsolete]
+    public static T GetAncestorDeprecated<T>(this Node node) where T : Node
     {
         Node parent;
 

@@ -46,7 +46,7 @@ public partial class PlayerRollState : PlayerState
     public override CharacterState Process(double delta)
     {
         Character.Direction = _rollDirection;
-        if ((_timeLeftToRoll -= delta) <= 0)
+        if ((_timeLeftToRoll -= delta) <= 0 || _player.Health <= 0)
         {
             return IdleState;
         }

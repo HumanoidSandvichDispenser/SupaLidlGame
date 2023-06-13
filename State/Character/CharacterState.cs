@@ -46,6 +46,13 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
 
     public virtual CharacterState PhysicsProcess(double delta)
     {
+        if (Character.Health < 0)
+        {
+            Character.Velocity = Vector2.Zero;
+            Character.MoveAndSlide();
+            return null;
+        }
+
         Character.Velocity = Character.NetImpulse;
 
         if (Character.NetImpulse.LengthSquared() < Mathf.Pow(Character.Speed, 2))

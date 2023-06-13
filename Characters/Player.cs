@@ -47,6 +47,24 @@ public sealed partial class Player : Character
             _sprite.Animation = _spriteAnim;
         }
         base._Ready();
+        Death += (Events.HealthChangedArgs args) =>
+        {
+            Visible = false;
+        };
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (StateMachine != null)
+        {
+            StateMachine.Input(@event);
+        }
+    }
+
+    public void Spawn()
+    {
+        Health = 100;
+        Visible = true;
     }
 
     public override void ModifyVelocity()

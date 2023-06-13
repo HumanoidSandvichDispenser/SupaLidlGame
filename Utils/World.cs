@@ -49,7 +49,10 @@ public partial class World : Node2D
         CurrentPlayer.Death += (Events.HealthChangedArgs args) =>
         {
             // TODO: respawn the player at the last campfire.
-            SpawnPlayer();
+            GetTree().CreateTimer(1).Timeout += () =>
+            {
+                SpawnPlayer();
+            };
         };
 
         base._Ready();
@@ -200,11 +203,13 @@ public partial class World : Node2D
     public void SpawnPlayer()
     {
         // TODO: add max health property
-        CurrentPlayer.Health = 100;
-        CurrentPlayer.GlobalPosition = SaveLocation;
+        //CurrentPlayer.Health = 100;
+        //CurrentPlayer.Sprite.Visible = true;
         if (CurrentMap.SceneFilePath != SaveMapKey)
         {
             LoadScene(SaveMapKey);
         }
+        CurrentPlayer.GlobalPosition = SaveLocation;
+        CurrentPlayer.Spawn();
     }
 }

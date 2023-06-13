@@ -92,8 +92,13 @@ public partial class NPC : Character
         Character bestChar = null;
         foreach (Node node in GetParent().GetChildren())
         {
-            if (node is Character character && character.Faction != Faction)
+            if (node is Character character)
             {
+                if (character.Faction == Faction || character.Health <= 0)
+                {
+                    continue;
+                }
+
                 float dist = Position.DistanceTo(character.Position);
                 if (dist < bestDist)
                 {
