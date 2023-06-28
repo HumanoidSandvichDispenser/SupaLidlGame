@@ -29,11 +29,14 @@ public partial class Hurtbox : BoundingBox, IFaction
         Vector2 knockbackOrigin = default,
         Vector2 knockbackVector = default)
     {
-        EmitSignal(
-            SignalName.ReceivedDamage,
-            damage,
-            inflictor,
-            knockback,
-            knockbackOrigin, knockbackVector);
+        if (inflictor is not null)
+        {
+            EmitSignal(
+                SignalName.ReceivedDamage,
+                damage,
+                inflictor,
+                knockback,
+                knockbackOrigin, knockbackVector);
+        }
     }
 }
