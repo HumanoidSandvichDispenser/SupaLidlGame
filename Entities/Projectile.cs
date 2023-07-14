@@ -20,10 +20,22 @@ public partial class Projectile : RigidBody2D
     [Export]
     public double Lifetime { get; set; } = 10;
 
+    [Export]
+    public double Delay { get; set; } = 0;
+
     public Character Character { get; set; }
+
+    public override void _Ready()
+    {
+        Hitbox.Hit += OnHit;
+    }
 
     public override void _Process(double delta)
     {
+        if (Delay > 0)
+        {
+            Delay -= delta;
+        }
         if ((Lifetime -= delta) <= 0)
         {
             QueueFree();
@@ -32,11 +44,14 @@ public partial class Projectile : RigidBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        Vector2 velocity = Velocity;
-        MoveAndCollide(velocity * (float)delta);
+        if (Delay <= 0)
+        {
+            Vector2 velocity = Velocity;
+            MoveAndCollide(velocity * (float)delta);
+        }
     }
 
-    public void _on_hitbox_hit(BoundingBox box)
+    public void OnHit(BoundingBox box)
     {
         if (box is Hurtbox hurtbox)
         {

@@ -95,3 +95,7 @@ equip_3={
 [physics]
 
 2d/default_gravity=0.0
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 1)

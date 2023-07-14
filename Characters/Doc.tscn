@@ -1,0 +1,296 @@
+[gd_scene load_steps=33 format=3 uid="uid://bt6s40u515jvo"]
+
+[ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
+[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
+[ext_resource type="Texture2D" uid="uid://baiuqgrqipppt" path="res://Assets/Sprites/Characters/doc.png" id="3_rs44f"]
+[ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="3_t5jjc"]
+[ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="4_b35px"]
+[ext_resource type="Script" path="res://State/Character/NPCMoveState.cs" id="5_pejsd"]
+[ext_resource type="Script" path="res://State/NPC/NPCStateMachine.cs" id="6_kjpug"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocTelegraphState.cs" id="7_tfwbh"]
+[ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="7_tnve0"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocAttackState.cs" id="8_r4l3q"]
+[ext_resource type="Script" path="res://Items/Inventory.cs" id="8_r8ejq"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocExitState.cs" id="9_6com1"]
+[ext_resource type="PackedScene" uid="uid://bqvseo3sbs1aj" path="res://Entities/RailBeam.tscn" id="9_fcrmd"]
+[ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="9_stm0e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
+resource_local_to_scene = true
+shader = ExtResource("2_5jxom")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+
+[sub_resource type="Animation" id="Animation_7oukw"]
+resource_name = "enter_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 0.5), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_j3s0y"]
+resource_name = "exit_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 0.5), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rpply"]
+_data = {
+"enter_in": SubResource("Animation_7oukw"),
+"exit_out": SubResource("Animation_j3s0y")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dib6t"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(0, 0, 12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cwqre"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(12, 0, 12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r8xjl"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(24, 0, 12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7hkj4"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(36, 0, 12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w04w0"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(48, 0, 12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym6tg"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(60, 0, 12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3rbas"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(72, 0, 12, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_63wkp"]
+atlas = ExtResource("3_rs44f")
+region = Rect2(84, 0, 12, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kb0pl"]
+resource_local_to_scene = true
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dib6t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cwqre")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r8xjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7hkj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w04w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ym6tg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3rbas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63wkp")
+}],
+"loop": true,
+"name": &"move",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uict5"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
+size = Vector2(16, 18)
+
+[sub_resource type="Animation" id="Animation_dxevc"]
+resource_name = "Hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/intensity")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(4, 4, 4, 4, 4, 4, 4),
+"update": 0,
+"values": [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_k6l16"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/intensity")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xe5eq"]
+_data = {
+"Hurt": SubResource("Animation_dxevc"),
+"RESET": SubResource("Animation_k6l16")
+}
+
+[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("BossStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+y_sort_enabled = true
+texture_filter = 3
+material = SubResource("ShaderMaterial_7n7iy")
+collision_layer = 10
+collision_mask = 17
+script = ExtResource("2_3elet")
+BossStateMachine = NodePath("BossStateMachine")
+Health = 50.0
+Sprite = NodePath("Sprite")
+Inventory = NodePath("Inventory")
+StateMachine = NodePath("StateMachine")
+Hurtbox = NodePath("Hurtbox")
+Faction = 2
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
+script = ExtResource("3_t5jjc")
+InitialState = NodePath("Idle")
+Character = NodePath("..")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "Character")]
+script = ExtResource("4_b35px")
+MoveState = NodePath("../Move")
+Character = NodePath("../..")
+
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("5_pejsd")
+IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
+[node name="BossStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("6_kjpug")
+InitialState = NodePath("Telegraph")
+
+[node name="Telegraph" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("TelegraphAnimationPlayer", "AttackState", "NPC")]
+script = ExtResource("7_tfwbh")
+TelegraphAnimationPlayer = NodePath("../../Animations/Telegraph")
+AttackState = NodePath("../Attack")
+NPC = NodePath("../..")
+
+[node name="Attack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ExitState", "NPC")]
+script = ExtResource("8_r4l3q")
+Duration = 8.0
+AttackDuration = 1.0
+Projectile = ExtResource("9_fcrmd")
+ExitState = NodePath("../Exit")
+NPC = NodePath("../..")
+
+[node name="Exit" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("TelegraphAnimationPlayer", "TelegraphState", "NPC")]
+script = ExtResource("9_6com1")
+TelegraphAnimationPlayer = NodePath("../../Animations/Telegraph")
+TelegraphState = NodePath("../Telegraph")
+NPC = NodePath("../..")
+
+[node name="Animations" type="Node" parent="."]
+
+[node name="Telegraph" type="AnimationPlayer" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_rpply")
+}
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5)
+use_parent_material = true
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_kb0pl")
+animation = &"move"
+frame_progress = 0.563144
+offset = Vector2(0, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_uict5")
+
+[node name="Hurtbox" parent="." instance=ExtResource("7_tnve0")]
+visible = false
+position = Vector2(0, -4)
+Faction = 2
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_8lxmf")
+
+[node name="Inventory" type="Node2D" parent="."]
+y_sort_enabled = true
+script = ExtResource("8_r8ejq")
+Items = Array[Node2D]([])
+
+[node name="FlashAnimation" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xe5eq")
+}
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_stm0e")
+
+[editable path="Hurtbox"]

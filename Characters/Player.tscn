@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=38 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -11,8 +11,9 @@
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
-[ext_resource type="AudioStream" uid="uid://njun3e6v4854" path="res://Assets/Sounds/hurt.wav" id="12_h0x0g"]
+[ext_resource type="AudioStream" uid="uid://bkeyg8weaqnuu" path="res://Assets/Sounds/splat-player.ogg" id="12_vvem5"]
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
+[ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="14_l4ekh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -89,7 +90,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(16, 8)
+size = Vector2(12, 8)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5h1n"]
 font_size = 24
@@ -134,6 +135,21 @@ _data = {
 "RESET": SubResource("Animation_k6l16")
 }
 
+[sub_resource type="Animation" id="Animation_yejx2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_rx2pj"]
 resource_name = "roll"
 length = 0.5
@@ -149,21 +165,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 3.14159, 6.28319]
-}
-
-[sub_resource type="Animation" id="Animation_yejx2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jai06"]
@@ -266,11 +267,9 @@ horizontal_alignment = 1
 
 [node name="Node" type="Node" parent="."]
 
-[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
-y_sort_enabled = true
+[node name="Inventory" type="Node2D" parent="."]
 position = Vector2(0, 4)
 script = ExtResource("7_xyenu")
-Items = []
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1
@@ -298,7 +297,7 @@ libraries = {
 }
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("12_h0x0g")
+stream = ExtResource("12_vvem5")
 max_distance = 64.0
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
@@ -320,5 +319,13 @@ process_material = SubResource("ParticleProcessMaterial_humq0")
 texture = SubResource("CanvasTexture_pited")
 one_shot = true
 explosiveness = 0.9
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+blend_mode = 2
+shadow_enabled = true
+shadow_filter = 2
+shadow_filter_smooth = 3.0
+texture = ExtResource("14_l4ekh")
+texture_scale = 0.5
 
 [editable path="Hurtbox"]

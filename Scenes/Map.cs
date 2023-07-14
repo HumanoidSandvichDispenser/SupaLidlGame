@@ -29,7 +29,7 @@ public partial class Map : TileMap
         }
         set
         {
-            _active = Visible =  value;
+            _active = Visible = value;
             SetProcess(value);
         }
     }
@@ -42,5 +42,17 @@ public partial class Map : TileMap
     public override void _Process(double delta)
     {
         base._Process(delta);
+    }
+
+    public Node SpawnEntity(PackedScene scene)
+    {
+        var instance = scene.Instantiate();
+        Entities.AddChild(instance);
+        return instance;
+    }
+
+    public T SpawnEntity<T>(PackedScene scene) where T : Node
+    {
+        return SpawnEntity(scene) as T;
     }
 }

@@ -202,7 +202,14 @@ public partial class Character : CharacterBody2D, IFaction
         {
             if (knockbackOrigin == default)
             {
-                knockbackOrigin = inflictor.GlobalPosition;
+                if (inflictor is null)
+                {
+                    knockbackOrigin = GlobalPosition + Vector2.Down;
+                }
+                else
+                {
+                    knockbackOrigin = inflictor.GlobalPosition;
+                }
             }
 
             knockbackDir = knockbackOrigin.DirectionTo(GlobalPosition);
