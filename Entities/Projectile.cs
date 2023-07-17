@@ -44,11 +44,8 @@ public partial class Projectile : RigidBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Delay <= 0)
-        {
-            Vector2 velocity = Velocity;
-            MoveAndCollide(velocity * (float)delta);
-        }
+        Vector2 velocity = Delay <= 0 ? Velocity : Vector2.Zero;
+        MoveAndCollide(velocity * (float)delta);
     }
 
     public void OnHit(BoundingBox box)

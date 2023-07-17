@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://State/NPC/Doc/DocAttackState.cs" id="8_r4l3q"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="8_r8ejq"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocExitState.cs" id="9_6com1"]
-[ext_resource type="PackedScene" uid="uid://bqvseo3sbs1aj" path="res://Entities/RailBeam.tscn" id="9_fcrmd"]
+[ext_resource type="PackedScene" uid="uid://doiwdphocqlpo" path="res://Entities/ShungiteSpike.tscn" id="9_7kavk"]
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="9_stm0e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
@@ -204,7 +204,7 @@ collision_layer = 10
 collision_mask = 17
 script = ExtResource("2_3elet")
 BossStateMachine = NodePath("BossStateMachine")
-Health = 50.0
+Health = 1000.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
@@ -240,7 +240,7 @@ NPC = NodePath("../..")
 script = ExtResource("8_r4l3q")
 Duration = 8.0
 AttackDuration = 1.0
-Projectile = ExtResource("9_fcrmd")
+Projectile = ExtResource("9_7kavk")
 ExitState = NodePath("../Exit")
 NPC = NodePath("../..")
 

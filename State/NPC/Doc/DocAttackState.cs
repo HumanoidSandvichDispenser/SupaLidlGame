@@ -5,11 +5,11 @@ namespace SupaLidlGame.State.NPC.Doc;
 
 public partial class DocAttackState : NPCState
 {
-    private Scenes.Map _map;
-    private Utils.World _world;
+    protected Scenes.Map _map;
+    protected Utils.World _world;
 
-    private double _currentDuration = 0;
-    private double _currentAttackDuration = 0;
+    protected double _currentDuration = 0;
+    protected double _currentAttackDuration = 0;
 
     [Export]
     public double Duration { get; set; }
@@ -39,7 +39,7 @@ public partial class DocAttackState : NPCState
 
     }
 
-    private void SpawnProjectile(Vector2 position, Vector2 direction)
+    protected virtual void SpawnProjectile(Vector2 position, Vector2 direction)
     {
         var projectile = _map.SpawnEntity<Entities.Projectile>(Projectile);
         projectile.Hitbox.Faction = NPC.Faction;

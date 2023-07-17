@@ -252,7 +252,7 @@ physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_5yxvt")
 sources/0 = SubResource("TileSetAtlasSource_fcd6d")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wurwd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hn0x7"]
 resource_local_to_scene = true
 shader = ExtResource("5_aevwf")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
@@ -268,7 +268,6 @@ layer_4/tile_data = PackedInt32Array(-524296, 327680, 0, -589818, 262144, 0, -58
 color = Color(0.753984, 0.753984, 0.753984, 1)
 
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_c0csw")]
-material = SubResource("ShaderMaterial_wurwd")
+material = SubResource("ShaderMaterial_hn0x7")
 PreferredWeightDistance = 256.0
 MaxWeightDistance = 32.0
-Health = 1000.0
