@@ -22,9 +22,10 @@ public partial class DocShungiteDartState : DocAttackState
     public override PackedScene Projectile { get; set; }
 
     [Export]
-    public override DocExitState ExitState { get; set; }
+    public override DocChooseAttackState ChooseAttackState { get; set; }
 
-    private float _intensity = 1;
+    [Export]
+    public Characters.Doc Doc { get; set; }
 
     public override NPCState Enter(IState<NPCState> previousState)
     {
@@ -51,7 +52,7 @@ public partial class DocShungiteDartState : DocAttackState
         projectile.GlobalPosition = position;
         projectile.Direction = direction;
         projectile.GlobalRotation = direction.Angle();
-        projectile.Delay = 1 / _intensity;
+        projectile.Delay = 1.0 / Doc.Intensity;
         return projectile;
     }
 
@@ -65,24 +66,14 @@ public partial class DocShungiteDartState : DocAttackState
         Vector2 direction2 = -direction1;
         SpawnProjectile(position1, direction1);
         SpawnProjectile(position2, direction2);
-        _currentAttackDuration = AttackDuration / _intensity;
+        _currentAttackDuration = AttackDuration / Doc.Intensity;
     }
 
     public override NPCState Process(double delta)
     {
         if ((_currentDuration -= delta) <= 0)
         {
-            return ExitState;
-        }
-
-        if (NPC.Health < 500)
-        {
-            _intensity = 2;
-        }
-
-        if (NPC.Health < 250)
-        {
-            _intensity = 3;
+            return ChooseAttackState;
         }
 
         if ((_currentAttackDuration -= delta) <= 0)

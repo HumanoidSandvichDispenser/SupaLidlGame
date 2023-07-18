@@ -212,31 +212,31 @@ physics_layer_0/collision_mask = 16
 physics_layer_1/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dvbe3")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lhxal"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ho8d"]
 resource_local_to_scene = true
 shader = ExtResource("4_mwgaq")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ypbiq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tic7i"]
 resource_local_to_scene = true
 shader = ExtResource("4_mwgaq")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rl34k"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oh7dr"]
 resource_local_to_scene = true
 shader = ExtResource("4_mwgaq")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_txxdc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x6kxt"]
 resource_local_to_scene = true
 shader = ExtResource("4_mwgaq")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_rqx80"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uuq2q"]
 resource_local_to_scene = true
 shader = ExtResource("4_mwgaq")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
@@ -268,23 +268,23 @@ layer_4/tile_data = PackedInt32Array(1114105, 196608, 3, 1114106, 262144, 3, 111
 layer_5/tile_data = PackedInt32Array(786438, 262144, 3, 720899, 262144, 3, 851971, 458752, 3, 196611, 458752, 3, 1835019, 262144, 3, 1835034, 458752, 3)
 
 [node name="ExampleEnemy" parent="Entities" index="0" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_lhxal")
+material = SubResource("ShaderMaterial_5ho8d")
 position = Vector2(169, 115)
 
 [node name="ExampleEnemy2" parent="Entities" index="1" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_ypbiq")
+material = SubResource("ShaderMaterial_tic7i")
 position = Vector2(75, 130)
 
 [node name="ExampleEnemy3" parent="Entities" index="2" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_rl34k")
+material = SubResource("ShaderMaterial_oh7dr")
 position = Vector2(140, 177)
 
 [node name="ExampleEnemy4" parent="Entities" index="3" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_txxdc")
+material = SubResource("ShaderMaterial_x6kxt")
 position = Vector2(14, 159)
 
 [node name="ExampleEnemy5" parent="Entities" index="4" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_rqx80")
+material = SubResource("ShaderMaterial_uuq2q")
 position = Vector2(10, 22)
 Faction = 1
 

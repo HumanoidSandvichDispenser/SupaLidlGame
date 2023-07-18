@@ -7,12 +7,23 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
 {
     private float _intensity = 1;
 
+    public override NPCState Enter(IState<NPCState> previous)
+    {
+        // subtract from total state time by intensity
+        Duration = _currentDuration = 9 - 2 * Doc.Intensity;
+        return base.Enter(previous);
+    }
+
     protected override Projectile SpawnProjectile(
         Vector2 position,
         Vector2 direction)
     {
-        var projectile = base.SpawnProjectile(position, direction);
-        projectile.Delay = 4;
+        var projectile = base.SpawnProjectile(position, direction)
+            as ShungiteSpike;
+        projectile.GlobalRotation = 0;
+        projectile.Delay = 0;
+        projectile.ExplodeTime = 6 - 2 * Doc.Intensity;
+        projectile.Hitbox.Faction = projectile.Hurtbox.Faction = Doc.Faction;
         return projectile;
     }
 
@@ -30,6 +41,21 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
         SpawnProjectile(down, Vector2.Zero);
 
         // only attack once and stop (but keep in this state for 8 seconds)
-        _currentAttackDuration = float.PositiveInfinity;
+        _currentAttackDuration += 8;
+    }
+
+    public override NPCState Process(double delta)
+    {
+        if ((_currentDuration -= delta) <= 0)
+        {
+            return ChooseAttackState;
+        }
+
+        if ((_currentAttackDuration -= delta) <= 0)
+        {
+            Attack();
+        }
+
+        return null;
     }
 }

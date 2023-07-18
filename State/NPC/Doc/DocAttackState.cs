@@ -10,7 +10,7 @@ public abstract partial class DocAttackState : NPCState
 
     public abstract PackedScene Projectile { get; set; }
 
-    public abstract DocExitState ExitState { get; set; }
+    public abstract DocChooseAttackState ChooseAttackState { get; set; }
 
     protected abstract void Attack();
 }

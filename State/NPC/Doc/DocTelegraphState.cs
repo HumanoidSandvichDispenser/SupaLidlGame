@@ -8,7 +8,7 @@ public partial class DocTelegraphState : NPCState
     public AnimationPlayer TelegraphAnimationPlayer { get; set; }
 
     [Export]
-    public DocAttackState AttackState { get; set; }
+    public DocChooseAttackState AttackState { get; set; }
 
     [Export]
     public double Duration { get; set; } = 1;

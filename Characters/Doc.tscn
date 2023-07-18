@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=36 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -12,8 +12,11 @@
 [ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteDartState.cs" id="8_1hoax"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="8_r8ejq"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocExitState.cs" id="9_6com1"]
+[ext_resource type="PackedScene" uid="uid://1tiswf3gtyvv" path="res://Entities/ShungiteSpike.tscn" id="9_7kavk"]
 [ext_resource type="PackedScene" uid="uid://djaljmco3xo4g" path="res://Entities/ShungiteDart.tscn" id="9_kthpr"]
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="9_stm0e"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteSpikeState.cs" id="10_bgs6o"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocChooseAttackState.cs" id="12_45x13"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
@@ -233,14 +236,31 @@ InitialState = NodePath("Telegraph")
 [node name="Telegraph" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("TelegraphAnimationPlayer", "AttackState", "NPC")]
 script = ExtResource("7_tfwbh")
 TelegraphAnimationPlayer = NodePath("../../Animations/Telegraph")
-AttackState = NodePath("../Attack")
+AttackState = NodePath("../ChooseAttack")
 NPC = NodePath("../..")
 
-[node name="Attack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ExitState", "NPC")]
+[node name="Dart" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ChooseAttackState", "Doc", "NPC")]
 script = ExtResource("8_1hoax")
 Duration = 8.0
 AttackDuration = 1.0
 Projectile = ExtResource("9_kthpr")
+ChooseAttackState = NodePath("../ChooseAttack")
+Doc = NodePath("../..")
+NPC = NodePath("../..")
+
+[node name="Spike" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ChooseAttackState", "Doc", "NPC")]
+script = ExtResource("10_bgs6o")
+Duration = 8.0
+AttackDuration = 1.0
+Projectile = ExtResource("9_7kavk")
+ChooseAttackState = NodePath("../ChooseAttack")
+Doc = NodePath("../..")
+NPC = NodePath("../..")
+
+[node name="ChooseAttack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("DartState", "SpikeState", "ExitState", "NPC")]
+script = ExtResource("12_45x13")
+DartState = NodePath("../Dart")
+SpikeState = NodePath("../Spike")
 ExitState = NodePath("../Exit")
 NPC = NodePath("../..")
 
