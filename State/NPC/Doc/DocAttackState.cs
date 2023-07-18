@@ -1,5 +1,6 @@
 using Godot;
 using GodotUtilities;
+using SupaLidlGame.Entities;
 
 namespace SupaLidlGame.State.NPC.Doc;
 
@@ -39,9 +40,11 @@ public partial class DocAttackState : NPCState
 
     }
 
-    protected virtual void SpawnProjectile(Vector2 position, Vector2 direction)
+    protected virtual Projectile SpawnProjectile(
+        Vector2 position,
+        Vector2 direction)
     {
-        var projectile = _map.SpawnEntity<Entities.Projectile>(Projectile);
+        var projectile = _map.SpawnEntity<Projectile>(Projectile);
         projectile.Hitbox.Faction = NPC.Faction;
         // global position is (from npc to player) * 2 = (2 * npc) - player
         //projectile.GlobalPosition = 2 * NPC.GlobalPosition - playerPos;
@@ -49,6 +52,20 @@ public partial class DocAttackState : NPCState
         projectile.Direction = direction;
         projectile.GlobalRotation = direction.Angle();
         projectile.Delay = 1 / _intensity;
+        return projectile;
+    }
+
+    protected virtual void Attack()
+    {
+        var player = _world.CurrentPlayer;
+        var playerPos = player.GlobalPosition;
+        Vector2 position1 = 2 * NPC.GlobalPosition - playerPos;
+        Vector2 position2 = 2 * playerPos - NPC.GlobalPosition;
+        Vector2 direction1 = position1.DirectionTo(playerPos);
+        Vector2 direction2 = -direction1;
+        SpawnProjectile(position1, direction1);
+        SpawnProjectile(position2, direction2);
+        _currentAttackDuration = AttackDuration / _intensity;
     }
 
     public override NPCState Process(double delta)
@@ -70,15 +87,7 @@ public partial class DocAttackState : NPCState
 
         if ((_currentAttackDuration -= delta) <= 0)
         {
-            var player = _world.CurrentPlayer;
-            var playerPos = player.GlobalPosition;
-            Vector2 position1 = 2 * NPC.GlobalPosition - playerPos;
-            Vector2 position2 = 2 * playerPos - NPC.GlobalPosition;
-            Vector2 direction1 = position1.DirectionTo(playerPos);
-            Vector2 direction2 = -direction1;
-            SpawnProjectile(position1, direction1);
-            SpawnProjectile(position2, direction2);
-            _currentAttackDuration = AttackDuration / _intensity;
+            Attack();
         }
 
         return null;
