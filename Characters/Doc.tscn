@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bt6s40u515jvo"]
+[gd_scene load_steps=33 format=3 uid="uid://dsr5kkbthpwpl"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -9,7 +9,7 @@
 [ext_resource type="Script" path="res://State/NPC/NPCStateMachine.cs" id="6_kjpug"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocTelegraphState.cs" id="7_tfwbh"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="7_tnve0"]
-[ext_resource type="Script" path="res://State/NPC/Doc/DocAttackState.cs" id="8_r4l3q"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteDartState.cs" id="8_1hoax"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="8_r8ejq"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocExitState.cs" id="9_6com1"]
 [ext_resource type="PackedScene" uid="uid://doiwdphocqlpo" path="res://Entities/ShungiteSpike.tscn" id="9_7kavk"]
@@ -237,7 +237,7 @@ AttackState = NodePath("../Attack")
 NPC = NodePath("../..")
 
 [node name="Attack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ExitState", "NPC")]
-script = ExtResource("8_r4l3q")
+script = ExtResource("8_1hoax")
 Duration = 8.0
 AttackDuration = 1.0
 Projectile = ExtResource("9_7kavk")

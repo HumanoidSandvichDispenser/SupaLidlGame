@@ -1,10 +1,9 @@
 using Godot;
-using GodotUtilities;
 using SupaLidlGame.Entities;
 
 namespace SupaLidlGame.State.NPC.Doc;
 
-public partial class DocShungiteSpikeState : DocAttackState
+public partial class DocShungiteSpikeState : DocShungiteDartState
 {
     private float _intensity = 1;
 
