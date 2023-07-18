@@ -1,6 +1,6 @@
 using Godot;
+using GodotUtilities;
 using System;
-using SupaLidlGame.Utils;
 
 namespace SupaLidlGame.Extensions;
 
@@ -44,7 +44,7 @@ public static class AudioStreamPlayer2DExtensions
         this AudioStreamPlayer2D audio,
         Vector2 globalPosition)
     {
-        var world = audio.GetTree().Root.GetNode("World/TileMap");
+        var world = audio.GetAncestor<Scenes.Map>();
         if (world is null)
         {
             throw new NullReferenceException("World does not exist");
@@ -60,6 +60,15 @@ public static class AudioStreamPlayer2DExtensions
             parent.QueueFree();
         };
         return clone;
+    }
+
+    public static AudioStreamPlayer2D PlayOneShot(
+        this AudioStreamPlayer2D audio,
+        float fromPosition = 0)
+    {
+        audio.Finished += () => audio.QueueFree();
+        audio.Play(fromPosition);
+        return audio;
     }
 
     public static AudioStreamPlayer2D WithPitchDeviation(

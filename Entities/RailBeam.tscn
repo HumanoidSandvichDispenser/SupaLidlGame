@@ -27,6 +27,4 @@ Knockback = 256.0
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource("RectangleShape2D_j0tne")
 
-[connection signal="Hit" from="Hitbox" to="." method="_on_hitbox_hit"]
-
 [editable path="Hitbox"]

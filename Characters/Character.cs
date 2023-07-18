@@ -1,4 +1,5 @@
 using Godot;
+using GodotUtilities;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Items;
 using SupaLidlGame.Utils;
@@ -24,6 +25,12 @@ public partial class Character : CharacterBody2D, IFaction
                 _mass = value;
         }
     }
+
+    [Signal]
+    public delegate void HurtEventHandler(Events.HealthChangedArgs args);
+
+    [Signal]
+    public delegate void DeathEventHandler(Events.HealthChangedArgs args);
 
     protected float _mass = 1.0f;
 
@@ -68,7 +75,15 @@ public partial class Character : CharacterBody2D, IFaction
     public CharacterStateMachine StateMachine { get; set; }
 
     [Export]
+    public BoundingBoxes.Hurtbox Hurtbox { get; set; }
+
+    [Export]
     public ushort Faction { get; set; }
+
+    public override void _Ready()
+    {
+        Hurtbox.ReceivedDamage += OnReceivedDamage;
+    }
 
     public override void _Process(double delta)
     {
@@ -79,14 +94,6 @@ public partial class Character : CharacterBody2D, IFaction
 
         Sprite.FlipH = Target.X < 0;
         DrawTarget();
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (StateMachine != null)
-        {
-            StateMachine.Input(@event);
-        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -127,7 +134,7 @@ public partial class Character : CharacterBody2D, IFaction
         StunTime += time;
     }
 
-    protected void DrawTarget()
+    protected virtual void DrawTarget()
     {
         Vector2 target = Target;
         float angle = Mathf.Atan2(target.Y, Mathf.Abs(target.X));
@@ -167,13 +174,19 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
-    public virtual void _on_hurtbox_received_damage(
+    public virtual void OnReceivedDamage(
         float damage,
         Character inflictor,
         float knockback,
         Vector2 knockbackOrigin = default,
         Vector2 knockbackVector = default)
     {
+        if (Health <= 0)
+        {
+            return;
+        }
+
+        float oldHealth = Health;
         Health -= damage;
 
         // create damage text
@@ -189,7 +202,14 @@ public partial class Character : CharacterBody2D, IFaction
         {
             if (knockbackOrigin == default)
             {
-                knockbackOrigin = inflictor.GlobalPosition;
+                if (inflictor is null)
+                {
+                    knockbackOrigin = GlobalPosition + Vector2.Down;
+                }
+                else
+                {
+                    knockbackOrigin = inflictor.GlobalPosition;
+                }
             }
 
             knockbackDir = knockbackOrigin.DirectionTo(GlobalPosition);
@@ -217,7 +237,25 @@ public partial class Character : CharacterBody2D, IFaction
         if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)
         {
             // very small pitch deviation
-            sound.At(GlobalPosition).WithPitchDeviation(0.125f).Play();
+            sound.At(GlobalPosition).WithPitchDeviation(0.125f).PlayOneShot();
+        }
+
+        Events.HealthChangedArgs args = new Events.HealthChangedArgs
+        {
+            Attacker = inflictor,
+            OldHealth = oldHealth,
+            NewHealth = Health,
+            Damage = damage,
+        };
+
+        EmitSignal(SignalName.Hurt, args);
+
+        if (Health <= 0)
+        {
+            EmitSignal(SignalName.Death, args);
+            GetNode<GpuParticles2D>("DeathParticles")
+                .CloneOnWorld<GpuParticles2D>()
+                .EmitOneShot();
         }
     }
 }

@@ -1,4 +1,5 @@
 using Godot;
+using GodotUtilities;
 using SupaLidlGame.BoundingBoxes;
 using SupaLidlGame.Characters;
 using SupaLidlGame.Extensions;
@@ -197,7 +198,7 @@ public partial class Sword : Weapon, IParryable
         IsParried = true;
         AnimationPlayer.SpeedScale = 0.25f;
         Character.Stun(1.5f);
-        GetNode<AudioStreamPlayer2D>("ParrySound").OnWorld().Play();
+        GetNode<AudioStreamPlayer2D>("ParrySound").OnWorld().PlayOneShot();
     }
 
     public override void _on_hitbox_hit(BoundingBox box)

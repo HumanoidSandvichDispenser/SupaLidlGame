@@ -89,7 +89,13 @@ equip_3={
 2d_physics/layer_3="Player"
 2d_physics/layer_4="NPC"
 2d_physics/layer_5="World Clip"
+2d_physics/layer_6="Interaction Receiver"
+2d_physics/layer_7="Interaction Trigger"
 
 [physics]
 
 2d/default_gravity=0.0
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 1)

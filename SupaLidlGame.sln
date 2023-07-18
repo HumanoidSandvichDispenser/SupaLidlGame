@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupaLidlGame", "SupaLidlGame.csproj", "{AF3A4D72-D276-44C3-A64F-EAB32D2B9B97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupaLidlGame", "SupaLidlGame.csproj", "{BC071CA6-9462-4CEC-AA20-B0CA618321E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,11 +9,11 @@ Global
 	ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AF3A4D72-D276-44C3-A64F-EAB32D2B9B97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF3A4D72-D276-44C3-A64F-EAB32D2B9B97}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF3A4D72-D276-44C3-A64F-EAB32D2B9B97}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
-		{AF3A4D72-D276-44C3-A64F-EAB32D2B9B97}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
-		{AF3A4D72-D276-44C3-A64F-EAB32D2B9B97}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
-		{AF3A4D72-D276-44C3-A64F-EAB32D2B9B97}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
 	EndGlobalSection
 EndGlobal

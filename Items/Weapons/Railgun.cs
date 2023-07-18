@@ -1,5 +1,5 @@
 using Godot;
-using SupaLidlGame.Extensions;
+using GodotUtilities;
 
 namespace SupaLidlGame.Items.Weapons;
 
