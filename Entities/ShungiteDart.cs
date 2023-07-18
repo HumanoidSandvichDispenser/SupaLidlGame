@@ -1,7 +1,7 @@
 using Godot;
 namespace SupaLidlGame.Entities;
 
-public partial class ShungiteSpike : Projectile
+public partial class ShungiteDart : Projectile
 {
     public override void _Ready()
     {

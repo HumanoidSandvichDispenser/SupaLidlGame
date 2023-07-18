@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dsr5kkbthpwpl"]
+[gd_scene load_steps=33 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteDartState.cs" id="8_1hoax"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="8_r8ejq"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocExitState.cs" id="9_6com1"]
-[ext_resource type="PackedScene" uid="uid://doiwdphocqlpo" path="res://Entities/ShungiteSpike.tscn" id="9_7kavk"]
+[ext_resource type="PackedScene" uid="uid://djaljmco3xo4g" path="res://Entities/ShungiteDart.tscn" id="9_kthpr"]
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="9_stm0e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
@@ -240,7 +240,7 @@ NPC = NodePath("../..")
 script = ExtResource("8_1hoax")
 Duration = 8.0
 AttackDuration = 1.0
-Projectile = ExtResource("9_7kavk")
+Projectile = ExtResource("9_kthpr")
 ExitState = NodePath("../Exit")
 NPC = NodePath("../..")
 
