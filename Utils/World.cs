@@ -38,6 +38,7 @@ public partial class World : Node2D
 
     public override void _Ready()
     {
+        Godot.RenderingServer.SetDefaultClearColor(Godot.Colors.Black);
         if (StartingArea is not null)
         {
             LoadScene(StartingArea);

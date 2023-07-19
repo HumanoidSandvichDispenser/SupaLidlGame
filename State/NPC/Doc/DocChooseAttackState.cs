@@ -32,8 +32,8 @@ public partial class DocChooseAttackState : NPCState
 
     private void ResetStates()
     {
-        //_possibleStates.Add(DartState);
-        //_possibleStates.Add(SpikeState);
+        _possibleStates.Add(DartState);
+        _possibleStates.Add(SpikeState);
         _possibleStates.Add(UnwantedFrequencyState);
     }
 
