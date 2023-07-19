@@ -1,4 +1,5 @@
 using Godot;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace SupaLidlGame.State.NPC.Doc;
@@ -12,19 +13,28 @@ public partial class DocChooseAttackState : NPCState
     public DocShungiteSpikeState SpikeState { get; set; }
 
     [Export]
+    public DocUnwantedFrequencyState UnwantedFrequencyState { get; set; }
+
+    [Export]
     public DocExitState ExitState { get; set; }
 
     public Characters.Doc Doc => NPC as Characters.Doc;
 
-    private List<NPCState> _states = new List<NPCState>();
+    private HashSet<NPCState> _possibleStates = new HashSet<NPCState>();
 
     private int _consecutiveAttacks = 0;
 
     public override void _Ready()
     {
-        _states.Add(DartState);
-        _states.Add(SpikeState);
+        ResetStates();
         base._Ready();
+    }
+
+    private void ResetStates()
+    {
+        _possibleStates.Add(DartState);
+        _possibleStates.Add(SpikeState);
+        _possibleStates.Add(UnwantedFrequencyState);
     }
 
     public override NPCState Enter(IState<NPCState> previous)
@@ -44,8 +54,16 @@ public partial class DocChooseAttackState : NPCState
             return ExitState;
         }
 
+        if (_possibleStates.Count == 0)
+        {
+            ResetStates();
+        }
+
         // choose random attack
         var random = new System.Random();
-        return _states[random.Next(_states.Count)];
+        int index = random.Next(_possibleStates.Count);
+        var state = _possibleStates.ElementAt(index);
+        _possibleStates.Remove(state);
+        return state;
     }
 }

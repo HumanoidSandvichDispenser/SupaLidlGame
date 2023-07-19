@@ -2,19 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="Texture2D" uid="uid://b0yiy7w8nxmas" path="res://Assets/Sprites/arena-tileset.png" id="2_wnjm0"]
-[ext_resource type="Texture2D" uid="uid://5k0o7d7j65a4" path="res://Assets/Sprites/arena-tileset-normal.png" id="3_iitgk"]
-[ext_resource type="PackedScene" uid="uid://dsr5kkbthpwpl" path="res://Characters/Doc.tscn" id="4_c0csw"]
+[ext_resource type="PackedScene" uid="uid://d2skjvvx6fal0" path="res://Characters/Doc.tscn" id="4_c0csw"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="5_aevwf"]
+[ext_resource type="PackedScene" uid="uid://c1w7t6irnohfx" path="res://Entities/Torch.tscn" id="6_1wwor"]
+[ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="6_jy3pc"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8jil2"]
 polygon = PackedVector2Array(-8, -4, -6, -5, -6, -18, 6, -18, 6, -5, 8, -4, 8, 4, 4, 8, -4, 8, -8, 3.5)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_dnsyd"]
-diffuse_texture = ExtResource("2_wnjm0")
-normal_texture = ExtResource("3_iitgk")
-
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fcd6d"]
-texture = SubResource("CanvasTexture_dnsyd")
+texture = ExtResource("2_wnjm0")
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
@@ -252,7 +249,7 @@ physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_5yxvt")
 sources/0 = SubResource("TileSetAtlasSource_fcd6d")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4g4ap"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_im5g2"]
 resource_local_to_scene = true
 shader = ExtResource("5_aevwf")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
@@ -265,9 +262,42 @@ layer_3/tile_data = PackedInt32Array(-196612, 65536, 1, -131076, 65536, 1, -6554
 layer_4/tile_data = PackedInt32Array(-524296, 327680, 0, -589818, 262144, 0, -589817, 262144, 1, -589819, 327680, 0, -589820, 196608, 1, -589821, 327680, 1, -589822, 131072, 1, -589823, 262144, 1, -589824, 327680, 0, -524289, 131072, 1, -524290, 327680, 0, -524291, 327680, 1, -524292, 327680, 1, -524293, 327680, 0, -524294, 131072, 1, -524295, 262144, 1, -589832, 131072, 2, -589831, 131072, 2, -589830, 131072, 2, -589829, 131072, 2, -589828, 131072, 2, -589827, 131072, 2, -589826, 131072, 2, -589825, 131072, 2, -655360, 131072, 2, -655359, 131072, 2, -655358, 131072, 2, -655357, 131072, 2, -655356, 131072, 2, -655355, 131072, 2, -655354, 131072, 2, -655353, 131072, 2, -655352, 327680, 2, -589833, 262144, 2, -524297, 196608, 3, -458761, 196608, 3, -393225, 196608, 3, -327689, 196608, 3, -262153, 196608, 3, -196617, 196608, 3, -131081, 196608, 3, -65545, 196608, 3, -9, 196608, 3, 65527, 196608, 3, 131063, 196608, 3, 196599, 196608, 3, 262135, 196608, 3, 327671, 196608, 3, 393207, 196608, 3, 458743, 196608, 3, 524279, 196608, 3, 262152, 131072, 3, 327688, 131072, 3, 393224, 131072, 3, 458760, 131072, 3, 196616, 131072, 3, 131080, 131072, 3, 65544, 131072, 3, 8, 131072, 3, -65528, 131072, 3, -131064, 131072, 3, -196600, 131072, 3, -262136, 131072, 3, -589816, 131072, 3, -524280, 131072, 3, -458744, 131072, 3, -393208, 131072, 3, -327672, 131072, 3, 589816, 196608, 2, 589817, 196608, 2, 589818, 196608, 2, 589819, 196608, 2, 589820, 196608, 2, 589821, 196608, 2, 589822, 196608, 2, 589823, 196608, 2, 524288, 196608, 2, 524289, 196608, 2, 524290, 196608, 2, 524291, 196608, 2, 524292, 196608, 2, 524293, 196608, 2, 524294, 196608, 2, 524295, 196608, 2, 524296, 327680, 3, 589815, 262144, 3)
 
 [node name="CanvasModulate" parent="." index="0"]
-color = Color(0.753984, 0.753984, 0.753984, 1)
+color = Color(0.501961, 0.501961, 0.501961, 1)
 
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_c0csw")]
-material = SubResource("ShaderMaterial_4g4ap")
+material = SubResource("ShaderMaterial_im5g2")
 PreferredWeightDistance = 256.0
 MaxWeightDistance = 32.0
+
+[node name="Torch" parent="Entities" index="1" instance=ExtResource("6_1wwor")]
+position = Vector2(-120, -112)
+
+[node name="Torch2" parent="Entities" index="2" instance=ExtResource("6_1wwor")]
+position = Vector2(-72, -112)
+
+[node name="Torch3" parent="Entities" index="3" instance=ExtResource("6_1wwor")]
+position = Vector2(-24, -113)
+
+[node name="Torch4" parent="Entities" index="4" instance=ExtResource("6_1wwor")]
+position = Vector2(24, -112)
+
+[node name="Torch5" parent="Entities" index="5" instance=ExtResource("6_1wwor")]
+position = Vector2(72, -112)
+
+[node name="Torch6" parent="Entities" index="6" instance=ExtResource("6_1wwor")]
+position = Vector2(120, -112)
+
+[node name="TorchLamp" parent="." index="6" instance=ExtResource("6_jy3pc")]
+position = Vector2(-96, -120)
+
+[node name="TorchLamp2" parent="." index="7" instance=ExtResource("6_jy3pc")]
+position = Vector2(-48, -120)
+
+[node name="TorchLamp3" parent="." index="8" instance=ExtResource("6_jy3pc")]
+position = Vector2(0, -120)
+
+[node name="TorchLamp4" parent="." index="9" instance=ExtResource("6_jy3pc")]
+position = Vector2(48, -120)
+
+[node name="TorchLamp5" parent="." index="10" instance=ExtResource("6_jy3pc")]
+position = Vector2(96, -120)

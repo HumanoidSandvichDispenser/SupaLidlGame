@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=38 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -17,6 +17,8 @@
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="9_stm0e"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteSpikeState.cs" id="10_bgs6o"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocChooseAttackState.cs" id="12_45x13"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocUnwantedFrequencyState.cs" id="12_d51jv"]
+[ext_resource type="PackedScene" uid="uid://1y5r6sklwgrp" path="res://Entities/UnwantedFrequency.tscn" id="13_lpj21"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
@@ -257,10 +259,20 @@ ChooseAttackState = NodePath("../ChooseAttack")
 Doc = NodePath("../..")
 NPC = NodePath("../..")
 
-[node name="ChooseAttack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("DartState", "SpikeState", "ExitState", "NPC")]
+[node name="UnwantedFrequency" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ChooseAttackState", "Doc", "NPC")]
+script = ExtResource("12_d51jv")
+Duration = 4.0
+AttackDuration = 1.0
+Projectile = ExtResource("13_lpj21")
+ChooseAttackState = NodePath("../ChooseAttack")
+Doc = NodePath("../..")
+NPC = NodePath("../..")
+
+[node name="ChooseAttack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("DartState", "SpikeState", "UnwantedFrequencyState", "ExitState", "NPC")]
 script = ExtResource("12_45x13")
 DartState = NodePath("../Dart")
 SpikeState = NodePath("../Spike")
+UnwantedFrequencyState = NodePath("../UnwantedFrequency")
 ExitState = NodePath("../Exit")
 NPC = NodePath("../..")
 

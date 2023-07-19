@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://c1w7t6irnohfx"]
+
+[ext_resource type="Texture2D" uid="uid://har1bd5u4dq3" path="res://Assets/Sprites/Misc/torch.png" id="1_14bgb"]
+[ext_resource type="Texture2D" uid="uid://b8ann6yb8qox4" path="res://Assets/Sprites/Particles/light-pixel.png" id="2_f0xs8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_js1l1"]
+atlas = ExtResource("1_14bgb")
+region = Rect2(0, 0, 8, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdxtl"]
+atlas = ExtResource("1_14bgb")
+region = Rect2(8, 0, 8, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_da7fw"]
+atlas = ExtResource("1_14bgb")
+region = Rect2(16, 0, 8, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpccx"]
+atlas = ExtResource("1_14bgb")
+region = Rect2(24, 0, 8, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_crwu1"]
+atlas = ExtResource("1_14bgb")
+region = Rect2(32, 0, 8, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3kxc"]
+atlas = ExtResource("1_14bgb")
+region = Rect2(40, 0, 8, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_225la"]
+atlas = ExtResource("1_14bgb")
+region = Rect2(48, 0, 8, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gf7ku"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_js1l1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdxtl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_da7fw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpccx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crwu1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r3kxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_225la")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Torch" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_gf7ku")
+autoplay = "default"
+frame = 5
+frame_progress = 0.743234
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0.898039, 0.686275, 1)
+blend_mode = 2
+shadow_enabled = true
+shadow_filter_smooth = 3.0
+texture = ExtResource("2_f0xs8")
+offset = Vector2(0, 2)

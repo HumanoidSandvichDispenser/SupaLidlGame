@@ -277,8 +277,10 @@ _data = {
 
 [node name="ShungiteDart" type="RigidBody2D" node_paths=PackedStringArray("Hitbox")]
 script = ExtResource("1_jbgb8")
+ProjectileName = "Shungite Dart"
 Speed = 256.0
 Hitbox = NodePath("Hitbox")
+Lifetime = 5.0
 Delay = 1.0
 
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
@@ -290,7 +292,7 @@ speed_scale = 4.0
 
 [node name="Hitbox" parent="." instance=ExtResource("3_gdyk8")]
 Damage = 25.0
-Knockback = 128.0
+Knockback = 64.0
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 shape = SubResource("RectangleShape2D_fa7yf")

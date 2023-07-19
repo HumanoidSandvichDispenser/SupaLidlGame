@@ -47,8 +47,6 @@ public partial class DocShungiteDartState : DocAttackState
     {
         var projectile = _map.SpawnEntity<Projectile>(Projectile);
         projectile.Hitbox.Faction = NPC.Faction;
-        // global position is (from npc to player) * 2 = (2 * npc) - player
-        //projectile.GlobalPosition = 2 * NPC.GlobalPosition - playerPos;
         projectile.GlobalPosition = position;
         projectile.Direction = direction;
         projectile.GlobalRotation = direction.Angle();
@@ -60,6 +58,8 @@ public partial class DocShungiteDartState : DocAttackState
     {
         var player = _world.CurrentPlayer;
         var playerPos = player.GlobalPosition;
+        // global position is (from npc to player) * 2 = (2 * npc) - player
+        //projectile.GlobalPosition = 2 * NPC.GlobalPosition - playerPos;
         Vector2 position1 = 2 * NPC.GlobalPosition - playerPos;
         Vector2 position2 = 2 * playerPos - NPC.GlobalPosition;
         Vector2 direction1 = position1.DirectionTo(playerPos);
