@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="Texture2D" uid="uid://b0yiy7w8nxmas" path="res://Assets/Sprites/arena-tileset.png" id="2_wnjm0"]
 [ext_resource type="Texture2D" uid="uid://5k0o7d7j65a4" path="res://Assets/Sprites/arena-tileset-normal.png" id="3_iitgk"]
-[ext_resource type="PackedScene" uid="uid://dsr5kkbthpwpl" path="res://Characters/Doc.tscn" id="4_c0csw"]
+[ext_resource type="PackedScene" uid="uid://d2skjvvx6fal0" path="res://Characters/Doc.tscn" id="4_c0csw"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="5_aevwf"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_8jil2"]
@@ -252,7 +252,7 @@ physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_5yxvt")
 sources/0 = SubResource("TileSetAtlasSource_fcd6d")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4g4ap"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h6m08"]
 resource_local_to_scene = true
 shader = ExtResource("5_aevwf")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
@@ -268,6 +268,6 @@ layer_4/tile_data = PackedInt32Array(-524296, 327680, 0, -589818, 262144, 0, -58
 color = Color(0.753984, 0.753984, 0.753984, 1)
 
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_c0csw")]
-material = SubResource("ShaderMaterial_4g4ap")
+material = SubResource("ShaderMaterial_h6m08")
 PreferredWeightDistance = 256.0
 MaxWeightDistance = 32.0

@@ -4,5 +4,6 @@
 
 [node name="Trail" type="Line2D"]
 show_behind_parent = true
+top_level = true
 script = ExtResource("1_t42kk")
 MaximumPoints = 16

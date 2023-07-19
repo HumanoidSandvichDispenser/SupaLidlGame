@@ -10,9 +10,6 @@ public partial class ShungiteSpike : Projectile
     public PackedScene Dart { get; set; }
 
     [Export]
-    public double ExplodeTime { get; set; } = 6;
-
-    [Export]
     public BoundingBoxes.Hurtbox Hurtbox { get; set; }
 
     [Export]
@@ -21,17 +18,43 @@ public partial class ShungiteSpike : Projectile
     [Export]
     public AnimationPlayer AnimationPlayer { get; set; }
 
+    public Vector2 Target { get; set; }
+
+    public double ExplodeTime { get; set; } = 2;
+
+    public double FreezeTime
+    {
+        get => _freezeTime;
+        set
+        {
+            _currentFreezeTime = _freezeTime = value;
+        }
+    }
+
     private double _currentExplodeTime;
+    private double _freezeTime;
+    private double _currentFreezeTime;
+    private bool _hasFrozen = false;
+    private bool _hasExploded = false;
 
     private Scenes.Map _map;
 
     public override void _Ready()
     {
+        _currentFreezeTime = FreezeTime;
         _currentExplodeTime = ExplodeTime;
         _map = this.GetAncestor<Scenes.Map>();
 
         Hurtbox.ReceivedDamage += OnReceivedDamage;
         AnimationPlayer.Play("spin");
+
+        AnimationPlayer.AnimationFinished += (StringName anim) =>
+        {
+            if (anim == "explode")
+            {
+                QueueFree();
+            }
+        };
 
         base._Ready();
     }
@@ -43,8 +66,21 @@ public partial class ShungiteSpike : Projectile
         Vector2 knockbackOrigin = default,
         Vector2 knockbackVector = default)
     {
+        // if we were hit by the player before the spike freezes,
+        // spawn a dart towards where the player is aiming
+        if (inflictor is Characters.Player player)
+        {
+            var mousePos = GetGlobalMousePosition();
+            var dart = CreateDart(GlobalPosition.DirectionTo(mousePos));
+            dart.Hitbox.Faction = player.Faction;
+            Hitbox.IsDisabled = true;
+        }
+
         HitSound.At(GlobalPosition).PlayOneShot();
-        QueueFree();
+        _hasExploded = true;
+        _hasFrozen = true;
+        AnimationPlayer.Stop();
+        AnimationPlayer.Play("explode");
     }
 
 
@@ -60,13 +96,27 @@ public partial class ShungiteSpike : Projectile
 
     public override void _Process(double delta)
     {
-        if ((_currentExplodeTime -= delta) <= 0)
+        if ((_currentFreezeTime -= delta) <= 0)
         {
-            CreateDart(Vector2.Up);
-            CreateDart(Vector2.Down);
-            CreateDart(Vector2.Left);
-            CreateDart(Vector2.Right);
-            QueueFree();
+            if (!_hasFrozen)
+            {
+                Speed = 0;
+                _hasFrozen = true;
+                AnimationPlayer.Stop();
+            }
+
+            if ((_currentExplodeTime -= delta) <= 0)
+            {
+                if (!_hasExploded)
+                {
+                    CreateDart(Vector2.Up);
+                    CreateDart(Vector2.Down);
+                    CreateDart(Vector2.Left);
+                    CreateDart(Vector2.Right);
+                    AnimationPlayer.Play("explode");
+                    _hasExploded = true;
+                }
+            }
         }
     }
 }

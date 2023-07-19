@@ -9,6 +9,9 @@ public partial class Projectile : RigidBody2D
     public Vector2 Velocity => Direction * Speed;
 
     [Export]
+    public string ProjectileName { get; set; }
+
+    [Export]
     public float Speed { get; set; }
 
     [Export]
@@ -25,6 +28,8 @@ public partial class Projectile : RigidBody2D
 
     public Character Character { get; set; }
 
+    public bool IsDead { get; set; }
+
     public override void _Ready()
     {
         Hitbox.Hit += OnHit;
@@ -35,15 +40,26 @@ public partial class Projectile : RigidBody2D
         if (Delay > 0)
         {
             Delay -= delta;
+            if (Delay <= 0)
+            {
+                OnDelayEnd();
+            }
         }
         if ((Lifetime -= delta) <= 0)
         {
-            QueueFree();
+            if (!IsDead)
+            {
+                Die();
+            }
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
+        if (IsDead)
+        {
+            return;
+        }
         Vector2 velocity = Delay <= 0 ? Velocity : Vector2.Zero;
         MoveAndCollide(velocity * (float)delta);
     }
@@ -59,5 +75,15 @@ public partial class Projectile : RigidBody2D
                 knockbackVector: Direction
             );
         }
+    }
+
+    public virtual void Die()
+    {
+        QueueFree();
+    }
+
+    public virtual void OnDelayEnd()
+    {
+
     }
 }

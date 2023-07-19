@@ -84,6 +84,25 @@ public sealed partial class Player : Character
         // TODO: implement visual effects for stun
     }
 
+    public override void OnReceivedDamage(
+        float damage,
+        Character inflictor,
+        float knockback,
+        Vector2 knockbackOrigin = default,
+        Vector2 knockbackVector = default)
+    {
+        if (damage >= 10 && IsAlive)
+        {
+            Camera.Shake(2, 0.5f);
+        }
+        base.OnReceivedDamage(
+            damage,
+            inflictor,
+            knockback,
+            knockbackOrigin,
+            knockbackVector);
+    }
+
     public override void Die()
     {
         GD.Print("died");

@@ -377,12 +377,11 @@ environment = SubResource("Environment_72txp")
 y_sort_enabled = true
 rotation = -1.5708
 
-[node name="Trail" parent="Anchor" node_paths=PackedStringArray("Tracking") instance=ExtResource("4_pt6lq")]
+[node name="Trail" parent="Anchor" instance=ExtResource("4_pt6lq")]
 position = Vector2(2.40734, -0.55655)
 rotation = 0.945464
 width_curve = SubResource("Curve_4cxtp")
 gradient = SubResource("Gradient_2ablm")
-Tracking = NodePath("../Node2D/Sprite2D")
 
 [node name="Node2D" type="Node2D" parent="Anchor"]
 y_sort_enabled = true

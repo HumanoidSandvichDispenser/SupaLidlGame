@@ -80,7 +80,6 @@ public partial class Hitbox : BoundingBox
     {
         if (area is BoundingBox box)
         {
-            GD.Print("hit");
             // we don't want to hurt teammates
             if (Faction != box.Faction)
             {
