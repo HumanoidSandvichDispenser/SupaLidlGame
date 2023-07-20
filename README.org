@@ -2,8 +2,5 @@
 
 Forsen-related game
 
-Issue below fixed with [[https://github.com/godotengine/godot/pull/68866]]. Please update your version to ~4.0.beta6.mono~.
-
-+*NOTE:* although the latest version at the time of writing is ~4.0.beta5.mono~, this project only works under ~4.0.beta4.mono~. The latest beta does not include node exports, which was previously in Beta 4.+
-
-+[[https://github.com/godotengine/godot/pull/67055]]+
+#+attr_html: :style margin-left: auto; margin-right: auto;
+[[./Assets/Sprites/Characters/forsen2-portrait.png]]

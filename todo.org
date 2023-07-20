@@ -1,0 +1,15 @@
+#+title: TODO LIST
+
+* Doc Boss
+
+** TODO Reset possible attacks after each cycle
+
+** TODO Attack animations
+
+* TODO Boss cards
+
+* TODO Dialog
+
+* TODO Short arena entrance
+
+* TODO Video demonstration
