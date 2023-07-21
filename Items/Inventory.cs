@@ -14,6 +14,9 @@ public partial class Inventory : Node2D
     [Export]
     public Dictionary<string, int> InventoryMap { get; set; }
 
+    [Signal]
+    public delegate void UsedItemEventHandler(Item item);
+
     public const int MaxCapacity = 32;
 
     private Item _selectedItem;

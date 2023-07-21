@@ -63,8 +63,7 @@ public partial class ShungiteSpike : Projectile
         float damage,
         Characters.Character inflictor,
         float knockback,
-        Vector2 knockbackOrigin = default,
-        Vector2 knockbackVector = default)
+        Vector2 knockbackDir)
     {
         // if we were hit by the player before the spike freezes,
         // spawn a dart towards where the player is aiming

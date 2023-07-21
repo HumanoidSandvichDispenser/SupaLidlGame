@@ -98,12 +98,13 @@ animations = [{
 [node name="TorchLamp" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
 texture_filter = 1
-position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_gf7ku")
 autoplay = "default"
 frame = 6
 frame_progress = 0.743234
+offset = Vector2(0, -12)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(1, 0.827451, 0.619608, 1)

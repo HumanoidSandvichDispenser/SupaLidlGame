@@ -15,6 +15,7 @@ public partial class UnwantedFrequency : Projectile
     public Node2D TrailRotation { get; set; }
     public Node2D TrailPosition { get; set; }
     public GpuParticles2D DeathParticles { get; set; }
+    public GpuParticles2D SpawnParticles { get; set; }
     public Timer DeferDeathTimer { get; set; }
 
     private double _currentLifetime = 0;
@@ -26,6 +27,8 @@ public partial class UnwantedFrequency : Projectile
         Trail = TrailPosition.GetNode<Utils.Trail>("Trail");
         DeferDeathTimer = GetNode<Timer>("DeferDeath");
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
+        SpawnParticles = GetNode<GpuParticles2D>("SpawnParticles");
+        SpawnParticles.Emitting = true;
         Hitbox.Hit += (BoundingBoxes.BoundingBox box) =>
         {
             if (box is BoundingBoxes.Hurtbox && box.Faction != Hitbox.Faction)
@@ -62,7 +65,8 @@ public partial class UnwantedFrequency : Projectile
 
     public override void Die()
     {
-        IsDead = Trail.IsDead = Hitbox.IsDisabled = true;
+        IsDead = Trail.IsDead = true;
+        Hitbox.SetDeferred("monitoring", false);
         DeferDeathTimer.Timeout += () =>
         {
             QueueFree();

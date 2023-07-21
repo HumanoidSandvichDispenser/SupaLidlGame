@@ -9,20 +9,38 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
 
     public override NPCState Enter(IState<NPCState> previous)
     {
+        if (this is not DocUnwantedFrequencyState)
+        {
+            GetNode<AnimationPlayer>("../../Animations/Telegraph")
+                .Play("shungite_spike");
+        }
         _currentAttacks = 0;
         _currentAttackDuration = 1;
+        NPC.ShouldMove = false;
         return base.Enter(previous);
+    }
+
+    public override void Exit(IState<NPCState> nextState)
+    {
+        GetNode<AnimationPlayer>("../../Animations/Telegraph").Stop();
+        NPC.ShouldMove = true;
     }
 
     protected override Projectile SpawnProjectile(
         Vector2 position,
         Vector2 direction)
     {
+        GetNode<AnimationPlayer>("../../Animations/Telegraph")
+            .Play("shungite_spike");
         var projectile = base.SpawnProjectile(position, direction)
             as ShungiteSpike;
         projectile.GlobalRotation = 0;
         projectile.Delay = 0;
-        projectile.Hitbox.Faction = projectile.Hurtbox.Faction = Doc.Faction;
+        projectile.Hitbox.Faction = Doc.Faction;
+        if (projectile.Hurtbox is not null)
+        {
+            projectile.Hurtbox.Faction = Doc.Faction;
+        }
         return projectile;
     }
 

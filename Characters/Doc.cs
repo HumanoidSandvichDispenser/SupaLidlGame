@@ -1,4 +1,5 @@
 using Godot;
+using GodotUtilities;
 
 namespace SupaLidlGame.Characters;
 
@@ -25,7 +26,6 @@ public partial class Doc : Enemy
 
     public override void _Ready()
     {
-        GD.Print(Health);
         base._Ready();
     }
     
@@ -33,5 +33,17 @@ public partial class Doc : Enemy
     {
         BossStateMachine.Process(delta);
         base._Process(delta);
+    }
+
+    public override void OnReceivedDamage(
+        float damage,
+        Character inflictor,
+        float knockback,
+        Vector2 knockbackDir = default)
+    {
+        GetNode<GpuParticles2D>("Effects/HurtParticles")
+            .SetDirection(knockbackDir);
+
+        base.OnReceivedDamage(damage, inflictor, knockback, knockbackDir);
     }
 }

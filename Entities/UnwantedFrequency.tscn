@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://1y5r6sklwgrp"]
+[gd_scene load_steps=20 format=3 uid="uid://1y5r6sklwgrp"]
 
 [ext_resource type="Script" path="res://Entities/UnwantedFrequency.cs" id="1_6sbe0"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="2_gxtvd"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="3_67uhs"]
 [ext_resource type="AudioStream" uid="uid://cn2wop7rfxku8" path="res://Assets/Sounds/karabast.mp3" id="4_pbgsi"]
+[ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="5_d8kx8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30y8q"]
 size = Vector2(8, 8)
@@ -33,6 +34,36 @@ angular_velocity_max = 90.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 2.0
 color_ramp = SubResource("GradientTexture1D_yfhnr")
+
+[sub_resource type="Gradient" id="Gradient_5hy7c"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iyaih"]
+gradient = SubResource("Gradient_5hy7c")
+
+[sub_resource type="Curve" id="Curve_wt1cb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_5uulw"]
+curve = SubResource("Curve_wt1cb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_olfm2"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 32.0
+initial_velocity_max = 32.0
+angular_velocity_min = 90.0
+angular_velocity_max = 90.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+tangential_accel_min = 8.0
+tangential_accel_max = 8.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_5uulw")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_iyaih")
 
 [sub_resource type="Animation" id="Animation_w1abs"]
 length = 0.001
@@ -122,9 +153,22 @@ lifetime = 2.0
 one_shot = true
 explosiveness = 0.8
 
+[node name="SpawnParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_olfm2")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_v8fdt")
 }
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 1.2
+blend_mode = 2
+texture = ExtResource("5_d8kx8")
 
 [editable path="Hitbox"]

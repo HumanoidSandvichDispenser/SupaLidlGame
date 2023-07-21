@@ -8,7 +8,6 @@ namespace SupaLidlGame.Characters;
 [Scene]
 public sealed partial class Player : Character
 {
-    private AnimatedSprite2D _sprite;
     private string _spriteAnim;
 
     [Export]
@@ -17,39 +16,31 @@ public sealed partial class Player : Character
     [Export]
     public Marker2D DirectionMarker { get; private set; }
 
+    [Export]
+    public AnimationTree AnimationTree { get; private set; }
+
     public InteractionRay InteractionRay { get; private set; }
 
-    public string Animation
-    {
-        get => _sprite.Animation;
-        set
-        {
-            // the Player.Animation property might be set before this node is
-            // even ready, so if _sprite is null, then we just hold the new
-            // animation in a temp value, which will be assigned once this node
-            // is ready
-            if (_sprite is null)
-            {
-                _spriteAnim = value;
-                return;
-            }
-
-            _sprite.Play(value);
-        }
-    }
+    public AnimationPlayer AttackAnimation { get; set; }
 
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
-        _sprite = GetNode<AnimatedSprite2D>("Sprite");
-        if (_spriteAnim != default)
-        {
-            _sprite.Animation = _spriteAnim;
-        }
-        base._Ready();
         Death += (Events.HealthChangedArgs args) =>
         {
             Visible = false;
+        };
+
+        AttackAnimation = GetNode<AnimationPlayer>("Animations/Attack");
+
+        base._Ready();
+
+        Inventory.UsedItem += (Items.Item item) =>
+        {
+            if (item is Items.Weapons.Sword)
+            {
+                AttackAnimation.Play("sword");
+            }
         };
     }
 
@@ -88,19 +79,17 @@ public sealed partial class Player : Character
         float damage,
         Character inflictor,
         float knockback,
-        Vector2 knockbackOrigin = default,
-        Vector2 knockbackVector = default)
+        Vector2 knockbackDir = default)
     {
         if (damage >= 10 && IsAlive)
         {
             Camera.Shake(2, 0.5f);
         }
-        base.OnReceivedDamage(
-            damage,
-            inflictor,
-            knockback,
-            knockbackOrigin,
-            knockbackVector);
+
+        GetNode<GpuParticles2D>("Effects/HurtParticles")
+            .SetDirection(knockbackDir);
+
+        base.OnReceivedDamage(damage, inflictor, knockback, knockbackDir);
     }
 
     public override void Die()

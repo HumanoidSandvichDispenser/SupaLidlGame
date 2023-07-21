@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=48 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -13,18 +13,114 @@
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="8_r8ejq"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocExitState.cs" id="9_6com1"]
 [ext_resource type="PackedScene" uid="uid://1tiswf3gtyvv" path="res://Entities/ShungiteSpike.tscn" id="9_7kavk"]
-[ext_resource type="PackedScene" uid="uid://djaljmco3xo4g" path="res://Entities/ShungiteDart.tscn" id="9_kthpr"]
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="9_stm0e"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteSpikeState.cs" id="10_bgs6o"]
+[ext_resource type="PackedScene" uid="uid://cqx56u46g2c16" path="res://Entities/CompactDisc.tscn" id="11_23p3o"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocChooseAttackState.cs" id="12_45x13"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocUnwantedFrequencyState.cs" id="12_d51jv"]
 [ext_resource type="PackedScene" uid="uid://1y5r6sklwgrp" path="res://Entities/UnwantedFrequency.tscn" id="13_lpj21"]
+[ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="16_x277j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
 shader = ExtResource("2_5jxom")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
+
+[sub_resource type="Animation" id="Animation_7ay6e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_px7yx"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_a7sk6"]
+resource_name = "move"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1xv7m"]
+_data = {
+"RESET": SubResource("Animation_7ay6e"),
+"idle": SubResource("Animation_px7yx"),
+"move": SubResource("Animation_a7sk6")
+}
+
+[sub_resource type="Animation" id="Animation_dbist"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Effects/UnwantedFrequenciesParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_7oukw"]
 resource_name = "enter_in"
@@ -82,102 +178,80 @@ tracks/1/keys = {
 "values": [Color(1, 1, 1, 0.5), Color(1, 1, 1, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rpply"]
-_data = {
-"enter_in": SubResource("Animation_7oukw"),
-"exit_out": SubResource("Animation_j3s0y")
-}
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dib6t"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(0, 0, 12, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cwqre"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(12, 0, 12, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r8xjl"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(24, 0, 12, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7hkj4"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(36, 0, 12, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_w04w0"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(48, 0, 12, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ym6tg"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(60, 0, 12, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3rbas"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(72, 0, 12, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_63wkp"]
-atlas = ExtResource("3_rs44f")
-region = Rect2(84, 0, 12, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kb0pl"]
-resource_local_to_scene = true
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dib6t")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cwqre")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r8xjl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7hkj4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_w04w0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ym6tg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3rbas")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_63wkp")
-}],
-"loop": true,
-"name": &"move",
-"speed": 12.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uict5"]
-size = Vector2(16, 8)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
-size = Vector2(16, 18)
-
-[sub_resource type="Animation" id="Animation_dxevc"]
-resource_name = "Hurt"
-length = 0.6
+[sub_resource type="Animation" id="Animation_8dhub"]
+resource_name = "shungite_spike"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/intensity")
-tracks/0/interp = 2
+tracks/0/path = NodePath("../Sprite:frame")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-"transitions": PackedFloat32Array(4, 4, 4, 4, 4, 4, 4),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [15]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(2, 5, 5, 5),
 "update": 0,
-"values": [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+"values": [Vector2(1.5, 0.75), Vector2(1, 1), Vector2(0.75, 1.5), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qggcf"]
+resource_name = "unwanted_frequencies"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Effects/UnwantedFrequenciesParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 8, 9, 10, 11, 12, 13, 14, 8, 9, 10, 11, 12, 13, 14, 9, 10, 11, 12, 13, 14, 8, 9, 10]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1.5, 0.75), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rpply"]
+_data = {
+"RESET": SubResource("Animation_dbist"),
+"enter_in": SubResource("Animation_7oukw"),
+"exit_out": SubResource("Animation_j3s0y"),
+"shungite_spike": SubResource("Animation_8dhub"),
+"unwanted_frequencies": SubResource("Animation_qggcf")
 }
 
 [sub_resource type="Animation" id="Animation_k6l16"]
@@ -195,11 +269,93 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_dxevc"]
+resource_name = "hurt"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/intensity")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(4, 4, 4, 4, 4, 4, 4),
+"update": 0,
+"values": [0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xe5eq"]
 _data = {
-"Hurt": SubResource("Animation_dxevc"),
-"RESET": SubResource("Animation_k6l16")
+"RESET": SubResource("Animation_k6l16"),
+"hurt": SubResource("Animation_dxevc")
 }
+
+[sub_resource type="Gradient" id="Gradient_lcoxi"]
+offsets = PackedFloat32Array(0.37037, 0.651852)
+colors = PackedColorArray(0.367549, 0.894801, 1, 1, 0.992095, 0.364069, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5606i"]
+gradient = SubResource("Gradient_lcoxi")
+
+[sub_resource type="Gradient" id="Gradient_pikjh"]
+offsets = PackedFloat32Array(0.533333, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_pjeh8"]
+gradient = SubResource("Gradient_pikjh")
+
+[sub_resource type="Curve" id="Curve_x3x4q"]
+_data = [Vector2(0, 0.463636), 0.0, 0.0, 0, 0, Vector2(0.325301, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ssoms"]
+curve = SubResource("Curve_x3x4q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_s1tqp"]
+emission_shape = 3
+emission_box_extents = Vector3(8, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 32.0
+initial_velocity_max = 64.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_max = 1.5
+scale_curve = SubResource("CurveTexture_ssoms")
+color_ramp = SubResource("GradientTexture1D_pjeh8")
+color_initial_ramp = SubResource("GradientTexture1D_5606i")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_hs7xn"]
+
+[sub_resource type="Curve" id="Curve_jqr7v"]
+_data = [Vector2(0, 0), 0.0, 2.0, 0, 1, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.0, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_s2csc"]
+curve = SubResource("Curve_jqr7v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wkgo8"]
+emission_shape = 1
+emission_sphere_radius = 8.0
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 30.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.01
+scale_max = 0.01
+scale_curve = SubResource("CurveTexture_s2csc")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uict5"]
+size = Vector2(16, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
+size = Vector2(16, 18)
 
 [node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("BossStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
@@ -245,14 +401,14 @@ NPC = NodePath("../..")
 script = ExtResource("8_1hoax")
 Duration = 8.0
 AttackDuration = 1.0
-Projectile = ExtResource("9_kthpr")
+Projectile = ExtResource("11_23p3o")
 ChooseAttackState = NodePath("../ChooseAttack")
 Doc = NodePath("../..")
 NPC = NodePath("../..")
 
 [node name="Spike" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ChooseAttackState", "Doc", "NPC")]
 script = ExtResource("10_bgs6o")
-Duration = 8.0
+Duration = 4.0
 AttackDuration = 1.0
 Projectile = ExtResource("9_7kavk")
 ChooseAttackState = NodePath("../ChooseAttack")
@@ -284,19 +440,48 @@ NPC = NodePath("../..")
 
 [node name="Animations" type="Node" parent="."]
 
+[node name="Movement" type="AnimationPlayer" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_1xv7m")
+}
+
 [node name="Telegraph" type="AnimationPlayer" parent="Animations"]
 libraries = {
 "": SubResource("AnimationLibrary_rpply")
 }
 
-[node name="Sprite" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.5)
+[node name="Hurt" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_xe5eq")
+}
+
+[node name="Effects" type="Node2D" parent="."]
+
+[node name="UnwantedFrequenciesParticles" type="GPUParticles2D" parent="Effects"]
+position = Vector2(0, 8)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_s1tqp")
+texture = SubResource("CanvasTexture_hs7xn")
+lifetime = 0.5
+trail_enabled = true
+trail_sections = 4
+
+[node name="HurtParticles" type="GPUParticles2D" parent="Effects"]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_wkgo8")
+texture = ExtResource("16_x277j")
+lifetime = 0.4
+one_shot = true
+explosiveness = 1.0
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.08)
 use_parent_material = true
 position = Vector2(0, -4)
-sprite_frames = SubResource("SpriteFrames_kb0pl")
-animation = &"move"
-frame_progress = 0.563144
+texture = ExtResource("3_rs44f")
 offset = Vector2(0, 4)
+hframes = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -316,11 +501,6 @@ shape = SubResource("RectangleShape2D_8lxmf")
 y_sort_enabled = true
 script = ExtResource("8_r8ejq")
 Items = Array[Node2D]([])
-
-[node name="FlashAnimation" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_xe5eq")
-}
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_stm0e")

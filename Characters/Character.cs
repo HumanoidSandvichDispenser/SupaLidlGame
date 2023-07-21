@@ -66,7 +66,7 @@ public partial class Character : CharacterBody2D, IFaction
     public double StunTime { get; set; }
 
     [Export]
-    public AnimatedSprite2D Sprite { get; set; }
+    public Sprite2D Sprite { get; set; }
 
     [Export]
     public Inventory Inventory { get; set; }
@@ -80,8 +80,16 @@ public partial class Character : CharacterBody2D, IFaction
     [Export]
     public ushort Faction { get; set; }
 
+    public AnimationPlayer MovementAnimation { get; set; }
+
+    public AnimationPlayer HurtAnimation { get; set; }
+
     public override void _Ready()
     {
+        // TODO: 80+ char line
+        MovementAnimation = GetNode<AnimationPlayer>("Animations/Movement");
+        HurtAnimation = GetNode<AnimationPlayer>("Animations/Hurt");
+        GD.Print(Name + " " + MovementAnimation.CurrentAnimation);
         Hurtbox.ReceivedDamage += OnReceivedDamage;
     }
 
@@ -163,6 +171,10 @@ public partial class Character : CharacterBody2D, IFaction
         if (Inventory.SelectedItem is Weapon weapon)
         {
             weapon.Use();
+            if (weapon.IsUsing)
+            {
+                Inventory.EmitSignal(Inventory.SignalName.UsedItem, weapon);
+            }
         }
     }
 
@@ -178,8 +190,7 @@ public partial class Character : CharacterBody2D, IFaction
         float damage,
         Character inflictor,
         float knockback,
-        Vector2 knockbackOrigin = default,
-        Vector2 knockbackVector = default)
+        Vector2 knockbackDir = default)
     {
         if (Health <= 0)
         {
@@ -197,34 +208,18 @@ public partial class Character : CharacterBody2D, IFaction
         this.GetAncestor<TileMap>().AddChild(instance);
 
         // apply knockback
-        Vector2 knockbackDir = knockbackVector;
-        if (knockbackDir == default)
-        {
-            if (knockbackOrigin == default)
-            {
-                if (inflictor is null)
-                {
-                    knockbackOrigin = GlobalPosition + Vector2.Down;
-                }
-                else
-                {
-                    knockbackOrigin = inflictor.GlobalPosition;
-                }
-            }
-
-            knockbackDir = knockbackOrigin.DirectionTo(GlobalPosition);
-        }
 
         ApplyImpulse(knockbackDir.Normalized() * knockback);
 
         GD.Print("lol");
 
         // play damage animation
-        var anim = GetNode<AnimationPlayer>("FlashAnimation");
+        var anim = GetNode<AnimationPlayer>("Animations/Hurt");
         if (anim != null)
         {
             anim.Stop();
-            anim.Play("Hurt");
+            anim.Play("hurt");
+            anim.Queue("hurt_flash");
         }
 
         // if anyone involved is a player, shake their screen

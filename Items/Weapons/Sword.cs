@@ -166,7 +166,6 @@ public partial class Sword : Weapon, IParryable
 
         foreach (BoundingBox box in Hitbox.Hits)
         {
-            GD.Print("processing hit");
             if (box is Hurtbox hurtbox)
             {
                 hurtbox.InflictDamage(Damage, Character, Knockback);

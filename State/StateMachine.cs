@@ -2,7 +2,7 @@ using Godot;
 
 namespace SupaLidlGame.State;
 
-public abstract partial class StateMachine<T> : Node where T : IState<T>
+public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
 {
     public T CurrentState { get; protected set; }
 
@@ -20,16 +20,19 @@ public abstract partial class StateMachine<T> : Node where T : IState<T>
             return false;
         }
 
+        // NOTE: proxied states can call Exit() more than once
         if (CurrentState is not null)
         {
             CurrentState.Exit(nextState);
         }
 
+        var previousState = CurrentState;
         CurrentState = nextState;
 
         // if the next state decides it should enter a different state,
         // then we enter that different state instead
-        var nextNextState = nextState.Enter(CurrentState);
+        var nextNextState = nextState.Enter(previousState);
+
         if (nextNextState is T t)
         {
             return ChangeState(t, true);

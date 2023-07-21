@@ -9,8 +9,7 @@ public partial class PlayerMoveState : PlayerState
 
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)
     {
-        Godot.GD.Print("Started moving");
-        _player.Animation = "move";
+        _player.MovementAnimation.Play("move");
         return base.Enter(previousState);
     }
 
