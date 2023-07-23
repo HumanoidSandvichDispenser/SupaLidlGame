@@ -3,12 +3,29 @@ using GodotUtilities;
 
 namespace SupaLidlGame.Characters;
 
-public partial class Doc : Enemy
+public partial class Doc : Boss
 {
-    [Export]
-    public State.NPC.NPCStateMachine BossStateMachine { get; set; }
+    public AnimationPlayer TelegraphAnimation { get; set; }
 
-    public int Intensity
+    public override float Health
+    {
+        get => base.Health;
+        set
+        {
+            if (IsActive)
+            {
+                base.Health = value;
+            }
+            else
+            {
+                // play opening animation
+                // then become active when it finishes
+                base.Health = value;
+            }
+        }
+    }
+
+    public override int Intensity
     {
         get
         {
@@ -24,15 +41,39 @@ public partial class Doc : Enemy
         }
     }
 
+    public Doc()
+    {
+        ShouldMove = false;
+    }
+
     public override void _Ready()
     {
+        TelegraphAnimation = GetNode<AnimationPlayer>("Animations/Telegraph");
         base._Ready();
     }
     
     public override void _Process(double delta)
     {
-        BossStateMachine.Process(delta);
+        if (IsActive)
+        {
+            BossStateMachine.Process(delta);
+        }
         base._Process(delta);
+    }
+
+    protected override float ReceiveDamage(
+        float damage,
+        Character inflictor,
+        float knockback,
+        Vector2 knockbackDir = default)
+    {
+        if (IsActive)
+        {
+            return base.ReceiveDamage(
+                damage, inflictor, knockback, knockbackDir);
+        }
+
+        return 1;
     }
 
     public override void OnReceivedDamage(

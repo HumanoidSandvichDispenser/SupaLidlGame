@@ -17,6 +17,9 @@ public partial class World : Node2D
     [Export]
     public Player CurrentPlayer { get; set; }
 
+    [Export]
+    public Control Control { get; set; }
+
     private Dictionary<string, Map> _maps;
 
     private string _currentConnector;
@@ -54,6 +57,13 @@ public partial class World : Node2D
             {
                 SpawnPlayer();
             };
+        };
+
+        CurrentPlayer.Hurt += (Events.HealthChangedArgs args) =>
+        {
+            var bar = Control.GetNode<UI.HealthBar>("HealthBar");
+            GD.Print("Set health bar");
+            bar.ProgressBar.Value = args.NewHealth;
         };
 
         base._Ready();

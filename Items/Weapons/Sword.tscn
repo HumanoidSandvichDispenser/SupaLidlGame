@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://dvqap2uhcah63"]
+[gd_scene load_steps=36 format=3 uid="uid://dvqap2uhcah63"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_vwirq"]
@@ -8,8 +8,9 @@
 [ext_resource type="Script" path="res://State/Weapon/SwordAnticipateState.cs" id="4_j3cud"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="4_pt6lq"]
 [ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_hmisb"]
-[ext_resource type="Texture2D" uid="uid://do1bui3bblkk7" path="res://Assets/Sprites/sword-swing.png" id="5_pywek"]
 [ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="6_8nxjm"]
+[ext_resource type="Texture2D" uid="uid://cmvh6pc71ir1m" path="res://Assets/Sprites/sword-swing-large.png" id="10_672jv"]
+[ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="10_mfnl7"]
 
 [sub_resource type="Environment" id="Environment_72txp"]
 background_mode = 3
@@ -174,7 +175,7 @@ tracks/1/path = NodePath("SwingSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.1, 0.2, 0.4),
+"times": PackedFloat32Array(0.1, 0.3, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [1, 2, 0]
@@ -214,6 +215,20 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(),
 "values": []
 }
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SwingSound")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_pclfs"]
 resource_name = "attack_alternate"
@@ -237,10 +252,10 @@ tracks/1/path = NodePath("SwingSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.1, 0.2, 0.4),
+"times": PackedFloat32Array(0.1, 0.3, 0.35),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [1, 3, 0]
+"values": [3, 4, 0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -340,11 +355,10 @@ graph_offset = Vector2(0, -104.073)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_o5g2u"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ic623"]
-radius = 20.0
-height = 48.0
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_fcgvv"]
+points = PackedVector2Array(0, 0, -21.213, 21.213, -30, 0, -21.213, -21.213, 0, -30, 21.213, -21.213, 30, 0, 21.213, 21.213, 0, 0)
 
-[node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "AnimationTree", "ParryParticles", "StateMachine", "Anchor")]
+[node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "AnimationTree", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
 y_sort_enabled = true
 texture_filter = 3
 script = ExtResource("1_mlo73")
@@ -361,6 +375,7 @@ Damage = 20.0
 UseTime = 0.55
 Knockback = 64.0
 ShouldHideIdle = true
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_vwirq")
@@ -422,6 +437,10 @@ initial_velocity_min = 8.0
 initial_velocity_max = 64.0
 color_ramp = SubResource("Gradient_jjxq2")
 
+[node name="Hand" type="Sprite2D" parent="Anchor/Node2D/Sprite2D"]
+position = Vector2(-2.52724e-05, 7)
+rotation = 1.5708
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_tao4k")
@@ -440,16 +459,17 @@ IsDisabled = true
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 position = Vector2(4, 0)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_ic623")
+shape = SubResource("ConvexPolygonShape2D_fcgvv")
 disabled = true
 
 [node name="SwingSprite" type="Sprite2D" parent="."]
 modulate = Color(2, 2, 2, 1)
-texture = ExtResource("5_pywek")
+texture = ExtResource("10_672jv")
 offset = Vector2(8, 0)
-hframes = 4
+hframes = 5
 
 [node name="SwingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_mfnl7")
 max_distance = 256.0
 
 [node name="ParrySound" type="AudioStreamPlayer2D" parent="."]

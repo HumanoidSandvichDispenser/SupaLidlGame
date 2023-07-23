@@ -3,8 +3,7 @@
 [ext_resource type="Script" path="res://Utils/PlayerCamera.cs" id="1_jabhk"]
 
 [node name="Camera2D" type="Camera2D"]
-current = true
-zoom = Vector2(4, 4)
+zoom = Vector2(2, 2)
 script = ExtResource("1_jabhk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

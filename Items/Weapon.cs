@@ -53,6 +53,9 @@ public abstract partial class Weapon : Item
     [Export]
     public float MaxDistanceHint { get; set; }
 
+    [Export]
+    public Sprite2D HandAnchor { get; set; }
+
     public virtual bool IsParryable { get; protected set; } = false;
 
     public bool IsParried { get; set; }
@@ -70,6 +73,12 @@ public abstract partial class Weapon : Item
             Visible = true;
         }
         Character = character;
+
+        // set the hand textures to the character's
+        if (HandAnchor is not null && character.HandTexture is not null)
+        {
+            HandAnchor.Texture = character.HandTexture;
+        }
     }
 
     public override void Unequip(Character character)

@@ -45,12 +45,13 @@ public partial class DocChooseAttackState : NPCState
         }
         else
         {
-            _consecutiveAttacks = 0;
+            _consecutiveAttacks = 1;
         }
 
         if (_consecutiveAttacks > Doc.Intensity)
         {
-            _consecutiveAttacks = 0;
+            _consecutiveAttacks = 1;
+            ResetStates();
             return ExitState;
         }
 

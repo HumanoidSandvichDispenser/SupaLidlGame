@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=52 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -11,7 +11,8 @@
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="7_sdgvb"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
-[ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="8_ohe3r"]
+[ext_resource type="Material" uid="uid://x5qcq5muvc3g" path="res://Assets/Sprites/Particles/PlayerDamageProcessMaterial.tres" id="8_yf112"]
+[ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="9_7gumm"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
 [ext_resource type="AudioStream" uid="uid://bkeyg8weaqnuu" path="res://Assets/Sounds/splat-player.ogg" id="12_vvem5"]
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
@@ -28,7 +29,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Character:frame")
+tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -40,7 +41,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Sprites/Character:rotation")
+tracks/1/path = NodePath("../Sprites/Node2D/Character:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -57,7 +58,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Character:frame")
+tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -74,7 +75,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Character:frame")
+tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -91,7 +92,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Character:rotation")
+tracks/0/path = NodePath("../Sprites/Node2D/Character:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -107,7 +108,7 @@ length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Character:frame")
+tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -131,30 +132,30 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Character:frame")
+tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [12]
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_3w3u1"]
 resource_name = "sword"
-length = 0.2
+length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Character:frame")
+tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [12, 13, 0]
+"values": [12, 13, 14]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_73mj7"]
@@ -180,7 +181,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprites/Character:frame")
+tracks/1/path = NodePath("Sprites/Node2D/Character:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -221,7 +222,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprites/Character:frame")
+tracks/1/path = NodePath("Sprites/Node2D/Character:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -241,6 +242,20 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Effects/HurtParticles")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_pjey7"]
@@ -321,48 +336,21 @@ graph_offset = Vector2(-335.315, -63.5708)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_jln87"]
 
-[sub_resource type="Gradient" id="Gradient_6k7fi"]
-offsets = PackedFloat32Array(0, 0.540741, 0.592593, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_1phkb"]
-gradient = SubResource("Gradient_6k7fi")
-
-[sub_resource type="Gradient" id="Gradient_3tax5"]
-offsets = PackedFloat32Array(0, 0.533333, 1)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_13jjx"]
-gradient = SubResource("Gradient_3tax5")
-
-[sub_resource type="Curve" id="Curve_0565g"]
-_data = [Vector2(0, 0.5), 0.0, 5.0, 0, 1, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.11111, 0.0, 1, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_k4txv"]
-curve = SubResource("Curve_0565g")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_humq0"]
-emission_shape = 2
-emission_sphere_radius = 32.0
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_852jj"]
 particle_flag_disable_z = true
-direction = Vector3(0, -1, 0)
+spread = 180.0
 gravity = Vector3(0, 0, 0)
-initial_velocity_min = 128.0
-initial_velocity_max = 256.0
+initial_velocity_min = 8.0
+initial_velocity_max = 16.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-tangential_accel_min = -8.0
-tangential_accel_max = -4.0
-scale_min = 0.01
-scale_max = 0.01
-scale_curve = SubResource("CurveTexture_k4txv")
-color_ramp = SubResource("GradientTexture1D_13jjx")
-color_initial_ramp = SubResource("GradientTexture1D_1phkb")
-turbulence_enabled = true
-turbulence_noise_scale = 4.0
+linear_accel_min = -32.0
+linear_accel_max = -16.0
+scale_min = 0.1
+scale_max = 0.1
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_pited"]
+diffuse_texture = ExtResource("9_7gumm")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
 size = Vector2(12, 8)
@@ -377,14 +365,13 @@ size = Vector2(8, 8)
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
-position = Vector2(0, -8)
 collision_layer = 6
 collision_mask = 17
 script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
 DirectionMarker = NodePath("Direction2D")
 Speed = 80.0
-Sprite = NodePath("Sprites/Character")
+Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
@@ -441,21 +428,31 @@ parameters/conditions/roll = false
 
 [node name="Effects" type="Node2D" parent="."]
 
-[node name="DeathParticles" type="GPUParticles2D" parent="Effects"]
+[node name="RollParticles" type="GPUParticles2D" parent="Effects"]
 emitting = false
 amount = 16
-process_material = SubResource("ParticleProcessMaterial_humq0")
+process_material = SubResource("ParticleProcessMaterial_852jj")
+texture = ExtResource("9_7gumm")
+lifetime = 0.8
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Effects"]
+emitting = false
+amount = 32
+process_material = ExtResource("8_yf112")
 texture = SubResource("CanvasTexture_pited")
-one_shot = true
+lifetime = 2.0
+preprocess = 0.1
 explosiveness = 0.9
 
 [node name="HurtParticles" type="GPUParticles2D" parent="Effects"]
 emitting = false
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_humq0")
-texture = ExtResource("8_ohe3r")
+process_material = ExtResource("8_yf112")
+texture = ExtResource("9_7gumm")
+lifetime = 1.5
 one_shot = true
-explosiveness = 1.0
+preprocess = 0.1
+explosiveness = 0.9
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 limit_left = -256
@@ -465,17 +462,21 @@ limit_bottom = 256
 position_smoothing_speed = 8.0
 
 [node name="Sprites" type="Node2D" parent="."]
-use_parent_material = true
-
-[node name="Character" type="Sprite2D" parent="Sprites"]
 y_sort_enabled = true
 use_parent_material = true
+rotation = 6.28319
+
+[node name="Node2D" type="Node2D" parent="Sprites"]
+
+[node name="Character" type="Sprite2D" parent="Sprites/Node2D"]
+use_parent_material = true
+position = Vector2(0, -8)
 texture = ExtResource("4_5vird")
 offset = Vector2(0, -4)
-hframes = 23
+hframes = 24
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Debug" type="Control" parent="."]
@@ -494,6 +495,7 @@ label_settings = SubResource("LabelSettings_q5h1n")
 horizontal_alignment = 1
 
 [node name="Inventory" type="Node2D" parent="."]
+position = Vector2(0, -4)
 script = ExtResource("7_xyenu")
 InventoryMap = {
 "equip_1": 0,
@@ -504,10 +506,12 @@ InventoryMap = {
 visible = false
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("9_avyu4")]
+visible = false
 InvincibilityTimer = NodePath("Timer")
 Faction = 1
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
+visible = false
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_cjk6b")
 
@@ -515,22 +519,27 @@ shape = SubResource("RectangleShape2D_cjk6b")
 one_shot = true
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+visible = false
 stream = ExtResource("12_vvem5")
 max_distance = 64.0
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
+visible = false
 current = true
 
 [node name="Direction2D" type="Marker2D" parent="."]
+visible = false
 position = Vector2(0, 6)
 
 [node name="InteractionRay" type="RayCast2D" parent="Direction2D"]
+visible = false
 target_position = Vector2(16, 0)
 collision_mask = 64
 collide_with_areas = true
 script = ExtResource("13_hs3u1")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 blend_mode = 2
 shadow_enabled = true
 shadow_filter = 2

@@ -21,8 +21,16 @@ public partial class PlayerIdleState : PlayerState
             }
         }
 
-        var velocity = _player.Velocity.LengthSquared();
-        if (previousState is PlayerMoveState && velocity > 16)
+        // must be moving at least 4 u/s for more than 0.5 seconds
+        bool shouldPlayStopAnim = false;
+
+        if (previousState is PlayerMoveState move)
+        {
+            shouldPlayStopAnim = move.MoveDuration > 0.5;
+            // NOTE: more conditions may be added soon
+        }
+
+        if (shouldPlayStopAnim)
         {
             _player.MovementAnimation.Play("stop");
             _player.MovementAnimation.Queue("idle");

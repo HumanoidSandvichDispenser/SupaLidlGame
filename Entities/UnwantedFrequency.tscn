@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://1y5r6sklwgrp"]
+[gd_scene load_steps=19 format=3 uid="uid://1y5r6sklwgrp"]
 
 [ext_resource type="Script" path="res://Entities/UnwantedFrequency.cs" id="1_6sbe0"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="2_gxtvd"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="3_67uhs"]
 [ext_resource type="AudioStream" uid="uid://cn2wop7rfxku8" path="res://Assets/Sounds/karabast.mp3" id="4_pbgsi"]
-[ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="5_d8kx8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30y8q"]
 size = Vector2(8, 8)
@@ -165,10 +164,5 @@ explosiveness = 1.0
 libraries = {
 "": SubResource("AnimationLibrary_v8fdt")
 }
-
-[node name="PointLight2D" type="PointLight2D" parent="."]
-energy = 1.2
-blend_mode = 2
-texture = ExtResource("5_d8kx8")
 
 [editable path="Hitbox"]

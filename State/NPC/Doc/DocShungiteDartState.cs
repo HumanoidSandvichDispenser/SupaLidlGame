@@ -38,7 +38,6 @@ public partial class DocShungiteDartState : DocAttackState
 
     public override void Exit(IState<NPCState> nextState)
     {
-
     }
 
     protected virtual Projectile SpawnProjectile(

@@ -1,8 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://1pb3mpmrl7lc"]
+[gd_scene load_steps=4 format=3 uid="uid://1pb3mpmrl7lc"]
 
 [ext_resource type="Script" path="res://Utils/World.cs" id="1_1k6ew"]
 [ext_resource type="PackedScene" uid="uid://b2x17su05ou5w" path="res://Scenes/Maps/Arena.tscn" id="2_avsrq"]
+[ext_resource type="PackedScene" uid="uid://bxo553hblp6nf" path="res://UI/HealthBar.tscn" id="3_5rhge"]
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" node_paths=PackedStringArray("Control")]
 script = ExtResource("1_1k6ew")
 StartingArea = ExtResource("2_avsrq")
+Control = NodePath("CanvasLayer/UI")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+z_index = 128
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 480.0
+
+[node name="HealthBar" parent="CanvasLayer/UI" instance=ExtResource("3_5rhge")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_bottom = 0.0
+grow_horizontal = 0
+grow_vertical = 1

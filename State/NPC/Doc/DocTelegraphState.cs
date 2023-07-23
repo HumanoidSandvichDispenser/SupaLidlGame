@@ -19,8 +19,8 @@ public partial class DocTelegraphState : NPCState
     {
         _currentDuration = Duration;
         TelegraphAnimationPlayer.Play("enter_in");
-        float randX = GD.RandRange(-128, 128);
-        float randY = GD.RandRange(-128, 128);
+        float randX = GD.RandRange(-112, 112);
+        float randY = GD.RandRange(-112, 112);
         NPC.GlobalPosition = new Vector2(randX, randY);
         return null;
     }

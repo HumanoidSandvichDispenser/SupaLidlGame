@@ -11,8 +11,7 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
     {
         if (this is not DocUnwantedFrequencyState)
         {
-            GetNode<AnimationPlayer>("../../Animations/Telegraph")
-                .Play("shungite_spike");
+            Doc.TelegraphAnimation.Play("shungite_spike");
         }
         _currentAttacks = 0;
         _currentAttackDuration = 1;
@@ -22,7 +21,8 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
 
     public override void Exit(IState<NPCState> nextState)
     {
-        GetNode<AnimationPlayer>("../../Animations/Telegraph").Stop();
+        //Doc.TelegraphAnimation.Stop();
+        //Doc.TelegraphAnimation.Stop();
         NPC.ShouldMove = true;
     }
 
@@ -30,8 +30,7 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
         Vector2 position,
         Vector2 direction)
     {
-        GetNode<AnimationPlayer>("../../Animations/Telegraph")
-            .Play("shungite_spike");
+        Doc.TelegraphAnimation.Play("shungite_spike");
         var projectile = base.SpawnProjectile(position, direction)
             as ShungiteSpike;
         projectile.GlobalRotation = 0;
@@ -46,6 +45,7 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
 
     protected override void Attack()
     {
+        GD.Print("shungite spike");
         var player = _world.CurrentPlayer;
         var playerPos = player.GlobalPosition;
         var docPos = NPC.GlobalPosition;

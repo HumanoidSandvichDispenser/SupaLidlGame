@@ -53,7 +53,7 @@ public partial class AnimationManager : Node
             p1.AnimationChanged += (StringName oldName, StringName newName) =>
             {
                 var anim = p1.GetAnimation(oldName);
-                GD.Print(oldName + "resolve");
+                //GD.Print(oldName + "resolve");
                 ResolveConflicts(anim);
                 RemoveAllHolds(anim);
             };
@@ -108,7 +108,7 @@ public partial class AnimationManager : Node
                             hold.TrackIndex = p1Track;
                             anim1.TrackSetEnabled(p1Track, false);
                         }
-                        GD.Print($"{hold.PriorityAnim.ResourceName} > {hold.HoldAnim.ResourceName}");
+                        //GD.Print($"{hold.PriorityAnim.ResourceName} > {hold.HoldAnim.ResourceName}");
                         _holds.Add(hold);
                         break;
                     }
@@ -129,7 +129,7 @@ public partial class AnimationManager : Node
             // be enabled
             if (hold.PriorityAnim == anim)
             {
-                GD.Print($"{anim.ResourceName} was holding ${hold.HoldAnim.ResourceName}");
+                //GD.Print($"{anim.ResourceName} was holding ${hold.HoldAnim.ResourceName}");
                 _holds.RemoveAt(i);
                 i--;
 
@@ -137,13 +137,13 @@ public partial class AnimationManager : Node
                 // enable the track
                 if (_holds.FindIndex(h => h.HoldAnim == hold.HoldAnim && h.TrackIndex == hold.TrackIndex) < 0)
                 {
-                    GD.Print($"{hold.HoldAnim.ResourceName} is now free");
+                    //GD.Print($"{hold.HoldAnim.ResourceName} is now free");
                     hold.HoldAnim.TrackSetEnabled(hold.TrackIndex, true);
                 }
             }
         }
 
-        GD.Print("There are currently " + _holds.Count + " holds");
+        //GD.Print("There are currently " + _holds.Count + " holds");
     }
 
     private void RemoveAllHolds(Animation anim)

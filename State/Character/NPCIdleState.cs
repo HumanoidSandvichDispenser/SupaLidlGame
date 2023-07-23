@@ -10,7 +10,7 @@ public partial class NPCIdleState : NPCState
     public override CharacterState Process(double delta)
     {
         base.Process(delta);
-        if (Character.Direction.LengthSquared() > 0)
+        if (Character.Direction.LengthSquared() > 0.01f)
         {
             return MoveState;
         }

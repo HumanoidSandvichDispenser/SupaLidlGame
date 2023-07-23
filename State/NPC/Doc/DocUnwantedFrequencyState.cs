@@ -7,18 +7,16 @@ public partial class DocUnwantedFrequencyState : DocShungiteSpikeState
 {
     public override NPCState Enter(IState<NPCState> previous)
     {
-        GetNode<AnimationPlayer>("../../Animations/Telegraph")
-            .Play("unwanted_frequencies");
-        NPC.ShouldMove = false;
+        Doc.TelegraphAnimation.Play("unwanted_frequencies");
         return base.Enter(previous);
     }
 
     public override void Exit(IState<NPCState> nextState)
     {
-        GetNode<AnimationPlayer>("../../Animations/Telegraph").Stop();
         GetNode<GpuParticles2D>("../../Effects/UnwantedFrequenciesParticles")
             .Emitting = false;
-        NPC.ShouldMove = true;
+        GD.Print("Exit unwanted frequency");
+        base.Exit(nextState);
     }
 
     protected override Projectile SpawnProjectile(
@@ -35,6 +33,8 @@ public partial class DocUnwantedFrequencyState : DocShungiteSpikeState
 
     protected override void Attack()
     {
+        Doc.TelegraphAnimation.Play("unwanted_frequencies");
+        GD.Print("unwanted frequency");
         var player = _world.CurrentPlayer;
         var playerPos = player.GlobalPosition;
         var docPos = NPC.GlobalPosition;

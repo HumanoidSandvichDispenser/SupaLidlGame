@@ -8,9 +8,12 @@ public partial class PlayerRollState : PlayerState
 
     private Vector2 _rollDirection = Vector2.Zero;
 
+    private GpuParticles2D _particles;
+
     public override void _Ready()
     {
         base._Ready();
+        _particles = _player.GetNode<GpuParticles2D>("Effects/RollParticles");
     }
 
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)
@@ -28,6 +31,7 @@ public partial class PlayerRollState : PlayerState
             _player.MovementAnimation.PlayBackwards("roll");
         }
         _player.MovementAnimation.Queue("idle");
+        _particles.Emitting = true;
         return base.Enter(previousState);
     }
 
@@ -37,6 +41,7 @@ public partial class PlayerRollState : PlayerState
         // this state (e.g. from death)
         _timeLeftToRoll = 0;
         _rollDirection = Character.Direction;
+        _particles.Emitting = false;
         base.Exit(nextState);
     }
 

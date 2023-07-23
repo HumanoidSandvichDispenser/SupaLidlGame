@@ -39,9 +39,12 @@ public partial class Character : CharacterBody2D, IFaction
     public Vector2 Direction { get; set; } = Vector2.Zero;
 
     public Vector2 Target { get; set; } = Vector2.Zero;
+    
+    [Export]
+    public Texture2D HandTexture { get; set; }
 
     [Export]
-    public float Health
+    public virtual float Health
     {
         get => _health;
         set
@@ -186,6 +189,13 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
+    protected virtual float ReceiveDamage(
+        float damage,
+        Character inflictor,
+        float knockback,
+        Vector2 knockbackDir = default) => damage;
+
+
     public virtual void OnReceivedDamage(
         float damage,
         Character inflictor,
@@ -198,7 +208,7 @@ public partial class Character : CharacterBody2D, IFaction
         }
 
         float oldHealth = Health;
-        Health -= damage;
+        Health -= ReceiveDamage(damage, inflictor, knockback, knockbackDir);
 
         // create damage text
         var textScene = GD.Load<PackedScene>("res://UI/FloatingText.tscn");
@@ -226,7 +236,7 @@ public partial class Character : CharacterBody2D, IFaction
         Player plr = inflictor as Player ?? this as Player;
         if (plr is not null)
         {
-            plr.Camera.Shake(1, 0.4f);
+            //plr.Camera.Shake(1, 0.4f);
         }
 
         if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)
