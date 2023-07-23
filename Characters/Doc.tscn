@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=52 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -22,6 +22,9 @@
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="16_bsvls"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="16_x277j"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="17_iomdx"]
+[ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="19_p0p6c"]
+[ext_resource type="Material" uid="uid://rcjujd5dv7lm" path="res://Assets/Sprites/Particles/DocIntroParticles.tres" id="19_q4rt1"]
+[ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="24_y1go8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
@@ -376,6 +379,14 @@ _data = {
 "hurt": SubResource("Animation_dxevc")
 }
 
+[sub_resource type="Animation" id="Animation_uemm6"]
+resource_name = "intro"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kjxam"]
+_data = {
+"intro": SubResource("Animation_uemm6")
+}
+
 [sub_resource type="Gradient" id="Gradient_lcoxi"]
 offsets = PackedFloat32Array(0.37037, 0.651852)
 colors = PackedColorArray(0.367549, 0.894801, 1, 1, 0.992095, 0.364069, 1, 1)
@@ -429,6 +440,7 @@ collision_layer = 10
 collision_mask = 17
 script = ExtResource("2_3elet")
 BossStateMachine = NodePath("BossStateMachine")
+BossName = "Doc, The Two-Time"
 Health = 1000.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
@@ -520,6 +532,11 @@ libraries = {
 "": SubResource("AnimationLibrary_xe5eq")
 }
 
+[node name="Misc" type="AnimationPlayer" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_kjxam")
+}
+
 [node name="Effects" type="Node2D" parent="."]
 
 [node name="UnwantedFrequenciesParticles" type="GPUParticles2D" parent="Effects"]
@@ -538,6 +555,13 @@ texture = ExtResource("16_x277j")
 lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
+
+[node name="IntroParticles" type="GPUParticles2D" parent="Effects"]
+position = Vector2(0, -8)
+emitting = false
+amount = 32
+process_material = ExtResource("19_q4rt1")
+texture = ExtResource("19_p0p6c")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 y_sort_enabled = true
@@ -562,6 +586,8 @@ shape = SubResource("RectangleShape2D_8lxmf")
 y_sort_enabled = true
 script = ExtResource("8_r8ejq")
 Items = Array[Node2D]([])
+
+[node name="Sword" parent="Inventory" instance=ExtResource("24_y1go8")]
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_stm0e")

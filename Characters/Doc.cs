@@ -50,6 +50,16 @@ public partial class Doc : Boss
     {
         TelegraphAnimation = GetNode<AnimationPlayer>("Animations/Telegraph");
         base._Ready();
+
+        // when we are hurt, start the boss fight
+        Hurt += (Events.HealthChangedArgs args) =>
+        {
+            if (!IsActive)
+            {
+                IsActive = true;
+                Inventory.SelectedItem = Inventory.Items[0];
+            }
+        };
     }
     
     public override void _Process(double delta)

@@ -43,6 +43,12 @@ public partial class Hurtbox : BoundingBox, IFaction
         Vector2 knockbackOrigin = default,
         Vector2 knockbackVector = default)
     {
+        if (!IsInstanceValid(this))
+        {
+            // this should fix the error of the object being invalid
+            return;
+        }
+
         Vector2 knockbackDir = knockbackVector;
         if (knockbackDir == default)
         {

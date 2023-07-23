@@ -18,7 +18,7 @@ public partial class World : Node2D
     public Player CurrentPlayer { get; set; }
 
     [Export]
-    public Control Control { get; set; }
+    public UI.UIController UIController { get; set; }
 
     private Dictionary<string, Map> _maps;
 
@@ -61,12 +61,17 @@ public partial class World : Node2D
 
         CurrentPlayer.Hurt += (Events.HealthChangedArgs args) =>
         {
-            var bar = Control.GetNode<UI.HealthBar>("HealthBar");
-            GD.Print("Set health bar");
+            // TODO: move this to UI controller and add a setup method
+            var bar = UIController.GetNode<UI.HealthBar>("Top/Margin/HealthBar");
             bar.ProgressBar.Value = args.NewHealth;
         };
 
         base._Ready();
+    }
+
+    public void RegisterBoss(Boss boss)
+    {
+        UIController.BossBar.Boss = boss;
     }
 
     private void LoadMap(Map map)

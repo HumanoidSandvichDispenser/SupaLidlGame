@@ -108,7 +108,7 @@ public abstract partial class Weapon : Item
         }
     }
 
-    public virtual void _on_hitbox_hit(BoundingBox box)
+    public virtual void OnHitboxHit(BoundingBox box)
     {
         if (box is Hurtbox hurtbox)
         {

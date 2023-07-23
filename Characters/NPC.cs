@@ -45,6 +45,8 @@ public partial class NPC : Character
 
     public bool ShouldMove { get; set; } = true;
 
+    public bool CanAttack { get; set; } = true;
+
     protected float[] _weights = new float[16];
     protected int _bestWeightIdx;
     protected double _thinkTimeElapsed = 0;
@@ -232,7 +234,7 @@ public partial class NPC : Character
             float dist = GlobalPosition.DistanceSquaredTo(pos);
             UpdateWeights(pos);
 
-            if (dist < 1024)
+            if (dist < 1600 && CanAttack)
             {
                 if (Inventory.SelectedItem is Weapon weapon)
                 {
