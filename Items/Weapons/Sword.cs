@@ -112,7 +112,6 @@ public partial class Sword : Weapon, IParryable
         IsParried = false;
         IsParryable = true;
         ParryTimeOrigin = Time.GetTicksMsec();
-        GD.Print(Character.Name);
     }
 
     public void DisableParry()
@@ -147,6 +146,7 @@ public partial class Sword : Weapon, IParryable
     public override void _Ready()
     {
         Hitbox.Damage = Damage;
+        Hitbox.Hit += OnHitboxHit;
         _playback = (AnimationNodeStateMachinePlayback)AnimationTree
             .Get("parameters/playback");
     }
@@ -200,7 +200,7 @@ public partial class Sword : Weapon, IParryable
         GetNode<AudioStreamPlayer2D>("ParrySound").OnWorld().PlayOneShot();
     }
 
-    public override void _on_hitbox_hit(BoundingBox box)
+    public override void OnHitboxHit(BoundingBox box)
     {
         if (IsParried)
         {

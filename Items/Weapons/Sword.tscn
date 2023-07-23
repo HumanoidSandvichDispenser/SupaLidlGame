@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="4_pt6lq"]
 [ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_hmisb"]
 [ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="6_8nxjm"]
+[ext_resource type="Shape2D" uid="uid://dw4e4r2yxwk1b" path="res://Items/Weapons/SwordCollisionShape.tres" id="9_wsprl"]
 [ext_resource type="Texture2D" uid="uid://cmvh6pc71ir1m" path="res://Assets/Sprites/sword-swing-large.png" id="10_672jv"]
 [ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="10_mfnl7"]
 
@@ -355,9 +356,6 @@ graph_offset = Vector2(0, -104.073)
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_o5g2u"]
 
-[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_fcgvv"]
-points = PackedVector2Array(0, 0, -21.213, 21.213, -30, 0, -21.213, -21.213, 0, -30, 21.213, -21.213, 30, 0, 21.213, 21.213, 0, 0)
-
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "AnimationTree", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
 y_sort_enabled = true
 texture_filter = 3
@@ -459,7 +457,7 @@ IsDisabled = true
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 position = Vector2(4, 0)
 rotation = 1.5708
-shape = SubResource("ConvexPolygonShape2D_fcgvv")
+shape = ExtResource("9_wsprl")
 disabled = true
 
 [node name="SwingSprite" type="Sprite2D" parent="."]

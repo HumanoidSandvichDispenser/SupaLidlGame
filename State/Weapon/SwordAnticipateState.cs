@@ -14,8 +14,6 @@ public partial class SwordAnticipateState : WeaponState
 
     public override WeaponState Enter(IState<WeaponState> prevState)
     {
-        Sword.EnableParry();
-
         if (Sword.Character is SupaLidlGame.Characters.Player)
         {
             return AttackState;
@@ -29,6 +27,7 @@ public partial class SwordAnticipateState : WeaponState
         {
             Sword.AnimationPlayer.Play("anticipate");
         }
+        GD.Print("Anticipating time");
         _anticipateTime = Sword.NPCAnticipateTime;
         return null;
     }

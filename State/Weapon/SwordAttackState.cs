@@ -23,7 +23,7 @@ public partial class SwordAttackState : WeaponState
 
     public override WeaponState Enter(IState<WeaponState> prevState)
     {
-        //Sword.AnimationPlayer.Stop();
+        Sword.EnableParry();
         Sword.Attack();
 
         if (_isAlternate)
