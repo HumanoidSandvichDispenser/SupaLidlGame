@@ -26,8 +26,10 @@ public sealed partial class Player : Character
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
-        Death += (Events.HealthChangedArgs args) =>
+        Death += async (Events.HealthChangedArgs args) =>
         {
+            HurtAnimation.Play("death");
+            await ToSignal(HurtAnimation, "animation_finished");
             Visible = false;
         };
 
