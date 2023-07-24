@@ -23,8 +23,6 @@ public partial class DocShungiteDartState : DocAttackState
 
     public override NPCState Enter(IState<NPCState> nextState)
     {
-        Doc.CanAttack = true;
-        Doc.ShouldMove = true;
         return base.Enter(nextState);
     }
 

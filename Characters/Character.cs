@@ -292,4 +292,9 @@ public partial class Character : CharacterBody2D, IFaction
                 .EmitOneShot();
         }
     }
+
+    public virtual void Footstep()
+    {
+        throw new System.NotImplementedException();
+    }
 }
