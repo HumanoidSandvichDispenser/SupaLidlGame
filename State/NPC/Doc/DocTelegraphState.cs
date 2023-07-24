@@ -1,4 +1,5 @@
 using Godot;
+using GodotUtilities;
 
 namespace SupaLidlGame.State.NPC.Doc;
 
@@ -17,11 +18,28 @@ public partial class DocTelegraphState : NPCState
 
     public override NPCState Enter(IState<NPCState> previousState)
     {
+        // TODO: clean this up
+        if (!(NPC as Characters.Doc).IsActive)
+        {
+            return null;
+        }
+
         _currentDuration = Duration;
         TelegraphAnimationPlayer.Play("enter_in");
-        float randX = GD.RandRange(-128, 128);
-        float randY = GD.RandRange(-128, 128);
-        NPC.GlobalPosition = new Vector2(randX, randY);
+
+        var player = this.GetAncestor<Utils.World>().CurrentPlayer;
+        Vector2 randVec;
+
+        do
+        {
+            float randX = GD.RandRange(-112, 112);
+            float randY = GD.RandRange(-112, 112);
+            randVec = new Vector2(randX, randY);
+        }
+        while (randVec.DistanceSquaredTo(player.GlobalPosition) < 1024);
+        // can not teleport within 32 units of the player
+
+        NPC.GlobalPosition = randVec;
         return null;
     }
 

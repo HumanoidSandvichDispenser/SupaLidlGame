@@ -13,7 +13,7 @@ public partial class Character : CharacterBody2D, IFaction
     public float Speed { get; protected set; } = 32.0f;
 
     [Export]
-    public float Friction { get; protected set; } = 4.0f;
+    public float Friction { get; set; } = 4.0f;
 
     [Export]
     public float Mass
@@ -39,9 +39,12 @@ public partial class Character : CharacterBody2D, IFaction
     public Vector2 Direction { get; set; } = Vector2.Zero;
 
     public Vector2 Target { get; set; } = Vector2.Zero;
+    
+    [Export]
+    public Texture2D HandTexture { get; set; }
 
     [Export]
-    public float Health
+    public virtual float Health
     {
         get => _health;
         set
@@ -66,7 +69,7 @@ public partial class Character : CharacterBody2D, IFaction
     public double StunTime { get; set; }
 
     [Export]
-    public AnimatedSprite2D Sprite { get; set; }
+    public Sprite2D Sprite { get; set; }
 
     [Export]
     public Inventory Inventory { get; set; }
@@ -80,8 +83,19 @@ public partial class Character : CharacterBody2D, IFaction
     [Export]
     public ushort Faction { get; set; }
 
+    public AnimationPlayer MovementAnimation { get; set; }
+
+    public AnimationPlayer HurtAnimation { get; set; }
+
+    public AnimationPlayer StunAnimation { get; set; }
+
     public override void _Ready()
     {
+        // TODO: 80+ char line
+        MovementAnimation = GetNode<AnimationPlayer>("Animations/Movement");
+        HurtAnimation = GetNode<AnimationPlayer>("Animations/Hurt");
+        StunAnimation = GetNode<AnimationPlayer>("Animations/Stun");
+        GD.Print(Name + " " + MovementAnimation.CurrentAnimation);
         Hurtbox.ReceivedDamage += OnReceivedDamage;
     }
 
@@ -90,6 +104,15 @@ public partial class Character : CharacterBody2D, IFaction
         if (StateMachine != null)
         {
             StateMachine.Process(delta);
+        }
+
+        if (StunTime > 0 && !StunAnimation.IsPlaying())
+        {
+            StunAnimation.Play("stun");
+        }
+        else if (StunTime < 0 && StunAnimation.IsPlaying())
+        {
+            StunAnimation.Stop();
         }
 
         Sprite.FlipH = Target.X < 0;
@@ -113,6 +136,18 @@ public partial class Character : CharacterBody2D, IFaction
         {
             Velocity *= 0.25f;
         }
+
+        var state = StateMachine.CurrentState;
+        if (state is State.Character.CharacterDashState dashState)
+        {
+            Velocity *= dashState.VelocityModifier;
+        }
+        // TODO: make PlayerRollState a CharacterRollState instead
+        else if (state is State.Character.PlayerRollState rollState)
+        {
+            Velocity *= 2;
+            //Velocity *= rollState.VelocityModifier;
+        }
     }
 
     public virtual void Die()
@@ -131,7 +166,7 @@ public partial class Character : CharacterBody2D, IFaction
 
     public virtual void Stun(float time)
     {
-        StunTime += time;
+        StunTime = Mathf.Max(time, StunTime);
     }
 
     protected virtual void DrawTarget()
@@ -156,13 +191,25 @@ public partial class Character : CharacterBody2D, IFaction
     {
         if (StunTime > 0)
         {
-            GD.Print("tried to use weapon but stunned");
             return;
         }
 
         if (Inventory.SelectedItem is Weapon weapon)
         {
             weapon.Use();
+            if (weapon.IsUsing)
+            {
+                Inventory.EmitSignal(Inventory.SignalName.UsedItem, weapon);
+            }
+        }
+    }
+
+    public void DeuseCurrentItem()
+    {
+        if (Inventory.SelectedItem is Weapon weapon)
+        {
+            weapon.Deuse();
+            // TODO: DeusedItem signal, implement when needed
         }
     }
 
@@ -174,12 +221,18 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
+    protected virtual float ReceiveDamage(
+        float damage,
+        Character inflictor,
+        float knockback,
+        Vector2 knockbackDir = default) => damage;
+
+
     public virtual void OnReceivedDamage(
         float damage,
         Character inflictor,
         float knockback,
-        Vector2 knockbackOrigin = default,
-        Vector2 knockbackVector = default)
+        Vector2 knockbackDir = default)
     {
         if (Health <= 0)
         {
@@ -187,7 +240,7 @@ public partial class Character : CharacterBody2D, IFaction
         }
 
         float oldHealth = Health;
-        Health -= damage;
+        Health -= ReceiveDamage(damage, inflictor, knockback, knockbackDir);
 
         // create damage text
         var textScene = GD.Load<PackedScene>("res://UI/FloatingText.tscn");
@@ -197,41 +250,25 @@ public partial class Character : CharacterBody2D, IFaction
         this.GetAncestor<TileMap>().AddChild(instance);
 
         // apply knockback
-        Vector2 knockbackDir = knockbackVector;
-        if (knockbackDir == default)
-        {
-            if (knockbackOrigin == default)
-            {
-                if (inflictor is null)
-                {
-                    knockbackOrigin = GlobalPosition + Vector2.Down;
-                }
-                else
-                {
-                    knockbackOrigin = inflictor.GlobalPosition;
-                }
-            }
-
-            knockbackDir = knockbackOrigin.DirectionTo(GlobalPosition);
-        }
 
         ApplyImpulse(knockbackDir.Normalized() * knockback);
 
         GD.Print("lol");
 
         // play damage animation
-        var anim = GetNode<AnimationPlayer>("FlashAnimation");
+        var anim = GetNode<AnimationPlayer>("Animations/Hurt");
         if (anim != null)
         {
             anim.Stop();
-            anim.Play("Hurt");
+            anim.Play("hurt");
+            anim.Queue("hurt_flash");
         }
 
         // if anyone involved is a player, shake their screen
         Player plr = inflictor as Player ?? this as Player;
         if (plr is not null)
         {
-            plr.Camera.Shake(1, 0.4f);
+            //plr.Camera.Shake(1, 0.4f);
         }
 
         if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)

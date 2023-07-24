@@ -5,6 +5,20 @@ namespace SupaLidlGame.State.NPC.Doc;
 
 public partial class DocUnwantedFrequencyState : DocShungiteSpikeState
 {
+    public override NPCState Enter(IState<NPCState> previous)
+    {
+        Doc.TelegraphAnimation.Play("unwanted_frequencies");
+        return base.Enter(previous);
+    }
+
+    public override void Exit(IState<NPCState> nextState)
+    {
+        GetNode<GpuParticles2D>("../../Effects/UnwantedFrequenciesParticles")
+            .Emitting = false;
+        GD.Print("Exit unwanted frequency");
+        base.Exit(nextState);
+    }
+
     protected override Projectile SpawnProjectile(
         Vector2 position,
         Vector2 direction)
@@ -19,6 +33,8 @@ public partial class DocUnwantedFrequencyState : DocShungiteSpikeState
 
     protected override void Attack()
     {
+        Doc.TelegraphAnimation.Play("unwanted_frequencies");
+        GD.Print("unwanted frequency");
         var player = _world.CurrentPlayer;
         var playerPos = player.GlobalPosition;
         var docPos = NPC.GlobalPosition;

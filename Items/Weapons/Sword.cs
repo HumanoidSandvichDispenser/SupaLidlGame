@@ -20,9 +20,6 @@ public partial class Sword : Weapon, IParryable
     [Export]
     public AnimationPlayer AnimationPlayer { get; set; }
 
-    [Export]
-    public AnimationTree AnimationTree { get; set; }
-
     /// <summary>
     /// The time frame in seconds for which the weapon will deal damage.
     /// </summary>
@@ -37,7 +34,7 @@ public partial class Sword : Weapon, IParryable
     public double AttackAnimationDuration { get; set; }
 
     [Export]
-    public CpuParticles2D ParryParticles { get; set; }
+    public GpuParticles2D ParryParticles { get; set; }
 
     [Export]
     public double NPCAnticipateTime { get; set; }
@@ -69,41 +66,7 @@ public partial class Sword : Weapon, IParryable
 
     public override void Use()
     {
-        // we can't use if we're still using the weapon
-        if (RemainingUseTime > 0)
-        {
-            //return;
-        }
-
         StateMachine.Use();
-
-        /*
-        // reset state of the weapon
-        IsParried = false;
-        IsParryable = true;
-        ParryTimeOrigin = Time.GetTicksMsec();
-
-        _playback.Travel("use");
-        */
-
-        // play animation depending on rotation of weapon
-        /*
-        string anim = "use";
-
-        if (GetNode<Node2D>("Anchor").Rotation > Mathf.DegToRad(50))
-        {
-            anim = "use2";
-        }
-
-        if (Character is NPC)
-        {
-            // NPCs have a slower attack
-            anim += "-npc";
-        }
-
-        AnimationPlayer.Play(anim);
-        */
-
         base.Use();
     }
 
@@ -112,7 +75,6 @@ public partial class Sword : Weapon, IParryable
         IsParried = false;
         IsParryable = true;
         ParryTimeOrigin = Time.GetTicksMsec();
-        GD.Print(Character.Name);
     }
 
     public void DisableParry()
@@ -123,7 +85,8 @@ public partial class Sword : Weapon, IParryable
     public override void Deuse()
     {
         //AnimationPlayer.Stop();
-        Deattack();
+        //Deattack();
+        StateMachine.Deuse();
         base.Deuse();
     }
 
@@ -147,8 +110,7 @@ public partial class Sword : Weapon, IParryable
     public override void _Ready()
     {
         Hitbox.Damage = Damage;
-        _playback = (AnimationNodeStateMachinePlayback)AnimationTree
-            .Get("parameters/playback");
+        Hitbox.Hit += OnHitboxHit;
     }
 
     public override void _Process(double delta)
@@ -166,9 +128,9 @@ public partial class Sword : Weapon, IParryable
 
         foreach (BoundingBox box in Hitbox.Hits)
         {
-            GD.Print("processing hit");
             if (box is Hurtbox hurtbox)
             {
+                GD.Print("LUL");
                 hurtbox.InflictDamage(Damage, Character, Knockback);
             }
         }
@@ -176,32 +138,33 @@ public partial class Sword : Weapon, IParryable
 
     public void AttemptParry(Weapon otherWeapon)
     {
-        //if (IsParryable && otherWeapon.IsParryable)
         if (otherWeapon.IsParryable &&
-                otherWeapon is IParryable otherParryable)
+            otherWeapon is IParryable otherParryable)
         {
-            ParryParticles.Emitting = true;
             if (ParryTimeOrigin < otherParryable.ParryTimeOrigin)
             {
                 // our character was parried
+                ParryParticles.CloneOnWorld<GpuParticles2D>().EmitOneShot();
             }
             else
             {
                 otherParryable.Stun();
             }
         }
-        //this.GetAncestor<TileMap>().AddChild(instance);
     }
 
     public void Stun()
     {
         IsParried = true;
         AnimationPlayer.SpeedScale = 0.25f;
-        Character.Stun(1.5f);
-        GetNode<AudioStreamPlayer2D>("ParrySound").OnWorld().PlayOneShot();
+        Character.Stun(1);
+        GetNode<AudioStreamPlayer2D>("ParrySound")
+            .OnWorld()
+            .WithPitchDeviation(0.125f)
+            .PlayOneShot();
     }
 
-    public override void _on_hitbox_hit(BoundingBox box)
+    public override void OnHitboxHit(BoundingBox box)
     {
         if (IsParried)
         {
@@ -232,6 +195,6 @@ public partial class Sword : Weapon, IParryable
 
     protected void SetAnimationCondition(string condition, bool value)
     {
-        AnimationTree.Set("parameters/conditions/" + condition, value);
+
     }
 }

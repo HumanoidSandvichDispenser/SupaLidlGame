@@ -1,11 +1,28 @@
 #+TITLE: SupaLidlGame To-do List
 
-* List of what to add
-
-** STARTED Campfires
+* STARTED Campfires
 DEADLINE: <2022-12-03 Sat>
 
-** TODO Enemy Spawning
+* TODO Enemy Spawning
 
-** TODO Handle Character Death
+* DONE Handle Character Death
 DEADLINE: <2022-12-04 Sun>
+
+* Doc Boss
+
+** DONE Reset possible attacks after each cycle
+CLOSED: [2023-07-21 Fri]
+
+** DONE Attack animations
+CLOSED: [2023-07-20 Thu]
+
+** TODO Boss Music
+
+* TODO Boss cards
+
+* TODO Dialog
+
+* TODO Short arena entrance
+
+* TODO Video demonstration
+

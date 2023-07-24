@@ -9,7 +9,6 @@ public partial class PlayerIdleState : PlayerState
 
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)
     {
-        GD.Print("Entered idle state");
         if (previousState is not PlayerMoveState)
         {
             if (Character.Direction.LengthSquared() > 0.01f)
@@ -21,7 +20,26 @@ public partial class PlayerIdleState : PlayerState
                 return MoveState;
             }
         }
-        _player.Animation = "idle";
+
+        // must be moving at least 4 u/s for more than 0.5 seconds
+        bool shouldPlayStopAnim = false;
+
+        if (previousState is PlayerMoveState move)
+        {
+            shouldPlayStopAnim = move.MoveDuration > 0.5;
+            // NOTE: more conditions may be added soon
+        }
+
+        if (shouldPlayStopAnim)
+        {
+            _player.MovementAnimation.Play("stop");
+            _player.MovementAnimation.Queue("idle");
+        }
+        else
+        {
+            _player.MovementAnimation.Play("idle");
+        }
+
         return base.Enter(previousState);
     }
 

@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://bjnmfgt5yqle7"]
+
+[ext_resource type="FontFile" uid="uid://bo3obq6sos7lu" path="res://Assets/Fonts/compass-pro.ttf" id="1_brr65"]
+
+[resource]
+base_font = ExtResource("1_brr65")
+spacing_glyph = 4

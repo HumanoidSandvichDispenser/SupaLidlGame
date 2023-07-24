@@ -6,13 +6,27 @@ namespace SupaLidlGame.Entities;
 
 public partial class Projectile : RigidBody2D
 {
-    public Vector2 Velocity => Direction * Speed;
+    //public virtual Vector2 Velocity => Direction * Speed;
+    public virtual Vector2 Velocity
+    {
+        get => Direction * Speed;
+        set
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 
     [Export]
     public string ProjectileName { get; set; }
 
     [Export]
     public float Speed { get; set; }
+
+    [Export]
+    public Vector2 AccelerationDirection { get; set; }
+
+    [Export]
+    public float AccelerationMagnitude { get; set; }
 
     [Export]
     public Vector2 Direction { get; set; }

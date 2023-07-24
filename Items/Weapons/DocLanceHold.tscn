@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://bauucuqvjwbxp"]
+
+[ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="1_kmq5r"]
+[ext_resource type="Script" path="res://State/Weapon/SwordHoldAttackState.cs" id="2_7fom6"]
+
+[node name="DocLance" instance=ExtResource("1_kmq5r")]
+NPCAnticipateTime = 0.1
+
+[node name="Anticipate" parent="State" index="1" node_paths=PackedStringArray("AttackState")]
+AttackState = NodePath("../HoldAttack")
+
+[node name="Attack" parent="State" index="2"]
+script = ExtResource("2_7fom6")
+
+[node name="HoldAttack" type="Node" parent="State" index="3" node_paths=PackedStringArray("Sword", "IdleState")]
+script = ExtResource("2_7fom6")
+Sword = NodePath("../..")
+IdleState = NodePath("../Idle")
+
+[editable path="Hitbox"]

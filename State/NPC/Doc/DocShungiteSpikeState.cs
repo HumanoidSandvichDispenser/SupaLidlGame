@@ -9,20 +9,38 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
 
     public override NPCState Enter(IState<NPCState> previous)
     {
+        Doc.CanAttack = false;
+        if (this is not DocUnwantedFrequencyState)
+        {
+            Doc.TelegraphAnimation.Play("shungite_spike");
+        }
         _currentAttacks = 0;
         _currentAttackDuration = 1;
+        Doc.ShouldMove = true;
+        Doc.CanAttack = true;
         return base.Enter(previous);
+    }
+
+    public override void Exit(IState<NPCState> nextState)
+    {
+        //Doc.TelegraphAnimation.Stop();
+        //Doc.TelegraphAnimation.Stop();
     }
 
     protected override Projectile SpawnProjectile(
         Vector2 position,
         Vector2 direction)
     {
+        Doc.TelegraphAnimation.Play("shungite_spike");
         var projectile = base.SpawnProjectile(position, direction)
             as ShungiteSpike;
         projectile.GlobalRotation = 0;
         projectile.Delay = 0;
-        projectile.Hitbox.Faction = projectile.Hurtbox.Faction = Doc.Faction;
+        projectile.Hitbox.Faction = Doc.Faction;
+        if (projectile.Hurtbox is not null)
+        {
+            projectile.Hurtbox.Faction = Doc.Faction;
+        }
         return projectile;
     }
 
@@ -43,7 +61,6 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
             out float time);
         projectile.Direction = projectile.GlobalPosition.DirectionTo(targetPos);
         projectile.FreezeTime = time + 0.25; // freeze when it reaches target
-        GD.Print("projectile velocity: " + projectile.Velocity);
 
         _currentAttackDuration = 1;
         _currentAttacks++;
@@ -51,6 +68,11 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
 
     public override NPCState Process(double delta)
     {
+        if (Doc.StunTime > 0)
+        {
+            return null;
+        }
+
         if ((_currentAttackDuration -= delta) <= 0)
         {
             Attack();

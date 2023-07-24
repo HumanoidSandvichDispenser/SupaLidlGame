@@ -57,7 +57,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [node name="Torch" type="Node2D"]
@@ -67,8 +67,7 @@ texture_filter = 1
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_gf7ku")
 autoplay = "default"
-frame = 5
-frame_progress = 0.743234
+frame_progress = 0.337799
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(1, 0.898039, 0.686275, 1)

@@ -1,0 +1,293 @@
+[gd_scene load_steps=21 format=3 uid="uid://p7oijq6dbvvk"]
+
+[ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_1oyma"]
+[ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_c41ov"]
+[ext_resource type="Script" path="res://State/Weapon/SwordIdleState.cs" id="3_sxffm"]
+[ext_resource type="Script" path="res://State/Weapon/SwordAnticipateState.cs" id="4_t7af2"]
+[ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_i5v42"]
+[ext_resource type="Texture2D" uid="uid://o7enu13gvji5" path="res://Assets/Sprites/doc-lance.png" id="6_7t87o"]
+[ext_resource type="Material" uid="uid://cbfaqolx1ydvv" path="res://Assets/Sprites/Particles/ParryParticles.tres" id="8_y2qyn"]
+[ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="9_buajm"]
+[ext_resource type="Texture2D" uid="uid://cmvh6pc71ir1m" path="res://Assets/Sprites/sword-swing-large.png" id="11_46l1i"]
+[ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="12_85vwu"]
+[ext_resource type="AudioStream" uid="uid://cceld51anbm1m" path="res://Assets/Sounds/unsheathe.wav" id="12_khh4e"]
+[ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="13_p4djk"]
+
+[sub_resource type="Curve" id="Curve_36q15"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_383y7"]
+curve = SubResource("Curve_36q15")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_duy55"]
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 60.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 8.0
+initial_velocity_max = 16.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_383y7")
+color = Color(1, 0, 1, 1)
+
+[sub_resource type="Animation" id="Animation_b7327"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwingSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Anchor:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Anchor/Node2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0001, 0.0002),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0.0, 0.0, 0.0]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["is_alternate", false],
+"method": &"SetAnimationCondition"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SwingSprite:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2, 2, 2, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ameas"]
+resource_name = "anticipate"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-8, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UnsheatheSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_6jphj"]
+resource_name = "attack"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.65),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(-8, 0), Vector2(8, 0), Vector2(0, 0)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwingSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tao4k"]
+_data = {
+"RESET": SubResource("Animation_b7327"),
+"anticipate": SubResource("Animation_ameas"),
+"attack": SubResource("Animation_6jphj")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrgwb"]
+size = Vector2(8, 32)
+
+[node name="DocLance" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
+y_sort_enabled = true
+texture_filter = 3
+script = ExtResource("1_1oyma")
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
+AttackTime = 0.2
+AttackAnimationDuration = 0.75
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
+NPCAnticipateTime = 0.3
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
+Damage = 20.0
+UseTime = 0.55
+Knockback = 64.0
+ShouldHideIdle = true
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
+ItemName = "VSM-93"
+Description = "\"Violence. Speed. Momentum.\""
+
+[node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("2_c41ov")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("AnticipateState", "Sword")]
+script = ExtResource("3_sxffm")
+AnticipateState = NodePath("../Anticipate")
+Sword = NodePath("../..")
+
+[node name="Anticipate" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AttackState")]
+script = ExtResource("4_t7af2")
+Sword = NodePath("../..")
+AttackState = NodePath("../Attack")
+
+[node name="Attack" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState")]
+script = ExtResource("5_i5v42")
+Sword = NodePath("../..")
+IdleState = NodePath("../Idle")
+
+[node name="Anchor" type="Node2D" parent="."]
+y_sort_enabled = true
+rotation = 1.5708
+
+[node name="Node2D" type="Node2D" parent="Anchor"]
+y_sort_enabled = true
+position = Vector2(-4, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Anchor/Node2D"]
+y_sort_enabled = true
+position = Vector2(0, -8)
+texture = ExtResource("6_7t87o")
+
+[node name="ParryParticles" type="GPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
+modulate = Color(1.2, 1.2, 1.2, 1)
+position = Vector2(-0.221825, -3.12132)
+rotation = 0.785398
+emitting = false
+amount = 16
+process_material = ExtResource("8_y2qyn")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 4
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
+position = Vector2(-2.28882e-05, -6)
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_duy55")
+lifetime = 0.25
+
+[node name="Hand" type="Sprite2D" parent="Anchor/Node2D/Sprite2D"]
+position = Vector2(-2.52724e-05, 7)
+rotation = 1.5708
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tao4k")
+}
+
+[node name="Hitbox" parent="." instance=ExtResource("9_buajm")]
+position = Vector2(16, -4)
+IsDisabled = true
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_rrgwb")
+disabled = true
+
+[node name="SwingSprite" type="Sprite2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+texture = ExtResource("11_46l1i")
+offset = Vector2(8, 0)
+hframes = 5
+
+[node name="SwingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_85vwu")
+max_distance = 256.0
+
+[node name="ParrySound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_p4djk")
+max_distance = 256.0
+
+[node name="UnsheatheSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_khh4e")
+
+[editable path="Hitbox"]

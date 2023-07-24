@@ -19,7 +19,7 @@ public partial class NPCMoveState : NPCState
 
     public override IState<CharacterState> Enter(IState<CharacterState> prev)
     {
-        Character.Sprite.Play("move");
+        Character.MovementAnimation.Play("move");
         return base.Enter(prev);
     }
 }

@@ -1,0 +1,53 @@
+[gd_scene load_steps=7 format=3 uid="uid://01d24ij5av1y"]
+
+[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="1_2r0jo"]
+[ext_resource type="Script" path="res://UI/BossBar.cs" id="1_x3sqy"]
+[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="2_ctee6"]
+[ext_resource type="Texture2D" uid="uid://b75oak1nd2q6x" path="res://Assets/Sprites/UI/over-under-bar.png" id="3_0ftem"]
+[ext_resource type="Texture2D" uid="uid://co7xm7i5f6n51" path="res://Assets/Sprites/UI/progress-bar.png" id="4_6pnyx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_njgrw"]
+font = ExtResource("2_ctee6")
+font_color = Color(0.921569, 0.929412, 0.913725, 1)
+outline_size = 4
+outline_color = Color(0.117647, 0.113725, 0.223529, 1)
+
+[node name="BossBar" type="VBoxContainer"]
+offset_right = 139.0
+offset_bottom = 44.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_x3sqy")
+
+[node name="LabelMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_top = 8
+
+[node name="BossNameLabel" type="Label" parent="LabelMargin"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("1_2r0jo")
+text = "Doc, The Two Time"
+label_settings = SubResource("LabelSettings_njgrw")
+horizontal_alignment = 1
+
+[node name="BarMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 8
+
+[node name="BossBar" type="TextureProgressBar" parent="BarMargin"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("3_0ftem")
+texture_progress = ExtResource("4_6pnyx")

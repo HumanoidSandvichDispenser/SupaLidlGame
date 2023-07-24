@@ -10,7 +10,7 @@ public partial class NPCIdleState : NPCState
     public override CharacterState Process(double delta)
     {
         base.Process(delta);
-        if (Character.Direction.LengthSquared() > 0)
+        if (Character.Direction.LengthSquared() > 0.01f)
         {
             return MoveState;
         }
@@ -19,7 +19,7 @@ public partial class NPCIdleState : NPCState
 
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)
     {
-        Character.Sprite.Play("idle");
+        Character.MovementAnimation.Play("idle");
         return base.Enter(previousState);
     }
 }

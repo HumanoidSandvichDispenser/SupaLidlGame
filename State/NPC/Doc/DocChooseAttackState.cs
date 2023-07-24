@@ -16,6 +16,9 @@ public partial class DocChooseAttackState : NPCState
     public DocUnwantedFrequencyState UnwantedFrequencyState { get; set; }
 
     [Export]
+    public DocLanceState LanceState { get; set; }
+
+    [Export]
     public DocExitState ExitState { get; set; }
 
     public Characters.Doc Doc => NPC as Characters.Doc;
@@ -39,18 +42,24 @@ public partial class DocChooseAttackState : NPCState
 
     public override NPCState Enter(IState<NPCState> previous)
     {
+        if (Doc.Intensity == 3)
+        {
+            return LanceState;
+        }
+
         if (previous is not DocTelegraphState)
         {
             _consecutiveAttacks++;
         }
         else
         {
-            _consecutiveAttacks = 0;
+            _consecutiveAttacks = 1;
         }
 
         if (_consecutiveAttacks > Doc.Intensity)
         {
-            _consecutiveAttacks = 0;
+            _consecutiveAttacks = 1;
+            ResetStates();
             return ExitState;
         }
 

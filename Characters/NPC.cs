@@ -1,3 +1,5 @@
+#undef DEBUG_NPC
+
 using Godot;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Items;
@@ -41,6 +43,10 @@ public partial class NPC : Character
         }
     }
 
+    public bool ShouldMove { get; set; } = true;
+
+    public bool CanAttack { get; set; } = true;
+
     protected float[] _weights = new float[16];
     protected int _bestWeightIdx;
     protected double _thinkTimeElapsed = 0;
@@ -65,7 +71,7 @@ public partial class NPC : Character
 
     public override void _Draw()
     {
-#if DEBUG
+#if DEBUG_NPC
         for (int i = 0; i < 16; i++)
         {
             Vector2 vec = _weightDirs[i] * _weights[i] * 32;
@@ -116,12 +122,19 @@ public partial class NPC : Character
         {
             _thinkTimeElapsed = 0;
             Think();
-#if DEBUG
+#if DEBUG_NPC
             QueueRedraw();
 #endif
         }
 
-        Direction = _weightDirs[_bestWeightIdx];
+        if (ShouldMove)
+        {
+            Direction = _weightDirs[_bestWeightIdx];
+        }
+        else
+        {
+            Direction = Vector2.Zero;
+        }
     }
 
     public void UpdateWeights(Vector2 pos)
@@ -221,7 +234,7 @@ public partial class NPC : Character
             float dist = GlobalPosition.DistanceSquaredTo(pos);
             UpdateWeights(pos);
 
-            if (dist < 1024)
+            if (dist < 1600 && CanAttack)
             {
                 if (Inventory.SelectedItem is Weapon weapon)
                 {
