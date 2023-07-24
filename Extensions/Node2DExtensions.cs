@@ -30,6 +30,7 @@ public static class Node2DExtensions
         var clone = node.Duplicate() as T;
         world.AddChild(clone);
         clone.GlobalPosition = node.GlobalPosition;
+        GD.Print("clone on world: " + clone.GlobalPosition);
         return clone;
     }
 

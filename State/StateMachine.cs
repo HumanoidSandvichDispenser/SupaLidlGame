@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.State;
 
@@ -39,5 +40,14 @@ public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Changes the current state to a state of type U which must inherit from T.
+    /// </summary>
+    public bool ChangeState<U>(out U state) where U : T
+    {
+        state = this.FindChildOfType<U>();
+        return ChangeState(state);
     }
 }

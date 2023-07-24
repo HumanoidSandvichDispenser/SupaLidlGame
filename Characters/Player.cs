@@ -60,11 +60,6 @@ public sealed partial class Player : Character
 
     public override void ModifyVelocity()
     {
-        if (StateMachine.CurrentState is SupaLidlGame.State.Character.PlayerRollState)
-        {
-            Velocity *= 2;
-        }
-
         base.ModifyVelocity();
     }
 

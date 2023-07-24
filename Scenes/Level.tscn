@@ -6,14 +6,13 @@
 [ext_resource type="Script" path="res://UI/UIController.cs" id="3_fe62s"]
 [ext_resource type="PackedScene" uid="uid://01d24ij5av1y" path="res://UI/BossBar.tscn" id="5_8njq4"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("UIController")]
+[node name="World" type="Node2D"]
 script = ExtResource("1_1k6ew")
 StartingArea = ExtResource("2_avsrq")
-UIController = NodePath("CanvasLayer/UI")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="UI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("BossBar")]
+[node name="UI" type="Control" parent="CanvasLayer"]
 z_index = 128
 layout_mode = 3
 anchors_preset = 15
@@ -24,7 +23,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("3_fe62s")
-BossBar = NodePath("Bottom/BossBar")
 
 [node name="Top" type="HBoxContainer" parent="CanvasLayer/UI"]
 layout_mode = 1
@@ -43,6 +41,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Bottom" type="HBoxContainer" parent="CanvasLayer/UI"]
+visible = false
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0

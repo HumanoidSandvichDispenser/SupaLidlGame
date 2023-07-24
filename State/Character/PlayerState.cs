@@ -51,9 +51,9 @@ public abstract partial class PlayerState : CharacterState
         {
             if (Character.Inventory.SelectedItem is Items.Weapon weapon)
             {
+                var isPressed = Godot.Input.IsActionPressed("attack1");
                 if (!weapon.IsUsing)
                 {
-                    var isPressed = Godot.Input.IsActionPressed("attack1");
                     var ret = false;
 
                     if (!weapon.ShouldHideIdle || isPressed)
@@ -68,6 +68,13 @@ public abstract partial class PlayerState : CharacterState
                     }
 
                     return ret;
+                }
+                else
+                {
+                    if (!isPressed)
+                    {
+                        Character.DeuseCurrentItem();
+                    }
                 }
             }
             return false;

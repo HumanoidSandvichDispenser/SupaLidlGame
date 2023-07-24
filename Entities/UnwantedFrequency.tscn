@@ -103,12 +103,12 @@ _data = {
 
 [node name="UnwantedFrequency" type="RigidBody2D" node_paths=PackedStringArray("Hitbox")]
 script = ExtResource("1_6sbe0")
-HomingVelocity = 1.4
+HomingVelocity = 1.2
 ProjectileName = "Unwanted Frequency"
-Speed = 140.0
+Speed = 124.0
 Direction = Vector2(1, 1)
 Hitbox = NodePath("Hitbox")
-Lifetime = 8.0
+Lifetime = 7.0
 
 [node name="Hitbox" parent="." instance=ExtResource("2_gxtvd")]
 collision_layer = 0

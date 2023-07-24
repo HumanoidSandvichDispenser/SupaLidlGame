@@ -38,4 +38,17 @@ public static class NodeExtensions
     {
         return node.GetNode(name) as T;
     }
+
+    public static T FindChildOfType<T>(this Node node) where T : Node
+    {
+        foreach (Node child in node.GetChildren())
+        {
+            if (child is T t)
+            {
+                return t;
+            }
+        }
+
+        return null;
+    }
 }

@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="4_pt6lq"]
 [ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_hmisb"]
 [ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="6_8nxjm"]
+[ext_resource type="Material" uid="uid://cbfaqolx1ydvv" path="res://Assets/Sprites/Particles/ParryParticles.tres" id="8_10gir"]
 [ext_resource type="Shape2D" uid="uid://dw4e4r2yxwk1b" path="res://Items/Weapons/SwordCollisionShape.tres" id="9_wsprl"]
 [ext_resource type="Texture2D" uid="uid://cmvh6pc71ir1m" path="res://Assets/Sprites/sword-swing-large.png" id="10_672jv"]
 [ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="10_mfnl7"]
@@ -25,10 +26,6 @@ point_count = 3
 [sub_resource type="Gradient" id="Gradient_2ablm"]
 offsets = PackedFloat32Array(0.835938, 0.992188)
 colors = PackedColorArray(1, 1, 1, 0.498039, 1, 1, 1, 0)
-
-[sub_resource type="Gradient" id="Gradient_jjxq2"]
-offsets = PackedFloat32Array(0, 0.945312)
-colors = PackedColorArray(1, 1, 1, 1, 0.687215, 0.687215, 0.687215, 0)
 
 [sub_resource type="Animation" id="Animation_b7327"]
 length = 0.001
@@ -417,23 +414,19 @@ y_sort_enabled = true
 position = Vector2(0, -8)
 texture = ExtResource("3_r75ni")
 
-[node name="ParryParticles" type="CPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
+[node name="ParryParticles" type="GPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
 modulate = Color(1.2, 1.2, 1.2, 1)
 position = Vector2(-0.221825, -3.12132)
 rotation = 0.785398
 emitting = false
-amount = 24
-lifetime = 0.4
+amount = 16
+process_material = ExtResource("8_10gir")
+lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
-emission_shape = 1
-emission_sphere_radius = 4.0
-direction = Vector2(0, -1)
-spread = 180.0
-gravity = Vector2(0, 200)
-initial_velocity_min = 8.0
-initial_velocity_max = 64.0
-color_ramp = SubResource("Gradient_jjxq2")
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 4
 
 [node name="Hand" type="Sprite2D" parent="Anchor/Node2D/Sprite2D"]
 position = Vector2(-2.52724e-05, 7)

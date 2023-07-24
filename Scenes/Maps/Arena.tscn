@@ -251,11 +251,12 @@ physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_5yxvt")
 sources/0 = SubResource("TileSetAtlasSource_fcd6d")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_spvk4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q3ile"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwpea"]
 size = Vector2(256, 256)
@@ -342,7 +343,7 @@ visible = false
 position = Vector2(120, -112)
 
 [node name="Doc" parent="Entities" index="18" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_spvk4")
+material = SubResource("ShaderMaterial_q3ile")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="19"]
 position = Vector2(168, -42)

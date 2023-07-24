@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=55 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -11,11 +11,13 @@
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="7_sdgvb"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
+[ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="8_m08fh"]
 [ext_resource type="Material" uid="uid://x5qcq5muvc3g" path="res://Assets/Sprites/Particles/PlayerDamageProcessMaterial.tres" id="8_yf112"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="9_7gumm"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
 [ext_resource type="AudioStream" uid="uid://bkeyg8weaqnuu" path="res://Assets/Sounds/splat-player.ogg" id="12_vvem5"]
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
+[ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="14_bj0lo"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
 
@@ -23,6 +25,7 @@
 shader = ExtResource("2_ngsgt")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="Animation" id="Animation_imqdv"]
 length = 0.001
@@ -282,6 +285,11 @@ _data = {
 "hurt_flash": SubResource("Animation_pjey7")
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kks2p"]
+_data = {
+"stun": ExtResource("8_m08fh")
+}
+
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kwett"]
 animation = &"idle"
 
@@ -418,6 +426,11 @@ libraries = {
 "": SubResource("AnimationLibrary_xe5eq")
 }
 
+[node name="Stun" type="AnimationPlayer" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_kks2p")
+}
+
 [node name="AnimationTree" type="AnimationTree" parent="Animations"]
 tree_root = SubResource("AnimationNodeStateMachine_0ukul")
 anim_player = NodePath("../Movement")
@@ -470,7 +483,7 @@ rotation = 6.28319
 
 [node name="Character" type="Sprite2D" parent="Sprites/Node2D"]
 use_parent_material = true
-position = Vector2(0, -8)
+position = Vector2(-1, -8)
 texture = ExtResource("4_5vird")
 offset = Vector2(0, -4)
 hframes = 24
@@ -504,6 +517,8 @@ InventoryMap = {
 
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
 visible = false
+
+[node name="DocLance" parent="Inventory" instance=ExtResource("14_bj0lo")]
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("9_avyu4")]
 visible = false

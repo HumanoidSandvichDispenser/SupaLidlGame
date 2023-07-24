@@ -1,12 +1,15 @@
-[gd_scene load_steps=52 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=61 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
+[ext_resource type="AudioStream" uid="uid://ipss4y2gkk3y" path="res://Assets/Music/gillette.mp3" id="3_eo4lg"]
 [ext_resource type="Texture2D" uid="uid://baiuqgrqipppt" path="res://Assets/Sprites/Characters/doc.png" id="3_rs44f"]
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="3_t5jjc"]
+[ext_resource type="Texture2D" uid="uid://dpepm54hjuyga" path="res://Assets/Sprites/Characters/forsen-hand.png" id="4_8lqj6"]
 [ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="4_b35px"]
 [ext_resource type="Script" path="res://State/Character/NPCMoveState.cs" id="5_pejsd"]
 [ext_resource type="Script" path="res://State/NPC/NPCStateMachine.cs" id="6_kjpug"]
+[ext_resource type="Script" path="res://State/Character/CharacterDashState.cs" id="7_0ks57"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocTelegraphState.cs" id="7_tfwbh"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="7_tnve0"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteDartState.cs" id="8_1hoax"]
@@ -19,18 +22,22 @@
 [ext_resource type="Script" path="res://State/NPC/Doc/DocChooseAttackState.cs" id="12_45x13"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocUnwantedFrequencyState.cs" id="12_d51jv"]
 [ext_resource type="PackedScene" uid="uid://1y5r6sklwgrp" path="res://Entities/UnwantedFrequency.tscn" id="13_lpj21"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocLanceState.cs" id="15_dmd05"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="16_bsvls"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="16_x277j"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="17_iomdx"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="19_p0p6c"]
 [ext_resource type="Material" uid="uid://rcjujd5dv7lm" path="res://Assets/Sprites/Particles/DocIntroParticles.tres" id="19_q4rt1"]
-[ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="24_y1go8"]
+[ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="21_ixn4k"]
+[ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="24_2es2r"]
+[ext_resource type="PackedScene" uid="uid://bauucuqvjwbxp" path="res://Items/Weapons/DocLanceHold.tscn" id="26_0tntj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
 shader = ExtResource("2_5jxom")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="Animation" id="Animation_7ay6e"]
 length = 0.001
@@ -81,9 +88,14 @@ tracks/0/keys = {
 "values": [2, 3, 4, 5, 6, 7]
 }
 
+[sub_resource type="Animation" id="Animation_j0d8o"]
+resource_name = "dash"
+length = 0.1
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1xv7m"]
 _data = {
 "RESET": SubResource("Animation_7ay6e"),
+"dash": SubResource("Animation_j0d8o"),
 "idle": SubResource("Animation_px7yx"),
 "move": SubResource("Animation_a7sk6")
 }
@@ -129,14 +141,14 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../Sprite:modulate")
+tracks/3/path = NodePath("..:material:shader_parameter/alpha_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [1.0]
 }
 
 [sub_resource type="Animation" id="Animation_7oukw"]
@@ -157,38 +169,38 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Sprite:modulate")
+tracks/1/path = NodePath("../Sprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(2, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.5)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../Sprite:frame")
+tracks/2/path = NodePath("../Effects/UnwantedFrequenciesParticles:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../Effects/UnwantedFrequenciesParticles:emitting")
+tracks/3/path = NodePath("..:material:shader_parameter/alpha_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_j3s0y"]
@@ -209,38 +221,38 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Sprite:modulate")
+tracks/1/path = NodePath("../Sprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 2),
-"update": 0,
-"values": [Color(1, 1, 1, 0.5), Color(1, 1, 1, 0)]
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../Sprite:frame")
+tracks/2/path = NodePath("../Effects/UnwantedFrequenciesParticles:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../Effects/UnwantedFrequenciesParticles:emitting")
+tracks/3/path = NodePath("..:material:shader_parameter/alpha_modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
 }
 
 [sub_resource type="Animation" id="Animation_8dhub"]
@@ -379,6 +391,11 @@ _data = {
 "hurt": SubResource("Animation_dxevc")
 }
 
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kks2p"]
+_data = {
+"stun": ExtResource("21_ixn4k")
+}
+
 [sub_resource type="Animation" id="Animation_uemm6"]
 resource_name = "intro"
 
@@ -426,22 +443,31 @@ color_initial_ramp = SubResource("GradientTexture1D_5606i")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_hs7xn"]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j1srf"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uict5"]
 size = Vector2(11, 5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
 size = Vector2(16, 19)
 
-[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("BossStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("Lance", "BossStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_7n7iy")
 collision_layer = 10
 collision_mask = 17
 script = ExtResource("2_3elet")
+Lance = NodePath("Inventory/DocLance")
 BossStateMachine = NodePath("BossStateMachine")
 BossName = "Doc, The Two-Time"
-Health = 1000.0
+Music = ExtResource("3_eo4lg")
+HandTexture = ExtResource("4_8lqj6")
+Health = 800.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
@@ -460,6 +486,13 @@ Character = NodePath("../..")
 [node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
 script = ExtResource("5_pejsd")
 IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
+[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("7_0ks57")
+IdleState = NodePath("../Idle")
+TimeToDash = 0.1
+VelocityModifier = 10.0
 Character = NodePath("../..")
 
 [node name="BossStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
@@ -499,11 +532,17 @@ ChooseAttackState = NodePath("../ChooseAttack")
 Doc = NodePath("../..")
 NPC = NodePath("../..")
 
-[node name="ChooseAttack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("DartState", "SpikeState", "UnwantedFrequencyState", "ExitState", "NPC")]
+[node name="Lance" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ExitState", "NPC")]
+script = ExtResource("15_dmd05")
+ExitState = NodePath("../Exit")
+NPC = NodePath("../..")
+
+[node name="ChooseAttack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("DartState", "SpikeState", "UnwantedFrequencyState", "LanceState", "ExitState", "NPC")]
 script = ExtResource("12_45x13")
 DartState = NodePath("../Dart")
 SpikeState = NodePath("../Spike")
 UnwantedFrequencyState = NodePath("../UnwantedFrequency")
+LanceState = NodePath("../Lance")
 ExitState = NodePath("../Exit")
 NPC = NodePath("../..")
 
@@ -530,6 +569,11 @@ libraries = {
 root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_xe5eq")
+}
+
+[node name="Stun" type="AnimationPlayer" parent="Animations"]
+libraries = {
+"": SubResource("AnimationLibrary_kks2p")
 }
 
 [node name="Misc" type="AnimationPlayer" parent="Animations"]
@@ -563,9 +607,17 @@ amount = 32
 process_material = ExtResource("19_q4rt1")
 texture = ExtResource("19_p0p6c")
 
+[node name="Dash" type="GPUParticles2D" parent="Effects"]
+position = Vector2(0, -8)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_j1srf")
+
 [node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5)
 y_sort_enabled = true
 use_parent_material = true
+position = Vector2(-0.5, 0)
 texture = ExtResource("3_rs44f")
 offset = Vector2(0, -8)
 hframes = 16
@@ -587,7 +639,9 @@ y_sort_enabled = true
 script = ExtResource("8_r8ejq")
 Items = Array[Node2D]([])
 
-[node name="Sword" parent="Inventory" instance=ExtResource("24_y1go8")]
+[node name="DocLance" parent="Inventory" instance=ExtResource("24_2es2r")]
+
+[node name="DocLanceHold" parent="Inventory" instance=ExtResource("26_0tntj")]
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_stm0e")

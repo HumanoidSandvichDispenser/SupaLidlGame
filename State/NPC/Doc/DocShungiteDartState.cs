@@ -6,12 +6,6 @@ namespace SupaLidlGame.State.NPC.Doc;
 
 public partial class DocShungiteDartState : DocAttackState
 {
-    protected Scenes.Map _map;
-    protected Utils.World _world;
-
-    protected double _currentDuration = 0;
-    protected double _currentAttackDuration = 0;
-
     [Export]
     public override double Duration { get; set; }
 
@@ -26,15 +20,6 @@ public partial class DocShungiteDartState : DocAttackState
 
     [Export]
     public Characters.Doc Doc { get; set; }
-
-    public override NPCState Enter(IState<NPCState> previousState)
-    {
-        _map = this.GetAncestor<Scenes.Map>();
-        _world = this.GetAncestor<Utils.World>();
-        _currentDuration = Duration;
-        _currentAttackDuration = AttackDuration;
-        return null;
-    }
 
     public override void Exit(IState<NPCState> nextState)
     {
@@ -70,6 +55,11 @@ public partial class DocShungiteDartState : DocAttackState
 
     public override NPCState Process(double delta)
     {
+        if (Doc.StunTime > 0)
+        {
+            return null;
+        }
+
         if ((_currentDuration -= delta) <= 0)
         {
             return ChooseAttackState;

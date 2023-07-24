@@ -1,11 +1,17 @@
 using Godot;
 using GodotUtilities;
+using SupaLidlGame.State.Character;
 
 namespace SupaLidlGame.Characters;
 
 public partial class Doc : Boss
 {
     public AnimationPlayer TelegraphAnimation { get; set; }
+
+    [Export]
+    public Items.Weapons.Sword Lance { get; set; }
+
+    protected bool _dashedAway = false;
 
     public override float Health
     {
@@ -31,9 +37,9 @@ public partial class Doc : Boss
         {
             switch (Health)
             {
-                case < 250:
+                case < 200:
                     return 3;
-                case < 500:
+                case < 400:
                     return 2;
                 default:
                     return 1;
@@ -57,7 +63,7 @@ public partial class Doc : Boss
             if (!IsActive)
             {
                 IsActive = true;
-                Inventory.SelectedItem = Inventory.Items[0];
+                Inventory.SelectedItem = Lance;
             }
         };
     }
@@ -96,5 +102,60 @@ public partial class Doc : Boss
             .SetDirection(knockbackDir);
 
         base.OnReceivedDamage(damage, inflictor, knockback, knockbackDir);
+    }
+
+    protected override void Think()
+    {
+        if (BossStateMachine.CurrentState is State.NPC.Doc.DocLanceState)
+        {
+            ThirdPhaseThink();
+        }
+        else
+        {
+            base.Think();
+        }
+    }
+
+    protected void ThirdPhaseThink()
+    {
+        Character bestTarget = FindBestTarget();
+        if (bestTarget is not null)
+        {
+            Vector2 pos = bestTarget.GlobalPosition;
+            Target = pos - GlobalPosition;
+            Vector2 dir = GlobalPosition.DirectionTo(pos);
+            float dist = GlobalPosition.DistanceSquaredTo(pos);
+            UpdateWeights(pos);
+
+            if (CanAttack && StunTime <= 0)
+            {
+                bool isTargetStunned = bestTarget.StunTime > 0;
+                if (!isTargetStunned && dist < 2500)
+                {
+                    if (Inventory.SelectedItem is Items.Weapon weapon)
+                    {
+                        // dash away if too close
+                        DashTo(-dir);
+                        UseCurrentItem();
+                        _dashedAway = true;
+                    }
+                }
+                else if (isTargetStunned || (dist < 3600 && _dashedAway))
+                {
+                    if (!Inventory.SelectedItem.IsUsing)
+                    {
+                        DashTo(dir);
+                        UseCurrentItem();
+                        _dashedAway = false;
+                    }
+                }
+            }
+        }
+    }
+
+    private void DashTo(Vector2 direction)
+    {
+        StateMachine.ChangeState<CharacterDashState>(out var state);
+        state.DashDirection = direction;
     }
 }

@@ -8,10 +8,10 @@ public partial class SwordAttackState : WeaponState
     public SupaLidlGame.Items.Weapons.Sword Sword { get; set; }
 
     [Export]
-    public SwordAnticipateState AnticipateState { get; set; }
+    public SwordIdleState IdleState { get; set; }
 
     [Export]
-    public SwordIdleState IdleState { get; set; }
+    public bool HasAlternateAnimation { get; set; } = false;
 
     private double _attackDuration = 0;
 
@@ -26,7 +26,7 @@ public partial class SwordAttackState : WeaponState
         Sword.EnableParry();
         Sword.Attack();
 
-        if (_isAlternate)
+        if (HasAlternateAnimation && _isAlternate)
         {
             Sword.AnimationPlayer.Play("attack_alternate");
         }

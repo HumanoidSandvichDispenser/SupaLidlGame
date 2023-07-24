@@ -10,5 +10,6 @@ public static class Particles2D
         {
             particles.QueueFree();
         };
+        particles.Emitting = true;
     }
 }

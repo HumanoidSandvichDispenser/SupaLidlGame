@@ -10,6 +10,9 @@ public partial class SwordAnticipateState : WeaponState
     [Export]
     public SwordAttackState AttackState { get; set; }
 
+    [Export]
+    public bool HasAlternateAninmation { get; set; } = false;
+
     private double _anticipateTime;
 
     public override WeaponState Enter(IState<WeaponState> prevState)
@@ -19,7 +22,8 @@ public partial class SwordAnticipateState : WeaponState
             return AttackState;
         }
 
-        if (Sword.Anchor.Rotation > Mathf.DegToRad(50))
+        float rotThreshold = Mathf.DegToRad(50);
+        if (HasAlternateAninmation && Sword.Anchor.Rotation > rotThreshold)
         {
             Sword.AnimationPlayer.Play("anticipate_alternate");
         }
@@ -27,7 +31,6 @@ public partial class SwordAnticipateState : WeaponState
         {
             Sword.AnimationPlayer.Play("anticipate");
         }
-        GD.Print("Anticipating time");
         _anticipateTime = Sword.NPCAnticipateTime;
         return null;
     }

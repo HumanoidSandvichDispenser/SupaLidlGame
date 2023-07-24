@@ -13,7 +13,7 @@ public partial class Character : CharacterBody2D, IFaction
     public float Speed { get; protected set; } = 32.0f;
 
     [Export]
-    public float Friction { get; protected set; } = 4.0f;
+    public float Friction { get; set; } = 4.0f;
 
     [Export]
     public float Mass
@@ -87,11 +87,14 @@ public partial class Character : CharacterBody2D, IFaction
 
     public AnimationPlayer HurtAnimation { get; set; }
 
+    public AnimationPlayer StunAnimation { get; set; }
+
     public override void _Ready()
     {
         // TODO: 80+ char line
         MovementAnimation = GetNode<AnimationPlayer>("Animations/Movement");
         HurtAnimation = GetNode<AnimationPlayer>("Animations/Hurt");
+        StunAnimation = GetNode<AnimationPlayer>("Animations/Stun");
         GD.Print(Name + " " + MovementAnimation.CurrentAnimation);
         Hurtbox.ReceivedDamage += OnReceivedDamage;
     }
@@ -101,6 +104,15 @@ public partial class Character : CharacterBody2D, IFaction
         if (StateMachine != null)
         {
             StateMachine.Process(delta);
+        }
+
+        if (StunTime > 0 && !StunAnimation.IsPlaying())
+        {
+            StunAnimation.Play("stun");
+        }
+        else if (StunTime < 0 && StunAnimation.IsPlaying())
+        {
+            StunAnimation.Stop();
         }
 
         Sprite.FlipH = Target.X < 0;
@@ -124,6 +136,18 @@ public partial class Character : CharacterBody2D, IFaction
         {
             Velocity *= 0.25f;
         }
+
+        var state = StateMachine.CurrentState;
+        if (state is State.Character.CharacterDashState dashState)
+        {
+            Velocity *= dashState.VelocityModifier;
+        }
+        // TODO: make PlayerRollState a CharacterRollState instead
+        else if (state is State.Character.PlayerRollState rollState)
+        {
+            Velocity *= 2;
+            //Velocity *= rollState.VelocityModifier;
+        }
     }
 
     public virtual void Die()
@@ -142,7 +166,7 @@ public partial class Character : CharacterBody2D, IFaction
 
     public virtual void Stun(float time)
     {
-        StunTime += time;
+        StunTime = Mathf.Max(time, StunTime);
     }
 
     protected virtual void DrawTarget()
@@ -167,7 +191,6 @@ public partial class Character : CharacterBody2D, IFaction
     {
         if (StunTime > 0)
         {
-            GD.Print("tried to use weapon but stunned");
             return;
         }
 
@@ -178,6 +201,15 @@ public partial class Character : CharacterBody2D, IFaction
             {
                 Inventory.EmitSignal(Inventory.SignalName.UsedItem, weapon);
             }
+        }
+    }
+
+    public void DeuseCurrentItem()
+    {
+        if (Inventory.SelectedItem is Weapon weapon)
+        {
+            weapon.Deuse();
+            // TODO: DeusedItem signal, implement when needed
         }
     }
 

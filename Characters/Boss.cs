@@ -11,6 +11,9 @@ public abstract partial class Boss : Enemy
     [Export]
     public string BossName { get; set; }
 
+    [Export]
+    public AudioStream Music { get; set; }
+
     public abstract int Intensity { get; }
 
     private bool _isActive;
