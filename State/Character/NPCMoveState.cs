@@ -20,6 +20,7 @@ public partial class NPCMoveState : NPCState
     public override IState<CharacterState> Enter(IState<CharacterState> prev)
     {
         Character.MovementAnimation.Play("move");
+        GD.Print("playing anim " + Character.MovementAnimation.CurrentAnimation);
         return base.Enter(prev);
     }
 }

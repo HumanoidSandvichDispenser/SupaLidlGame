@@ -16,13 +16,15 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
         }
         _currentAttacks = 0;
         _currentAttackDuration = 1;
-        Doc.ShouldMove = true;
-        Doc.CanAttack = true;
+        Doc.ShouldMove = false;
+        Doc.CanAttack = false;
         return base.Enter(previous);
     }
 
     public override void Exit(IState<NPCState> nextState)
     {
+        Doc.ShouldMove = true;
+        Doc.CanAttack = true;
         //Doc.TelegraphAnimation.Stop();
         //Doc.TelegraphAnimation.Stop();
     }

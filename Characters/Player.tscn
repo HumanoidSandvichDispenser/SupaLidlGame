@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=59 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -18,6 +18,7 @@
 [ext_resource type="Material" uid="uid://ra02tvwd5o5g" path="res://Assets/Sprites/Particles/PlayerDeathProcessMaterial.tres" id="10_agw51"]
 [ext_resource type="AudioStream" uid="uid://bbqdpexvknma2" path="res://Assets/Sounds/never-lucky.mp3" id="12_vd7j4"]
 [ext_resource type="AudioStream" uid="uid://bkeyg8weaqnuu" path="res://Assets/Sounds/splat-player.ogg" id="12_vvem5"]
+[ext_resource type="AudioStream" uid="uid://cruylv4pu2fo1" path="res://Assets/Sounds/footstep-tile.wav" id="13_bxguv"]
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="14_bj0lo"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
@@ -232,6 +233,60 @@ tracks/4/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_vtf8v"]
+resource_name = "death"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprites/Node2D/Character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [11, 15, 16, 17]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Effects/DeathParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/alpha_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 1.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Effects/DeathCry")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_dxevc"]
 resource_name = "hurt"
 length = 0.2
@@ -302,60 +357,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(4, 4, 4),
 "update": 0,
 "values": [0.0, 1.0, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_vtf8v"]
-resource_name = "death"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprites/Node2D/Character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [11, 15, 16, 17]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Effects/DeathParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:material:shader_parameter/alpha_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(1, 1.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Effects/DeathCry")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.3),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xe5eq"]
@@ -535,6 +536,7 @@ amount = 32
 process_material = ExtResource("10_agw51")
 texture = SubResource("CanvasTexture_pited")
 lifetime = 2.0
+one_shot = true
 preprocess = 0.1
 explosiveness = 0.9
 
@@ -551,6 +553,9 @@ explosiveness = 0.9
 [node name="DeathCry" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("12_vd7j4")
 volume_db = 2.0
+
+[node name="Footstep" type="AudioStreamPlayer2D" parent="Effects"]
+stream = ExtResource("13_bxguv")
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 limit_left = -256

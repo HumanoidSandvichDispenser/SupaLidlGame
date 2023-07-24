@@ -21,8 +21,11 @@ public partial class DocShungiteDartState : DocAttackState
     [Export]
     public Characters.Doc Doc { get; set; }
 
-    public override void Exit(IState<NPCState> nextState)
+    public override NPCState Enter(IState<NPCState> nextState)
     {
+        Doc.CanAttack = true;
+        Doc.ShouldMove = true;
+        return base.Enter(nextState);
     }
 
     protected virtual Projectile SpawnProjectile(

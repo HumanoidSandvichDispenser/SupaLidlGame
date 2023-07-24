@@ -6,10 +6,11 @@
 [ext_resource type="Script" path="res://UI/UIController.cs" id="3_fe62s"]
 [ext_resource type="PackedScene" uid="uid://01d24ij5av1y" path="res://UI/BossBar.tscn" id="5_8njq4"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("UIController")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("UIController", "MusicPlayer")]
 script = ExtResource("1_1k6ew")
 StartingArea = ExtResource("2_avsrq")
 UIController = NodePath("CanvasLayer/UI")
+MusicPlayer = NodePath("MusicPlayer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -56,3 +57,5 @@ alignment = 1
 [node name="BossBar" parent="CanvasLayer/UI/Bottom" instance=ExtResource("5_8njq4")]
 visible = false
 layout_mode = 2
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]

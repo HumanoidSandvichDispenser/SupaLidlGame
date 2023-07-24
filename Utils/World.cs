@@ -20,6 +20,9 @@ public partial class World : Node2D
     [Export]
     public UI.UIController UIController { get; set; }
 
+    [Export]
+    public AudioStreamPlayer MusicPlayer { get; set; }
+
     private Dictionary<string, Map> _maps;
 
     private string _currentConnector;
@@ -72,6 +75,8 @@ public partial class World : Node2D
     public void RegisterBoss(Boss boss)
     {
         UIController.BossBar.Boss = boss;
+        MusicPlayer.Stream = boss.Music;
+        MusicPlayer.Play();
     }
 
     private void LoadMap(Map map)
