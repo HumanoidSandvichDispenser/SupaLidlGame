@@ -2,6 +2,7 @@ using Godot;
 using GodotUtilities;
 using SupaLidlGame.Utils;
 using SupaLidlGame.BoundingBoxes;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.Characters;
 
@@ -101,5 +102,13 @@ public sealed partial class Player : Character
         DirectionMarker.GlobalRotation = DirectionMarker.GlobalPosition
             .DirectionTo(GetGlobalMousePosition())
             .Angle();
+    }
+
+    public override void Footstep()
+    {
+        GetNode<AudioStreamPlayer2D>("Effects/Footstep")
+            .OnWorld()
+            .WithPitchDeviation(0.125f)
+            .Play();
     }
 }
