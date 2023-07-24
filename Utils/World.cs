@@ -18,6 +18,9 @@ public partial class World : Node2D
     public Player CurrentPlayer { get; set; }
 
     [Export]
+    public Boss CurrentBoss { get; set; }
+
+    [Export]
     public UI.UIController UIController { get; set; }
 
     [Export]
@@ -44,7 +47,18 @@ public partial class World : Node2D
 
     public override void _Ready()
     {
+        // check if world already exists
+
+        var globalState = GetNode<State.Global.GlobalState>("/root/GlobalState");
+        if (globalState.World is not null)
+        {
+            throw new System.InvalidOperationException();
+        }
+
+        globalState.World = this;
+
         Godot.RenderingServer.SetDefaultClearColor(Godot.Colors.Black);
+
         if (StartingArea is not null)
         {
             LoadScene(StartingArea);
@@ -74,9 +88,17 @@ public partial class World : Node2D
 
     public void RegisterBoss(Boss boss)
     {
+        CurrentBoss = boss;
         UIController.BossBar.Boss = boss;
         MusicPlayer.Stream = boss.Music;
         MusicPlayer.Play();
+    }
+
+    public void DeregisterBoss(Boss boss)
+    {
+        CurrentBoss = null;
+        UIController.BossBar.Boss = null;
+        MusicPlayer.Stop();
     }
 
     private void LoadMap(Map map)
