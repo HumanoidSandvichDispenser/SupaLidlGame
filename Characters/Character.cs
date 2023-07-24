@@ -253,15 +253,12 @@ public partial class Character : CharacterBody2D, IFaction
 
         ApplyImpulse(knockbackDir.Normalized() * knockback);
 
-        GD.Print("lol");
-
         // play damage animation
-        var anim = GetNode<AnimationPlayer>("Animations/Hurt");
-        if (anim != null)
+        if (HurtAnimation is not null && Health > 0)
         {
-            anim.Stop();
-            anim.Play("hurt");
-            anim.Queue("hurt_flash");
+            HurtAnimation.Stop();
+            HurtAnimation.Play("hurt");
+            HurtAnimation.Queue("hurt_flash");
         }
 
         // if anyone involved is a player, shake their screen
