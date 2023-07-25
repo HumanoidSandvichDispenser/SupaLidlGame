@@ -2,6 +2,7 @@ using Godot;
 using GodotUtilities;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.State.Character;
+using DialogueManagerRuntime;
 
 namespace SupaLidlGame.Characters;
 
@@ -9,12 +10,27 @@ public partial class Doc : Boss
 {
     public AnimationPlayer TelegraphAnimation { get; set; }
 
+    public AnimationPlayer MiscAnimation { get; set; }
+
     [Export]
     public Items.Weapons.Sword Lance { get; set; }
 
     protected bool _dashedAway = false;
     protected CharacterDashState _dashState;
     protected float _originalDashModifier;
+
+    [Export]
+    public override bool IsActive
+    {
+        get => base.IsActive;
+        set
+        {
+            base.IsActive = value;
+            var introState = BossStateMachine
+                .GetNode<State.NPC.Doc.DocIntroState>("Intro");
+            BossStateMachine.ChangeState(introState);
+        }
+    }
 
     public override float Health
     {
@@ -58,10 +74,33 @@ public partial class Doc : Boss
     public override void _Ready()
     {
         TelegraphAnimation = GetNode<AnimationPlayer>("Animations/Telegraph");
+        MiscAnimation = GetNode<AnimationPlayer>("Animations/Misc");
+
         base._Ready();
 
         _dashState = StateMachine.FindChildOfType<CharacterDashState>();
         _originalDashModifier = _dashState.VelocityModifier;
+
+        var dialog = GD.Load<Resource>("res://Assets/Dialog/doc.dialogue");
+
+        GetNode<BoundingBoxes.InteractionTrigger>("InteractionTrigger")
+            .Interaction += () =>
+        {
+            //DialogueManager.ShowExampleDialogueBalloon(dialog, "duel");
+            this.GetAncestor<Utils.World>().DialogueBalloon
+                .Start(dialog, "duel");
+                //.Call("start", dialog, "duel");
+        };
+
+        GetNode<State.Global.GlobalState>("/root/GlobalState")
+            .SummonBoss += (string name) =>
+        {
+            if (name == "Doc")
+            {
+                IsActive = true;
+                Inventory.SelectedItem = Lance;
+            }
+        };
 
 
         // when we are hurt, start the boss fight
@@ -71,6 +110,7 @@ public partial class Doc : Boss
             {
                 IsActive = true;
                 Inventory.SelectedItem = Lance;
+                //DialogueManager.ShowExampleDialogueBalloon();
             }
         };
     }

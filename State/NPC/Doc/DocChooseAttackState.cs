@@ -16,7 +16,7 @@ public partial class DocChooseAttackState : NPCState
     public DocUnwantedFrequencyState UnwantedFrequencyState { get; set; }
 
     [Export]
-    public DocLanceState LanceState { get; set; }
+    public DocIntroState LanceIntroState { get; set; }
 
     [Export]
     public DocExitState ExitState { get; set; }
@@ -44,7 +44,7 @@ public partial class DocChooseAttackState : NPCState
     {
         if (Doc.Intensity == 3)
         {
-            return LanceState;
+            return LanceIntroState;
         }
 
         if (previous is not DocTelegraphState)

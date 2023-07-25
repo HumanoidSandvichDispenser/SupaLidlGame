@@ -1,16 +1,18 @@
-[gd_scene load_steps=6 format=3 uid="uid://1pb3mpmrl7lc"]
+[gd_scene load_steps=7 format=3 uid="uid://1pb3mpmrl7lc"]
 
 [ext_resource type="Script" path="res://Utils/World.cs" id="1_1k6ew"]
 [ext_resource type="PackedScene" uid="uid://b2x17su05ou5w" path="res://Scenes/Maps/Arena.tscn" id="2_avsrq"]
 [ext_resource type="PackedScene" uid="uid://bxo553hblp6nf" path="res://UI/HealthBar.tscn" id="3_5rhge"]
 [ext_resource type="Script" path="res://UI/UIController.cs" id="3_fe62s"]
 [ext_resource type="PackedScene" uid="uid://01d24ij5av1y" path="res://UI/BossBar.tscn" id="5_8njq4"]
+[ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Dialogue/balloon.tscn" id="6_2bdwl"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("UIController", "MusicPlayer")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("UIController", "MusicPlayer", "DialogueBalloon")]
 script = ExtResource("1_1k6ew")
 StartingArea = ExtResource("2_avsrq")
 UIController = NodePath("CanvasLayer/UI")
 MusicPlayer = NodePath("MusicPlayer")
+DialogueBalloon = NodePath("DialogBalloon")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -70,3 +72,5 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="DialogBalloon" parent="." instance=ExtResource("6_2bdwl")]

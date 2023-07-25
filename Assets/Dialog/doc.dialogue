@@ -1,0 +1,28 @@
+~ duel
+
+Doc, The Two Time: The name...
+Doc, The Two Time: is Doctor...
+Doc, The Two Time: Disrespect.
+Doc, The Two Time: I'm the two-time, back to back, consecutive years...
+Doc, The Two Time: A lot of you were still in your little diapers.
+Doc, The Two Time: Still in your little onesies, pajamas. Little footsy pajamas. He-Man pajamas. Spiderman pajamas.
+Doc, The Two Time: A lot of you were still sleeping on the top of your bunk bed, underneath your blankets, scared to death of the boogieman underneath your bed.
+Doc, The Two Time: A lot of you were still there.
+Doc, The Two Time: While I was out...
+Doc, The Two Time: at Marine World.
+Doc, The Two Time: Winning.
+Doc, The Two Time: Two years in a row. The 1993-1994 Blockbuster video game championship right in front of the killer whale exhibit. 200+ TVs. NBA Jam.
+Doc, The Two Time: I AM THE...
+Doc, The Two Time: I'm an international videogame superstar. I'm 6'8", 37" vertical leap. A jawline that will cut, slice, deliver anything that you will ever dream of right to your front door.
+Doc, The Two Time: Nothing but success.
+Doc, The Two Time: That's what my life's about. Period.
+Doc, The Two Time: And the arena today, ladies and gentlemen...
+Doc, The Two Time: is wide open, and the crowds are flooding in. VIP seating. Skybox section. Reserved for the Slick Daddy Club.
+Doc, The Two Time: The Slick Daddy Club looking so damn good today. I'm feeling so damn good. It's obvious.
+Doc, The Two Time: The V of success.
+Challenge [b]Doc, The Two Time[/b]?
+- Yes
+	do emit("SummonBoss", "Doc")
+- No => END
+
+=> END

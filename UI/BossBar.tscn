@@ -35,9 +35,9 @@ horizontal_alignment = 1
 [node name="BarMargin" type="MarginContainer" parent="."]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/margin_left = 64
-theme_override_constants/margin_right = 64
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_right = 128
+theme_override_constants/margin_bottom = 32
 
 [node name="BossBar" type="TextureProgressBar" parent="BarMargin"]
 texture_filter = 1
