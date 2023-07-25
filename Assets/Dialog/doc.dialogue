@@ -20,7 +20,7 @@ Doc, The Two Time: And the arena today, ladies and gentlemen...
 Doc, The Two Time: is wide open, and the crowds are flooding in. VIP seating. Skybox section. Reserved for the Slick Daddy Club.
 Doc, The Two Time: The Slick Daddy Club looking so damn good today. I'm feeling so damn good. It's obvious.
 Doc, The Two Time: The V of success.
-Challenge [b]Doc, The Two Time[/b]?
+Challenge [b]Doc, The Two Time[/b] to a duel?
 - Yes
 	do emit("SummonBoss", "Doc")
 - No => END
