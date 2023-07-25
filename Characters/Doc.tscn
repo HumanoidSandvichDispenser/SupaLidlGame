@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=66 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="9_stm0e"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocShungiteSpikeState.cs" id="10_bgs6o"]
 [ext_resource type="PackedScene" uid="uid://cqx56u46g2c16" path="res://Entities/CompactDisc.tscn" id="11_23p3o"]
+[ext_resource type="Script" path="res://State/NPC/Doc/DocIntroState.cs" id="11_lt771"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocChooseAttackState.cs" id="12_45x13"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocUnwantedFrequencyState.cs" id="12_d51jv"]
 [ext_resource type="PackedScene" uid="uid://1y5r6sklwgrp" path="res://Entities/UnwantedFrequency.tscn" id="13_lpj21"]
@@ -32,6 +33,7 @@
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="24_2es2r"]
 [ext_resource type="PackedScene" uid="uid://bauucuqvjwbxp" path="res://Items/Weapons/DocLanceHold.tscn" id="26_0tntj"]
 [ext_resource type="AudioStream" uid="uid://cqj44je3mvk60" path="res://Assets/Sounds/rauuul.wav" id="26_js7p2"]
+[ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="33_08dyq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
@@ -397,11 +399,102 @@ _data = {
 "stun": ExtResource("21_ixn4k")
 }
 
+[sub_resource type="Animation" id="Animation_ucpsk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Effects/IntroParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_uemm6"]
 resource_name = "intro"
+length = 3.0
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Effects/BattleCry")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [16]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Effects/IntroParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Sprite:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(2, 0.5), Vector2(1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kjxam"]
 _data = {
+"RESET": SubResource("Animation_ucpsk"),
 "intro": SubResource("Animation_uemm6")
 }
 
@@ -456,6 +549,9 @@ size = Vector2(11, 5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8lxmf"]
 size = Vector2(16, 19)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_8hwat"]
+radius = 16.0
+
 [node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("Lance", "BossStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
@@ -500,6 +596,11 @@ Character = NodePath("../..")
 script = ExtResource("6_kjpug")
 InitialState = NodePath("Telegraph")
 
+[node name="Intro" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("NextState", "NPC")]
+script = ExtResource("11_lt771")
+NextState = NodePath("../Telegraph")
+NPC = NodePath("../..")
+
 [node name="Telegraph" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("TelegraphAnimationPlayer", "AttackState", "NPC")]
 script = ExtResource("7_tfwbh")
 TelegraphAnimationPlayer = NodePath("../../Animations/Telegraph")
@@ -533,17 +634,22 @@ ChooseAttackState = NodePath("../ChooseAttack")
 Doc = NodePath("../..")
 NPC = NodePath("../..")
 
+[node name="LanceIntro" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("NextState", "NPC")]
+script = ExtResource("11_lt771")
+NextState = NodePath("../Lance")
+NPC = NodePath("../..")
+
 [node name="Lance" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ExitState", "NPC")]
 script = ExtResource("15_dmd05")
 ExitState = NodePath("../Exit")
 NPC = NodePath("../..")
 
-[node name="ChooseAttack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("DartState", "SpikeState", "UnwantedFrequencyState", "LanceState", "ExitState", "NPC")]
+[node name="ChooseAttack" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("DartState", "SpikeState", "UnwantedFrequencyState", "LanceIntroState", "ExitState", "NPC")]
 script = ExtResource("12_45x13")
 DartState = NodePath("../Dart")
 SpikeState = NodePath("../Spike")
 UnwantedFrequencyState = NodePath("../UnwantedFrequency")
-LanceState = NodePath("../Lance")
+LanceIntroState = NodePath("../LanceIntro")
 ExitState = NodePath("../Exit")
 NPC = NodePath("../..")
 
@@ -607,6 +713,7 @@ emitting = false
 amount = 32
 process_material = ExtResource("19_q4rt1")
 texture = ExtResource("19_p0p6c")
+lifetime = 0.5
 
 [node name="Dash" type="GPUParticles2D" parent="Effects"]
 position = Vector2(0, -8)
@@ -626,7 +733,7 @@ use_parent_material = true
 position = Vector2(-0.5, 0)
 texture = ExtResource("3_rs44f")
 offset = Vector2(0, -8)
-hframes = 16
+hframes = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -1.5)
@@ -652,4 +759,11 @@ Items = Array[Node2D]([])
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_stm0e")
 
+[node name="InteractionTrigger" parent="." instance=ExtResource("33_08dyq")]
+
+[node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_8hwat")
+
 [editable path="Hurtbox"]
+[editable path="InteractionTrigger"]

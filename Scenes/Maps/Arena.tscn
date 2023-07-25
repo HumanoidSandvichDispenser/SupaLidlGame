@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://b2x17su05ou5w"]
+[gd_scene load_steps=16 format=3 uid="uid://b2x17su05ou5w"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="Texture2D" uid="uid://b0yiy7w8nxmas" path="res://Assets/Sprites/arena-tileset.png" id="2_wnjm0"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c1w7t6irnohfx" path="res://Entities/Torch.tscn" id="6_1wwor"]
 [ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="6_jy3pc"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="7_y7j0e"]
+[ext_resource type="AudioStream" uid="uid://dy4qjflo1k28b" path="res://Assets/Sounds/calm-storm-ambient.mp3" id="8_wox7d"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_3n6aa"]
 diffuse_texture = ExtResource("2_wnjm0")
@@ -251,7 +252,7 @@ physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_5yxvt")
 sources/0 = SubResource("TileSetAtlasSource_fcd6d")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_q3ile"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i75i0"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
@@ -343,7 +344,7 @@ visible = false
 position = Vector2(120, -112)
 
 [node name="Doc" parent="Entities" index="18" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_q3ile")
+material = SubResource("ShaderMaterial_i75i0")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="19"]
 position = Vector2(168, -42)
@@ -356,6 +357,12 @@ texture = ExtResource("7_y7j0e")
 height = 16.0
 
 [node name="CanvasGroup" type="CanvasGroup" parent="Entities" index="20"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Entities" index="21"]
+position = Vector2(19, 23)
+stream = ExtResource("8_wox7d")
+volume_db = -5.0
+autoplay = true
 
 [node name="Areas" parent="." index="2"]
 visible = false

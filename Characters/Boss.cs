@@ -19,7 +19,7 @@ public abstract partial class Boss : Enemy
     private bool _isActive;
 
     [Export]
-    public bool IsActive
+    public virtual bool IsActive
     {
         get => _isActive;
         set

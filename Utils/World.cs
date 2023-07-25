@@ -1,5 +1,6 @@
 using Godot;
 using SupaLidlGame.Characters;
+using SupaLidlGame.Extensions;
 using SupaLidlGame.Scenes;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,9 @@ public partial class World : Node2D
 
     [Export]
     public AudioStreamPlayer MusicPlayer { get; set; }
+
+    [Export]
+    public Dialogue.Balloon DialogueBalloon { get; set; }
 
     private Dictionary<string, Map> _maps;
 
@@ -255,4 +259,6 @@ public partial class World : Node2D
         CurrentPlayer.GlobalPosition = SaveLocation;
         CurrentPlayer.Spawn();
     }
+
+    public Node FindEntity(string name) => CurrentMap.Entities.GetNode(name);
 }

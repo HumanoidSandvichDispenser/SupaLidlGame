@@ -1,13 +1,14 @@
 [gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://rcjujd5dv7lm"]
 
 [sub_resource type="Gradient" id="Gradient_v7xci"]
-offsets = PackedFloat32Array(0.525926, 0.6)
+offsets = PackedFloat32Array(0.525926, 0.585185)
 colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_pntll"]
 gradient = SubResource("Gradient_v7xci")
 
 [resource]
+particle_flag_rotate_y = true
 particle_flag_disable_z = true
 spread = 180.0
 gravity = Vector3(0, 0, 0)
