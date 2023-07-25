@@ -36,6 +36,7 @@ public partial class DocLanceState : DocAttackState
     {
         var state = base.Enter(previousState);
         _doc.ShouldMove = true;
+        _doc.GetNode<AudioStreamPlayer2D>("Effects/BattleCry").Play();
 
         //if (_doc.Intensity > 2)
         //{

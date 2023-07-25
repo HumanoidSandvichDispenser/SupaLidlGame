@@ -108,7 +108,7 @@ ProjectileName = "Unwanted Frequency"
 Speed = 124.0
 Direction = Vector2(1, 1)
 Hitbox = NodePath("Hitbox")
-Lifetime = 7.0
+Lifetime = 4.0
 
 [node name="Hitbox" parent="." instance=ExtResource("2_gxtvd")]
 collision_layer = 0

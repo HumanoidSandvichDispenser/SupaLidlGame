@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=62 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -31,6 +31,7 @@
 [ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="21_ixn4k"]
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="24_2es2r"]
 [ext_resource type="PackedScene" uid="uid://bauucuqvjwbxp" path="res://Items/Weapons/DocLanceHold.tscn" id="26_0tntj"]
+[ext_resource type="AudioStream" uid="uid://cqj44je3mvk60" path="res://Assets/Sounds/rauuul.wav" id="26_js7p2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
@@ -467,7 +468,7 @@ BossStateMachine = NodePath("BossStateMachine")
 BossName = "Doc, The Two-Time"
 Music = ExtResource("3_eo4lg")
 HandTexture = ExtResource("4_8lqj6")
-Health = 800.0
+Health = 900.0
 Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
@@ -507,8 +508,8 @@ NPC = NodePath("../..")
 
 [node name="Dart" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ChooseAttackState", "Doc", "NPC")]
 script = ExtResource("8_1hoax")
-Duration = 8.0
-AttackDuration = 1.0
+Duration = 6.0
+AttackDuration = 1.5
 Projectile = ExtResource("11_23p3o")
 ChooseAttackState = NodePath("../ChooseAttack")
 Doc = NodePath("../..")
@@ -612,6 +613,11 @@ position = Vector2(0, -8)
 emitting = false
 amount = 32
 process_material = SubResource("ParticleProcessMaterial_j1srf")
+
+[node name="BattleCry" type="AudioStreamPlayer2D" parent="Effects"]
+stream = ExtResource("26_js7p2")
+volume_db = 3.0
+attenuation = 0.5
 
 [node name="Sprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.5)

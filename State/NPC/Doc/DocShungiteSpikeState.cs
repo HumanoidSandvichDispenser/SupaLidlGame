@@ -75,7 +75,7 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
             return null;
         }
 
-        if ((_currentAttackDuration -= delta) <= 0)
+        if ((_currentAttackDuration -= delta) <= 0 || Doc.Intensity > 2)
         {
             Attack();
         }

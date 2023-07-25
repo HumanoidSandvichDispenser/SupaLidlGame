@@ -157,7 +157,7 @@ public partial class Sword : Weapon, IParryable
     {
         IsParried = true;
         AnimationPlayer.SpeedScale = 0.25f;
-        Character.Stun(1);
+        Character.Stun(2);
         GetNode<AudioStreamPlayer2D>("ParrySound")
             .OnWorld()
             .WithPitchDeviation(0.125f)

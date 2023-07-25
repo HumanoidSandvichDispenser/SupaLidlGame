@@ -45,8 +45,8 @@ public partial class DocShungiteDartState : DocAttackState
         var playerPos = player.GlobalPosition;
         // global position is (from npc to player) * 2 = (2 * npc) - player
         //projectile.GlobalPosition = 2 * NPC.GlobalPosition - playerPos;
-        Vector2 position1 = 2 * NPC.GlobalPosition - playerPos;
-        Vector2 position2 = 2 * playerPos - NPC.GlobalPosition;
+        Vector2 position1 = 3 * NPC.GlobalPosition - 2 * playerPos;
+        Vector2 position2 = 3 * playerPos - 2 * NPC.GlobalPosition;
         Vector2 direction1 = position1.DirectionTo(playerPos);
         Vector2 direction2 = -direction1;
         SpawnProjectile(position1, direction1);
@@ -61,7 +61,7 @@ public partial class DocShungiteDartState : DocAttackState
             return null;
         }
 
-        if ((_currentDuration -= delta) <= 0)
+        if ((_currentDuration -= delta) <= 0 || Doc.Intensity > 2)
         {
             return ChooseAttackState;
         }

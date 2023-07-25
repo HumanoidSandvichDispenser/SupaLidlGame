@@ -1,5 +1,6 @@
 using Godot;
 using GodotUtilities;
+using SupaLidlGame.Extensions;
 using SupaLidlGame.State.Character;
 
 namespace SupaLidlGame.Characters;
@@ -12,6 +13,8 @@ public partial class Doc : Boss
     public Items.Weapons.Sword Lance { get; set; }
 
     protected bool _dashedAway = false;
+    protected CharacterDashState _dashState;
+    protected float _originalDashModifier;
 
     public override float Health
     {
@@ -37,9 +40,9 @@ public partial class Doc : Boss
         {
             switch (Health)
             {
-                case < 200:
+                case < 300:
                     return 3;
-                case < 400:
+                case < 600:
                     return 2;
                 default:
                     return 1;
@@ -56,6 +59,10 @@ public partial class Doc : Boss
     {
         TelegraphAnimation = GetNode<AnimationPlayer>("Animations/Telegraph");
         base._Ready();
+
+        _dashState = StateMachine.FindChildOfType<CharacterDashState>();
+        _originalDashModifier = _dashState.VelocityModifier;
+
 
         // when we are hurt, start the boss fight
         Hurt += (Events.HealthChangedArgs args) =>
@@ -130,24 +137,52 @@ public partial class Doc : Boss
             if (CanAttack && StunTime <= 0)
             {
                 bool isTargetStunned = bestTarget.StunTime > 0;
-                if (!isTargetStunned && dist < 2500)
+
+                bool shouldDashAway = false;
+                bool shouldDashTowards = false;
+
+                var lance = Inventory.SelectedItem as Items.Weapons.Sword;
+                var lanceState = lance.StateMachine.CurrentState;
+
+                float dot = Direction.Normalized()
+                    .Dot(bestTarget.Direction.Normalized());
+
+                // doc will still dash if you are farther than normal but
+                // moving towards him
+                float distThreshold = 2500 - (dot * 400);
+
+                // or just directly dash towards you if you are too far
+                float distTowardsThreshold = 22500;
+
+                // dash towards if lance in anticipate state
+                shouldDashTowards = (isTargetStunned || _dashedAway) &&
+                    lanceState is State.Weapon.SwordAnticipateState ||
+                    dist > distTowardsThreshold;
+
+                shouldDashAway = dist < distThreshold && !isTargetStunned;
+
+                //if (!isTargetStunned && dist < 2500 && !_dashedAway)
+                if (shouldDashAway && !shouldDashTowards)
                 {
-                    if (Inventory.SelectedItem is Items.Weapon weapon)
-                    {
-                        // dash away if too close
-                        DashTo(-dir);
-                        UseCurrentItem();
-                        _dashedAway = true;
-                    }
+                    // dash away if too close
+                    _dashState.VelocityModifier = _originalDashModifier;
+                    DashTo(-dir);
+                    UseCurrentItem();
+                    _dashedAway = true;
                 }
-                else if (isTargetStunned || (dist < 3600 && _dashedAway))
+                else if (shouldDashTowards && !shouldDashAway)
                 {
-                    if (!Inventory.SelectedItem.IsUsing)
-                    {
-                        DashTo(dir);
-                        UseCurrentItem();
-                        _dashedAway = false;
-                    }
+                    // dash to player's predicted position
+                    _dashState.VelocityModifier = _originalDashModifier * 1.75f;
+                    var dashSpeed = _dashState.VelocityModifier * Speed;
+                    var newPos = Utils.Physics.PredictNewPosition(
+                        GlobalPosition,
+                        dashSpeed,
+                        pos,
+                        bestTarget.Velocity,
+                        out float _);
+                    DashTo(GlobalPosition.DirectionTo(newPos));
+                    _dashedAway = false;
                 }
             }
         }
