@@ -19,6 +19,7 @@ public partial class DocExitState : NPCState
     {
         _currentDuration = Duration;
         TelegraphAnimationPlayer.Play("exit_out");
+        NPC.ShouldMove = false;
         return null;
     }
 

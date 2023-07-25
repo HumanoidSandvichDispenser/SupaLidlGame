@@ -26,6 +26,7 @@ public partial class DocTelegraphState : NPCState
 
         _currentDuration = Duration;
         TelegraphAnimationPlayer.Play("enter_in");
+        NPC.ShouldMove = true;
 
         var player = this.GetAncestor<Utils.World>().CurrentPlayer;
         Vector2 randVec;
@@ -36,8 +37,8 @@ public partial class DocTelegraphState : NPCState
             float randY = GD.RandRange(-112, 112);
             randVec = new Vector2(randX, randY);
         }
-        while (randVec.DistanceSquaredTo(player.GlobalPosition) < 1024);
-        // can not teleport within 32 units of the player
+        while (randVec.DistanceSquaredTo(player.GlobalPosition) < 9216);
+        // can not teleport within 96 units of the player
 
         NPC.GlobalPosition = randVec;
         return null;

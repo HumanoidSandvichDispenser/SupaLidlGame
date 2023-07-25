@@ -31,4 +31,9 @@ public abstract partial class Boss : Enemy
                 .RegisterBoss(_isActive ? this : null);
         }
     }
+
+    public override void _Ready()
+    {
+        base._Ready();
+    }
 }
