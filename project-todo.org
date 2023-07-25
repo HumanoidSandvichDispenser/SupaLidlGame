@@ -3,7 +3,7 @@
 * STARTED Campfires
 DEADLINE: <2022-12-03 Sat>
 
-* TODO Enemy Spawning
+* DONE Enemy Spawning
 
 * DONE Handle Character Death
 DEADLINE: <2022-12-04 Sun>
@@ -16,13 +16,16 @@ CLOSED: [2023-07-21 Fri]
 ** DONE Attack animations
 CLOSED: [2023-07-20 Thu]
 
-** TODO Boss Music
+** DONE Boss Music
+CLOSED: [2023-07-24 Mon]
 
 * TODO Boss cards
 
-* TODO Dialog
+* DONE Dialog
+CLOSED: [2023-07-25 Tue]
 
 * TODO Short arena entrance
 
-* TODO Video demonstration
+* DONE Video demonstration
+CLOSED: [2023-07-25 Tue]
 
