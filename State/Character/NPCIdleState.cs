@@ -17,9 +17,9 @@ public partial class NPCIdleState : NPCState
         return null;
     }
 
-    public override IState<CharacterState> Enter(IState<CharacterState> previousState)
+    public override IState<CharacterState> Enter(IState<CharacterState> prev)
     {
-        Character.MovementAnimation.Play("idle");
-        return base.Enter(previousState);
+        Character.MovementAnimation?.Play("idle");
+        return base.Enter(prev);
     }
 }
