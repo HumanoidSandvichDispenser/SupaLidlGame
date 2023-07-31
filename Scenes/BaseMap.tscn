@@ -1837,30 +1837,30 @@ y_sort_enabled = true
 texture_filter = 3
 tile_set = SubResource("TileSet_18c7j")
 format = 2
-layer_0/name = "Walls"
+layer_0/name = "Layer 3"
 layer_0/y_sort_enabled = true
-layer_1/name = "Ground 2"
+layer_1/name = "Layer 2"
 layer_1/enabled = true
 layer_1/modulate = Color(1, 1, 1, 1)
 layer_1/y_sort_enabled = true
 layer_1/y_sort_origin = 0
 layer_1/z_index = -1
 layer_1/tile_data = PackedInt32Array()
-layer_2/name = "Ground Paths"
+layer_2/name = "Layer 1 Overlay"
 layer_2/enabled = true
 layer_2/modulate = Color(1, 1, 1, 1)
 layer_2/y_sort_enabled = true
 layer_2/y_sort_origin = 0
 layer_2/z_index = -1
 layer_2/tile_data = PackedInt32Array()
-layer_3/name = "Ground"
+layer_3/name = "Layer 1"
 layer_3/enabled = true
 layer_3/modulate = Color(1, 1, 1, 1)
 layer_3/y_sort_enabled = true
 layer_3/y_sort_origin = 0
 layer_3/z_index = -2
 layer_3/tile_data = PackedInt32Array()
-layer_4/name = "Lower 2"
+layer_4/name = "Layer 0"
 layer_4/enabled = true
 layer_4/modulate = Color(1, 1, 1, 1)
 layer_4/y_sort_enabled = true
@@ -1880,6 +1880,8 @@ Areas = NodePath("Areas")
 Spawners = NodePath("Spawners")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="Static" type="Node2D" parent="."]
 
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true

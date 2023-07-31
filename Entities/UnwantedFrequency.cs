@@ -1,12 +1,11 @@
 using Godot;
-using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.Entities;
 
-public partial class UnwantedFrequency : Projectile
+public partial class UnwantedFrequency : Projectile, Utils.ITarget
 {
     [Export]
-    public Characters.Character Homing { get; set; }
+    public Characters.Character CharacterTarget { get; set; }
 
     [Export]
     public float HomingVelocity { get; set; } = 1;
@@ -46,17 +45,10 @@ public partial class UnwantedFrequency : Projectile
         TrailRotation.Rotation = Direction.Angle();
         TrailPosition.Position = new Vector2(0, 4 * Mathf.Sin(radians));
 
-        // home towards player
-        if (Homing is not null)
+        if (CharacterTarget is not null)
         {
-            var desired = GlobalPosition.DirectionTo(Homing.GlobalPosition);
-            //var steer = (desired - Direction) * HomingVelocity * (float)delta;
-            //float dTheta = Direction.AngleTo(dirToHoming);
-            //float dTheta = Mathf.Acos(Direction.Dot(dirToHoming));
-
-            //float max = (float)(delta * HomingRotationalVelocity);
-            //float rotVel = Mathf.Clamp(dTheta, -max, max);
-
+            var pos = CharacterTarget.GlobalPosition;
+            var desired = GlobalPosition.DirectionTo(pos);
             Direction += (desired - Direction) * HomingVelocity * (float)delta;
         }
 

@@ -152,8 +152,16 @@ public partial class Character : CharacterBody2D, IFaction
 
     public virtual void Die()
     {
-        GD.Print("lol died");
-        QueueFree();
+        if (HurtAnimation.HasAnimation("death"))
+        {
+            HurtAnimation.Play("death");
+            HurtAnimation.AnimationFinished += (StringName name) =>
+                QueueFree();
+        }
+        else
+        {
+            QueueFree();
+        }
     }
 
     public void ApplyImpulse(Vector2 impulse, bool resetVelocity = false)
@@ -189,7 +197,7 @@ public partial class Character : CharacterBody2D, IFaction
 
     public void UseCurrentItem()
     {
-        if (StunTime > 0)
+        if (StunTime > 0 || !IsAlive)
         {
             return;
         }
@@ -242,6 +250,12 @@ public partial class Character : CharacterBody2D, IFaction
         float oldHealth = Health;
         Health -= ReceiveDamage(damage, inflictor, knockback, knockbackDir);
 
+        var hurtParticles = GetNode<GpuParticles2D>("Effects/HurtParticles");
+        if (hurtParticles is not null)
+        {
+            hurtParticles.SetDirection(knockbackDir);
+        }
+
         // create damage text
         var textScene = GD.Load<PackedScene>("res://UI/FloatingText.tscn");
         var instance = textScene.Instantiate<UI.FloatingText>();
@@ -268,9 +282,10 @@ public partial class Character : CharacterBody2D, IFaction
             //plr.Camera.Shake(1, 0.4f);
         }
 
-        if (this.GetNode("HurtSound") is AudioStreamPlayer2D sound)
+        if (this.GetNode("Effects/HurtSound") is AudioStreamPlayer2D sound)
         {
             // very small pitch deviation
+            GD.Print("hurt sound");
             sound.At(GlobalPosition).WithPitchDeviation(0.125f).PlayOneShot();
         }
 
@@ -295,6 +310,9 @@ public partial class Character : CharacterBody2D, IFaction
 
     public virtual void Footstep()
     {
-        throw new System.NotImplementedException();
+        if (GetNode("Effects/Footstep") is AudioStreamPlayer2D player)
+        {
+            player.Play();
+        }
     }
 }

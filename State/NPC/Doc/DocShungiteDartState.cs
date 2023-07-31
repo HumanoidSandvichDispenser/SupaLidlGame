@@ -41,7 +41,7 @@ public partial class DocShungiteDartState : DocAttackState
 
     protected override void Attack()
     {
-        var player = _world.CurrentPlayer;
+        var player = NPC.FindBestTarget();
         var playerPos = player.GlobalPosition;
         // global position is (from npc to player) * 2 = (2 * npc) - player
         //projectile.GlobalPosition = 2 * NPC.GlobalPosition - playerPos;

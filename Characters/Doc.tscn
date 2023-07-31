@@ -726,6 +726,9 @@ stream = ExtResource("26_js7p2")
 volume_db = 3.0
 attenuation = 0.5
 
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="Effects"]
+stream = ExtResource("9_stm0e")
+
 [node name="Sprite" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.5)
 y_sort_enabled = true
@@ -753,16 +756,14 @@ script = ExtResource("8_r8ejq")
 Items = Array[Node2D]([])
 
 [node name="DocLance" parent="Inventory" instance=ExtResource("24_2es2r")]
+unique_name_in_owner = true
 
 [node name="DocLanceHold" parent="Inventory" instance=ExtResource("26_0tntj")]
-
-[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("9_stm0e")
 
 [node name="InteractionTrigger" parent="." instance=ExtResource("33_08dyq")]
 
 [node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
-position = Vector2(0, -8)
+position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_8hwat")
 
 [editable path="Hurtbox"]

@@ -7,6 +7,9 @@ public partial class PlayerMoveState : PlayerState
     [Export]
     public PlayerRollState RollState { get; set; }
 
+    [Export]
+    public CharacterDashState DashState { get; set; }
+
     public double MoveDuration { get; private set; }
 
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)

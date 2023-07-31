@@ -38,7 +38,7 @@ public partial class DocUnwantedFrequencyState : DocShungiteSpikeState
         var docPos = NPC.GlobalPosition;
         var projectile = SpawnProjectile(docPos, docPos.DirectionTo(playerPos))
             as UnwantedFrequency;
-        projectile.Homing = player;
+        projectile.CharacterTarget = NPC.FindBestTarget();
 
         _currentAttackDuration = 1;
         _currentAttacks++;

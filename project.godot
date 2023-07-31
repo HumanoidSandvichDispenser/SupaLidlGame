@@ -24,6 +24,7 @@ GlobalState="*res://State/Global/GlobalState.cs"
 [dialogue_manager]
 
 general/states=["GlobalState"]
+general/wrap_lines=true
 
 [display]
 
@@ -105,10 +106,11 @@ equip_3={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://Assets/Dialog/doc.dialogue")
+locale/translations_pot_files=PackedStringArray("res://Assets/Dialog/doc.dialogue", "res://Assets/Dialogue/doc.dialogue", "res://Assets/Dialogue/spellbook.dialogue", "res://Assets/Dialogue/books.dialogue")
 
 [layer_names]
 
+2d_render/layer_4="Godray Occluder"
 2d_physics/layer_1="World"
 2d_physics/layer_2="Character"
 2d_physics/layer_3="Player"
@@ -123,4 +125,5 @@ locale/translations_pot_files=PackedStringArray("res://Assets/Dialog/doc.dialogu
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 1)

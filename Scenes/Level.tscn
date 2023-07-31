@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://1pb3mpmrl7lc"]
 
 [ext_resource type="Script" path="res://Utils/World.cs" id="1_1k6ew"]
-[ext_resource type="PackedScene" uid="uid://b2x17su05ou5w" path="res://Scenes/Maps/Arena.tscn" id="2_avsrq"]
+[ext_resource type="PackedScene" uid="uid://b2x17su05ou5w" path="res://Scenes/Maps/Arena.tscn" id="2_lddbd"]
 [ext_resource type="PackedScene" uid="uid://bxo553hblp6nf" path="res://UI/HealthBar.tscn" id="3_5rhge"]
 [ext_resource type="Script" path="res://UI/UIController.cs" id="3_fe62s"]
 [ext_resource type="PackedScene" uid="uid://01d24ij5av1y" path="res://UI/BossBar.tscn" id="5_8njq4"]
@@ -9,7 +9,7 @@
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("UIController", "MusicPlayer", "DialogueBalloon")]
 script = ExtResource("1_1k6ew")
-StartingArea = ExtResource("2_avsrq")
+StartingArea = ExtResource("2_lddbd")
 UIController = NodePath("CanvasLayer/UI")
 MusicPlayer = NodePath("MusicPlayer")
 DialogueBalloon = NodePath("DialogBalloon")

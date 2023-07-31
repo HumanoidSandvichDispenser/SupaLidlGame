@@ -46,7 +46,7 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
 
     public virtual CharacterState PhysicsProcess(double delta)
     {
-        if (Character.Health < 0)
+        if (!Character.IsAlive)
         {
             Character.Velocity = Vector2.Zero;
             Character.MoveAndSlide();

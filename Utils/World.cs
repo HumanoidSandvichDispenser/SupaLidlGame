@@ -121,6 +121,7 @@ public partial class World : Node2D
 
         CurrentMap = map;
         CurrentMap.Active = true;
+        CurrentMap.Load();
 
         if (CurrentPlayer is not null)
         {

@@ -1,10 +1,11 @@
-[gd_scene load_steps=59 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=57 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
 [ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="4_5vird"]
 [ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="5_rgckv"]
+[ext_resource type="Script" path="res://State/Character/CharacterDashState.cs" id="6_rft7p"]
 [ext_resource type="Script" path="res://State/Character/PlayerIdleState.cs" id="6_wkfdm"]
 [ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
 [ext_resource type="Script" path="res://State/Character/PlayerMoveState.cs" id="7_dfqd8"]
@@ -15,6 +16,7 @@
 [ext_resource type="Material" uid="uid://x5qcq5muvc3g" path="res://Assets/Sprites/Particles/PlayerDamageProcessMaterial.tres" id="8_yf112"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="9_7gumm"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
+[ext_resource type="AnimationLibrary" uid="uid://epe31b7x1nt1" path="res://Assets/Animations/player_hurt.res" id="9_g42dl"]
 [ext_resource type="Material" uid="uid://ra02tvwd5o5g" path="res://Assets/Sprites/Particles/PlayerDeathProcessMaterial.tres" id="10_agw51"]
 [ext_resource type="AudioStream" uid="uid://bbqdpexvknma2" path="res://Assets/Sounds/never-lucky.mp3" id="12_vd7j4"]
 [ext_resource type="AudioStream" uid="uid://bkeyg8weaqnuu" path="res://Assets/Sounds/splat-player.ogg" id="12_vvem5"]
@@ -151,6 +153,7 @@ _data = {
 }
 
 [sub_resource type="Animation" id="Animation_adxyh"]
+resource_local_to_scene = true
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -185,203 +188,6 @@ tracks/0/keys = {
 _data = {
 "RESET": SubResource("Animation_adxyh"),
 "sword": SubResource("Animation_3w3u1")
-}
-
-[sub_resource type="Animation" id="Animation_k6l16"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/intensity")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprites/Node2D/Character:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Effects/HurtParticles:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".:material:shader_parameter/alpha_modulate")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Effects/DeathParticles:emitting")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_vtf8v"]
-resource_name = "death"
-length = 3.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprites/Node2D/Character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [11, 15, 16, 17]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Effects/DeathParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".:material:shader_parameter/alpha_modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(1, 1.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Effects/DeathCry")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.3),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [0.0],
-"method": &"play"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_dxevc"]
-resource_name = "hurt"
-length = 0.2
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/intensity")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.2),
-"transitions": PackedFloat32Array(4, 4, 4, 4),
-"update": 0,
-"values": [1.0, 0.0, 1.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprites/Node2D/Character:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [11]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Effects/HurtParticles:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Effects/HurtParticles")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"restart"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_pjey7"]
-resource_name = "hurt_flash"
-length = 0.4
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/intensity")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(4, 4, 4),
-"update": 0,
-"values": [0.0, 1.0, 0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_xe5eq"]
-_data = {
-"RESET": SubResource("Animation_k6l16"),
-"death": SubResource("Animation_vtf8v"),
-"hurt": SubResource("Animation_dxevc"),
-"hurt_flash": SubResource("Animation_pjey7")
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kks2p"]
@@ -468,6 +274,10 @@ font_size = 24
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cjk6b"]
 size = Vector2(8, 8)
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7482j"]
+closed = false
+polygon = PackedVector2Array(-3, 0, 2, 0)
+
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "DirectionMarker", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
@@ -495,10 +305,18 @@ MoveState = NodePath("../Move")
 IdleState = NodePath(".")
 Character = NodePath("../..")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("RollState", "IdleState", "Character")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("RollState", "DashState", "IdleState", "Character")]
 script = ExtResource("7_dfqd8")
 RollState = NodePath("../Roll")
+DashState = NodePath("../Dash")
 IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
+[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("6_rft7p")
+IdleState = NodePath("../Idle")
+TimeToDash = 0.1
+VelocityModifier = 5.0
 Character = NodePath("../..")
 
 [node name="Roll" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
@@ -507,6 +325,7 @@ IdleState = NodePath("../Idle")
 Character = NodePath("../..")
 
 [node name="Animations" type="Node" parent="."]
+unique_name_in_owner = true
 script = ExtResource("7_sdgvb")
 
 [node name="Movement" type="AnimationPlayer" parent="Animations"]
@@ -522,7 +341,7 @@ libraries = {
 [node name="Hurt" type="AnimationPlayer" parent="Animations"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_xe5eq")
+"": ExtResource("9_g42dl")
 }
 
 [node name="Stun" type="AnimationPlayer" parent="Animations"]
@@ -539,6 +358,7 @@ parameters/conditions/move = false
 parameters/conditions/roll = false
 
 [node name="Effects" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="RollParticles" type="GPUParticles2D" parent="Effects"]
 emitting = false
@@ -574,14 +394,15 @@ volume_db = 2.0
 [node name="Footstep" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("13_bxguv")
 
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="Effects"]
+stream = ExtResource("12_vvem5")
+
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
-limit_left = -256
-limit_top = -256
-limit_right = 256
-limit_bottom = 256
+limit_smoothed = true
 position_smoothing_speed = 8.0
 
 [node name="Sprites" type="Node2D" parent="."]
+unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 rotation = 6.28319
@@ -641,11 +462,6 @@ shape = SubResource("RectangleShape2D_cjk6b")
 [node name="Timer" type="Timer" parent="Hurtbox"]
 one_shot = true
 
-[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
-visible = false
-stream = ExtResource("12_vvem5")
-max_distance = 64.0
-
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 visible = false
 current = true
@@ -655,7 +471,6 @@ visible = false
 position = Vector2(0, 6)
 
 [node name="InteractionRay" type="RayCast2D" parent="Direction2D"]
-visible = false
 target_position = Vector2(16, 0)
 collision_mask = 64
 collide_with_areas = true
@@ -663,6 +478,7 @@ script = ExtResource("13_hs3u1")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 visible = false
+position = Vector2(0, -8)
 blend_mode = 2
 shadow_enabled = true
 shadow_filter = 2
@@ -672,5 +488,9 @@ height = 10.0
 
 [node name="DamageTime" type="Node" parent="."]
 script = ExtResource("15_4xl06")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_7482j")
+occluder_light_mask = 8
 
 [editable path="Hurtbox"]

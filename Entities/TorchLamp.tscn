@@ -107,7 +107,7 @@ frame_progress = 0.743234
 offset = Vector2(0, -12)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.803922, 0.698039, 1)
+color = Color(1, 0.9525, 0.85, 1)
 energy = 1.2
 blend_mode = 2
 shadow_filter_smooth = 3.0

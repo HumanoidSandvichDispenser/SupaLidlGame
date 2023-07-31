@@ -1,4 +1,4 @@
-#undef DEBUG_NPC
+#define DEBUG_NPC
 
 using Godot;
 using SupaLidlGame.Extensions;
@@ -43,6 +43,9 @@ public partial class NPC : Character
         }
     }
 
+    [Export]
+    public Items.Item DefaultSelectedItem { get; set; }
+
     public bool ShouldMove { get; set; } = true;
 
     public bool CanAttack { get; set; } = true;
@@ -67,11 +70,16 @@ public partial class NPC : Character
     {
         base._Ready();
         Array.Fill(_weights, 0);
+
+        if (DefaultSelectedItem is not null)
+        {
+            Inventory.SelectedItem = DefaultSelectedItem;
+        }
     }
 
     public override void _Draw()
     {
-#if DEBUG_NPC
+#if DEBUG
         for (int i = 0; i < 16; i++)
         {
             Vector2 vec = _weightDirs[i] * _weights[i] * 32;
@@ -92,7 +100,7 @@ public partial class NPC : Character
         base._Draw();
     }
 
-    protected virtual Character FindBestTarget()
+    public virtual Character FindBestTarget()
     {
         float bestDist = float.MaxValue;
         Character bestChar = null;
@@ -100,7 +108,8 @@ public partial class NPC : Character
         {
             if (node is Character character)
             {
-                if (character.Faction == Faction || character.Health <= 0)
+                bool isFriendly = character.Faction == Faction;
+                if (isFriendly || character.Health <= 0)
                 {
                     continue;
                 }

@@ -2,7 +2,6 @@ using Godot;
 using GodotUtilities;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.State.Character;
-using DialogueManagerRuntime;
 
 namespace SupaLidlGame.Characters;
 
@@ -81,7 +80,7 @@ public partial class Doc : Boss
         _dashState = StateMachine.FindChildOfType<CharacterDashState>();
         _originalDashModifier = _dashState.VelocityModifier;
 
-        var dialog = GD.Load<Resource>("res://Assets/Dialog/doc.dialogue");
+        var dialog = GD.Load<Resource>("res://Assets/Dialogue/doc.dialogue");
 
         GetNode<BoundingBoxes.InteractionTrigger>("InteractionTrigger")
             .Interaction += () =>
@@ -139,6 +138,7 @@ public partial class Doc : Boss
         return 1;
     }
 
+    /*
     public override void OnReceivedDamage(
         float damage,
         Character inflictor,
@@ -150,6 +150,7 @@ public partial class Doc : Boss
 
         base.OnReceivedDamage(damage, inflictor, knockback, knockbackDir);
     }
+    */
 
     protected override void Think()
     {
@@ -181,8 +182,12 @@ public partial class Doc : Boss
                 bool shouldDashAway = false;
                 bool shouldDashTowards = false;
 
-                var lance = Inventory.SelectedItem as Items.Weapons.Sword;
-                var lanceState = lance.StateMachine.CurrentState;
+                var lanceState = Lance.StateMachine.CurrentState;
+
+                if (Inventory.SelectedItem != Lance)
+                {
+                    Inventory.SelectedItem = Lance;
+                }
 
                 float dot = Direction.Normalized()
                     .Dot(bestTarget.Direction.Normalized());

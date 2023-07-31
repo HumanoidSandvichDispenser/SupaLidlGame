@@ -19,6 +19,15 @@ public partial class Map : TileMap
     [Export]
     public Vector2 CameraUpperBound { get; set; }
 
+    [Export]
+    public Color ClearColor { get; set; }
+
+    [Export]
+    public string AreaName { get; set; }
+
+    [Export]
+    public string MapName { get; set; }
+
     private bool _active;
 
     public bool Active
@@ -42,6 +51,11 @@ public partial class Map : TileMap
     public override void _Process(double delta)
     {
         base._Process(delta);
+    }
+
+    public void Load()
+    {
+        Godot.RenderingServer.SetDefaultClearColor(ClearColor);
     }
 
     public Node SpawnEntity(PackedScene scene)

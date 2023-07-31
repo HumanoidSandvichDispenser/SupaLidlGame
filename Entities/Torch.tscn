@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://c1w7t6irnohfx"]
 
 [ext_resource type="Texture2D" uid="uid://har1bd5u4dq3" path="res://Assets/Sprites/Misc/torch.png" id="1_14bgb"]
-[ext_resource type="Texture2D" uid="uid://b8ann6yb8qox4" path="res://Assets/Sprites/Particles/light-pixel.png" id="2_f0xs8"]
+[ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="2_hotvd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_js1l1"]
 atlas = ExtResource("1_14bgb")
@@ -64,15 +64,16 @@ animations = [{
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(0, -12)
+position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_gf7ku")
 autoplay = "default"
 frame_progress = 0.337799
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.898039, 0.686275, 1)
+color = Color(1, 0.976471, 0.92549, 1)
 blend_mode = 2
 shadow_enabled = true
 shadow_filter_smooth = 3.0
-texture = ExtResource("2_f0xs8")
+texture = ExtResource("2_hotvd")
 offset = Vector2(0, 2)
+texture_scale = 0.25
