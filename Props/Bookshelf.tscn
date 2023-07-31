@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://hm3ek8vqt1d4"]
+
+[ext_resource type="Texture2D" uid="uid://dwbrymm3ud5xu" path="res://Assets/Sprites/Props/bookshelf.png" id="1_cnrpk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wc4oe"]
+size = Vector2(28, 8)
+
+[node name="Bookshelf" type="StaticBody2D"]
+y_sort_enabled = true
+
+[node name="BottomLeft" type="Sprite2D" parent="."]
+position = Vector2(-16, 0)
+texture = ExtResource("1_cnrpk")
+centered = false
+offset = Vector2(0, -16)
+hframes = 8
+vframes = 2
+frame = 8
+
+[node name="BottomRight" type="Sprite2D" parent="."]
+texture = ExtResource("1_cnrpk")
+centered = false
+offset = Vector2(0, -16)
+hframes = 8
+vframes = 2
+frame = 9
+
+[node name="TopLeft" type="Sprite2D" parent="."]
+position = Vector2(-16, -16)
+texture = ExtResource("1_cnrpk")
+centered = false
+offset = Vector2(0, -16)
+hframes = 8
+vframes = 2
+
+[node name="TopRight" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("1_cnrpk")
+centered = false
+offset = Vector2(0, -16)
+hframes = 8
+vframes = 2
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_wc4oe")
