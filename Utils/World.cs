@@ -30,6 +30,8 @@ public partial class World : Node2D
     [Export]
     public Dialogue.Balloon DialogueBalloon { get; set; }
 
+    public State.Global.GlobalState GlobalState { get; set; }
+
     private Dictionary<string, Map> _maps;
 
     private string _currentConnector;
@@ -53,13 +55,13 @@ public partial class World : Node2D
     {
         // check if world already exists
 
-        var globalState = GetNode<State.Global.GlobalState>("/root/GlobalState");
-        if (globalState.World is not null)
+        GlobalState = GetNode<State.Global.GlobalState>("/root/GlobalState");
+        if (GlobalState.World is not null)
         {
             throw new System.InvalidOperationException();
         }
 
-        globalState.World = this;
+        GlobalState.World = this;
 
         Godot.RenderingServer.SetDefaultClearColor(Godot.Colors.Black);
 

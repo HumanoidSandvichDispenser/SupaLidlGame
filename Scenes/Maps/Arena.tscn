@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b2x17su05ou5w"]
+[gd_scene load_steps=11 format=3 uid="uid://b2x17su05ou5w"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_x0mh7"]
@@ -8,131 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="6_jy3pc"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="7_y7j0e"]
 [ext_resource type="AudioStream" uid="uid://dy4qjflo1k28b" path="res://Assets/Sounds/calm-storm-ambient.mp3" id="8_wox7d"]
-[ext_resource type="PackedScene" uid="uid://ckxelxak8dko7" path="res://Characters/ExampleEnemy2.tscn" id="9_xh7k8"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r2j43"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onuc5"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_khdpp"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_elehk"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5id6"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ssogq"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2fv3"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qo5u"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xibdk"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xqxak"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wa4u"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2ha1r"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1dp4"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w34xi"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_316o8"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_c02am"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fh67a"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cl7jx"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-shader_parameter/alpha_modulate = 1.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qfnxq"]
-resource_local_to_scene = true
-shader = ExtResource("5_h8k5p")
-shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
@@ -151,88 +31,85 @@ ClearColor = Color(0.105882, 0.0470588, 0.117647, 1)
 AreaName = "The Arena"
 MapName = "The Arena"
 
-[node name="CanvasModulate" parent="." index="0"]
-color = Color(0.317647, 0.184314, 0.345098, 1)
-
-[node name="TorchLamp" parent="Static" index="0" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp" parent="." index="0" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-96, -120)
 
-[node name="TorchLamp3" parent="Static" index="1" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp3" parent="." index="1" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(0, -120)
 
-[node name="TorchLamp5" parent="Static" index="2" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp5" parent="." index="2" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(96, -120)
 
-[node name="TorchLamp6" parent="Static" index="3" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp6" parent="." index="3" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, -96)
 
-[node name="TorchLamp7" parent="Static" index="4" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp7" parent="." index="4" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(120, -96)
 
-[node name="TorchLamp9" parent="Static" index="5" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp9" parent="." index="5" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(120, -1)
 
-[node name="TorchLamp11" parent="Static" index="6" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp11" parent="." index="6" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(120, 95)
 
-[node name="TorchLamp12" parent="Static" index="7" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp12" parent="." index="7" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(97, 120)
 
-[node name="TorchLamp14" parent="Static" index="8" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp14" parent="." index="8" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(0, 120)
 
-[node name="TorchLamp16" parent="Static" index="9" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp16" parent="." index="9" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-96, 120)
 
-[node name="TorchLamp17" parent="Static" index="10" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp17" parent="." index="10" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, 95)
 
-[node name="TorchLamp19" parent="Static" index="11" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp19" parent="." index="11" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, -1)
 
-[node name="Torch" parent="Static" index="12" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch" parent="." index="12" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-120, -112)
 
-[node name="Torch2" parent="Static" index="13" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch2" parent="." index="13" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-72, -112)
 
-[node name="Torch3" parent="Static" index="14" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch3" parent="." index="14" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-24, -113)
 
-[node name="Torch4" parent="Static" index="15" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch4" parent="." index="15" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(24, -112)
 
-[node name="Torch5" parent="Static" index="16" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch5" parent="." index="16" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(72, -112)
 
-[node name="Torch6" parent="Static" index="17" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch6" parent="." index="17" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(120, -112)
 
+[node name="CanvasModulate" parent="." index="18"]
+color = Color(0.317647, 0.184314, 0.345098, 1)
+
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_r2j43")
+material = SubResource("ShaderMaterial_onuc5")
 
-[node name="Doc2" parent="Entities" index="1" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_khdpp")
-
-[node name="PointLight2D" type="PointLight2D" parent="Entities" index="2"]
+[node name="PointLight2D" type="PointLight2D" parent="Entities" index="1"]
 position = Vector2(168, -42)
 energy = 1.5
 blend_mode = 2
@@ -242,95 +119,15 @@ shadow_color = Color(0.572549, 0.572549, 0.572549, 0)
 texture = ExtResource("7_y7j0e")
 height = 16.0
 
-[node name="CanvasGroup" type="CanvasGroup" parent="Entities" index="3"]
+[node name="CanvasGroup" type="CanvasGroup" parent="Entities" index="2"]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Entities" index="4"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Entities" index="3"]
 position = Vector2(19, 23)
 stream = ExtResource("8_wox7d")
 volume_db = -5.0
 autoplay = true
 
-[node name="Enemy" parent="Entities" index="5" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_elehk")
-position = Vector2(-40, 72)
-Faction = 1
-
-[node name="Enemy2" parent="Entities" index="6" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_v5id6")
-position = Vector2(64, -88)
-Faction = 1
-
-[node name="Enemy3" parent="Entities" index="7" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_ssogq")
-position = Vector2(64, -88)
-Faction = 1
-
-[node name="Enemy4" parent="Entities" index="8" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_s2fv3")
-position = Vector2(64, -48)
-Faction = 1
-
-[node name="Enemy5" parent="Entities" index="9" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_2qo5u")
-position = Vector2(-48, -88)
-Faction = 1
-
-[node name="Enemy6" parent="Entities" index="10" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_xibdk")
-position = Vector2(-16, -88)
-Faction = 1
-
-[node name="Enemy7" parent="Entities" index="11" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_xqxak")
-position = Vector2(-16, 40)
-Faction = 1
-
-[node name="Enemy8" parent="Entities" index="12" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_8wa4u")
-position = Vector2(-16, 40)
-Faction = 1
-
-[node name="Enemy9" parent="Entities" index="13" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_2ha1r")
-position = Vector2(-16, 40)
-Faction = 1
-
-[node name="Enemy10" parent="Entities" index="14" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_r1dp4")
-position = Vector2(-16, 40)
-Faction = 1
-
-[node name="Enemy11" parent="Entities" index="15" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_w34xi")
-position = Vector2(-16, 40)
-Faction = 1
-
-[node name="Enemy12" parent="Entities" index="16" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_316o8")
-position = Vector2(-40, -40)
-Faction = 1
-
-[node name="Enemy13" parent="Entities" index="17" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_c02am")
-position = Vector2(8, 16)
-Faction = 1
-
-[node name="Enemy14" parent="Entities" index="18" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_fh67a")
-position = Vector2(-16, -64)
-Faction = 1
-
-[node name="Enemy15" parent="Entities" index="19" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_cl7jx")
-position = Vector2(56, 40)
-Faction = 1
-
-[node name="Enemy16" parent="Entities" index="20" instance=ExtResource("9_xh7k8")]
-material = SubResource("ShaderMaterial_qfnxq")
-position = Vector2(-32, 8)
-Faction = 1
-
-[node name="Areas" parent="." index="3"]
+[node name="Areas" parent="." index="21"]
 visible = false
 
 [node name="Area2D" type="Area2D" parent="Areas" index="0"]

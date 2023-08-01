@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=58 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="14_bj0lo"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
+[ext_resource type="PackedScene" uid="uid://g7wfcubs6bdd" path="res://Items/Weapons/Railgun.tscn" id="21_n8w32"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -446,6 +447,9 @@ InventoryMap = {
 
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
 visible = false
+
+[node name="Railgun" parent="Inventory" instance=ExtResource("21_n8w32")]
+UseTime = 0.2
 
 [node name="DocLance" parent="Inventory" instance=ExtResource("14_bj0lo")]
 

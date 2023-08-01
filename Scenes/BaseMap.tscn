@@ -1881,7 +1881,7 @@ Spawners = NodePath("Spawners")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 
-[node name="Static" type="Node2D" parent="."]
+[node name="Props" type="Node2D" parent="."]
 
 [node name="Entities" type="Node2D" parent="."]
 y_sort_enabled = true
