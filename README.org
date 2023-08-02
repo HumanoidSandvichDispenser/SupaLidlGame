@@ -4,3 +4,5 @@ Forsen-related game
 
 #+attr_html: :style margin-left: auto; margin-right: auto;
 [[./Assets/Sprites/Characters/forsen2-portrait.png]]
+
+[[https://i.ibb.co/t367kD4/baj.gif]]
