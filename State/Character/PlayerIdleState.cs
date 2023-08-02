@@ -7,6 +7,9 @@ public partial class PlayerIdleState : PlayerState
     [Export]
     public CharacterState MoveState { get; set; }
 
+    [Export]
+    public PlayerEmoteState EmoteState { get; set; }
+
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)
     {
         if (previousState is not PlayerMoveState)
@@ -41,6 +44,15 @@ public partial class PlayerIdleState : PlayerState
         }
 
         return base.Enter(previousState);
+    }
+
+    public override CharacterState Input(InputEvent @event)
+    {
+        if (@event.IsActionPressed("emote"))
+        {
+            return EmoteState;
+        }
+        return base.Input(@event);
     }
 
     public override CharacterState Process(double delta)
