@@ -32,6 +32,8 @@ public partial class World : Node2D
 
     public State.Global.GlobalState GlobalState { get; set; }
 
+    public Events.EventBus EventBus { get; set; }
+
     private Dictionary<string, Map> _maps;
 
     private string _currentConnector;
@@ -55,7 +57,7 @@ public partial class World : Node2D
     {
         // check if world already exists
 
-        GlobalState = GetNode<State.Global.GlobalState>("/root/GlobalState");
+        GlobalState = this.GetGlobalState();
         if (GlobalState.World is not null)
         {
             throw new System.InvalidOperationException();
@@ -76,7 +78,7 @@ public partial class World : Node2D
         CurrentPlayer.Death += (Events.HealthChangedArgs args) =>
         {
             // TODO: respawn the player at the last campfire.
-            GetTree().CreateTimer(1).Timeout += () =>
+            GetTree().CreateTimer(3).Timeout += () =>
             {
                 SpawnPlayer();
             };
@@ -87,6 +89,13 @@ public partial class World : Node2D
             // TODO: move this to UI controller and add a setup method
             var bar = UIController.GetNode<UI.HealthBar>("Top/Margin/HealthBar");
             bar.ProgressBar.Value = args.NewHealth;
+        };
+
+        EventBus = this.GetEventBus();
+        EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
+        {
+            GD.Print("request move to area");
+            MoveToArea(args.Area, args.Connector);
         };
 
         base._Ready();
@@ -172,14 +181,15 @@ public partial class World : Node2D
 
     private void InitTilemap(Map map)
     {
+        // this is being replaced with interaction triggers
         var children = map.Areas.GetChildren();
         foreach (Node node in children)
         {
             if (node is BoundingBoxes.ConnectorBox connector)
             {
                 // this reconnects the EventHandler if it is connected
-                connector.RequestedEnter -= _on_area_2d_requested_enter;
-                connector.RequestedEnter += _on_area_2d_requested_enter;
+                //connector.RequestedEnter -= _on_area_2d_requested_enter;
+                //connector.RequestedEnter += _on_area_2d_requested_enter;
             }
         }
     }
@@ -187,16 +197,18 @@ public partial class World : Node2D
     private void MovePlayerToConnector(string name)
     {
         // find the first connector with the specified name
-        var connector = CurrentMap.Areas.GetChildren().First((child) =>
-        {
-            if (child is BoundingBoxes.ConnectorBox connector)
-            {
-                return connector.Identifier == name;
-            }
-            return false;
-        }) as BoundingBoxes.ConnectorBox;
+        // TODO: replace this with event buses
+        //var connector = CurrentMap.Areas.GetChildren().First((child) =>
+        //{
+        //    if (child is BoundingBoxes.ConnectorBox connector)
+        //    {
+        //        return connector.Identifier == name;
+        //    }
+        //    return false;
+        //}) as BoundingBoxes.ConnectorBox;
 
-        CurrentPlayer.GlobalPosition = connector.GlobalPosition;
+        //CurrentPlayer.GlobalPosition = connector.GlobalPosition;
+        CurrentPlayer.GlobalPosition = Vector2.Zero;
     }
 
     public void MoveToArea(string path, string connector)
@@ -205,7 +217,7 @@ public partial class World : Node2D
         if (path != _currentMapResourcePath)
         {
             var scene = ResourceLoader.Load<PackedScene>(path);
-            LoadScene(scene);
+            LoadScene(path);
             _currentMapResourcePath = path;
         }
 

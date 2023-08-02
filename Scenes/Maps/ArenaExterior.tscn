@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c72uqjjtxpi3g"]
+[gd_scene load_steps=40 format=3 uid="uid://c72uqjjtxpi3g"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ci4ij"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_m6h7j"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://cnbl2513g1aec" path="res://Assets/Sprites/Particles/noise-cell-32.png" id="16_u08sn"]
 [ext_resource type="Texture2D" uid="uid://pirjyyj5i0c7" path="res://Assets/Sprites/Particles/noise-cell-8.png" id="17_p0trg"]
 [ext_resource type="Texture2D" uid="uid://jxrytll5j50n" path="res://Assets/Sprites/Props/doc-statue.png" id="19_u6j17"]
+[ext_resource type="PackedScene" uid="uid://bou5pccj0147e" path="res://Entities/ArenaEntrance.tscn" id="20_tcd0x"]
 
 [sub_resource type="Gradient" id="Gradient_jupxw"]
 offsets = PackedFloat32Array(0.00740741, 0.2, 1)
@@ -127,18 +128,29 @@ light_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6r42m"]
 shader = ExtResource("15_vlb8v")
-shader_parameter/level = 0.0
-shader_parameter/water_albedo = Color(0.6, 0.458824, 0.8, 1)
 shader_parameter/alpha = 0.75
 shader_parameter/water_speed = 0.05
 shader_parameter/wave_distortion = 0.2
+shader_parameter/reflection_offset = Vector2(-0.08, 0)
 shader_parameter/noise_texture = ExtResource("16_u08sn")
 shader_parameter/noise_texture2 = ExtResource("17_p0trg")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_44wk8"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vak3n"]
+shader = ExtResource("15_vlb8v")
+shader_parameter/alpha = 0.75
+shader_parameter/water_speed = 0.05
+shader_parameter/wave_distortion = 0.2
+shader_parameter/reflection_offset = Vector2(0.02, 0)
+shader_parameter/noise_texture = ExtResource("16_u08sn")
+shader_parameter/noise_texture2 = ExtResource("17_p0trg")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wi532"]
 size = Vector2(64, 97)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5pcme"]
+size = Vector2(18, 6)
 
 [node name="TileMap" instance=ExtResource("1_ci4ij")]
 tile_set = ExtResource("2_m6h7j")
@@ -488,14 +500,13 @@ scale = Vector2(64, 84)
 texture = SubResource("CanvasTexture_44wk8")
 
 [node name="Sprite2D2" type="Sprite2D" parent="Props/Water" index="1"]
-material = SubResource("ShaderMaterial_6r42m")
+material = SubResource("ShaderMaterial_vak3n")
 position = Vector2(128, 0)
 scale = Vector2(64, 84)
 texture = SubResource("CanvasTexture_44wk8")
 
 [node name="Background" type="Sprite2D" parent="Props/Water" index="2"]
-visible = false
-modulate = Color(0.662745, 0.627451, 0.960784, 1)
+modulate = Color(0.819608, 0.988235, 1, 1)
 z_index = -3
 position = Vector2(64, 0)
 scale = Vector2(192, 84)
@@ -520,20 +531,32 @@ visible = false
 position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_wi532")
 
-[node name="DocStatue" type="Node2D" parent="Props" index="24"]
+[node name="DocStatue" type="StaticBody2D" parent="Props" index="24"]
 z_index = -1
-position = Vector2(544, 408)
+position = Vector2(544, 410)
 
 [node name="Sprite2D" type="Sprite2D" parent="Props/DocStatue" index="0"]
 texture = ExtResource("19_u6j17")
 
-[node name="DocStatue2" type="Node2D" parent="Props" index="25"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/DocStatue" index="1"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_5pcme")
+
+[node name="DocStatue2" type="StaticBody2D" parent="Props" index="25"]
 z_index = -1
-position = Vector2(608, 408)
+position = Vector2(608, 410)
 
 [node name="Sprite2D" type="Sprite2D" parent="Props/DocStatue2" index="0"]
 texture = ExtResource("19_u6j17")
 flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Props/DocStatue2" index="1"]
+position = Vector2(0, 9)
+shape = SubResource("RectangleShape2D_5pcme")
+
+[node name="ArenaEntrance" parent="Entities" index="0" instance=ExtResource("20_tcd0x")]
+z_index = -1
+position = Vector2(576, 416)
 
 [editable path="Props/StaticBookshelf"]
 [editable path="Props/StaticBookshelf2"]

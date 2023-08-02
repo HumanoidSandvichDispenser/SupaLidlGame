@@ -1,6 +1,8 @@
 using Godot;
 using System;
 using SupaLidlGame.Characters;
+using SupaLidlGame.Extensions;
+using SupaLidlGame.Events;
 
 namespace SupaLidlGame.BoundingBoxes;
 
@@ -25,7 +27,7 @@ public partial class ConnectorBox : Area2D
     /// the connector
     /// </summary>
     [Export]
-    public bool RequiresInteraction { get; set; } = false;
+    public InteractionTrigger InteractionTrigger { get; set; }
 
     [Export]
     public CollisionShape2D Collision { get; set; }
@@ -41,31 +43,32 @@ public partial class ConnectorBox : Area2D
 
         BodyEntered += (Node2D body) =>
         {
-            if (body is Player player)
+            if (body is Player && InteractionTrigger is null)
             {
-                _player = player;
+                OnInteraction();
             }
         };
 
-        BodyExited += (Node2D body) =>
+        if (InteractionTrigger is not null)
         {
-            if (body is Player)
-            {
-                _player = null;
-            }
-        };
+            InteractionTrigger.Interaction += OnInteraction;
+        }
     }
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustReleased("interact"))
-        {
-            if (_player is not null)
-            {
-                EmitSignal(SignalName.RequestedEnter, this, _player);
-            }
-        }
-
         base._Process(delta);
+    }
+
+    protected void OnInteraction()
+    {
+        var eventBus = this.GetEventBus();
+        System.Diagnostics.Debug.Assert(eventBus is not null);
+        var args = new Events.RequestAreaArgs
+        {
+            Area = ToArea,
+            Connector = ToConnector,
+        };
+        eventBus.EmitSignal(EventBus.SignalName.RequestMoveToArea, args);
     }
 }

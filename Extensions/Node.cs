@@ -51,4 +51,14 @@ public static class NodeExtensions
 
         return null;
     }
+
+    public static State.Global.GlobalState GetGlobalState(this Node node)
+    {
+        return node.GetNode<State.Global.GlobalState>("/root/GlobalState");
+    }
+
+    public static Events.EventBus GetEventBus(this Node node)
+    {
+        return node.GetNode<Events.EventBus>("/root/EventBus");
+    }
 }

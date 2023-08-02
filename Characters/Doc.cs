@@ -113,7 +113,7 @@ public partial class Doc : Boss
             }
         };
     }
-    
+
     public override void _Process(double delta)
     {
         if (IsActive)

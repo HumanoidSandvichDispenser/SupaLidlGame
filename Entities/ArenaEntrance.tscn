@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://bou5pccj0147e"]
+
+[ext_resource type="Texture2D" uid="uid://dsxoh88caw3cf" path="res://Assets/Sprites/Props/arena-entrance.png" id="1_edppa"]
+[ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="2_87s4g"]
+[ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="3_4rsih"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4g2i"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djn8q"]
+
+[node name="ArenaEntrance" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_edppa")
+offset = Vector2(0, -14)
+hframes = 2
+
+[node name="InteractionTrigger" parent="." instance=ExtResource("2_87s4g")]
+
+[node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
+shape = SubResource("RectangleShape2D_m4g2i")
+
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("InteractionTrigger", "Collision")]
+script = ExtResource("3_4rsih")
+ToArea = "res://Scenes/Maps/Arena.tscn"
+ToConnector = "entrance"
+Identifier = "arena_entrance"
+InteractionTrigger = NodePath("../InteractionTrigger")
+Collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_djn8q")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[editable path="InteractionTrigger"]

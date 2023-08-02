@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2x17su05ou5w"]
+[gd_scene load_steps=14 format=3 uid="uid://b2x17su05ou5w"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_x0mh7"]
@@ -8,8 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="6_jy3pc"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="7_y7j0e"]
 [ext_resource type="AudioStream" uid="uid://dy4qjflo1k28b" path="res://Assets/Sounds/calm-storm-ambient.mp3" id="8_wox7d"]
+[ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="9_3401j"]
+[ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="9_fg062"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_onuc5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rp1a6"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
@@ -19,8 +21,10 @@ shader_parameter/alpha_modulate = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gwpea"]
 size = Vector2(256, 256)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2xagi"]
+size = Vector2(40, 20)
+
 [node name="TileMap" instance=ExtResource("1_ifiic")]
-position = Vector2(-1, 0)
 tile_set = ExtResource("2_x0mh7")
 layer_0/tile_data = PackedInt32Array(-524281, 458752, 0, -524284, 458752, 0, -262152, 458752, 0, -327673, 458752, 0, -131065, 458752, 0, -65544, 458752, 0, 131064, 458752, 0, 65543, 458752, 0, 262151, 458752, 0, 327672, 458752, 0, 524280, 458752, 0, 524283, 458752, 0, 524286, 458752, 0, 458753, 458752, 0, 458756, 458752, 0, 458759, 458752, 0, -458760, 458752, 0, -458757, 458752, 0, -524287, 458752, 0, -458754, 458752, 0, -524292, 458752, 3, -589821, 458752, 2, -589822, 393216, 3, -524291, 393216, 2, -589817, 393216, 0)
 layer_2/tile_data = PackedInt32Array(1376242, 262144, 2, 1441778, 196608, 3, 1376243, 131072, 2, 1441779, 131072, 1, 1376244, 131072, 2, 1441780, 131072, 1, 1376245, 131072, 2, 1441781, 196608, 1, 1376246, 131072, 2, 1441782, 196608, 1, 1376247, 131072, 2, 1441783, 131072, 1, 1376248, 131072, 2, 1441784, 131072, 1, 1376249, 131072, 2, 1441785, 131072, 1, 1376250, 327680, 2, 1441786, 0, 5, 1441787, 131072, 2, 1441788, 131072, 2, 1441789, 131072, 2, 655358, 196608, 3, 720894, 196608, 3, 786430, 196608, 3, 851966, 196608, 3, 917502, 196608, 3, 983038, 196608, 3, 1048574, 196608, 3, 1114110, 196608, 3, 1179646, 196608, 3, 1245182, 196608, 3, 1310718, 196608, 3, 1376254, 196608, 3, 1441790, 65536, 5, 1507322, 131072, 1, 1507323, 131072, 1, 1507324, 196608, 1, 1507325, 131072, 1, 1507326, 131072, 1, 1507314, 196608, 3, 1572850, 65536, 5, 1638386, 131072, 1, 1900530, 65536, 4, 1966066, 196608, 3, 2031602, 262144, 3, 2031603, 196608, 2, 2031604, 196608, 2, 2031605, 196608, 2, 2031606, 196608, 2, 2031607, 196608, 2, 2031608, 196608, 2, 2031609, 196608, 2, 1703930, 0, 4, 1769466, 131072, 3, 1835002, 131072, 3, 1900538, 131072, 3, 1966074, 131072, 3, 2031610, 327680, 3, 1703931, 196608, 2, 1703932, 196608, 2, 1703933, 196608, 2, 589822, 65536, 4, 1703934, 196608, 2, 1703935, 196608, 2, 1638400, 196608, 2, 524289, 0, 4, 589825, 131072, 3, 655361, 131072, 3, 720897, 131072, 3, 786433, 131072, 3, 851969, 131072, 3, 917505, 131072, 3, 983041, 131072, 3, 1048577, 131072, 3, 1114113, 131072, 3, 1179649, 131072, 3, 1245185, 131072, 3, 1310721, 131072, 3, 1376257, 131072, 3, 1441793, 131072, 3, 1507329, 131072, 3, 1572865, 131072, 3, 1638401, 327680, 3)
@@ -31,83 +35,83 @@ ClearColor = Color(0.105882, 0.0470588, 0.117647, 1)
 AreaName = "The Arena"
 MapName = "The Arena"
 
-[node name="Static@TorchLamp" parent="." index="0" instance=ExtResource("6_jy3pc")]
+[node name="CanvasModulate" parent="." index="0"]
+color = Color(0.317647, 0.184314, 0.345098, 1)
+
+[node name="Static@TorchLamp" parent="Props" index="0" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-96, -120)
 
-[node name="Static@TorchLamp3" parent="." index="1" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp3" parent="Props" index="1" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(0, -120)
 
-[node name="Static@TorchLamp5" parent="." index="2" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp5" parent="Props" index="2" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(96, -120)
 
-[node name="Static@TorchLamp6" parent="." index="3" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp6" parent="Props" index="3" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, -96)
 
-[node name="Static@TorchLamp7" parent="." index="4" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp7" parent="Props" index="4" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(120, -96)
 
-[node name="Static@TorchLamp9" parent="." index="5" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp9" parent="Props" index="5" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(120, -1)
 
-[node name="Static@TorchLamp11" parent="." index="6" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp11" parent="Props" index="6" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(120, 95)
 
-[node name="Static@TorchLamp12" parent="." index="7" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp12" parent="Props" index="7" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(97, 120)
 
-[node name="Static@TorchLamp14" parent="." index="8" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp14" parent="Props" index="8" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(0, 120)
 
-[node name="Static@TorchLamp16" parent="." index="9" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp16" parent="Props" index="9" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-96, 120)
 
-[node name="Static@TorchLamp17" parent="." index="10" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp17" parent="Props" index="10" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, 95)
 
-[node name="Static@TorchLamp19" parent="." index="11" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp19" parent="Props" index="11" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, -1)
 
-[node name="Static@Torch" parent="." index="12" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch" parent="Props" index="12" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-120, -112)
 
-[node name="Static@Torch2" parent="." index="13" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch2" parent="Props" index="13" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-72, -112)
 
-[node name="Static@Torch3" parent="." index="14" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch3" parent="Props" index="14" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-24, -113)
 
-[node name="Static@Torch4" parent="." index="15" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch4" parent="Props" index="15" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(24, -112)
 
-[node name="Static@Torch5" parent="." index="16" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch5" parent="Props" index="16" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(72, -112)
 
-[node name="Static@Torch6" parent="." index="17" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch6" parent="Props" index="17" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(120, -112)
 
-[node name="CanvasModulate" parent="." index="18"]
-color = Color(0.317647, 0.184314, 0.345098, 1)
-
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_onuc5")
+material = SubResource("ShaderMaterial_rp1a6")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="1"]
 position = Vector2(168, -42)
@@ -127,10 +131,27 @@ stream = ExtResource("8_wox7d")
 volume_db = -5.0
 autoplay = true
 
-[node name="Areas" parent="." index="21"]
-visible = false
-
 [node name="Area2D" type="Area2D" parent="Areas" index="0"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area2D" index="0"]
 shape = SubResource("RectangleShape2D_gwpea")
+
+[node name="Entrance" type="Node2D" parent="Areas" index="1"]
+position = Vector2(0, 360)
+
+[node name="InteractionTrigger" parent="Areas/Entrance" index="0" instance=ExtResource("9_3401j")]
+
+[node name="Connector" type="Area2D" parent="Areas/Entrance" index="1" node_paths=PackedStringArray("InteractionTrigger", "Collision")]
+collision_layer = 68
+collision_mask = 0
+script = ExtResource("9_fg062")
+ToArea = "res://Scenes/Maps/ArenaExterior.tscn"
+ToConnector = "arena_entrance"
+Identifier = "entrance"
+InteractionTrigger = NodePath("../InteractionTrigger")
+Collision = NodePath("CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Entrance/Connector" index="0"]
+shape = SubResource("RectangleShape2D_2xagi")
+
+[editable path="Areas/Entrance/InteractionTrigger"]

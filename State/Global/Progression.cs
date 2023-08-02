@@ -5,5 +5,5 @@ namespace SupaLidlGame.State.Global;
 
 public partial class Progression : Resource
 {
-    public Dictionary<PackedScene, bool> BossStatus { get; set; }
+    public Dictionary<string, bool> BossStatus { get; set; }
 }

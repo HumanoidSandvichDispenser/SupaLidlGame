@@ -35,5 +35,16 @@ public abstract partial class Boss : Enemy
     public override void _Ready()
     {
         base._Ready();
+
+        Death += (Events.HealthChangedArgs args) =>
+        {
+            UpdateBossStatus(true);
+        };
+    }
+
+    protected void UpdateBossStatus(bool status)
+    {
+        GetNode<State.Global.GlobalState>("/root/GlobalState")
+            .Progression.BossStatus[SceneFilePath] = status;
     }
 }
