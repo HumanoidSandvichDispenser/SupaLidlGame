@@ -2,4 +2,4 @@
 * text=auto eol=lf
 
 # disable addons from showing up in linguist stats
-addons/* linguist-vendored
+addons/**/* linguist-vendored
