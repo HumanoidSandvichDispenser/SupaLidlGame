@@ -21,6 +21,7 @@ DebugConsole="*res://Debug/DebugConsole.cs"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 GlobalState="*res://State/Global/GlobalState.cs"
 EventBus="*res://Events/EventBus.cs"
+Panku="*res://addons/panku_console/console.tscn"
 
 [dialogue_manager]
 
@@ -40,7 +41,7 @@ project/assembly_name="SupaLidlGame"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/panku_console/plugin.cfg")
 
 [input]
 
