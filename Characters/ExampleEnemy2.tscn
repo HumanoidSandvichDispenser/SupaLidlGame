@@ -373,7 +373,7 @@ use_parent_material = true
 position = Vector2(0, -8)
 texture = ExtResource("16_lr46v")
 offset = Vector2(0, -4)
-hframes = 18
+hframes = 35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)

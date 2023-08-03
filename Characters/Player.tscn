@@ -437,6 +437,7 @@ stream = ExtResource("13_bxguv")
 stream = ExtResource("12_vvem5")
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
+zoom = Vector2(4, 4)
 limit_smoothed = true
 position_smoothing_speed = 8.0
 

@@ -33,10 +33,8 @@ public partial class DocUnwantedFrequencyState : DocShungiteSpikeState
     protected override void Attack()
     {
         Doc.TelegraphAnimation.Play("unwanted_frequencies");
-        var player = _world.CurrentPlayer;
-        var playerPos = player.GlobalPosition;
         var docPos = NPC.GlobalPosition;
-        var projectile = SpawnProjectile(docPos, docPos.DirectionTo(playerPos))
+        var projectile = SpawnProjectile(docPos, Vector2.Zero)
             as UnwantedFrequency;
         projectile.CharacterTarget = NPC.FindBestTarget();
 

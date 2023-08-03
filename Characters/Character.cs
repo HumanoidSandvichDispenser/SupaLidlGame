@@ -272,7 +272,10 @@ public partial class Character : CharacterBody2D, IFaction
         {
             HurtAnimation.Stop();
             HurtAnimation.Play("hurt");
-            HurtAnimation.Queue("hurt_flash");
+            if (HurtAnimation.HasAnimation("hurt_flash"))
+            {
+                HurtAnimation.Queue("hurt_flash");
+            }
         }
 
         // if anyone involved is a player, shake their screen

@@ -10,13 +10,32 @@
 [node name="World" type="Node2D" node_paths=PackedStringArray("UIController", "MusicPlayer", "DialogueBalloon")]
 script = ExtResource("1_1k6ew")
 StartingArea = ExtResource("2_pksaj")
-UIController = NodePath("CanvasLayer/UI")
+UIController = NodePath("CanvasLayer/SubViewportContainer/UIViewport/CanvasLayer/UI")
 MusicPlayer = NodePath("MusicPlayer")
-DialogueBalloon = NodePath("DialogBalloon")
+DialogueBalloon = NodePath("CanvasLayer/SubViewportContainer/UIViewport/DialogBalloon")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="UI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("BossBar")]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 2
+
+[node name="UIViewport" type="SubViewport" parent="CanvasLayer/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(960, 540)
+render_target_update_mode = 4
+
+[node name="DialogBalloon" parent="CanvasLayer/SubViewportContainer/UIViewport" instance=ExtResource("6_2bdwl")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="CanvasLayer/SubViewportContainer/UIViewport"]
+
+[node name="UI" type="Control" parent="CanvasLayer/SubViewportContainer/UIViewport/CanvasLayer" node_paths=PackedStringArray("BossBar")]
 z_index = 128
 layout_mode = 3
 anchors_preset = 15
@@ -29,23 +48,23 @@ size_flags_vertical = 3
 script = ExtResource("3_fe62s")
 BossBar = NodePath("Bottom/BossBar")
 
-[node name="Top" type="HBoxContainer" parent="CanvasLayer/UI"]
+[node name="Top" type="HBoxContainer" parent="CanvasLayer/SubViewportContainer/UIViewport/CanvasLayer/UI"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 40.0
 grow_horizontal = 2
 
-[node name="Margin" type="MarginContainer" parent="CanvasLayer/UI/Top"]
+[node name="Margin" type="MarginContainer" parent="CanvasLayer/SubViewportContainer/UIViewport/CanvasLayer/UI/Top"]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 
-[node name="HealthBar" parent="CanvasLayer/UI/Top/Margin" instance=ExtResource("3_5rhge")]
+[node name="HealthBar" parent="CanvasLayer/SubViewportContainer/UIViewport/CanvasLayer/UI/Top/Margin" instance=ExtResource("3_5rhge")]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Bottom" type="HBoxContainer" parent="CanvasLayer/UI"]
+[node name="Bottom" type="HBoxContainer" parent="CanvasLayer/SubViewportContainer/UIViewport/CanvasLayer/UI"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -56,7 +75,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="BossBar" parent="CanvasLayer/UI/Bottom" instance=ExtResource("5_8njq4")]
+[node name="BossBar" parent="CanvasLayer/SubViewportContainer/UIViewport/CanvasLayer/UI/Bottom" instance=ExtResource("5_8njq4")]
 visible = false
 layout_mode = 2
 
@@ -72,5 +91,3 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-
-[node name="DialogBalloon" parent="." instance=ExtResource("6_2bdwl")]

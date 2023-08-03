@@ -49,6 +49,10 @@ public partial class DocShungiteSpikeState : DocShungiteDartState
     protected override void Attack()
     {
         var player = NPC.FindBestTarget();
+        if (player is null)
+        {
+            return;
+        }
         var playerPos = player.GlobalPosition;
         var docPos = NPC.GlobalPosition;
         var projectile = SpawnProjectile(docPos, Vector2.Zero) as ShungiteSpike;
