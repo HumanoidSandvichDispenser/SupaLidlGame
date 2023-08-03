@@ -599,6 +599,7 @@ InitialState = NodePath("Telegraph")
 [node name="Intro" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("NextState", "NPC")]
 script = ExtResource("11_lt771")
 NextState = NodePath("../Telegraph")
+Duration = 3.0
 NPC = NodePath("../..")
 
 [node name="Telegraph" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("TelegraphAnimationPlayer", "AttackState", "NPC")]
@@ -637,6 +638,7 @@ NPC = NodePath("../..")
 [node name="LanceIntro" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("NextState", "NPC")]
 script = ExtResource("11_lt771")
 NextState = NodePath("../Lance")
+Duration = 3.0
 NPC = NodePath("../..")
 
 [node name="Lance" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ExitState", "NPC")]

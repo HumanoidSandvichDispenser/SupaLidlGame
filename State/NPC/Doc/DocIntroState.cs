@@ -23,7 +23,14 @@ public partial class DocIntroState : NPCState
     {
         _currentDuration = Duration;
         _doc.MiscAnimation.Play("intro");
+        _doc.CanAttack = false;
         return null;
+    }
+
+    public override void Exit(IState<NPCState> nextState)
+    {
+        _doc.CanAttack = true;
+        base.Exit(nextState);
     }
 
     public override NPCState Process(double delta)
