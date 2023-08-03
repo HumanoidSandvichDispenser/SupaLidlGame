@@ -12,7 +12,7 @@ public partial class Balloon : CanvasLayer
   Color VISIBLE = new Color(1f, 1f, 1f, 1f);
   Color INVISIBLE = new Color(1f, 1f, 1f, 0f);
 
-  ColorRect balloon;
+  NinePatchRect balloon;
   MarginContainer margin;
   RichTextLabel characterLabel;
   RichTextLabel dialogueLabel;
@@ -46,14 +46,12 @@ public partial class Balloon : CanvasLayer
 
   public override void _Ready()
   {
-    balloon = GetNode<ColorRect>("Balloon");
+    balloon = GetNode<NinePatchRect>("Balloon");
     margin = GetNode<MarginContainer>("Balloon/Margin");
     characterLabel = GetNode<RichTextLabel>("Balloon/Margin/VBox/CharacterLabel");
     dialogueLabel = GetNode<RichTextLabel>("Balloon/Margin/VBox/DialogueLabel");
     responsesMenu = GetNode<VBoxContainer>("Balloon/Margin/VBox/Responses");
     responseTemplate = GetNode<RichTextLabel>("Balloon/Margin/VBox/ResponseTemplate");
-    GD.Print("responses menu is " + responsesMenu);
-    GD.Print("lulw");
 
     responseTemplate.Hide();
     balloon.Hide();

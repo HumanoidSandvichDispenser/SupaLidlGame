@@ -16,6 +16,7 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
     public GpuParticles2D DeathParticles { get; set; }
     public GpuParticles2D SpawnParticles { get; set; }
     public Timer DeferDeathTimer { get; set; }
+    public SceneTreeTimer DeferNeutralTeamTimer { get; set; }
 
     private double _currentLifetime = 0;
 

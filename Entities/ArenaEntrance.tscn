@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="2_87s4g"]
 [ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="3_4rsih"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4g2i"]
-size = Vector2(32, 32)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7pr7c"]
+height = 50.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_djn8q"]
 
@@ -19,7 +19,8 @@ hframes = 2
 [node name="InteractionTrigger" parent="." instance=ExtResource("2_87s4g")]
 
 [node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
-shape = SubResource("RectangleShape2D_m4g2i")
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_7pr7c")
 
 [node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("InteractionTrigger", "Collision")]
 script = ExtResource("3_4rsih")

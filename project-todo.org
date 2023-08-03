@@ -25,7 +25,15 @@ CLOSED: [2023-07-24 Mon]
 CLOSED: [2023-07-25 Tue]
 
 * TODO Short arena entrance
+CLOSED: [2023-08-02 Wed]
 
 * DONE Video demonstration
 CLOSED: [2023-07-25 Tue]
 
+* TODO Combo Attacks ("Level system")
+
+** TODO Healing
+
+** TODO Alt attack
+
+** TODO Max level
