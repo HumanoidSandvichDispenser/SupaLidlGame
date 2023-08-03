@@ -1,5 +1,5 @@
 using Godot;
-using GodotUtilities;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.State.NPC.Doc;
 
@@ -26,8 +26,9 @@ public abstract partial class DocAttackState : NPCState
 
     public override NPCState Enter(IState<NPCState> previousState)
     {
-        _map = this.GetAncestor<Scenes.Map>();
-        _world = this.GetAncestor<Utils.World>();
+        //_map = this.GetAncestor<Scenes.Map>();
+        _world = this.GetWorld();
+        _map = _world.CurrentMap;
         _currentDuration = Duration;
         _currentAttackDuration = AttackDuration;
         return null;

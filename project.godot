@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="SupaLidlGame"
-run/main_scene="res://Scenes/Level.tscn"
+run/main_scene="res://Scenes/Maps/ArenaExterior.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,7 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 GlobalState="*res://State/Global/GlobalState.cs"
 EventBus="*res://Events/EventBus.cs"
 Panku="*res://addons/panku_console/console.tscn"
+World="*res://Scenes/Level.tscn"
 
 [dialogue_manager]
 

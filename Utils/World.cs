@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SupaLidlGame.Utils;
 
-public partial class World : Node2D
+public partial class World : Node
 {
     [Export]
     public PackedScene StartingArea { get; set; }
@@ -34,7 +34,7 @@ public partial class World : Node2D
 
     public Events.EventBus EventBus { get; set; }
 
-    private Dictionary<string, Map> _maps;
+    private CacheStore<string, Map> _maps = new();
 
     private string _currentConnector;
 
@@ -49,7 +49,6 @@ public partial class World : Node2D
 
     public World()
     {
-        _maps = new Dictionary<string, Map>();
         _playerScene = ResourceLoader.Load<PackedScene>(PLAYER_PATH);
     }
 
@@ -58,38 +57,16 @@ public partial class World : Node2D
         // check if world already exists
 
         GlobalState = this.GetGlobalState();
-        if (GlobalState.World is not null)
-        {
-            throw new System.InvalidOperationException();
-        }
-
-        GlobalState.World = this;
 
         Godot.RenderingServer.SetDefaultClearColor(Godot.Colors.Black);
 
         if (StartingArea is not null)
         {
-            LoadScene(StartingArea);
+            //LoadScene(StartingArea);
         }
 
-        // spawn the player in
+        // create a player (currently unparented)
         CreatePlayer();
-
-        CurrentPlayer.Death += (Events.HealthChangedArgs args) =>
-        {
-            // TODO: respawn the player at the last campfire.
-            GetTree().CreateTimer(3).Timeout += () =>
-            {
-                SpawnPlayer();
-            };
-        };
-
-        CurrentPlayer.Hurt += (Events.HealthChangedArgs args) =>
-        {
-            // TODO: move this to UI controller and add a setup method
-            var bar = UIController.GetNode<UI.HealthBar>("Top/Margin/HealthBar");
-            bar.ProgressBar.Value = args.NewHealth;
-        };
 
         EventBus = this.GetEventBus();
         EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
@@ -123,11 +100,11 @@ public partial class World : Node2D
         if (CurrentMap is not null)
         {
             CurrentMap.Entities.RemoveChild(CurrentPlayer);
-            RemoveChild(CurrentMap);
+            GetTree().Root.RemoveChild(CurrentMap);
             CurrentMap.Active = false;
         }
 
-        AddChild(map);
+        GetTree().Root.AddChild(map);
         InitTilemap(map);
 
         CurrentMap = map;
@@ -140,17 +117,36 @@ public partial class World : Node2D
         }
     }
 
+    public void LoadScene(Map map)
+    {
+        _maps.Update(map.SceneFilePath, map);
+        LoadMap(map);
+    }
+
     public void LoadScene(PackedScene scene)
     {
-        Map map;
-        if (_maps.ContainsKey(scene.ResourcePath))
+        if (CurrentMap is not null)
         {
-            map = _maps[scene.ResourcePath];
+            _maps.Update(CurrentMap.SceneFilePath);
+        }
+
+        Map map;
+        string path = scene.ResourcePath;
+
+        if (_maps.IsItemValid(path))
+        {
+            GD.Print($"{path} is cached");
+            map = _maps.Retrieve(path);
         }
         else
         {
+            if (_maps.IsItemStale(path))
+            {
+                _maps[path].Value.QueueFree();
+                GD.Print("Freeing stale map " + path);
+            }
             map = scene.Instantiate<Map>();
-            _maps.Add(scene.ResourcePath, map);
+            _maps.Update(path, map);
         }
 
         LoadMap(map);
@@ -159,24 +155,47 @@ public partial class World : Node2D
     public void LoadScene(string path)
     {
         Map map;
-        if (_maps.ContainsKey(path))
+        if (_maps.IsItemValid(path))
         {
-            map = _maps[path];
+            GD.Print($"{path} is cached");
+            map = _maps.Retrieve(path);
         }
         else
         {
+            if (_maps.IsItemStale(path))
+            {
+                _maps[path].Value.QueueFree();
+                GD.Print("Freeing stale map " + path);
+            }
             var scene = ResourceLoader.Load<PackedScene>(path);
             map = scene.Instantiate<Map>();
-            _maps.Add(scene.ResourcePath, map);
+            _maps.Update(scene.ResourcePath, map);
         }
 
         LoadMap(map);
     }
 
-    public void CreatePlayer()
+    public Player CreatePlayer()
     {
         CurrentPlayer = _playerScene.Instantiate<Player>();
-        CurrentMap.Entities.AddChild(CurrentPlayer);
+
+        CurrentPlayer.Death += (Events.HealthChangedArgs args) =>
+        {
+            // TODO: respawn the player at the last campfire.
+            GetTree().CreateTimer(3).Timeout += () =>
+            {
+                SpawnPlayer();
+            };
+        };
+
+        CurrentPlayer.Hurt += (Events.HealthChangedArgs args) =>
+        {
+            // TODO: move this to UI controller and add a setup method
+            var bar = UIController.GetNode<UI.HealthBar>("Top/Margin/HealthBar");
+            bar.ProgressBar.Value = args.NewHealth;
+        };
+
+        return CurrentPlayer;
     }
 
     private void InitTilemap(Map map)

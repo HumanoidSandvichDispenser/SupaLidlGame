@@ -1,5 +1,5 @@
 using Godot;
-using GodotUtilities;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.Characters;
 
@@ -27,8 +27,7 @@ public abstract partial class Boss : Enemy
             _isActive = value;
 
             // register or deregister ourselves when we are active/inactive
-            this.GetAncestor<Utils.World>()
-                .RegisterBoss(_isActive ? this : null);
+            this.GetWorld().RegisterBoss(_isActive ? this : null);
         }
     }
 

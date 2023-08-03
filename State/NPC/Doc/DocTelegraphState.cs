@@ -1,5 +1,5 @@
 using Godot;
-using GodotUtilities;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.State.NPC.Doc;
 
@@ -28,7 +28,7 @@ public partial class DocTelegraphState : NPCState
         TelegraphAnimationPlayer.Play("enter_in");
         NPC.ShouldMove = true;
 
-        var player = this.GetAncestor<Utils.World>().CurrentPlayer;
+        var player = this.GetWorld().CurrentPlayer;
         Vector2 randVec;
 
         do

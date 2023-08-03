@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.Scenes;
 
@@ -45,6 +46,11 @@ public partial class Map : TileMap
 
     public override void _Ready()
     {
+        var world = this.GetWorld();
+        if (world.CurrentMap is null)
+        {
+            world.LoadScene(this);
+        }
         Active = true;
     }
 

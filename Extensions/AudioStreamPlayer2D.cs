@@ -30,7 +30,7 @@ public static class AudioStreamPlayer2DExtensions
     public static AudioStreamPlayer2D OnWorld(
         this AudioStreamPlayer2D audio)
     {
-        var world = audio.GetTree().Root.GetNode("World/TileMap");
+        var world = audio.GetWorld().CurrentMap;
         if (world is null)
         {
             throw new NullReferenceException("World does not exist");

@@ -61,4 +61,9 @@ public static class NodeExtensions
     {
         return node.GetNode<Events.EventBus>("/root/EventBus");
     }
+
+    public static Utils.World GetWorld(this Node node)
+    {
+        return node.GetNode<Utils.World>("/root/World");
+    }
 }

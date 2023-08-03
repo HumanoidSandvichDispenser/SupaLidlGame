@@ -1,5 +1,4 @@
 using Godot;
-using GodotUtilities;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.State.Character;
 
@@ -86,7 +85,7 @@ public partial class Doc : Boss
             .Interaction += () =>
         {
             //DialogueManager.ShowExampleDialogueBalloon(dialog, "duel");
-            this.GetAncestor<Utils.World>().DialogueBalloon
+            this.GetWorld().DialogueBalloon
                 .Start(dialog, "duel");
                 //.Call("start", dialog, "duel");
         };
