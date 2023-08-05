@@ -13,7 +13,7 @@ public partial class ConnectorBox : Area2D
         ConnectorBox box,
         Player player);
 
-    [Export]
+    [Export(PropertyHint.File, "*.tscn")]
     public string ToArea { get; set; }
 
     [Export]
