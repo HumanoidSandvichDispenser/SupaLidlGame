@@ -59,7 +59,6 @@ public partial class Balloon : CanvasLayer
 
     balloon.GuiInput += (inputEvent) =>
     {
-
       if (!isWaitingForInput) return;
       if (GetResponses().Count > 0) return;
 
@@ -69,7 +68,7 @@ public partial class Balloon : CanvasLayer
       {
         Next(dialogueLine.NextId);
       }
-      else if (inputEvent.IsActionPressed("ui_accept") && GetViewport().GuiGetFocusOwner() == balloon)
+      else if (inputEvent.IsActionPressed("ui_accept"))
       {
         Next(dialogueLine.NextId);
       }
@@ -160,10 +159,14 @@ public partial class Balloon : CanvasLayer
 
         if (inputEvent is InputEventMouseButton && inputEvent.IsPressed() && (inputEvent as InputEventMouseButton).ButtonIndex == MouseButton.Left)
         {
+          balloon.FocusMode = Control.FocusModeEnum.All;
+          balloon.GrabFocus();
           Next(dialogueLine.Responses[item.GetIndex()].NextId);
         }
         else if (inputEvent.IsActionPressed("ui_accept") && GetResponses().Contains(item))
         {
+          balloon.FocusMode = Control.FocusModeEnum.All;
+          balloon.GrabFocus();
           Next(dialogueLine.Responses[item.GetIndex()].NextId);
         }
       };

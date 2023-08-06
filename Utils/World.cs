@@ -26,7 +26,32 @@ public partial class World : Node
     public AudioStreamPlayer MusicPlayer { get; set; }
 
     [Export]
-    public Dialogue.Balloon DialogueBalloon { get; set; }
+    public Dialogue.Balloon DialogueBalloon
+    {
+        get
+        {
+            if (_dialogueBalloon is null || !IsInstanceValid(_dialogueBalloon))
+            {
+                var scene = GD.Load<PackedScene>("res://Dialogue/balloon.tscn");
+                _dialogueBalloon = scene.Instantiate<Dialogue.Balloon>();
+                //_uiViewport.AddChild(_dialogueBalloon);
+                _uiViewport.AddChild(_dialogueBalloon);
+            }
+            return _dialogueBalloon;
+        }
+        set
+        {
+            if (_dialogueBalloon != value && _dialogueBalloon is not null)
+            {
+                _dialogueBalloon.QueueFree();
+            }
+            _dialogueBalloon = value;
+        }
+    }
+
+    private Dialogue.Balloon _dialogueBalloon;
+
+    private SubViewport _uiViewport;
 
     public State.Global.GlobalState GlobalState { get; set; }
 
@@ -65,6 +90,8 @@ public partial class World : Node
         GlobalState = this.GetGlobalState();
 
         Godot.RenderingServer.SetDefaultClearColor(Godot.Colors.Black);
+
+        _uiViewport = GetNode<SubViewport>("CanvasLayer/SubViewportContainer/UIViewport");
 
         // create a player (currently unparented)
         CreatePlayer();
