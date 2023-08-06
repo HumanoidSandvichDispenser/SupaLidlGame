@@ -2,15 +2,13 @@ using Godot;
 using SupaLidlGame.Characters;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Scenes;
-using System.Collections.Generic;
-using System.Linq;
+using SupaLidlGame.State.Global;
 
 namespace SupaLidlGame.Utils;
 
 public partial class World : Node
 {
-    [Export]
-    public PackedScene StartingArea { get; set; }
+    public static World Instance { get; private set; }
 
     [Export]
     public Map CurrentMap { get; protected set; }
@@ -50,6 +48,14 @@ public partial class World : Node
     public World()
     {
         _playerScene = ResourceLoader.Load<PackedScene>(PLAYER_PATH);
+        if (Instance is null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            throw new System.Exception("Another World instance is running.");
+        }
     }
 
     public override void _Ready()
@@ -59,11 +65,6 @@ public partial class World : Node
         GlobalState = this.GetGlobalState();
 
         Godot.RenderingServer.SetDefaultClearColor(Godot.Colors.Black);
-
-        if (StartingArea is not null)
-        {
-            //LoadScene(StartingArea);
-        }
 
         // create a player (currently unparented)
         CreatePlayer();
@@ -201,16 +202,6 @@ public partial class World : Node
     private void InitTilemap(Map map)
     {
         // this is being replaced with interaction triggers
-        var children = map.Areas.GetChildren();
-        foreach (Node node in children)
-        {
-            if (node is BoundingBoxes.ConnectorBox connector)
-            {
-                // this reconnects the EventHandler if it is connected
-                //connector.RequestedEnter -= _on_area_2d_requested_enter;
-                //connector.RequestedEnter += _on_area_2d_requested_enter;
-            }
-        }
     }
 
     private void MovePlayerToConnector(string name)
@@ -254,11 +245,21 @@ public partial class World : Node
 
     public void SaveGame()
     {
+        ResourceSaver.Save(GlobalState.Progression, "user://progression.save");
+        ResourceSaver.Save(GlobalState.MapState, "user://map-state.save");
         throw new System.NotImplementedException();
     }
 
     public void LoadGame()
     {
+        var prog = ResourceLoader.Load<Progression>("user://progression.save");
+        var mapState = ResourceLoader.Load<MapState>("user://map-state.save");
+        GlobalState.Progression = prog;
+        GlobalState.MapState = mapState;
+
+        // load the player scene
+        // TODO: implement
+
         throw new System.NotImplementedException();
     }
 

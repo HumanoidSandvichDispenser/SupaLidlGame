@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
+[ext_resource type="Texture2D" uid="uid://dpepm54hjuyga" path="res://Assets/Sprites/Characters/forsen-hand.png" id="3_3dqh7"]
 [ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="4_5vird"]
 [ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="5_rgckv"]
@@ -280,8 +281,6 @@ states/stop/position = Vector2(438, 100)
 transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_sorqc"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_ujrp0"), "move", "stop", SubResource("AnimationNodeStateMachineTransition_kjkm8"), "stop", "idle", SubResource("AnimationNodeStateMachineTransition_1ywlq"), "idle", "roll", SubResource("AnimationNodeStateMachineTransition_abs7t"), "roll", "idle", SubResource("AnimationNodeStateMachineTransition_qlka8"), "roll", "move", SubResource("AnimationNodeStateMachineTransition_ql2f3"), "move", "roll", SubResource("AnimationNodeStateMachineTransition_g1yba")]
 graph_offset = Vector2(-335.315, -63.5708)
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_jln87"]
-
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_852jj"]
 particle_flag_disable_z = true
 spread = 180.0
@@ -321,6 +320,7 @@ script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
 DirectionMarker = NodePath("Direction2D")
 Speed = 80.0
+HandTexture = ExtResource("3_3dqh7")
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
@@ -391,7 +391,6 @@ libraries = {
 [node name="AnimationTree" type="AnimationTree" parent="Animations"]
 tree_root = SubResource("AnimationNodeStateMachine_0ukul")
 anim_player = NodePath("../Movement")
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_jln87")
 parameters/conditions/idle = false
 parameters/conditions/move = false
 parameters/conditions/roll = false
@@ -476,9 +475,10 @@ text = "lol"
 label_settings = SubResource("LabelSettings_q5h1n")
 horizontal_alignment = 1
 
-[node name="Inventory" type="Node2D" parent="."]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
 position = Vector2(0, -4)
 script = ExtResource("7_xyenu")
+Items = []
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1
@@ -486,6 +486,13 @@ InventoryMap = {
 
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
 visible = false
+InitialVelocity = 0.0
+ShouldFreezeAngleOnUse = true
+MinDistanceHint = 0.0
+MaxDistanceHint = 0.0
+ItemName = ""
+Description = ""
+CanStack = false
 
 [node name="Railgun" parent="Inventory" instance=ExtResource("21_n8w32")]
 UseTime = 0.2

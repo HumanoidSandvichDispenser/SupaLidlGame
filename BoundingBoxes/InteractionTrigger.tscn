@@ -1,8 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://dldnp8eunxj3q"]
+[gd_scene load_steps=7 format=3 uid="uid://dldnp8eunxj3q"]
 
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionTrigger.cs" id="1_uoemj"]
+[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="2_75ngm"]
+[ext_resource type="Texture2D" uid="uid://dqat7fjm20yie" path="res://Assets/Sprites/UI/arrow.png" id="3_yx2aa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfj3a"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v3m5k"]
+light_mode = 1
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n00hm"]
+atlas = ExtResource("3_yx2aa")
+region = Rect2(0, 0, 12, 12)
 
 [node name="InteractionTrigger" type="Area2D"]
 collision_layer = 64
@@ -12,3 +21,53 @@ script = ExtResource("1_uoemj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_dfj3a")
 debug_color = Color(0.905882, 0, 0.745098, 0.419608)
+
+[node name="Popup" type="Control" parent="."]
+light_mask = 0
+z_index = 255
+z_as_relative = false
+material = SubResource("CanvasItemMaterial_v3m5k")
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -36.0
+offset_right = 128.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="Popup"]
+light_mask = 0
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -23.0
+offset_right = 23.0
+offset_bottom = 19.0
+grow_horizontal = 2
+theme = ExtResource("2_75ngm")
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+text = "Okayeg"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Popup"]
+light_mask = 0
+use_parent_material = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -16.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = SubResource("AtlasTexture_n00hm")

@@ -10,13 +10,19 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
     [Export]
     public float HomingVelocity { get; set; } = 1;
 
-    public Utils.Trail Trail { get; set; }
-    public Node2D TrailRotation { get; set; }
-    public Node2D TrailPosition { get; set; }
-    public GpuParticles2D DeathParticles { get; set; }
-    public GpuParticles2D SpawnParticles { get; set; }
-    public Timer DeferDeathTimer { get; set; }
-    public SceneTreeTimer DeferNeutralTeamTimer { get; set; }
+    public Utils.Trail Trail { get; private set; }
+
+    public Node2D TrailRotation { get; private set; }
+
+    public Node2D TrailPosition { get; private set; }
+
+    public GpuParticles2D DeathParticles { get; private set; }
+
+    public GpuParticles2D SpawnParticles { get; private set; }
+
+    public Timer DeferDeathTimer { get; private set; }
+
+    public SceneTreeTimer DeferNeutralTeamTimer { get; private set; }
 
     private double _currentLifetime = 0;
 
@@ -66,6 +72,7 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
         };
         DeferDeathTimer.Start();
         DeathParticles.Emitting = true;
+        SpawnParticles.Emitting = false;
         GetNode<AudioStreamPlayer2D>("Sound").Stop();
         GetNode<AnimationPlayer>("AnimationPlayer").Play("death");
     }

@@ -1878,6 +1878,11 @@ script = ExtResource("2_4m0a1")
 Entities = NodePath("Entities")
 Areas = NodePath("Areas")
 Spawners = NodePath("Spawners")
+CameraLowerBound = null
+CameraUpperBound = null
+ClearColor = null
+AreaName = null
+MapName = null
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 

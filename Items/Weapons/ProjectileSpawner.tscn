@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bgavhkdtbx2o6"]
+
+[ext_resource type="Script" path="res://Items/Weapons/ProjectileSpawner.cs" id="1_8b4lf"]
+[ext_resource type="Script" path="res://State/Weapon/RangedIdleState.cs" id="2_cm0yp"]
+[ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_mjoh2"]
+[ext_resource type="Script" path="res://State/Weapon/RangedFireState.cs" id="3_uigar"]
+
+[node name="ProjectileSpawner" type="Node2D" node_paths=PackedStringArray("StateMachine")]
+script = ExtResource("1_8b4lf")
+StateMachine = NodePath("StateMachine")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("2_mjoh2")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("FireState", "Weapon")]
+script = ExtResource("2_cm0yp")
+FireState = NodePath("../Fire")
+Weapon = NodePath("../..")
+
+[node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("Weapon", "IdleState")]
+script = ExtResource("3_uigar")
+Weapon = NodePath("../..")
+IdleState = NodePath("../Idle")

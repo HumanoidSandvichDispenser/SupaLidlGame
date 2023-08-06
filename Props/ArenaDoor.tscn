@@ -1,0 +1,154 @@
+[gd_scene load_steps=14 format=3 uid="uid://c5i3cq1kewljv"]
+
+[ext_resource type="Script" path="res://Entities/DynamicDoor.cs" id="1_t6mj1"]
+[ext_resource type="Texture2D" uid="uid://crddevohy65we" path="res://Assets/Sprites/Props/arena-gate.png" id="2_kvtjv"]
+[ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="3_i2hr3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yrdxe"]
+size = Vector2(32, 25)
+
+[sub_resource type="Gradient" id="Gradient_r12k6"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8saft"]
+gradient = SubResource("Gradient_r12k6")
+
+[sub_resource type="Curve" id="Curve_fbk1d"]
+_data = [Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_scj30"]
+curve = SubResource("Curve_fbk1d")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5k2ug"]
+emission_shape = 3
+emission_box_extents = Vector3(16, 1, 1)
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 4.0
+initial_velocity_max = 8.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.25
+scale_max = 0.25
+scale_curve = SubResource("CurveTexture_scj30")
+color = Color(1, 1, 1, 0.498039)
+color_ramp = SubResource("GradientTexture1D_8saft")
+
+[sub_resource type="Animation" id="Animation_ylaba"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_unbll"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1nbqx"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3eva7"]
+_data = {
+"RESET": SubResource("Animation_ylaba"),
+"close": SubResource("Animation_unbll"),
+"open": SubResource("Animation_1nbqx")
+}
+
+[node name="ArenaDoor" type="StaticBody2D" node_paths=PackedStringArray("VisibleOnToggle")]
+collision_mask = 0
+script = ExtResource("1_t6mj1")
+MapStateKey = "b_arena_depths_door_1"
+VisibleOnToggle = [NodePath("GPUParticles2D"), NodePath("AudioStreamPlayer2D")]
+
+[node name="Gate" type="Sprite2D" parent="."]
+texture = ExtResource("2_kvtjv")
+offset = Vector2(0, -16)
+hframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_yrdxe")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_5k2ug")
+texture = ExtResource("3_i2hr3")
+one_shot = true
+explosiveness = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3eva7")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

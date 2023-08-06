@@ -14,11 +14,35 @@ public partial class InteractionTrigger : Area2D
     [Signal]
     public delegate void UntargetEventHandler();
 
+    [Export]
+    public string PopupText { get; set; }
+
+    private Control _popup;
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        _popup = GetNode<Control>("Popup");
+        _popup.Visible = false;
+        _popup.GetNode<Label>("Label").Text = PopupText;
+    }
+
     /// <summary>
     /// Invokes or triggers an interaction to occur.
     /// </summary>
     public void InvokeInteraction()
     {
         EmitSignal(SignalName.Interaction);
+    }
+
+    public void Focus()
+    {
+        _popup.Visible = true;
+    }
+
+    public void Unfocus()
+    {
+        _popup.Visible = false;
     }
 }

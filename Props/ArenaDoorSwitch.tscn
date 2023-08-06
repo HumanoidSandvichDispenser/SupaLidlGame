@@ -1,0 +1,122 @@
+[gd_scene load_steps=11 format=3 uid="uid://bs6xuujve2tsf"]
+
+[ext_resource type="Script" path="res://Entities/DynamicDoorSwitch.cs" id="1_78qab"]
+[ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="2_7j8p7"]
+[ext_resource type="Texture2D" uid="uid://88iqlixjutsn" path="res://Assets/Sprites/Props/switch.png" id="3_pgkt4"]
+[ext_resource type="AudioStream" uid="uid://djs15wmc7c77f" path="res://Assets/Sounds/switch-on.wav" id="4_cxkmr"]
+[ext_resource type="AudioStream" uid="uid://dryqvdw6cffvf" path="res://Assets/Sounds/switch-off.wav" id="5_8lkd0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1i8i0"]
+radius = 12.0
+
+[sub_resource type="Animation" id="Animation_jkd42"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_rntmq"]
+resource_name = "off"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.25,
+"start_offset": 0.0,
+"stream": ExtResource("5_8lkd0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_0yjbt"]
+resource_name = "on"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_cxkmr")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6ywhx"]
+_data = {
+"RESET": SubResource("Animation_jkd42"),
+"off": SubResource("Animation_rntmq"),
+"on": SubResource("Animation_0yjbt")
+}
+
+[node name="ArenaDoorSwitch" type="StaticBody2D"]
+script = ExtResource("1_78qab")
+
+[node name="InteractionTrigger" parent="." instance=ExtResource("2_7j8p7")]
+PopupText = null
+
+[node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
+shape = SubResource("CircleShape2D_1i8i0")
+
+[node name="Popup" parent="InteractionTrigger" index="1"]
+offset_top = -44.0
+offset_bottom = -8.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_pgkt4")
+centered = false
+offset = Vector2(-2, -8)
+hframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6ywhx")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[editable path="InteractionTrigger"]

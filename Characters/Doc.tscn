@@ -38,7 +38,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
 shader = ExtResource("2_5jxom")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
@@ -661,6 +661,12 @@ TelegraphAnimationPlayer = NodePath("../../Animations/Telegraph")
 TelegraphState = NodePath("../Telegraph")
 NPC = NodePath("../..")
 
+[node name="ThinkerStateMachine" type="Node" parent="."]
+
+[node name="Attack" type="Node" parent="ThinkerStateMachine"]
+
+[node name="DashAttack" type="Node" parent="ThinkerStateMachine"]
+
 [node name="Animations" type="Node" parent="."]
 script = ExtResource("16_bsvls")
 
@@ -752,10 +758,10 @@ Faction = 2
 position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_8lxmf")
 
-[node name="Inventory" type="Node2D" parent="."]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
 y_sort_enabled = true
 script = ExtResource("8_r8ejq")
-Items = Array[Node2D]([])
+Items = []
 
 [node name="DocLance" parent="Inventory" instance=ExtResource("24_2es2r")]
 unique_name_in_owner = true
@@ -763,6 +769,7 @@ unique_name_in_owner = true
 [node name="DocLanceHold" parent="Inventory" instance=ExtResource("26_0tntj")]
 
 [node name="InteractionTrigger" parent="." instance=ExtResource("33_08dyq")]
+PopupText = ""
 
 [node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
 position = Vector2(0, -6)

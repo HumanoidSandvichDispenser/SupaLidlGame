@@ -22,8 +22,6 @@ public sealed partial class Player : Character
 
     public InteractionRay InteractionRay { get; private set; }
 
-    public AnimationPlayer AttackAnimation { get; set; }
-
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
@@ -33,8 +31,6 @@ public sealed partial class Player : Character
             await ToSignal(HurtAnimation, "animation_finished");
             Visible = false;
         };
-
-        AttackAnimation = GetNode<AnimationPlayer>("Animations/Attack");
 
         base._Ready();
 

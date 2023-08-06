@@ -13,7 +13,7 @@ public partial class Character : CharacterBody2D, IFaction
     public float Speed { get; protected set; } = 32.0f;
 
     [Export]
-    public float Friction { get; set; } = 4.0f;
+    public float Friction { get; protected set; } = 4.0f;
 
     [Export]
     public float Mass
@@ -25,6 +25,9 @@ public partial class Character : CharacterBody2D, IFaction
                 _mass = value;
         }
     }
+
+    [Export]
+    public float Stealth { get; protected set; } = 0;
 
     [Signal]
     public delegate void HurtEventHandler(Events.HealthChangedArgs args);
@@ -89,13 +92,16 @@ public partial class Character : CharacterBody2D, IFaction
 
     public AnimationPlayer StunAnimation { get; set; }
 
+    public AnimationPlayer AttackAnimation { get; set; }
+
     public override void _Ready()
     {
         // TODO: 80+ char line
         MovementAnimation = GetNode<AnimationPlayer>("Animations/Movement");
         HurtAnimation = GetNode<AnimationPlayer>("Animations/Hurt");
         StunAnimation = GetNode<AnimationPlayer>("Animations/Stun");
-        GD.Print(Name + " " + MovementAnimation.CurrentAnimation);
+        AttackAnimation = GetNode<AnimationPlayer>("Animations/Attack");
+
         Hurtbox.ReceivedDamage += OnReceivedDamage;
     }
 
@@ -317,5 +323,24 @@ public partial class Character : CharacterBody2D, IFaction
         {
             player.Play();
         }
+    }
+
+    public bool HasLineOfSight(Character character, bool excludeClip = false)
+    {
+        var exclude = new Godot.Collections.Array<Godot.Rid>();
+        exclude.Add(GetRid());
+        var rayParams = new PhysicsRayQueryParameters2D
+        {
+            Exclude = exclude,
+            From = GlobalPosition,
+            To = character.GlobalPosition,
+            //CollisionMask = 1 + (uint)(excludeClip ? 0 : 16),
+            CollisionMask = 1,
+        };
+        var spaceState = GetWorld2D().DirectSpaceState;
+        var result = spaceState.IntersectRay(rayParams);
+        if (result.Count > 0)
+            GD.Print(result["collider"]);
+        return result.Count == 0;
     }
 }

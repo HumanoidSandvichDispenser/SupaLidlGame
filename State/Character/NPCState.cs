@@ -6,7 +6,7 @@ public abstract partial class NPCState : CharacterState
 
     public override CharacterState Process(double delta)
     {
-        _npc.ThinkProcess(delta);
+        //_npc.ThinkProcess(delta);
         return base.Process(delta);
     }
 }

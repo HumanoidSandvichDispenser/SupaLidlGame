@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://hm3ek8vqt1d4"]
+[gd_scene load_steps=4 format=3 uid="uid://hm3ek8vqt1d4"]
 
 [ext_resource type="Texture2D" uid="uid://dwbrymm3ud5xu" path="res://Assets/Sprites/Props/bookshelf.png" id="1_cnrpk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wc4oe"]
 size = Vector2(28, 8)
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_tsfmt"]
 
 [node name="Bookshelf" type="StaticBody2D"]
 y_sort_enabled = true
@@ -45,3 +47,6 @@ frame = 1
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_wc4oe")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_tsfmt")

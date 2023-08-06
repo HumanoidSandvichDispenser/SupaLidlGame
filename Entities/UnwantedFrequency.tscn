@@ -1,9 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://1y5r6sklwgrp"]
+[gd_scene load_steps=22 format=3 uid="uid://1y5r6sklwgrp"]
 
 [ext_resource type="Script" path="res://Entities/UnwantedFrequency.cs" id="1_6sbe0"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="2_gxtvd"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="3_67uhs"]
 [ext_resource type="AudioStream" uid="uid://cn2wop7rfxku8" path="res://Assets/Sounds/karabast.mp3" id="4_pbgsi"]
+[ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="5_qbbx7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30y8q"]
 size = Vector2(8, 8)
@@ -23,46 +24,52 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 0.00784314, 0.215686, 0.784314, 1, 0, 0
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_yfhnr"]
 gradient = SubResource("Gradient_2q0ut")
 
+[sub_resource type="Curve" id="Curve_8kv0q"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_es0lb"]
+curve = SubResource("Curve_8kv0q")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eh1hw"]
 particle_flag_disable_z = true
 spread = 180.0
 gravity = Vector3(0, 0, 0)
-initial_velocity_max = 100.0
-angular_velocity_min = 45.0
-angular_velocity_max = 90.0
-orbit_velocity_min = 0.0
+initial_velocity_min = 25.0
+initial_velocity_max = 50.0
+orbit_velocity_min = 1.0
 orbit_velocity_max = 2.0
+linear_accel_min = -8.0
+tangential_accel_max = 8.0
+scale_min = 0.1
+scale_max = 0.2
+scale_curve = SubResource("CurveTexture_es0lb")
 color_ramp = SubResource("GradientTexture1D_yfhnr")
 
 [sub_resource type="Gradient" id="Gradient_5hy7c"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.4, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.784314, 0.784314, 0.25098, 1, 0, 0, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_iyaih"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1bgot"]
 gradient = SubResource("Gradient_5hy7c")
 
 [sub_resource type="Curve" id="Curve_wt1cb"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_5uulw"]
+[sub_resource type="CurveTexture" id="CurveTexture_n73if"]
 curve = SubResource("Curve_wt1cb")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_olfm2"]
 particle_flag_disable_z = true
 spread = 180.0
 gravity = Vector3(0, 0, 0)
-initial_velocity_min = 32.0
-initial_velocity_max = 32.0
-angular_velocity_min = 90.0
-angular_velocity_max = 90.0
+initial_velocity_min = 8.0
+initial_velocity_max = 16.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-tangential_accel_min = 8.0
-tangential_accel_max = 8.0
-scale_max = 2.0
-scale_curve = SubResource("CurveTexture_5uulw")
-color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_iyaih")
+scale_curve = SubResource("CurveTexture_n73if")
+color_ramp = SubResource("GradientTexture1D_1bgot")
 
 [sub_resource type="Animation" id="Animation_w1abs"]
 length = 0.001
@@ -109,10 +116,12 @@ Speed = 124.0
 Direction = Vector2(1, 1)
 Hitbox = NodePath("Hitbox")
 Lifetime = 4.0
+Delay = 1.0
 
 [node name="Hitbox" parent="." instance=ExtResource("2_gxtvd")]
 collision_layer = 0
 monitorable = false
+priority = 5
 Damage = 12.0
 Knockback = 324.0
 
@@ -145,19 +154,22 @@ autoplay = true
 max_distance = 64.0
 attenuation = 8.0
 
-[node name="DeathParticles" type="GPUParticles2D" parent="."]
-emitting = false
-process_material = SubResource("ParticleProcessMaterial_eh1hw")
-lifetime = 2.0
-one_shot = true
-explosiveness = 0.8
-
 [node name="SpawnParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_eh1hw")
+texture = ExtResource("5_qbbx7")
+lifetime = 2.0
+explosiveness = 0.1
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 12
 process_material = SubResource("ParticleProcessMaterial_olfm2")
+texture = ExtResource("5_qbbx7")
 lifetime = 2.0
 one_shot = true
+preprocess = 0.1
 explosiveness = 1.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

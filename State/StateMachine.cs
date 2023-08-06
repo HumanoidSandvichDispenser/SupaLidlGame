@@ -50,4 +50,10 @@ public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
         state = this.FindChildOfType<U>();
         return ChangeState(state);
     }
+
+    public bool ChangeState(string name, out T state)
+    {
+        state = GetNode<T>(name);
+        return ChangeState(state);
+    }
 }

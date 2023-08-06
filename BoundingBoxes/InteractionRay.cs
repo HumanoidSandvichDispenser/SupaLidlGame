@@ -14,10 +14,21 @@ public partial class InteractionRay : RayCast2D
             if (_trigger != value)
             {
                 EmitSignal(SignalName.TriggerHit, value);
+
+                if (value is not null)
+                {
+                    // focus on the new trigger
+                    value.Focus();
+                }
             }
 
             if (_trigger is not null)
             {
+                if (_trigger != value)
+                {
+                    // unfocus from the old trigger
+                    _trigger.Unfocus();
+                }
                 LastValidTrigger = value;
             }
 

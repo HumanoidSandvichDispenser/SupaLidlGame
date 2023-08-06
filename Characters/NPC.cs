@@ -46,9 +46,17 @@ public partial class NPC : Character
     [Export]
     public Items.Item DefaultSelectedItem { get; set; }
 
+    [Export]
+    public bool ShouldMoveWhenUsingItem { get; set; } = true;
+
+    [Export]
+    public State.Thinker.ThinkerStateMachine ThinkerStateMachine { get; set; }
+
     public bool ShouldMove { get; set; } = true;
 
     public bool CanAttack { get; set; } = true;
+
+    public Vector2 LastSeenPosition { get; set; }
 
     protected float[] _weights = new float[16];
     protected int _bestWeightIdx;
@@ -75,6 +83,20 @@ public partial class NPC : Character
         {
             Inventory.SelectedItem = DefaultSelectedItem;
         }
+
+        Inventory.UsedItem += (Items.Item item) =>
+        {
+            if (item is Items.Weapon)
+            {
+                if (AttackAnimation is not null)
+                {
+                    if (AttackAnimation.HasAnimation("attack"))
+                    {
+                        AttackAnimation.Play("attack");
+                    }
+                }
+            }
+        };
     }
 
     public override void _Draw()
@@ -102,8 +124,9 @@ public partial class NPC : Character
 
     public virtual Character FindBestTarget()
     {
-        float bestDist = float.MaxValue;
+        float bestScore = float.MaxValue;
         Character bestChar = null;
+        // NOTE: this relies on all Characters being under the Entities node
         foreach (Node node in GetParent().GetChildren())
         {
             if (node is Character character)
@@ -114,15 +137,41 @@ public partial class NPC : Character
                     continue;
                 }
 
-                float dist = Position.DistanceTo(character.Position);
-                if (dist < bestDist)
+                float score = 0;
+                score += Position.DistanceTo(character.Position);
+                score *= (character.Stealth + 1);
+
+                // if the character has enough stealth, the dot product of the
+                // enemy's current direction and to the character will affect
+                // the score
+                // TODO: implement
+
+                if (score < bestScore)
                 {
-                    bestDist = dist;
+                    // if the character has enough stealth, they won't be
+                    // targeted if the NPC is not able to see
+                    if (!HasLineOfSight(character) && character.Stealth >= 1)
+                    {
+                        continue;
+                    }
+                    bestScore = score;
                     bestChar = character;
                 }
             }
         }
         return bestChar;
+    }
+
+    public override void _Process(double delta)
+    {
+        ThinkerStateMachine.Process(delta);
+        base._Process(delta);
+    }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        ThinkerStateMachine.PhysicsProcess(delta);
+        base._PhysicsProcess(delta);
     }
 
     public void ThinkProcess(double delta)
@@ -136,13 +185,13 @@ public partial class NPC : Character
 #endif
         }
 
-        if (ShouldMove)
+        if (!ShouldMove || (!ShouldMoveWhenUsingItem && Inventory.IsUsingItem))
         {
-            Direction = _weightDirs[_bestWeightIdx];
+            Direction = Vector2.Zero;
         }
         else
         {
-            Direction = Vector2.Zero;
+            Direction = _weightDirs[_bestWeightIdx];
         }
     }
 

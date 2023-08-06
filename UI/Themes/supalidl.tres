@@ -1,7 +1,10 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://cksjbu3vrup5"]
 
-[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="1_gdvg0"]
+[ext_resource type="FontFile" uid="uid://6bvgjbmqovau" path="res://Assets/Fonts/calamity/calamity.ttf" id="1_334fe"]
 
 [resource]
-default_font = ExtResource("1_gdvg0")
-/fonts/Alagard = ExtResource("1_gdvg0")
+default_font = ExtResource("1_334fe")
+default_font_size = 15
+/colors/background = Color(0.105882, 0.0470588, 0.117647, 1)
+/font_sizes/Normal = 16
+/fonts/Calamity = ExtResource("1_334fe")
