@@ -567,11 +567,18 @@ y_sort_enabled = true
 position = Vector2(-224, 41)
 MapStateKey = "b_arena_depths_1"
 
-[node name="ArenaDoorSwitch" parent="Entities" index="2" instance=ExtResource("22_ay852")]
+[node name="LeftDoorSwitch" parent="Entities" index="2" instance=ExtResource("22_ay852")]
 position = Vector2(-257, 76)
 MapStateKey = "b_arena_depths_1"
 
-[node name="BottomDoor" type="Node2D" parent="Entities" index="3"]
+[node name="BottomDoor" parent="Entities" index="3" instance=ExtResource("21_nvrif")]
+y_sort_enabled = true
+position = Vector2(0, 161)
+MapStateKey = "b_arena_depths_2"
+
+[node name="BottomDoorSwitch" parent="Entities" index="4" instance=ExtResource("22_ay852")]
+position = Vector2(24, 332)
+MapStateKey = "b_arena_depths_2"
 
 [editable path="Props/StaticBookshelf"]
 [editable path="Props/StaticBookshelf2"]
