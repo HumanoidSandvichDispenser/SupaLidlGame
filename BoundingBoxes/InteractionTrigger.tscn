@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dldnp8eunxj3q"]
+[gd_scene load_steps=8 format=3 uid="uid://dldnp8eunxj3q"]
 
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionTrigger.cs" id="1_uoemj"]
 [ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="2_75ngm"]
 [ext_resource type="Texture2D" uid="uid://dqat7fjm20yie" path="res://Assets/Sprites/UI/arrow.png" id="3_yx2aa"]
+[ext_resource type="AudioStream" uid="uid://b1p5eylqc2bsy" path="res://Assets/Sounds/ui-tick.wav" id="4_p2qp6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dfj3a"]
 
@@ -74,3 +75,6 @@ offset_right = 6.0
 grow_horizontal = 2
 grow_vertical = 0
 texture = SubResource("AtlasTexture_n00hm")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_p2qp6")

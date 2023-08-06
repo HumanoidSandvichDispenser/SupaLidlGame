@@ -34,6 +34,7 @@ public partial class InteractionTrigger : Area2D
 
     public void Focus()
     {
+        GetNode<AudioStreamPlayer>("AudioStreamPlayer").Play();
         _popup.Visible = true;
     }
 
