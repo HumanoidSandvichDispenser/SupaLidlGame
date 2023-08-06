@@ -124,11 +124,10 @@ _data = {
 "open": SubResource("Animation_1nbqx")
 }
 
-[node name="ArenaDoor" type="StaticBody2D" node_paths=PackedStringArray("VisibleOnToggle")]
+[node name="ArenaDoor" type="StaticBody2D"]
 collision_mask = 0
 script = ExtResource("1_t6mj1")
 MapStateKey = "b_arena_depths_door_1"
-VisibleOnToggle = [NodePath("GPUParticles2D"), NodePath("AudioStreamPlayer2D")]
 
 [node name="Gate" type="Sprite2D" parent="."]
 texture = ExtResource("2_kvtjv")

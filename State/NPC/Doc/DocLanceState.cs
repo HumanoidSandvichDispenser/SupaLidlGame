@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.State.Thinker;
 
 namespace SupaLidlGame.State.NPC.Doc;
 
@@ -36,6 +37,7 @@ public partial class DocLanceState : DocAttackState
     {
         var state = base.Enter(previousState);
         _doc.ShouldMove = true;
+        _doc.ThinkerStateMachine.ChangeState<DashDefensive>(out var _);
 
         return state;
     }

@@ -14,9 +14,6 @@ public partial class InteractionTrigger : Area2D
     [Signal]
     public delegate void UntargetEventHandler();
 
-    [Export]
-    public string PopupText { get; set; }
-
     private Control _popup;
 
     public override void _Ready()
@@ -25,7 +22,6 @@ public partial class InteractionTrigger : Area2D
 
         _popup = GetNode<Control>("Popup");
         _popup.Visible = false;
-        _popup.GetNode<Label>("Label").Text = PopupText;
     }
 
     /// <summary>

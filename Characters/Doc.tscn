@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=69 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -22,13 +22,16 @@
 [ext_resource type="Script" path="res://State/NPC/Doc/DocIntroState.cs" id="11_lt771"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocChooseAttackState.cs" id="12_45x13"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocUnwantedFrequencyState.cs" id="12_d51jv"]
-[ext_resource type="PackedScene" uid="uid://1y5r6sklwgrp" path="res://Entities/UnwantedFrequency.tscn" id="13_lpj21"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocLanceState.cs" id="15_dmd05"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="16_bsvls"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="16_x277j"]
+[ext_resource type="PackedScene" uid="uid://1y5r6sklwgrp" path="res://Entities/UnwantedFrequency.tscn" id="17_hl6o0"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="17_iomdx"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="19_p0p6c"]
 [ext_resource type="Material" uid="uid://rcjujd5dv7lm" path="res://Assets/Sprites/Particles/DocIntroParticles.tres" id="19_q4rt1"]
+[ext_resource type="Script" path="res://State/Thinker/DashDefensive.cs" id="20_12htp"]
+[ext_resource type="Script" path="res://State/Thinker/ThinkerStateMachine.cs" id="20_dy57x"]
+[ext_resource type="Script" path="res://State/Thinker/AttackState.cs" id="21_ij3bp"]
 [ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="21_ixn4k"]
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="24_2es2r"]
 [ext_resource type="PackedScene" uid="uid://bauucuqvjwbxp" path="res://Items/Weapons/DocLanceHold.tscn" id="26_0tntj"]
@@ -552,7 +555,7 @@ size = Vector2(16, 19)
 [sub_resource type="CircleShape2D" id="CircleShape2D_8hwat"]
 radius = 16.0
 
-[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("Lance", "BossStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("Lance", "BossStateMachine", "ThinkerStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_7n7iy")
@@ -563,6 +566,7 @@ Lance = NodePath("Inventory/DocLance")
 BossStateMachine = NodePath("BossStateMachine")
 BossName = "Doc, The Two-Time"
 Music = ExtResource("3_eo4lg")
+ThinkerStateMachine = NodePath("ThinkerStateMachine")
 HandTexture = ExtResource("4_8lqj6")
 Health = 900.0
 Sprite = NodePath("Sprite")
@@ -628,9 +632,9 @@ NPC = NodePath("../..")
 
 [node name="UnwantedFrequency" type="Node" parent="BossStateMachine" node_paths=PackedStringArray("ChooseAttackState", "Doc", "NPC")]
 script = ExtResource("12_d51jv")
-Duration = 4.0
+Duration = 2.0
 AttackDuration = 1.0
-Projectile = ExtResource("13_lpj21")
+Projectile = ExtResource("17_hl6o0")
 ChooseAttackState = NodePath("../ChooseAttack")
 Doc = NodePath("../..")
 NPC = NodePath("../..")
@@ -661,11 +665,17 @@ TelegraphAnimationPlayer = NodePath("../../Animations/Telegraph")
 TelegraphState = NodePath("../Telegraph")
 NPC = NodePath("../..")
 
-[node name="ThinkerStateMachine" type="Node" parent="."]
+[node name="ThinkerStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("20_dy57x")
+InitialState = NodePath("Attack")
 
-[node name="Attack" type="Node" parent="ThinkerStateMachine"]
+[node name="Attack" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NPC")]
+script = ExtResource("21_ij3bp")
+NPC = NodePath("../..")
 
-[node name="DashAttack" type="Node" parent="ThinkerStateMachine"]
+[node name="DashDefensive" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NPC")]
+script = ExtResource("20_12htp")
+NPC = NodePath("../..")
 
 [node name="Animations" type="Node" parent="."]
 script = ExtResource("16_bsvls")
@@ -758,10 +768,9 @@ Faction = 2
 position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_8lxmf")
 
-[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
+[node name="Inventory" type="Node2D" parent="."]
 y_sort_enabled = true
 script = ExtResource("8_r8ejq")
-Items = []
 
 [node name="DocLance" parent="Inventory" instance=ExtResource("24_2es2r")]
 unique_name_in_owner = true
@@ -769,11 +778,17 @@ unique_name_in_owner = true
 [node name="DocLanceHold" parent="Inventory" instance=ExtResource("26_0tntj")]
 
 [node name="InteractionTrigger" parent="." instance=ExtResource("33_08dyq")]
-PopupText = ""
 
 [node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_8hwat")
+
+[node name="Popup" parent="InteractionTrigger" index="1"]
+offset_top = -44.0
+offset_bottom = -14.0
+
+[node name="Label" parent="InteractionTrigger/Popup" index="0"]
+text = "Duel"
 
 [editable path="Hurtbox"]
 [editable path="InteractionTrigger"]

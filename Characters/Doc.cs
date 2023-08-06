@@ -1,6 +1,8 @@
 using Godot;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.State.Character;
+using SupaLidlGame.BoundingBoxes;
+using SupaLidlGame.State.Thinker;
 
 namespace SupaLidlGame.Characters;
 
@@ -13,10 +15,6 @@ public partial class Doc : Boss
     [Export]
     public Items.Weapons.Sword Lance { get; set; }
 
-    protected bool _dashedAway = false;
-    protected CharacterDashState _dashState;
-    protected float _originalDashModifier;
-
     [Export]
     public override bool IsActive
     {
@@ -27,6 +25,13 @@ public partial class Doc : Boss
             var introState = BossStateMachine
                 .GetNode<State.NPC.Doc.DocIntroState>("Intro");
             BossStateMachine.ChangeState(introState);
+
+            if (IsActive)
+            {
+                var trig = GetNode<InteractionTrigger>("InteractionTrigger");
+                var coll = trig.GetNode<CollisionShape2D>("CollisionShape2D");
+                coll.Disabled = true;
+            }
         }
     }
 
@@ -75,9 +80,6 @@ public partial class Doc : Boss
         MiscAnimation = GetNode<AnimationPlayer>("Animations/Misc");
 
         base._Ready();
-
-        _dashState = StateMachine.FindChildOfType<CharacterDashState>();
-        _originalDashModifier = _dashState.VelocityModifier;
 
         var dialog = GD.Load<Resource>("res://Assets/Dialogue/doc.dialogue");
 
@@ -155,86 +157,14 @@ public partial class Doc : Boss
     {
         if (BossStateMachine.CurrentState is State.NPC.Doc.DocLanceState)
         {
-            ThirdPhaseThink();
+            if (ThinkerStateMachine.CurrentState is not DashDefensive)
+            {
+                ThinkerStateMachine.ChangeState<DashDefensive>(out var _);
+            }
         }
         else
         {
             base.Think();
         }
-    }
-
-    protected void ThirdPhaseThink()
-    {
-        Character bestTarget = FindBestTarget();
-        if (bestTarget is not null)
-        {
-            Vector2 pos = bestTarget.GlobalPosition;
-            Target = pos - GlobalPosition;
-            Vector2 dir = GlobalPosition.DirectionTo(pos);
-            float dist = GlobalPosition.DistanceSquaredTo(pos);
-            UpdateWeights(pos);
-
-            if (CanAttack && StunTime <= 0)
-            {
-                bool isTargetStunned = bestTarget.StunTime > 0;
-
-                bool shouldDashAway = false;
-                bool shouldDashTowards = false;
-
-                var lanceState = Lance.StateMachine.CurrentState;
-
-                if (Inventory.SelectedItem != Lance)
-                {
-                    Inventory.SelectedItem = Lance;
-                }
-
-                float dot = Direction.Normalized()
-                    .Dot(bestTarget.Direction.Normalized());
-
-                // doc will still dash if you are farther than normal but
-                // moving towards him
-                float distThreshold = 2500 - (dot * 400);
-
-                // or just directly dash towards you if you are too far
-                float distTowardsThreshold = 22500;
-
-                // dash towards if lance in anticipate state
-                shouldDashTowards = (isTargetStunned || _dashedAway) &&
-                    lanceState is State.Weapon.SwordAnticipateState ||
-                    dist > distTowardsThreshold;
-
-                shouldDashAway = dist < distThreshold && !isTargetStunned;
-
-                //if (!isTargetStunned && dist < 2500 && !_dashedAway)
-                if (shouldDashAway && !shouldDashTowards)
-                {
-                    // dash away if too close
-                    _dashState.VelocityModifier = _originalDashModifier;
-                    DashTo(-dir);
-                    UseCurrentItem();
-                    _dashedAway = true;
-                }
-                else if (shouldDashTowards && !shouldDashAway)
-                {
-                    // dash to player's predicted position
-                    _dashState.VelocityModifier = _originalDashModifier * 1.75f;
-                    var dashSpeed = _dashState.VelocityModifier * Speed;
-                    var newPos = Utils.Physics.PredictNewPosition(
-                        GlobalPosition,
-                        dashSpeed,
-                        pos,
-                        bestTarget.Velocity,
-                        out float _);
-                    DashTo(GlobalPosition.DirectionTo(newPos));
-                    _dashedAway = false;
-                }
-            }
-        }
-    }
-
-    private void DashTo(Vector2 direction)
-    {
-        StateMachine.ChangeState<CharacterDashState>(out var state);
-        state.DashDirection = direction;
     }
 }

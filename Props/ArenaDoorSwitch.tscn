@@ -93,18 +93,21 @@ _data = {
 "on": SubResource("Animation_0yjbt")
 }
 
-[node name="ArenaDoorSwitch" type="StaticBody2D"]
+[node name="ArenaDoorSwitch" type="StaticBody2D" node_paths=PackedStringArray("InteractionTrigger")]
 script = ExtResource("1_78qab")
+InteractionTrigger = NodePath("InteractionTrigger")
 
 [node name="InteractionTrigger" parent="." instance=ExtResource("2_7j8p7")]
-PopupText = null
 
 [node name="CollisionShape2D" parent="InteractionTrigger" index="0"]
 shape = SubResource("CircleShape2D_1i8i0")
 
 [node name="Popup" parent="InteractionTrigger" index="1"]
-offset_top = -44.0
+offset_top = -38.0
 offset_bottom = -8.0
+
+[node name="Label" parent="InteractionTrigger/Popup" index="0"]
+text = "Activate"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_pgkt4")
