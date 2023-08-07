@@ -1,8 +1,6 @@
 using Godot;
 using SupaLidlGame.Extensions;
-using SupaLidlGame.State.Character;
 using SupaLidlGame.BoundingBoxes;
-using SupaLidlGame.State.Thinker;
 
 namespace SupaLidlGame.Characters;
 
@@ -104,13 +102,12 @@ public partial class Doc : Boss
 
 
         // when we are hurt, start the boss fight
-        Hurt += (Events.HealthChangedArgs args) =>
+        Hurt += (Events.HurtArgs args) =>
         {
             if (!IsActive)
             {
                 IsActive = true;
                 Inventory.SelectedItem = Lance;
-                //DialogueManager.ShowExampleDialogueBalloon();
             }
         };
     }
@@ -122,49 +119,5 @@ public partial class Doc : Boss
             BossStateMachine.Process(delta);
         }
         base._Process(delta);
-    }
-
-    protected override float ReceiveDamage(
-        float damage,
-        Character inflictor,
-        float knockback,
-        Vector2 knockbackDir = default)
-    {
-        if (IsActive)
-        {
-            return base.ReceiveDamage(
-                damage, inflictor, knockback, knockbackDir);
-        }
-
-        return 1;
-    }
-
-    /*
-    public override void OnReceivedDamage(
-        float damage,
-        Character inflictor,
-        float knockback,
-        Vector2 knockbackDir = default)
-    {
-        GetNode<GpuParticles2D>("Effects/HurtParticles")
-            .SetDirection(knockbackDir);
-
-        base.OnReceivedDamage(damage, inflictor, knockback, knockbackDir);
-    }
-    */
-
-    protected override void Think()
-    {
-        if (BossStateMachine.CurrentState is State.NPC.Doc.DocLanceState)
-        {
-            if (ThinkerStateMachine.CurrentState is not DashDefensive)
-            {
-                ThinkerStateMachine.ChangeState<DashDefensive>(out var _);
-            }
-        }
-        else
-        {
-            base.Think();
-        }
     }
 }

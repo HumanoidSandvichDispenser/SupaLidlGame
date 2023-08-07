@@ -40,8 +40,8 @@ public abstract partial class PlayerState : CharacterState
 
     public override CharacterState Process(double delta)
     {
-        Character.Direction = Godot.Input.GetVector("ui_left", "ui_right",
-                                                    "ui_up", "ui_down");
+        Character.Direction = Godot.Input.GetVector("left", "right",
+                                                    "up", "down");
         Character.LookTowardsDirection();
 
         Vector2 mousePos = Character.GetGlobalMousePosition();

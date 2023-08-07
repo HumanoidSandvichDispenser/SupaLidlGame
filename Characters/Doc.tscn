@@ -701,6 +701,8 @@ libraries = {
 "": SubResource("AnimationLibrary_kks2p")
 }
 
+[node name="Attack" type="AnimationPlayer" parent="Animations"]
+
 [node name="Misc" type="AnimationPlayer" parent="Animations"]
 libraries = {
 "": SubResource("AnimationLibrary_kjxam")

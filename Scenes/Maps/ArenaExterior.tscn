@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c72uqjjtxpi3g"]
+[gd_scene load_steps=46 format=3 uid="uid://c72uqjjtxpi3g"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ci4ij"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_m6h7j"]
@@ -9,8 +9,11 @@
 [ext_resource type="PackedScene" uid="uid://c1w7t6irnohfx" path="res://Entities/Torch.tscn" id="6_wx4iy"]
 [ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="8_3rpj6"]
 [ext_resource type="PackedScene" uid="uid://hm3ek8vqt1d4" path="res://Props/Bookshelf.tscn" id="9_qsthf"]
+[ext_resource type="Script" path="res://Utils/InteractionTriggerDialogue.cs" id="10_apvp5"]
 [ext_resource type="Texture2D" uid="uid://dcwerlcsr0nj0" path="res://Assets/Sprites/Props/tree-dark-3.png" id="10_i5qot"]
+[ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="10_scl41"]
 [ext_resource type="Texture2D" uid="uid://dl2q3k0w8e4fp" path="res://Assets/Sprites/Props/tree-dark.png" id="10_sx2hw"]
+[ext_resource type="Resource" uid="uid://dilmuoilweoeh" path="res://Assets/Dialogue/books.dialogue" id="11_fpxpb"]
 [ext_resource type="Texture2D" uid="uid://jhqfflef5yde" path="res://Assets/Sprites/Props/tree-dark-2.png" id="11_wjfe8"]
 [ext_resource type="Texture2D" uid="uid://ds0xg848g3jid" path="res://Assets/Sprites/Props/tree-dark-5.png" id="12_md5xh"]
 [ext_resource type="Texture2D" uid="uid://8rbstele3ckq" path="res://Assets/Sprites/Props/tree-dark-4.png" id="13_j84wc"]
@@ -22,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://bou5pccj0147e" path="res://Entities/ArenaEntrance.tscn" id="20_tcd0x"]
 [ext_resource type="PackedScene" uid="uid://c5i3cq1kewljv" path="res://Props/ArenaDoor.tscn" id="21_nvrif"]
 [ext_resource type="PackedScene" uid="uid://bs6xuujve2tsf" path="res://Props/ArenaDoorSwitch.tscn" id="22_ay852"]
+[ext_resource type="PackedScene" uid="uid://dhl071rj5wyvx" path="res://Entities/Campfire.tscn" id="23_mykt8"]
 
 [sub_resource type="Gradient" id="Gradient_jupxw"]
 offsets = PackedFloat32Array(0.00740741, 0.2, 1)
@@ -346,8 +350,21 @@ texture = SubResource("CanvasTexture_1u3bg")
 texture = ExtResource("3_lgup0")
 texture_scale = 0.15
 
-[node name="StaticBookshelf" parent="Props" index="13" instance=ExtResource("9_qsthf")]
+[node name="StaticBookshelf" parent="Props" index="13" node_paths=PackedStringArray("InteractionTrigger") instance=ExtResource("9_qsthf")]
 position = Vector2(64, 456)
+script = ExtResource("10_apvp5")
+InteractionTrigger = NodePath("InteractionTrigger")
+DialogueResource = ExtResource("11_fpxpb")
+DialogueTitle = "unwanted_frequencies"
+
+[node name="InteractionTrigger" parent="Props/StaticBookshelf" index="6" instance=ExtResource("10_scl41")]
+
+[node name="Popup" parent="Props/StaticBookshelf/InteractionTrigger" index="1"]
+offset_top = -57.0
+offset_bottom = -27.0
+
+[node name="Label" parent="Props/StaticBookshelf/InteractionTrigger/Popup" index="0"]
+text = "Read"
 
 [node name="StaticBookshelf2" parent="Props" index="14" instance=ExtResource("9_qsthf")]
 position = Vector2(96, 456)
@@ -580,6 +597,13 @@ MapStateKey = "b_arena_depths_2"
 position = Vector2(24, 332)
 MapStateKey = "b_arena_depths_2"
 
+[node name="Campfire" parent="Entities" index="5" instance=ExtResource("23_mykt8")]
+position = Vector2(256, -9)
+
+[node name="Campfire2" parent="Entities" index="6" instance=ExtResource("23_mykt8")]
+position = Vector2(80, 373)
+
 [editable path="Props/StaticBookshelf"]
+[editable path="Props/StaticBookshelf/InteractionTrigger"]
 [editable path="Props/StaticBookshelf2"]
 [editable path="Props/StaticBookshelf3"]

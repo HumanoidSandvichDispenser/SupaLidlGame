@@ -78,3 +78,4 @@ texture = SubResource("AtlasTexture_n00hm")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_p2qp6")
+bus = &"UI"

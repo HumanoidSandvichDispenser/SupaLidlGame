@@ -9,7 +9,7 @@ public partial class DynamicDoor : StaticBody2D
     public string MapStateKey { get; set; }
 
     [Export]
-    public Godot.Collections.Array<Node2D> VisibleOnToggle { get; set; } = new();
+    public Godot.Collections.Array<NodePath> VisibleOnToggle { get; set; } = new();
 
     [Export]
     public bool DefaultState { get; set; }
@@ -22,6 +22,7 @@ public partial class DynamicDoor : StaticBody2D
 
         var globalState = this.GetGlobalState();
         globalState.MapState.MapStateBoolChanged += OnMapStateChanged;
+        SetAnimations(false);
         RefreshMapState((bool)globalState.MapState[MapStateKey]);
     }
 
@@ -30,12 +31,7 @@ public partial class DynamicDoor : StaticBody2D
         GD.Print("Map state changed");
         if (key == MapStateKey)
         {
-            foreach (Node2D node in VisibleOnToggle)
-            {
-                // this is so extra effects are not played or showed when the
-                // door opens/closes from loading the map state.
-                node.Visible = true;
-            }
+            SetAnimations(true);
             RefreshMapState(value);
         }
     }
@@ -55,10 +51,31 @@ public partial class DynamicDoor : StaticBody2D
     public virtual void Open()
     {
         _animPlayer?.TryPlay("open");
+        //this.GetWorld().CurrentPlayer.Camera.Shake(1, 0.5f);
     }
 
     public virtual void Close()
     {
-        _animPlayer?.TryPlay("cose");
+        _animPlayer?.TryPlay("close");
+        //this.GetWorld().CurrentPlayer.Camera.Shake(2, 0.25f);
+    }
+
+    public void SetAnimations(bool isEnabled)
+    {
+        foreach (var animKey in _animPlayer.GetAnimationList())
+        {
+            var anim = _animPlayer.GetAnimation(animKey);
+            for (int i = 0; i < anim.GetTrackCount(); i++)
+            {
+                foreach (var nodePath in VisibleOnToggle)
+                {
+                    if (anim.TrackGetPath(i) == nodePath)
+                    {
+                        GD.Print($"Disabled anim for {nodePath}");
+                        anim.TrackSetEnabled(i, isEnabled);
+                    }
+                }
+            }
+        }
     }
 }

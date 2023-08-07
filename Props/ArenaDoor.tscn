@@ -1,8 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://c5i3cq1kewljv"]
+[gd_scene load_steps=18 format=3 uid="uid://c5i3cq1kewljv"]
 
 [ext_resource type="Script" path="res://Entities/DynamicDoor.cs" id="1_t6mj1"]
 [ext_resource type="Texture2D" uid="uid://crddevohy65we" path="res://Assets/Sprites/Props/arena-gate.png" id="2_kvtjv"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="3_i2hr3"]
+[ext_resource type="AudioStream" uid="uid://ciyi5ectbbscr" path="res://Assets/Sounds/rock-impact.wav" id="4_n2fp8"]
+[ext_resource type="AudioStream" uid="uid://dajb6kb64otkq" path="res://Assets/Sounds/cinder-block-move.wav" id="5_xjq01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yrdxe"]
 size = Vector2(32, 25)
@@ -62,6 +64,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_unbll"]
 resource_name = "close"
@@ -89,6 +103,33 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer2D")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("4_n2fp8")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="Animation" id="Animation_1nbqx"]
 resource_name = "open"
@@ -116,18 +157,90 @@ tracks/1/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("5_xjq01")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+
+[sub_resource type="Animation" id="Animation_s143f"]
+resource_name = "open_init"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_5kkkm"]
+resource_name = "close_init"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3eva7"]
 _data = {
 "RESET": SubResource("Animation_ylaba"),
 "close": SubResource("Animation_unbll"),
-"open": SubResource("Animation_1nbqx")
+"close_init": SubResource("Animation_5kkkm"),
+"open": SubResource("Animation_1nbqx"),
+"open_init": SubResource("Animation_s143f")
 }
 
 [node name="ArenaDoor" type="StaticBody2D"]
 collision_mask = 0
 script = ExtResource("1_t6mj1")
 MapStateKey = "b_arena_depths_door_1"
+VisibleOnToggle = [NodePath("GPUParticles2D"), NodePath("AudioStreamPlayer2D")]
 
 [node name="Gate" type="Sprite2D" parent="."]
 texture = ExtResource("2_kvtjv")
@@ -151,3 +264,6 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+max_distance = 512.0
+attenuation = 8.0
+bus = &"Effects"

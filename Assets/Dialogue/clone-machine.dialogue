@@ -1,0 +1,9 @@
+~ start
+
+Death Count\: {{Stats.DeathCount}} forsenPls
+- Save
+	do World.SaveGame()
+	=> END
+- Do nothing
+
+=> END

@@ -1,6 +1,8 @@
 using Godot;
 using GodotUtilities;
 using SupaLidlGame.BoundingBoxes;
+using SupaLidlGame.Extensions;
+using DialogueManagerRuntime;
 
 namespace SupaLidlGame.Entities;
 
@@ -14,16 +16,27 @@ public partial class Campfire : StaticBody2D, Utils.IInteractive
     [Signal]
     public delegate void UseEventHandler();
 
+    [Export(PropertyHint.File, "*.dialogue")]
+    public Resource DialogueResource { get; set; }
+
     public override void _Ready()
     {
         InteractionTrigger = GetNode<InteractionTrigger>("InteractionTrigger");
         _light = GetNode<PointLight2D>("PointLight2D");
+
         InteractionTrigger.Interaction += () =>
         {
             // save the player's spawn position to be their position on interaction
             EmitSignal(SignalName.Use);
 
-            this.GetAncestor<Utils.World>().SetSpawn(GlobalPosition);
+            var world = this.GetWorld();
+
+            // TODO: implement and use max health
+            world.CurrentPlayer.Health = 100;
+
+            //this.GetAncestor<Utils.World>().SetSpawn(GlobalPosition);
+            world.DialogueBalloon.Start(DialogueResource, "start");
+            //DialogueManager.ShowExampleDialogueBalloon(DialogueResource, "start");
         };
     }
 

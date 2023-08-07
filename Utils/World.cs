@@ -64,8 +64,6 @@ public partial class World : Node
     private string _currentMapResourcePath;
 
     //private Entities.Campfire _lastCampfire = null;
-    public Vector2 SaveLocation { get; set; }
-    public string SaveMapKey { get; set; }
 
     private const string PLAYER_PATH = "res://Characters/Player.tscn";
     private PackedScene _playerScene;
@@ -96,10 +94,12 @@ public partial class World : Node
         // create a player (currently unparented)
         CreatePlayer();
 
+        // TODO: create start menu and load game from there
+        LoadGame();
+
         EventBus = this.GetEventBus();
         EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
         {
-            GD.Print("request move to area");
             MoveToArea(args.Area, args.Connector);
         };
 
@@ -110,8 +110,16 @@ public partial class World : Node
     {
         CurrentBoss = boss;
         UIController.BossBar.Boss = boss;
-        MusicPlayer.Stream = boss.Music;
-        MusicPlayer.Play();
+        MusicPlayer.Stream = boss?.Music;
+        // TODO: use an audio manager
+        if (MusicPlayer.Stream is null)
+        {
+            MusicPlayer.Stop();
+        }
+        else
+        {
+            MusicPlayer.Play();
+        }
     }
 
     public void DeregisterBoss(Boss boss)
@@ -207,7 +215,7 @@ public partial class World : Node
     {
         CurrentPlayer = _playerScene.Instantiate<Player>();
 
-        CurrentPlayer.Death += (Events.HealthChangedArgs args) =>
+        CurrentPlayer.Death += (Events.HurtArgs args) =>
         {
             // TODO: respawn the player at the last campfire.
             GetTree().CreateTimer(3).Timeout += () =>
@@ -216,7 +224,7 @@ public partial class World : Node
             };
         };
 
-        CurrentPlayer.Hurt += (Events.HealthChangedArgs args) =>
+        CurrentPlayer.Hurt += (Events.HurtArgs args) =>
         {
             // TODO: move this to UI controller and add a setup method
             var bar = UIController.GetNode<UI.HealthBar>("Top/Margin/HealthBar");
@@ -251,11 +259,11 @@ public partial class World : Node
     public void MoveToArea(string path, string connector)
     {
         _currentConnector = connector;
-        if (path != _currentMapResourcePath)
+        GD.Print($"Moving to area {path} - {connector}");
+        if (path != CurrentMap.SceneFilePath)
         {
-            var scene = ResourceLoader.Load<PackedScene>(path);
             LoadScene(path);
-            _currentMapResourcePath = path;
+            //_currentMapResourcePath = path;
         }
 
         // after finished loading, move our player to the connector
@@ -272,22 +280,26 @@ public partial class World : Node
 
     public void SaveGame()
     {
-        ResourceSaver.Save(GlobalState.Progression, "user://progression.save");
-        ResourceSaver.Save(GlobalState.MapState, "user://map-state.save");
-        throw new System.NotImplementedException();
+        SetSpawn(CurrentPlayer.GlobalPosition);
+
+        // TODO: create a single save resource file
+        ResourceSaver.Save(GlobalState.Progression, "user://progression.tres");
+        ResourceSaver.Save(GlobalState.MapState, "user://map-state.tres");
+        ResourceSaver.Save(GlobalState.Stats, "user://stats.tres");
     }
 
     public void LoadGame()
     {
-        var prog = ResourceLoader.Load<Progression>("user://progression.save");
-        var mapState = ResourceLoader.Load<MapState>("user://map-state.save");
-        GlobalState.Progression = prog;
-        GlobalState.MapState = mapState;
+        var prog = ResourceLoader.Load<Progression>("user://progression.tres");
+        var mapState = ResourceLoader.Load<MapState>("user://map-state.tres");
+        var stats = ResourceLoader.Load<Stats>("user://stats.tres");
+
+        GlobalState.Progression = prog ?? new Progression();
+        GlobalState.MapState = mapState ?? new MapState();
+        GlobalState.Stats = stats ?? new Stats();
 
         // load the player scene
         // TODO: implement
-
-        throw new System.NotImplementedException();
     }
 
     /// <summary>
@@ -304,9 +316,9 @@ public partial class World : Node
         if (mapKey is null)
         {
             mapKey = CurrentMap.SceneFilePath;
-            SaveLocation = position;
-            SaveMapKey = mapKey;
         }
+        GlobalState.Stats.SaveLocation = position;
+        GlobalState.Stats.SaveMapKey = mapKey;
     }
 
     public void SpawnPlayer()
@@ -314,11 +326,11 @@ public partial class World : Node
         // TODO: add max health property
         //CurrentPlayer.Health = 100;
         //CurrentPlayer.Sprite.Visible = true;
-        if (CurrentMap.SceneFilePath != SaveMapKey)
+        if (CurrentMap.SceneFilePath != GlobalState.Stats.SaveMapKey)
         {
-            LoadScene(SaveMapKey);
+            LoadScene(GlobalState.Stats.SaveMapKey);
         }
-        CurrentPlayer.GlobalPosition = SaveLocation;
+        CurrentPlayer.GlobalPosition = GlobalState.Stats.SaveLocation;
         CurrentPlayer.Spawn();
     }
 

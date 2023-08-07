@@ -25,11 +25,10 @@ public sealed partial class Player : Character
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
-        Death += async (Events.HealthChangedArgs args) =>
+        Death += async (Events.HurtArgs args) =>
         {
             HurtAnimation.Play("death");
             await ToSignal(HurtAnimation, "animation_finished");
-            Visible = false;
         };
 
         base._Ready();
@@ -54,7 +53,7 @@ public sealed partial class Player : Character
     public void Spawn()
     {
         Health = 100;
-        Visible = true;
+        HurtAnimation.Play("spawn");
     }
 
     public override void ModifyVelocity()
@@ -69,7 +68,7 @@ public sealed partial class Player : Character
         // TODO: implement visual effects for stun
     }
 
-    public override void OnReceivedDamage(
+    protected override void OnReceivedDamage(
         float damage,
         Character inflictor,
         float knockback,

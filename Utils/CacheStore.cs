@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class CacheStore<TKey, TVal>
 {
-    // default TTL is 5 mins
-    public ulong TimeToLive { get; } = 3000;
+    // default TTL is 1 min
+    public ulong TimeToLive { get; } = 60000;
 
     private Dictionary<TKey, CacheItem<TVal>> _store = new();
 

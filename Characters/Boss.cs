@@ -14,6 +14,9 @@ public abstract partial class Boss : Enemy
     [Export]
     public AudioStream Music { get; set; }
 
+    [Export]
+    public Vector2 InitialPosition { get; set; }
+
     public abstract int Intensity { get; }
 
     private bool _isActive;
@@ -35,9 +38,14 @@ public abstract partial class Boss : Enemy
     {
         base._Ready();
 
-        Death += (Events.HealthChangedArgs args) =>
+        Death += (Events.HurtArgs args) =>
         {
             UpdateBossStatus(true);
+        };
+
+        this.GetWorld().CurrentPlayer.Death += (args) =>
+        {
+            Reset();
         };
     }
 
@@ -45,5 +53,25 @@ public abstract partial class Boss : Enemy
     {
         GetNode<State.Global.GlobalState>("/root/GlobalState")
             .Progression.BossStatus[SceneFilePath] = status;
+    }
+
+    protected virtual void Reset()
+    {
+        IsActive = false;
+
+        // reset animations
+        foreach (var child in GetNode("Animations").GetChildren())
+        {
+            if (child is AnimationPlayer anim)
+            {
+                if (anim.HasAnimation("RESET"))
+                {
+                    anim.Play("RESET");
+                }
+            }
+        }
+
+        StateMachine.ChangeState(StateMachine.InitialState);
+        ThinkerStateMachine.ChangeState(ThinkerStateMachine.InitialState);
     }
 }

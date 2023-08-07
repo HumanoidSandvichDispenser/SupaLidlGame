@@ -12,7 +12,7 @@ public partial class DynamicDoorSwitch : StaticBody2D
     public string MapStateKey { get; set; }
 
     [Export]
-    public Godot.Collections.Array<Node2D> VisibleOnToggle { get; set; } = new();
+    public Godot.Collections.Array<NodePath> VisibleOnToggle { get; set; } = new();
 
     private AnimationPlayer _animPlayer;
 
@@ -22,18 +22,16 @@ public partial class DynamicDoorSwitch : StaticBody2D
 
         var globalState = this.GetGlobalState();
         var doorState = globalState.MapState[MapStateKey];
-        if (!doorState.Equals(default))
-        {
-            if (!(bool)doorState)
-            {
-                InteractionTrigger.Interaction += OnInteraction;
-            }
-        }
+        InteractionTrigger.Interaction += OnInteraction;
+
+        // disable specific animations when entering initial state
+        SetAnimations(false);
+        RefreshMapState(doorState);
     }
 
     private void RefreshMapState(Variant value)
     {
-        if (value.Equals(default))
+        if (value.Equals(default) || value.VariantType != Variant.Type.Bool)
         {
             return;
         }
@@ -51,14 +49,38 @@ public partial class DynamicDoorSwitch : StaticBody2D
     public void OnInteraction()
     {
         var globalState = this.GetGlobalState();
-        globalState.MapState[MapStateKey] = true;
-        RefreshMapState(true);
-
-        GD.Print($"{MapStateKey} is now on");
-
-        foreach (Node2D node in VisibleOnToggle)
+        Variant oldState = globalState.MapState[MapStateKey];
+        bool newState;
+        globalState.MapState[MapStateKey] = newState = oldState.VariantType switch
         {
-            node.Visible = true;
+            Variant.Type.Bool => !(bool)oldState,
+            _ => true,
+        };
+        SetAnimations(true);
+        RefreshMapState(newState);
+
+        GD.Print($"Map state \"{MapStateKey}\" {oldState} -> {newState}");
+
+            //var a = _animPlayer.CurrentAnimation;
+            //GetNode<Node2D>(nodePath).SetProcess(true);
+    }
+
+    public void SetAnimations(bool isEnabled)
+    {
+        foreach (var animKey in _animPlayer.GetAnimationList())
+        {
+            var anim = _animPlayer.GetAnimation(animKey);
+            for (int i = 0; i < anim.GetTrackCount(); i++)
+            {
+                foreach (var nodePath in VisibleOnToggle)
+                {
+                    if (anim.TrackGetPath(i) == nodePath)
+                    {
+                        GD.Print($"Disabled anim for {nodePath}");
+                        anim.TrackSetEnabled(i, isEnabled);
+                    }
+                }
+            }
         }
     }
 }

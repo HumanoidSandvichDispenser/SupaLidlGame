@@ -96,6 +96,7 @@ _data = {
 [node name="ArenaDoorSwitch" type="StaticBody2D" node_paths=PackedStringArray("InteractionTrigger")]
 script = ExtResource("1_78qab")
 InteractionTrigger = NodePath("InteractionTrigger")
+VisibleOnToggle = [null]
 
 [node name="InteractionTrigger" parent="." instance=ExtResource("2_7j8p7")]
 

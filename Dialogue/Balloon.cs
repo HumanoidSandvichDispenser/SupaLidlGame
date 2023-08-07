@@ -72,7 +72,6 @@ public partial class Balloon : CanvasLayer
       {
         Next(dialogueLine.NextId);
       }
-
     };
 
     margin.Resized += () => HandleResize();
@@ -105,6 +104,7 @@ public partial class Balloon : CanvasLayer
   private async void Next(string nextId)
   {
     DialogueLine = await DialogueManager.GetNextDialogueLine(resource, nextId, temporaryGameStates ?? new Array<Variant>());
+    GD.Print(DialogueLine.Text);
   }
 
 
@@ -265,6 +265,7 @@ public partial class Balloon : CanvasLayer
     {
       isWaitingForInput = true;
       balloon.FocusMode = Control.FocusModeEnum.All;
+      balloon.GrabFocus();
     }
   }
 }

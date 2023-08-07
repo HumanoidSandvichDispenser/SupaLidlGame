@@ -30,10 +30,13 @@ public partial class Character : CharacterBody2D, IFaction
     public float Stealth { get; protected set; } = 0;
 
     [Signal]
-    public delegate void HurtEventHandler(Events.HealthChangedArgs args);
+    public delegate void HealthChangedEventHandler(float oldHP, float newHP);
 
     [Signal]
-    public delegate void DeathEventHandler(Events.HealthChangedArgs args);
+    public delegate void HurtEventHandler(Events.HurtArgs args);
+
+    [Signal]
+    public delegate void DeathEventHandler(Events.HurtArgs args);
 
     protected float _mass = 1.0f;
 
@@ -242,7 +245,7 @@ public partial class Character : CharacterBody2D, IFaction
         Vector2 knockbackDir = default) => damage;
 
 
-    public virtual void OnReceivedDamage(
+    protected virtual void OnReceivedDamage(
         float damage,
         Character inflictor,
         float knockback,
@@ -284,13 +287,6 @@ public partial class Character : CharacterBody2D, IFaction
             }
         }
 
-        // if anyone involved is a player, shake their screen
-        Player plr = inflictor as Player ?? this as Player;
-        if (plr is not null)
-        {
-            //plr.Camera.Shake(1, 0.4f);
-        }
-
         if (this.GetNode("Effects/HurtSound") is AudioStreamPlayer2D sound)
         {
             // very small pitch deviation
@@ -298,7 +294,7 @@ public partial class Character : CharacterBody2D, IFaction
             sound.At(GlobalPosition).WithPitchDeviation(0.125f).PlayOneShot();
         }
 
-        Events.HealthChangedArgs args = new Events.HealthChangedArgs
+        Events.HurtArgs args = new Events.HurtArgs
         {
             Attacker = inflictor,
             OldHealth = oldHealth,
@@ -315,6 +311,14 @@ public partial class Character : CharacterBody2D, IFaction
                 .CloneOnWorld<GpuParticles2D>()
                 .EmitOneShot();
         }
+    }
+
+    /// <summary>
+    /// For debugging purposes
+    /// </summary>
+    public void Inflict(float damage)
+    {
+        OnReceivedDamage(damage, null, 0);
     }
 
     public virtual void Footstep()
