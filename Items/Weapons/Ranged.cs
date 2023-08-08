@@ -13,7 +13,7 @@ public abstract partial class Ranged : Weapon
     [Export]
     public State.Weapon.WeaponStateMachine StateMachine { get; set; }
 
-    public override bool IsUsing => StateMachine.CurrentState
+    public override bool IsUsingPrimary => StateMachine.CurrentState
         is State.Weapon.RangedFireState;
 
     public bool IsChargeable => ChargeTime > 0;

@@ -8,7 +8,11 @@ public abstract partial class Weapon : Item
 {
     public double RemainingUseTime { get; protected set; } = 0;
 
-    public override bool IsUsing => RemainingUseTime > 0;
+    public override bool IsUsing => IsUsingPrimary || IsUsingAlt;
+
+    public virtual bool IsUsingPrimary => false;
+
+    public virtual bool IsUsingAlt => false;
 
     /// <summary>
     /// How much damage in HP that this weapon deals.
@@ -22,6 +26,9 @@ public abstract partial class Weapon : Item
     /// </summary>
     [Export]
     public double UseTime { get; set; } = 0;
+
+    [Export]
+    public double UseAltTime { get; set; } = 0;
 
     /// <summary>
     /// The magnitude of the knockback force of the weapon.

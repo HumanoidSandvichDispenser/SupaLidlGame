@@ -11,6 +11,9 @@ public partial class ProjectileSpawner : Ranged
     public bool ShouldOverrideProjectileDamage { get; set; } = true;
 
     [Export]
+    public bool ShouldOverrideVelocity { get; set; } = true;
+
+    [Export]
     public bool ShouldRotate { get; set; } = true;
 
     public override void Attack()
@@ -20,6 +23,7 @@ public partial class ProjectileSpawner : Ranged
         projectile.Hitbox.Faction = Character.Faction;
         projectile.Direction = Character.Target.Normalized();
         projectile.GlobalPosition = GlobalPosition;
+        projectile.Speed = InitialVelocity;
 
         if (ShouldRotate)
         {

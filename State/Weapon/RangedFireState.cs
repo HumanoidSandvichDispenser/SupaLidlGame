@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.State.Weapon;
 
@@ -10,6 +11,12 @@ public partial class RangedFireState : WeaponState
     [Export]
     public RangedIdleState IdleState { get; set; }
 
+    [Export]
+    public AnimationPlayer AnimationPlayer { get; set; }
+
+    [Export]
+    public string AnimationKey { get; set; }
+
     private double _timeLeft = 0;
 
     public override IState<WeaponState> Enter(IState<WeaponState> prev)
@@ -18,6 +25,7 @@ public partial class RangedFireState : WeaponState
         _timeLeft = Weapon.UseTime;
         Weapon.Attack();
         Weapon.UseDirection = Weapon.Character.Target;
+        AnimationPlayer?.TryPlay(AnimationKey);
         return null;
     }
 

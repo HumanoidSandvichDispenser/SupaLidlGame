@@ -5,6 +5,9 @@ namespace SupaLidlGame.State;
 
 public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
 {
+    [Signal]
+    public delegate void OnStateChangedEventHandler(Node state);
+
     public T CurrentState { get; protected set; }
 
     public abstract T InitialState { get; set; }

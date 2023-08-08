@@ -207,9 +207,9 @@ Description = "\"Violence. Speed. Momentum.\""
 script = ExtResource("2_c41ov")
 InitialState = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("AnticipateState", "Sword")]
+[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("UseState", "Sword")]
 script = ExtResource("3_sxffm")
-AnticipateState = NodePath("../Anticipate")
+UseState = NodePath("../Anticipate")
 Sword = NodePath("../..")
 
 [node name="Anticipate" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AttackState")]

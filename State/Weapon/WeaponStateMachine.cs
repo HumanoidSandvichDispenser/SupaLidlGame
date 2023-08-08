@@ -25,6 +25,24 @@ public partial class WeaponStateMachine : StateMachine<WeaponState>
         }
     }
 
+    public void UseAlt()
+    {
+        var state = CurrentState.UseAlt();
+        if (state is WeaponState)
+        {
+            ChangeState(state);
+        }
+    }
+
+    public void DeuseAlt()
+    {
+        var state = CurrentState.DeuseAlt();
+        if (state is WeaponState)
+        {
+            ChangeState(state);
+        }
+    }
+
     public void Process(double delta)
     {
         var state = CurrentState.Process(delta);

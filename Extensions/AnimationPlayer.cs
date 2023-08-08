@@ -1,5 +1,7 @@
 using Godot;
 
+namespace SupaLidlGame.Extensions;
+
 public static class AnimationPlayerExtensions
 {
     public static bool TryPlay(this AnimationPlayer player, string name)

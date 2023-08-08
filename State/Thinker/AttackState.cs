@@ -32,10 +32,15 @@ public partial class AttackState : ThinkerState
     public float MaxDistanceToTarget { get; set; }
 
     [Export]
+    public float UseItemDistance { get; set; } = 40;
+
+    [Export]
     public ThinkerState PassiveState { get; set; }
 
     [Export]
     public ThinkerState PursueState { get; set; }
+
+    protected Characters.Character _bestTarget;
 
     protected float _preferredWeightDistance = 64.0f;
     protected float _maxWeightDistance = 8.0f;
@@ -150,6 +155,7 @@ public partial class AttackState : ThinkerState
     {
         // TODO: the entity should wander if it doesn't find a best target
         var bestTarget = NPC.FindBestTarget();
+        _bestTarget = bestTarget;
 
         if (bestTarget is not null)
         {
@@ -169,12 +175,9 @@ public partial class AttackState : ThinkerState
 
             UpdateWeights(pos);
 
-            if (dist < 40 && NPC.CanAttack)
+            if (dist <= UseItemDistance && NPC.CanAttack)
             {
-                if (NPC.Inventory.SelectedItem is Items.Weapon weapon)
-                {
-                    NPC.UseCurrentItem();
-                }
+                Attack(bestTarget);
             }
         }
         else
@@ -198,5 +201,13 @@ public partial class AttackState : ThinkerState
         }
 
         return base.Process(delta);
+    }
+
+    public virtual void Attack(Characters.Character bestTarget)
+    {
+        if (NPC.Inventory.SelectedItem is Items.Weapon weapon)
+        {
+            NPC.UseCurrentItem();
+        }
     }
 }

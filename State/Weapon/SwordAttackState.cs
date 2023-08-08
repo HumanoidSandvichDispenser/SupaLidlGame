@@ -51,6 +51,7 @@ public partial class SwordAttackState : WeaponState
 
     public override WeaponState Use()
     {
+        /*
         if (_useDuration <= 0)
         {
             // if we are still playing the current attack animation, we should alternate
@@ -60,6 +61,7 @@ public partial class SwordAttackState : WeaponState
             }
             return IdleState;
         }
+        */
 
         return null;
     }

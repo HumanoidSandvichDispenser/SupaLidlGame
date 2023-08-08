@@ -1,0 +1,216 @@
+[gd_scene load_steps=18 format=3 uid="uid://d1d4vg7we5rjr"]
+
+[ext_resource type="Script" path="res://Items/Weapons/ProjectileSpawner.cs" id="1_4xyyt"]
+[ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_ag6rd"]
+[ext_resource type="PackedScene" uid="uid://bqvseo3sbs1aj" path="res://Entities/RailBeam.tscn" id="2_k2n4h"]
+[ext_resource type="Script" path="res://State/Weapon/RangedIdleState.cs" id="3_dd6bh"]
+[ext_resource type="Script" path="res://State/Weapon/RangedFireState.cs" id="4_bwqd6"]
+[ext_resource type="Texture2D" uid="uid://b1omx2kdb2x1n" path="res://Assets/Sprites/Items/shotgun.png" id="5_g8d45"]
+[ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="6_va8ee"]
+[ext_resource type="AudioStream" uid="uid://5fybh24xashp" path="res://Assets/Sounds/shotgun.wav" id="7_ucxp5"]
+
+[sub_resource type="Animation" id="Animation_i0e06"]
+resource_name = "fire"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-4, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer2D")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_ucxp5")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Sprite2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_sqn2o"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_vijrc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_si0kh"]
+_data = {
+"RESET": SubResource("Animation_vijrc"),
+"fire": SubResource("Animation_i0e06"),
+"idle": SubResource("Animation_sqn2o")
+}
+
+[sub_resource type="Gradient" id="Gradient_uphon"]
+colors = PackedColorArray(1, 1, 1, 0.498039, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_83h4s"]
+gradient = SubResource("Gradient_uphon")
+
+[sub_resource type="Curve" id="Curve_mqgo6"]
+_data = [Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3omj5"]
+curve = SubResource("Curve_mqgo6")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uexo4"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 90.0
+gravity = Vector3(0, -4, 0)
+initial_velocity_min = 3.0
+initial_velocity_max = 4.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.1
+scale_max = 0.1
+scale_curve = SubResource("CurveTexture_3omj5")
+color_ramp = SubResource("GradientTexture1D_83h4s")
+
+[node name="Shotgun" type="Node2D" node_paths=PackedStringArray("StateMachine")]
+script = ExtResource("1_4xyyt")
+Projectile = ExtResource("2_k2n4h")
+StateMachine = NodePath("State")
+Damage = 20.0
+UseTime = 1.0
+InitialVelocity = 256.0
+
+[node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("2_ag6rd")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("FireState", "Weapon", "AnimationPlayer")]
+script = ExtResource("3_dd6bh")
+FireState = NodePath("../Fire")
+Weapon = NodePath("../..")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+AnimationKey = "idle"
+
+[node name="Fire" type="Node" parent="State" node_paths=PackedStringArray("Weapon", "IdleState", "AnimationPlayer")]
+script = ExtResource("4_bwqd6")
+Weapon = NodePath("../..")
+IdleState = NodePath("../Idle")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+AnimationKey = "fire"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("5_g8d45")
+centered = false
+offset = Vector2(0, -2)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_si0kh")
+}
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(16, -1)
+emitting = false
+amount = 4
+process_material = SubResource("ParticleProcessMaterial_uexo4")
+texture = ExtResource("6_va8ee")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+max_distance = 256.0
+bus = &"Effects"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=63 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
 [ext_resource type="PackedScene" uid="uid://g7wfcubs6bdd" path="res://Items/Weapons/Railgun.tscn" id="21_n8w32"]
+[ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="22_mqpn7"]
+[ext_resource type="PackedScene" uid="uid://d1d4vg7we5rjr" path="res://Items/Weapons/Shotgun.tscn" id="22_rmciq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -479,6 +481,7 @@ label_settings = SubResource("LabelSettings_q5h1n")
 horizontal_alignment = 1
 
 [node name="Inventory" type="Node2D" parent="."]
+y_sort_enabled = true
 position = Vector2(0, -4)
 script = ExtResource("7_xyenu")
 InventoryMap = {
@@ -486,15 +489,12 @@ InventoryMap = {
 "equip_2": 1
 }
 
+[node name="Sword" parent="Inventory" instance=ExtResource("22_mqpn7")]
+
+[node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
+
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
 visible = false
-InitialVelocity = 0.0
-ShouldFreezeAngleOnUse = true
-MinDistanceHint = 0.0
-MaxDistanceHint = 0.0
-ItemName = ""
-Description = ""
-CanStack = false
 
 [node name="Railgun" parent="Inventory" instance=ExtResource("21_n8w32")]
 UseTime = 0.2

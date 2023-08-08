@@ -213,11 +213,11 @@ public partial class Character : CharacterBody2D, IFaction
 
         if (Inventory.SelectedItem is Weapon weapon)
         {
-            weapon.Use();
-            if (weapon.IsUsing)
+            if (!weapon.IsUsing)
             {
                 Inventory.EmitSignal(Inventory.SignalName.UsedItem, weapon);
             }
+            weapon.Use();
         }
     }
 
@@ -227,6 +227,27 @@ public partial class Character : CharacterBody2D, IFaction
         {
             weapon.Deuse();
             // TODO: DeusedItem signal, implement when needed
+        }
+    }
+
+    public void UseCurrentItemAlt()
+    {
+        if (StunTime > 0 || !IsAlive)
+        {
+            return;
+        }
+
+        if (Inventory.SelectedItem is Weapon weapon)
+        {
+            weapon.UseAlt();
+        }
+    }
+
+    public void DeuseCurrentItemAlt()
+    {
+        if (Inventory.SelectedItem is Weapon weapon)
+        {
+            weapon.DeuseAlt();
         }
     }
 
@@ -343,8 +364,6 @@ public partial class Character : CharacterBody2D, IFaction
         };
         var spaceState = GetWorld2D().DirectSpaceState;
         var result = spaceState.IntersectRay(rayParams);
-        if (result.Count > 0)
-            GD.Print(result["collider"]);
         return result.Count == 0;
     }
 }

@@ -11,8 +11,13 @@ public partial class Sword : Weapon, IParryable
 {
     public bool IsAttacking { get; protected set; }
 
-    public override bool IsUsing => StateMachine.CurrentState
-        is SwordAttackState;
+    public override bool IsUsing => IsUsingPrimary || IsUsingAlt;
+
+    public override bool IsUsingPrimary => StateMachine.CurrentState is
+        SwordAttackState;
+
+    public override bool IsUsingAlt => StateMachine.CurrentState is
+        SwordBlockState;
 
     [Export]
     public Hitbox Hitbox { get; set; }
@@ -29,6 +34,9 @@ public partial class Sword : Weapon, IParryable
     /// </remarks>
     [Export]
     public double AttackTime { get; set; } = 0;
+
+    [Export]
+    public double AttackAltTime { get; set; } = 0;
 
     [Export]
     public double AttackAnimationDuration { get; set; }
@@ -64,17 +72,16 @@ public partial class Sword : Weapon, IParryable
         base.Unequip(character);
     }
 
-    public override void Use()
+    public void EnableParry()
     {
-        StateMachine.Use();
-        base.Use();
+        EnableParry(Time.GetTicksMsec());
     }
 
-    public void EnableParry()
+    public void EnableParry(ulong parryTimeOrigin)
     {
         IsParried = false;
         IsParryable = true;
-        ParryTimeOrigin = Time.GetTicksMsec();
+        ParryTimeOrigin = parryTimeOrigin;
     }
 
     public void DisableParry()
@@ -82,12 +89,28 @@ public partial class Sword : Weapon, IParryable
         IsParryable = false;
     }
 
+    public override void Use()
+    {
+        StateMachine.Use();
+        base.Use();
+    }
+
     public override void Deuse()
     {
-        //AnimationPlayer.Stop();
-        //Deattack();
         StateMachine.Deuse();
         base.Deuse();
+    }
+
+    public override void UseAlt()
+    {
+        StateMachine.UseAlt();
+        base.UseAlt();
+    }
+
+    public override void DeuseAlt()
+    {
+        StateMachine.DeuseAlt();
+        base.DeuseAlt();
     }
 
     public void Attack()
@@ -130,7 +153,6 @@ public partial class Sword : Weapon, IParryable
         {
             if (box is Hurtbox hurtbox)
             {
-                GD.Print("LUL");
                 hurtbox.InflictDamage(Damage, Character, Knockback);
             }
         }
@@ -145,10 +167,15 @@ public partial class Sword : Weapon, IParryable
             {
                 // our character was parried
                 ParryParticles.CloneOnWorld<GpuParticles2D>().EmitOneShot();
-            }
-            else
-            {
-                otherParryable.Stun();
+                Stun();
+
+                if (otherParryable is Sword sword)
+                {
+                    if (sword.StateMachine.CurrentState is SwordBlockState b)
+                    {
+                        b.HasBlocked = true;
+                    }
+                }
             }
         }
     }

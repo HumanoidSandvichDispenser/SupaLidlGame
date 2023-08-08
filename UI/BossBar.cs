@@ -26,12 +26,12 @@ public partial class BossBar : VBoxContainer
         BossNameLabel = GetNode<Label>("LabelMargin/BossNameLabel");
     }
 
-    private void OnBossHurt(Events.HealthChangedArgs args)
+    private void OnBossHurt(Events.HurtArgs args)
     {
         ProgressBar.Value = args.NewHealth;
     }
 
-    private void OnBossDeath(Events.HealthChangedArgs args)
+    private void OnBossDeath(Events.HurtArgs args)
     {
         Visible = false;
         Boss = null;

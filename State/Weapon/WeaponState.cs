@@ -8,6 +8,10 @@ public abstract partial class WeaponState : Node, IState<WeaponState>
 
     public virtual WeaponState Deuse() => null;
 
+    public virtual WeaponState UseAlt() => null;
+
+    public virtual WeaponState DeuseAlt() => null;
+
     public abstract IState<WeaponState> Enter(IState<WeaponState> previousState);
 
     public virtual void Exit(IState<WeaponState> nextState)

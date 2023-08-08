@@ -49,4 +49,14 @@ public abstract partial class Item : Node2D
     public abstract void Use();
 
     public abstract void Deuse();
+
+    public virtual void UseAlt()
+    {
+
+    }
+
+    public virtual void DeuseAlt()
+    {
+
+    }
 }

@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.State.Weapon;
 
@@ -10,9 +11,17 @@ public partial class RangedIdleState : WeaponState
     [Export]
     public Items.Weapons.Ranged Weapon { get; set; }
 
+    [Export]
+    public AnimationPlayer AnimationPlayer { get; set; }
+
+    [Export]
+    public string AnimationKey { get; set; }
+
+
     public override IState<WeaponState> Enter(IState<WeaponState> prev)
     {
         Weapon.Visible = !Weapon.ShouldHideIdle;
+        AnimationPlayer?.TryPlay(AnimationKey);
         return null;
     }
 

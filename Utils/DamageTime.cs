@@ -18,7 +18,7 @@ public partial class DamageTime : Node
         }
     }
 
-    private void PlayerHurt(Events.HealthChangedArgs args)
+    private void PlayerHurt(Events.HurtArgs args)
     {
         if (args.Damage > 10)
         {

@@ -51,31 +51,30 @@ public abstract partial class PlayerState : CharacterState
         {
             if (Character.Inventory.SelectedItem is Items.Weapon weapon)
             {
-                var isPressed = Godot.Input.IsActionPressed("attack1");
+                var isAttack1On = Godot.Input.IsActionPressed("attack1");
+                var isAttack2On = Godot.Input.IsActionPressed("attack2");
+
+                var ret = false;
                 if (!weapon.IsUsing)
                 {
-                    var ret = false;
 
-                    if (!weapon.ShouldHideIdle || isPressed)
+                    if (!weapon.ShouldHideIdle || isAttack1On)
                     {
                         Character.Target = dirToMouse;
                         ret = true;
                     }
-
-                    if (isPressed)
-                    {
-                        Character.UseCurrentItem();
-                    }
-
-                    return ret;
                 }
-                else
+
+                if (isAttack1On)
                 {
-                    if (!isPressed)
-                    {
-                        Character.DeuseCurrentItem();
-                    }
+                    Character.UseCurrentItem();
                 }
+                else if (isAttack2On)
+                {
+                    Character.UseCurrentItemAlt();
+                }
+
+                return ret;
             }
             return false;
         }

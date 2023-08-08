@@ -1,0 +1,463 @@
+[gd_scene load_steps=26 format=3 uid="uid://5y1acxl4j4n7"]
+
+[ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mai31"]
+[ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_5ramr"]
+[ext_resource type="Script" path="res://State/Weapon/SwordIdleState.cs" id="3_fwkit"]
+[ext_resource type="Script" path="res://State/Weapon/SwordAnticipateState.cs" id="4_nsn1q"]
+[ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_g1en5"]
+[ext_resource type="Texture2D" uid="uid://dfpe74vxvuwal" path="res://Assets/Sprites/Items/pugio.png" id="6_d28k5"]
+[ext_resource type="Script" path="res://State/Weapon/SwordBlockState.cs" id="6_yvm8x"]
+[ext_resource type="Material" uid="uid://cbfaqolx1ydvv" path="res://Assets/Sprites/Particles/ParryParticles.tres" id="8_we1sv"]
+[ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="9_qimey"]
+[ext_resource type="Texture2D" uid="uid://ct0m4lk2icx3p" path="res://Assets/Sprites/sword-swing-small.png" id="10_q8b54"]
+[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="11_b1fwx"]
+[ext_resource type="Texture2D" uid="uid://417j1ckcjg2i" path="res://Assets/Sprites/Items/doc-shield.png" id="11_qpejo"]
+[ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="12_a8o3x"]
+[ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="13_t5wmj"]
+
+[sub_resource type="Environment" id="Environment_72txp"]
+background_mode = 3
+glow_enabled = true
+glow_hdr_threshold = 1.42
+
+[sub_resource type="Animation" id="Animation_b7327"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3.14159]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwingSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["is_alternate", false],
+"method": &"SetAnimationCondition"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SwingSprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2, 2, 2, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Anchor/Node2D/Sprite2D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Shield:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Shield:material:shader_parameter/intensity")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ameas"]
+resource_name = "anticipate"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0.933033),
+"update": 1,
+"values": [3.14159]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Anchor/Node2D/Sprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_bj2ky"]
+resource_name = "anticipate_alternate"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2.35619]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Anchor/Node2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_b8r8j"]
+resource_name = "anticipate_bot"
+
+[sub_resource type="Animation" id="Animation_6jphj"]
+resource_name = "attack"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0, 1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwingSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1, 2, 0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"values": []
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SwingSound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Anchor/Node2D/Sprite2D:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_pclfs"]
+resource_name = "attack_alternate"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [1.5708, -1.5708, -1.5708]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SwingSprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("Anchor:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.35),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(0, -4), Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Anchor/Node2D:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3.14159, 0.785398]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": ["is_alternate", false],
+"method": &"SetAnimationCondition"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_x1aou"]
+resource_name = "block"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Shield:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 0.25, 1),
+"update": 0,
+"values": [Vector2(1.4, 1.4), Vector2(1.4, 1.4), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Shield:material:shader_parameter/intensity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_11u25"]
+_data = {
+"RESET": SubResource("Animation_b7327"),
+"anticipate": SubResource("Animation_ameas"),
+"anticipate_alternate": SubResource("Animation_bj2ky"),
+"anticipate_bot": SubResource("Animation_b8r8j"),
+"attack": SubResource("Animation_6jphj"),
+"attack_alternate": SubResource("Animation_pclfs"),
+"block": SubResource("Animation_x1aou")
+}
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ycxcw"]
+points = PackedVector2Array(0, 0, -30, 0, -21.213, -21.213, 0, -30, 21.213, -21.213, 30, 0, 0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rgypv"]
+resource_local_to_scene = true
+shader = ExtResource("11_b1fwx")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[node name="Pugio" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
+y_sort_enabled = true
+texture_filter = 3
+script = ExtResource("1_mai31")
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
+AttackTime = 0.2
+AttackAltTime = 0.75
+AttackAnimationDuration = 0.5
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
+NPCAnticipateTime = 0.3
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
+Damage = 20.0
+UseTime = 0.55
+UseAltTime = 1.5
+Knockback = 64.0
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
+
+[node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("2_5ramr")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("UseState", "UseAltState", "Sword")]
+script = ExtResource("3_fwkit")
+UseState = NodePath("../Anticipate")
+UseAltState = NodePath("../Block")
+Sword = NodePath("../..")
+
+[node name="Anticipate" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AttackState")]
+script = ExtResource("4_nsn1q")
+Sword = NodePath("../..")
+AttackState = NodePath("../Attack")
+
+[node name="Attack" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState")]
+script = ExtResource("5_g1en5")
+Sword = NodePath("../..")
+IdleState = NodePath("../Idle")
+
+[node name="Block" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState", "UseState")]
+script = ExtResource("6_yvm8x")
+Sword = NodePath("../..")
+IdleState = NodePath("../Idle")
+UseState = NodePath("../Anticipate")
+BlockAnimKey = "block"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_72txp")
+
+[node name="Anchor" type="Node2D" parent="."]
+y_sort_enabled = true
+rotation = 3.14159
+
+[node name="Node2D" type="Node2D" parent="Anchor"]
+y_sort_enabled = true
+position = Vector2(0, -20)
+
+[node name="Sprite2D" type="Sprite2D" parent="Anchor/Node2D"]
+visible = false
+y_sort_enabled = true
+texture = ExtResource("6_d28k5")
+
+[node name="ParryParticles" type="GPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
+modulate = Color(1.2, 1.2, 1.2, 1)
+position = Vector2(-0.221825, -3.12132)
+rotation = 0.785398
+emitting = false
+amount = 16
+process_material = ExtResource("8_we1sv")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+trail_lifetime = 0.1
+trail_sections = 4
+
+[node name="Hand" type="Sprite2D" parent="Anchor/Node2D/Sprite2D"]
+position = Vector2(-2.52724e-05, 7)
+rotation = 1.5708
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_11u25")
+}
+
+[node name="Hitbox" parent="." instance=ExtResource("9_qimey")]
+IsDisabled = true
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+rotation = 1.5708
+shape = SubResource("ConvexPolygonShape2D_ycxcw")
+disabled = true
+
+[node name="SwingSprite" type="Sprite2D" parent="."]
+modulate = Color(2, 2, 2, 1)
+texture = ExtResource("10_q8b54")
+hframes = 3
+
+[node name="Shield" type="Sprite2D" parent="."]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_rgypv")
+position = Vector2(7, 8)
+texture = ExtResource("11_qpejo")
+offset = Vector2(0, -12)
+
+[node name="SwingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("12_a8o3x")
+pitch_scale = 1.2
+
+[node name="ParrySound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_t5wmj")
+
+[editable path="Hitbox"]

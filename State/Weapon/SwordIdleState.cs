@@ -5,7 +5,10 @@ namespace SupaLidlGame.State.Weapon;
 public partial class SwordIdleState : WeaponState
 {
     [Export]
-    public SwordAnticipateState AnticipateState { get; set; }
+    public WeaponState UseState { get; set; }
+
+    [Export]
+    public WeaponState UseAltState { get; set; }
 
     [Export]
     public SupaLidlGame.Items.Weapons.Sword Sword { get; set; }
@@ -31,12 +34,12 @@ public partial class SwordIdleState : WeaponState
 
     public override WeaponState Use()
     {
-        if (_attackCooldown <= 0)
-        {
-            return AnticipateState;
-        }
+        return UseState;
+    }
 
-        return AnticipateState;
+    public override WeaponState UseAlt()
+    {
+        return UseAltState;
     }
 
     public override WeaponState Process(double delta)

@@ -393,21 +393,17 @@ material = SubResource("ShaderMaterial_2fq6c")
 collision_layer = 6
 collision_mask = 17
 script = ExtResource("2_l16dp")
-PreferredWeightDistance = null
-MaxWeightDistance = null
 DefaultSelectedItem = NodePath("Inventory/ProjectileSpawner")
 ShouldMoveWhenUsingItem = false
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
 Speed = 40.0
 Friction = 8.0
 Mass = 0.5
-Stealth = null
 Health = 170.0
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
-Faction = null
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_lj2a2")
@@ -433,25 +429,19 @@ script = ExtResource("7_q01ij")
 NavigationAgent = NodePath("../../NavigationAgent2D")
 AttackState = NodePath("../Attack")
 MinDistanceToTarget = 96.0
-MaxDistanceFromOrigin = null
-LastSeenPosition = null
 ThinkDelta = 0.05
 NPC = NodePath("../..")
 
 [node name="Attack" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PassiveState", "PursueState", "NPC")]
 script = ExtResource("8_woh6n")
-PreferredWeightDistance = null
-MaxWeightDistance = null
 MaxDistanceToTarget = 128.0
 PassiveState = NodePath("../Pursue")
 PursueState = NodePath("../Pursue")
-ThinkDelta = null
 NPC = NodePath("../..")
 
 [node name="Idle" type="Node" parent="ThinkerStateMachine"]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_postprocessing = 1
 debug_enabled = true
 
 [node name="Animations" type="Node" parent="."]
@@ -527,31 +517,17 @@ hframes = 6
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_bfqew")
 
-[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
+[node name="Inventory" type="Node2D" parent="."]
 position = Vector2(0, -4)
 script = ExtResource("17_sjq8t")
-Items = []
 
 [node name="ProjectileSpawner" parent="Inventory" instance=ExtResource("17_dmlbb")]
 Projectile = ExtResource("18_lwg36")
 ShouldOverrideProjectileDamage = false
 ShouldRotate = false
-AngleDeviation = null
-ChargeTime = null
-Damage = null
 UseTime = 2.0
-Knockback = null
-InitialVelocity = null
-ShouldHideIdle = null
-ShouldFreezeAngleOnUse = null
-MinDistanceHint = null
-MaxDistanceHint = null
-ItemName = null
-Description = null
-CanStack = null
 
 [node name="Hurtbox" parent="." instance=ExtResource("18_ajs2x")]
-Faction = null
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(0, -8)
