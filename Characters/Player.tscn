@@ -324,6 +324,7 @@ script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
 DirectionMarker = NodePath("Direction2D")
 Speed = 80.0
+Stealth = 1.0
 HandTexture = ExtResource("3_3dqh7")
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
@@ -486,15 +487,16 @@ position = Vector2(0, -4)
 script = ExtResource("7_xyenu")
 InventoryMap = {
 "equip_1": 0,
-"equip_2": 1
+"equip_2": 1,
+"equip_3": 2
 }
 
 [node name="Sword" parent="Inventory" instance=ExtResource("22_mqpn7")]
 
-[node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
-
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
 visible = false
+
+[node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
 
 [node name="Railgun" parent="Inventory" instance=ExtResource("21_n8w32")]
 UseTime = 0.2

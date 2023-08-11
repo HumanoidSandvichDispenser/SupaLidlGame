@@ -42,7 +42,7 @@ public partial class ThinkerStateMachine : StateMachine<ThinkerState>
         }
     }
 
-    public override bool ChangeState(ThinkerState nextState, bool isProxied = false)
+    public override bool ChangeState(ThinkerState nextState)
     {
         if (base.ChangeState(nextState))
         {

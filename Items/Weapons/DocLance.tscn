@@ -153,7 +153,7 @@ tracks/0/path = NodePath("Anchor:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.65),
+"times": PackedFloat32Array(0, 0.1, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [Vector2(-8, 0), Vector2(8, 0), Vector2(0, 0)]
@@ -181,7 +181,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrgwb"]
-size = Vector2(8, 32)
+size = Vector2(10, 34)
 
 [node name="DocLance" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
 y_sort_enabled = true
@@ -206,6 +206,8 @@ Description = "\"Violence. Speed. Momentum.\""
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_c41ov")
 InitialState = NodePath("Idle")
+UsedItemStates = Array[NodePath]([NodePath("Attack")])
+DeusedItemStates = Array[NodePath]([NodePath("Idle")])
 
 [node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("UseState", "Sword")]
 script = ExtResource("3_sxffm")
@@ -269,6 +271,7 @@ position = Vector2(16, -4)
 IsDisabled = true
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(1, 0)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_rrgwb")
 disabled = true

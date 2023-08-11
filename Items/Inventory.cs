@@ -21,22 +21,13 @@ public partial class Inventory : Node2D
 
     private Item _selectedItem;
 
-    private Item _offhandItem;
-
     public Item SelectedItem
     {
         get => _selectedItem;
         set => EquipItem(value, ref _selectedItem);
     }
 
-    public Item OffhandItem
-    {
-        get => _selectedItem;
-        set => EquipItem(value, ref _offhandItem);
-    }
-
-    public bool IsUsingItem => (SelectedItem?.IsUsing ?? false) ||
-            (OffhandItem?.IsUsing ?? false);
+    public bool IsUsingItem => SelectedItem?.IsUsing ?? false;
 
     public Inventory()
     {
@@ -70,22 +61,6 @@ public partial class Inventory : Node2D
     {
         if (item is not null)
         {
-            if (item.IsOneHanded)
-            {
-                // we can not equip this if either hand is occupied by
-                // two-handed item
-
-                if (_selectedItem is not null && !_selectedItem.IsOneHanded)
-                {
-                    return false;
-                }
-
-                if (_offhandItem is not null && !_offhandItem.IsOneHanded)
-                {
-                    return false;
-                }
-            }
-
             if (!Items.Contains(item))
             {
                 GD.PrintErr("Tried to equip an item not in the inventory.");

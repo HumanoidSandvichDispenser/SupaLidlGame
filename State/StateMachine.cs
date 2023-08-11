@@ -1,12 +1,13 @@
 using Godot;
 using SupaLidlGame.Extensions;
+using System.Collections.Generic;
 
 namespace SupaLidlGame.State;
 
 public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
 {
     [Signal]
-    public delegate void OnStateChangedEventHandler(Node state);
+    public delegate void StateChangedEventHandler(Node state);
 
     public T CurrentState { get; protected set; }
 
@@ -17,7 +18,30 @@ public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
         ChangeState(InitialState);
     }
 
-    public virtual bool ChangeState(T nextState, bool isProxied = false)
+    public virtual bool ChangeState(T nextState)
+    {
+        return ChangeState(nextState, out Stack<T> _);
+    }
+
+    public bool ChangeState(T nextState, out T finalState)
+    {
+        var status = ChangeState(nextState, out Stack<T> states);
+        finalState = states.Peek();
+        return status;
+    }
+
+    public bool ChangeState(T nextState, out Stack<T> states)
+    {
+        states = new Stack<T>();
+        states.Push(CurrentState);
+        var result = ChangeStateRecursive(nextState, states);
+        EmitSignal(SignalName.StateChanged, states.Peek());
+        return result;
+    }
+
+    protected virtual bool ChangeStateRecursive(
+        T nextState,
+        Stack<T> states)
     {
         if (nextState is null)
         {
@@ -32,6 +56,7 @@ public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
 
         var previousState = CurrentState;
         CurrentState = nextState;
+        states.Push(nextState);
 
         // if the next state decides it should enter a different state,
         // then we enter that different state instead
@@ -39,7 +64,7 @@ public abstract partial class StateMachine<T> : Node where T : Node, IState<T>
 
         if (nextNextState is T t)
         {
-            return ChangeState(t, true);
+            return ChangeStateRecursive(t, states);
         }
 
         return true;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b2x17su05ou5w"]
+[gd_scene load_steps=24 format=3 uid="uid://b2x17su05ou5w"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_x0mh7"]
@@ -8,10 +8,68 @@
 [ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="6_jy3pc"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="7_y7j0e"]
 [ext_resource type="AudioStream" uid="uid://dy4qjflo1k28b" path="res://Assets/Sounds/calm-storm-ambient.mp3" id="8_wox7d"]
+[ext_resource type="PackedScene" uid="uid://dhamcei7tfta8" path="res://Characters/DocCenturion.tscn" id="9_4pmu0"]
 [ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="9_3401j"]
 [ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="9_fg062"]
+[ext_resource type="PackedScene" uid="uid://cdj50hb84aujp" path="res://Characters/DocLegionary.tscn" id="10_o8yqo"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tr5pw"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5qrl0"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0x5h"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mdq3p"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_emouq"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_42lqj"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5cfk"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1ooq"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y76p0"]
+resource_local_to_scene = true
+shader = ExtResource("5_h8k5p")
+shader_parameter/color = Vector4(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4fvo0"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Vector4(1, 1, 1, 1)
@@ -113,7 +171,7 @@ visible = false
 position = Vector2(120, -112)
 
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_tr5pw")
+material = SubResource("ShaderMaterial_5qrl0")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="1"]
 position = Vector2(168, -42)
@@ -132,6 +190,58 @@ position = Vector2(19, 23)
 stream = ExtResource("8_wox7d")
 volume_db = -5.0
 autoplay = true
+
+[node name="Centurion" parent="Entities" index="4" instance=ExtResource("9_4pmu0")]
+material = SubResource("ShaderMaterial_a0x5h")
+position = Vector2(-64, -16)
+Faction = 1
+
+[node name="Centurion3" parent="Entities" index="5" instance=ExtResource("9_4pmu0")]
+material = SubResource("ShaderMaterial_mdq3p")
+position = Vector2(-64, -44)
+Faction = 1
+
+[node name="Centurion2" parent="Entities" index="6" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox") instance=ExtResource("9_4pmu0")]
+material = SubResource("ShaderMaterial_emouq")
+position = Vector2(64, -48)
+DefaultSelectedItem = NodePath("../Centurion/Inventory/Sword")
+ThinkerStateMachine = NodePath("../Centurion/ThinkerStateMachine")
+Sprite = NodePath("../Centurion/Sprites/Node2D/Character")
+Inventory = NodePath("../Centurion/Inventory")
+StateMachine = NodePath("../Centurion/StateMachine")
+Hurtbox = NodePath("../Centurion/Hurtbox")
+Faction = 2
+
+[node name="Centurion4" parent="Entities" index="7" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox") instance=ExtResource("9_4pmu0")]
+material = SubResource("ShaderMaterial_42lqj")
+position = Vector2(107, -42)
+DefaultSelectedItem = NodePath("../Centurion/Inventory/Sword")
+ThinkerStateMachine = NodePath("../Centurion/ThinkerStateMachine")
+Sprite = NodePath("../Centurion/Sprites/Node2D/Character")
+Inventory = NodePath("../Centurion/Inventory")
+StateMachine = NodePath("../Centurion/StateMachine")
+Hurtbox = NodePath("../Centurion/Hurtbox")
+Faction = 2
+
+[node name="Legionary" parent="Entities" index="8" instance=ExtResource("10_o8yqo")]
+material = SubResource("ShaderMaterial_j5cfk")
+position = Vector2(-64, 48)
+Faction = 1
+
+[node name="Legionary3" parent="Entities" index="9" instance=ExtResource("10_o8yqo")]
+material = SubResource("ShaderMaterial_r1ooq")
+position = Vector2(-64, 12)
+Faction = 1
+
+[node name="Legionary2" parent="Entities" index="10" instance=ExtResource("10_o8yqo")]
+material = SubResource("ShaderMaterial_y76p0")
+position = Vector2(40, 40)
+Faction = 2
+
+[node name="Legionary4" parent="Entities" index="11" instance=ExtResource("10_o8yqo")]
+material = SubResource("ShaderMaterial_4fvo0")
+position = Vector2(50, 11)
+Faction = 2
 
 [node name="Area2D" type="Area2D" parent="Areas" index="0"]
 

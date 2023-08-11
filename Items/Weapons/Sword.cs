@@ -134,6 +134,25 @@ public partial class Sword : Weapon, IParryable
     {
         Hitbox.Damage = Damage;
         Hitbox.Hit += OnHitboxHit;
+        StateMachine.StateChanged += OnStateChanged;
+    }
+
+    public void OnStateChanged(Node state)
+    {
+        if (StateMachine.UsedItemStates is null)
+        {
+            return;
+        }
+
+        foreach (var nodePath in StateMachine.UsedItemStates)
+        {
+            if (StateMachine.GetNode(nodePath) == state)
+            {
+                Character.Inventory.EmitSignal(
+                    Inventory.SignalName.UsedItem, this);
+                //EmitSignal(SignalName.UsedItem, this);
+            }
+        }
     }
 
     public override void _Process(double delta)

@@ -22,7 +22,6 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
         }
 
         var item = Character.Inventory.SelectedItem;
-        var offhand = Character.Inventory.OffhandItem;
 
         // angle towards item use angle or offhand use angle if not used
 
@@ -39,7 +38,7 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
             return false;
         }
 
-        var _ = targetTowards(item) || targetTowards(offhand);
+        targetTowards(item);
 
         return null;
     }

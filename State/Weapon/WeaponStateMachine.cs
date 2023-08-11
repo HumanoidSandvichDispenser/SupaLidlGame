@@ -7,6 +7,12 @@ public partial class WeaponStateMachine : StateMachine<WeaponState>
     [Export]
     public override WeaponState InitialState { get; set; }
 
+    [Export]
+    public Godot.Collections.Array<NodePath> UsedItemStates { get; protected set; }
+
+    [Export]
+    public Godot.Collections.Array<NodePath> DeusedItemStates { get; protected set; }
+
     public void Use()
     {
         var state = CurrentState.Use();

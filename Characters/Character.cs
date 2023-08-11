@@ -213,10 +213,6 @@ public partial class Character : CharacterBody2D, IFaction
 
         if (Inventory.SelectedItem is Weapon weapon)
         {
-            if (!weapon.IsUsing)
-            {
-                Inventory.EmitSignal(Inventory.SignalName.UsedItem, weapon);
-            }
             weapon.Use();
         }
     }

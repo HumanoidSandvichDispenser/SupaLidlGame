@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://5y1acxl4j4n7"]
+[gd_scene load_steps=28 format=3 uid="uid://5y1acxl4j4n7"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mai31"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_5ramr"]
@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dfpe74vxvuwal" path="res://Assets/Sprites/Items/pugio.png" id="6_d28k5"]
 [ext_resource type="Script" path="res://State/Weapon/SwordBlockState.cs" id="6_yvm8x"]
 [ext_resource type="Material" uid="uid://cbfaqolx1ydvv" path="res://Assets/Sprites/Particles/ParryParticles.tres" id="8_we1sv"]
+[ext_resource type="AudioStream" uid="uid://m1sbk3c4eask" path="res://Assets/Sounds/metal-bash2.wav" id="9_b6yro"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="9_qimey"]
+[ext_resource type="AudioStream" uid="uid://kao8wbfaum27" path="res://Assets/Sounds/metal-bash3.wav" id="10_istfq"]
 [ext_resource type="Texture2D" uid="uid://ct0m4lk2icx3p" path="res://Assets/Sprites/sword-swing-small.png" id="10_q8b54"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="11_b1fwx"]
 [ext_resource type="Texture2D" uid="uid://417j1ckcjg2i" path="res://Assets/Sprites/Items/doc-shield.png" id="11_qpejo"]
@@ -309,7 +311,7 @@ tracks/0/path = NodePath("Shield:scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
+"times": PackedFloat32Array(0, 0.7, 1),
 "transitions": PackedFloat32Array(1, 0.25, 1),
 "update": 0,
 "values": [Vector2(1.4, 1.4), Vector2(1.4, 1.4), Vector2(1, 1)]
@@ -321,11 +323,30 @@ tracks/1/path = NodePath("Shield:material:shader_parameter/intensity")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5, 1),
+"times": PackedFloat32Array(0, 0.7, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [1.0, 1.0, 0.0]
 }
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ShieldSound")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0870516,
+"start_offset": 0.0,
+"stream": ExtResource("9_b6yro")
+}, {
+"end_offset": 0.383027,
+"start_offset": 0.0,
+"stream": ExtResource("10_istfq")
+}],
+"times": PackedFloat32Array(0, 0.7)
+}
+tracks/2/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_11u25"]
 _data = {
@@ -370,6 +391,8 @@ HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_5ramr")
 InitialState = NodePath("Idle")
+UsedItemStates = Array[NodePath]([NodePath("Attack"), NodePath("Block")])
+DeusedItemStates = Array[NodePath]([NodePath("Idle")])
 
 [node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("UseState", "UseAltState", "Sword")]
 script = ExtResource("3_fwkit")
@@ -446,10 +469,17 @@ modulate = Color(2, 2, 2, 1)
 texture = ExtResource("10_q8b54")
 hframes = 3
 
+[node name="Node" type="Node" parent="."]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node"]
+top_level = true
+remote_path = NodePath("../../Shield")
+update_position = false
+
 [node name="Shield" type="Sprite2D" parent="."]
 y_sort_enabled = true
 material = SubResource("ShaderMaterial_rgypv")
-position = Vector2(7, 8)
+position = Vector2(10, 10)
 texture = ExtResource("11_qpejo")
 offset = Vector2(0, -12)
 
@@ -458,6 +488,9 @@ stream = ExtResource("12_a8o3x")
 pitch_scale = 1.2
 
 [node name="ParrySound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_t5wmj")
+
+[node name="ShieldSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_t5wmj")
 
 [editable path="Hitbox"]

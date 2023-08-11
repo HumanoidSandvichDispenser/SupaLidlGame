@@ -5,6 +5,9 @@ namespace SupaLidlGame.Items;
 
 public abstract partial class Item : Node2D
 {
+    [Signal]
+    public delegate void UsedItemEventHandler(Item item);
+
     [Export]
     public string ItemName { get; set; }
 

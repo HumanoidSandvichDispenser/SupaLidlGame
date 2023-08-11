@@ -26,6 +26,10 @@ public abstract partial class PlayerState : CharacterState
             {
                 inventory.SelectedItem = inventory.GetItemByMap("equip_2");
             }
+            else if (@event.IsActionPressed("equip_3"))
+            {
+                inventory.SelectedItem = inventory.GetItemByMap("equip_3");
+            }
 
             if (@event.IsActionPressed("interact"))
             {
@@ -47,42 +51,26 @@ public abstract partial class PlayerState : CharacterState
         Vector2 mousePos = Character.GetGlobalMousePosition();
         Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
 
-        bool targetTowards(Items.Item item)
+        if (Character.Inventory.SelectedItem is Items.Weapon weapon)
         {
-            if (Character.Inventory.SelectedItem is Items.Weapon weapon)
+            var isAttack1On = Godot.Input.IsActionPressed("attack1");
+            var isAttack2On = Godot.Input.IsActionPressed("attack2");
+
+            if (!weapon.ShouldHideIdle || isAttack1On)
             {
-                var isAttack1On = Godot.Input.IsActionPressed("attack1");
-                var isAttack2On = Godot.Input.IsActionPressed("attack2");
-
-                var ret = false;
-                if (!weapon.IsUsing)
-                {
-
-                    if (!weapon.ShouldHideIdle || isAttack1On)
-                    {
-                        Character.Target = dirToMouse;
-                        ret = true;
-                    }
-                }
-
-                if (isAttack1On)
-                {
-                    Character.UseCurrentItem();
-                }
-                else if (isAttack2On)
-                {
-                    Character.UseCurrentItemAlt();
-                }
-
-                return ret;
+                Character.Target = dirToMouse;
             }
-            return false;
+
+            if (isAttack1On)
+            {
+                Character.UseCurrentItem();
+            }
+            else if (isAttack2On)
+            {
+                Character.UseCurrentItemAlt();
+            }
+
         }
-
-        var item = Character.Inventory.SelectedItem;
-        var offhand = Character.Inventory.OffhandItem;
-
-        var _ = targetTowards(item) || targetTowards(offhand);
 
         return base.Process(delta);
     }
