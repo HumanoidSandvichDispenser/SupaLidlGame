@@ -282,21 +282,26 @@ public partial class World : Node
     {
         SetSpawn(CurrentPlayer.GlobalPosition);
 
-        // TODO: create a single save resource file
-        ResourceSaver.Save(GlobalState.Progression, "user://progression.tres");
-        ResourceSaver.Save(GlobalState.MapState, "user://map-state.tres");
-        ResourceSaver.Save(GlobalState.Stats, "user://stats.tres");
+        var save = GetSave();
+        GlobalState.ExportToSave(save);
+        ResourceSaver.Save(save, "user://save.tres");
+    }
+
+    private Save GetSave()
+    {
+        if (ResourceLoader.Exists("user://save.tres"))
+        {
+            return ResourceLoader.Load<Save>("user://save.tres");
+        }
+        else
+        {
+            return new Save();
+        }
     }
 
     public void LoadGame()
     {
-        var prog = ResourceLoader.Load<Progression>("user://progression.tres");
-        var mapState = ResourceLoader.Load<MapState>("user://map-state.tres");
-        var stats = ResourceLoader.Load<Stats>("user://stats.tres");
-
-        GlobalState.Progression = prog ?? new Progression();
-        GlobalState.MapState = mapState ?? new MapState();
-        GlobalState.Stats = stats ?? new Stats();
+        GlobalState.ImportFromSave(GetSave());
 
         // load the player scene
         // TODO: implement
