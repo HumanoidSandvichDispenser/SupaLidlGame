@@ -40,6 +40,12 @@ public sealed partial class Player : Character
                 AttackAnimation.Play("sword");
             }
         };
+
+        HealthChanged += (args) =>
+        {
+            var signal = Events.EventBus.SignalName.PlayerHealthChanged;
+            this.GetEventBus().EmitSignal(signal, args);
+        };
     }
 
     public override void _Input(InputEvent @event)

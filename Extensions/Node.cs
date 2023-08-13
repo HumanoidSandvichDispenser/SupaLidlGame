@@ -66,4 +66,15 @@ public static class NodeExtensions
     {
         return node.GetNode<Utils.World>("/root/World");
     }
+
+    public static CanvasLayer GetUI(this Node node)
+    {
+        return node.GetNode<CanvasLayer>("/root/BaseUI");
+    }
+
+    public static UI.UIController GetMainUI(this Node node)
+    {
+        return node.GetNode<UI.UIController>("/root/BaseUI/" +
+            "SubViewportContainer/UIViewport/CanvasLayer/MainUILayer/Main");
+    }
 }
