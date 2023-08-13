@@ -50,6 +50,8 @@ public abstract partial class PlayerState : CharacterState
 
         Vector2 mousePos = Character.GetGlobalMousePosition();
         Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
+        Vector2 joystick = Godot.Input.GetVector("look_left", "look_right",
+                                                 "look_up", "look_down");
 
         if (Character.Inventory.SelectedItem is Items.Weapon weapon)
         {
@@ -58,7 +60,14 @@ public abstract partial class PlayerState : CharacterState
 
             if (!weapon.ShouldHideIdle || isAttack1On)
             {
-                Character.Target = dirToMouse;
+                if (joystick.IsZeroApprox())
+                {
+                    Character.Target = Character.Direction;
+                }
+                else
+                {
+                    Character.Target = joystick;
+                }
             }
 
             if (isAttack1On)
