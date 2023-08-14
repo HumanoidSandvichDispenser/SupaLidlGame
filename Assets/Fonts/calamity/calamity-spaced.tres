@@ -1,0 +1,7 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://cnjpt3yy746ob"]
+
+[ext_resource type="FontFile" uid="uid://6bvgjbmqovau" path="res://Assets/Fonts/calamity/calamity.ttf" id="1_m4w5i"]
+
+[resource]
+base_font = ExtResource("1_m4w5i")
+spacing_glyph = 4

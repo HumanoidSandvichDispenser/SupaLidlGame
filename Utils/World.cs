@@ -152,6 +152,8 @@ public partial class World : Node
         CurrentMap.Active = true;
         CurrentMap.Load();
 
+        EventBus.EmitSignal(Events.EventBus.SignalName.AreaChanged, map);
+
         if (CurrentPlayer is not null)
         {
             CurrentMap.Entities.AddChild(CurrentPlayer);
