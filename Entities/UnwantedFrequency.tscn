@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://1y5r6sklwgrp"]
+[gd_scene load_steps=24 format=3 uid="uid://1y5r6sklwgrp"]
 
 [ext_resource type="Script" path="res://Entities/UnwantedFrequency.cs" id="1_6sbe0"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="2_gxtvd"]
 [ext_resource type="PackedScene" uid="uid://cojxmcin13ihm" path="res://Utils/Trail.tscn" id="3_67uhs"]
 [ext_resource type="AudioStream" uid="uid://cn2wop7rfxku8" path="res://Assets/Sounds/karabast.mp3" id="4_pbgsi"]
+[ext_resource type="AudioStream" uid="uid://braj74by0oowo" path="res://Assets/Sounds/fire-burst-flash.wav" id="5_6tm7d"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="5_qbbx7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30y8q"]
@@ -16,6 +17,10 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_dyqhb"]
 offsets = PackedFloat32Array(0.00662252, 0.715232, 1)
 colors = PackedColorArray(0.996078, 0, 0.164706, 0, 0.996045, 0, 0.166638, 1, 1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_m1y6u"]
+offsets = PackedFloat32Array(0.00662252, 0.715232, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
 
 [sub_resource type="Gradient" id="Gradient_2q0ut"]
 offsets = PackedFloat32Array(0.525926, 0.740741, 1)
@@ -121,7 +126,6 @@ Delay = 1.0
 [node name="Hitbox" parent="." instance=ExtResource("2_gxtvd")]
 collision_layer = 0
 monitorable = false
-priority = 5
 Damage = 12.0
 Knockback = 324.0
 
@@ -144,6 +148,19 @@ end_cap_mode = 2
 MaximumPoints = 64
 Frequency = 30
 
+[node name="TrailPosition2" type="Node2D" parent="TrailRotation"]
+
+[node name="Trail" parent="TrailRotation/TrailPosition2" instance=ExtResource("3_67uhs")]
+self_modulate = Color(2, 2, 2, 1)
+width = 2.0
+width_curve = SubResource("Curve_eu273")
+gradient = SubResource("Gradient_m1y6u")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+MaximumPoints = 64
+Frequency = 30
+
 [node name="DeferDeath" type="Timer" parent="."]
 wait_time = 4.0
 
@@ -153,6 +170,14 @@ volume_db = -16.0
 autoplay = true
 max_distance = 64.0
 attenuation = 8.0
+bus = &"Effects"
+
+[node name="Burst" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_6tm7d")
+autoplay = true
+max_distance = 512.0
+attenuation = 4.0
+bus = &"Effects"
 
 [node name="SpawnParticles" type="GPUParticles2D" parent="."]
 emitting = false

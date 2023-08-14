@@ -19,7 +19,6 @@ public partial class World : Node
     [Export]
     public Boss CurrentBoss { get; set; }
 
-    [Export]
     public UI.UIController UIController { get; set; }
 
     [Export]
@@ -30,11 +29,10 @@ public partial class World : Node
     {
         get
         {
-            if (_dialogueBalloon is null || !IsInstanceValid(_dialogueBalloon))
+            if (!IsDialogueOpen)
             {
                 var scene = GD.Load<PackedScene>("res://Dialogue/balloon.tscn");
                 _dialogueBalloon = scene.Instantiate<Dialogue.Balloon>();
-                //_uiViewport.AddChild(_dialogueBalloon);
                 _uiViewport.AddChild(_dialogueBalloon);
             }
             return _dialogueBalloon;
@@ -47,6 +45,11 @@ public partial class World : Node
             }
             _dialogueBalloon = value;
         }
+    }
+
+    public bool IsDialogueOpen
+    {
+        get => _dialogueBalloon is not null && IsInstanceValid(_dialogueBalloon);
     }
 
     private Dialogue.Balloon _dialogueBalloon;
@@ -89,6 +92,14 @@ public partial class World : Node
 
         Godot.RenderingServer.SetDefaultClearColor(Godot.Colors.Black);
 
+        UIController = this.GetMainUI();
+
+        EventBus = this.GetEventBus();
+        EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
+        {
+            MoveToArea(args.Area, args.Connector);
+        };
+
         _uiViewport = GetNode<SubViewport>("CanvasLayer/SubViewportContainer/UIViewport");
 
         // create a player (currently unparented)
@@ -96,12 +107,6 @@ public partial class World : Node
 
         // TODO: create start menu and load game from there
         LoadGame();
-
-        EventBus = this.GetEventBus();
-        EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
-        {
-            MoveToArea(args.Area, args.Connector);
-        };
 
         base._Ready();
     }
@@ -146,6 +151,8 @@ public partial class World : Node
         CurrentMap = map;
         CurrentMap.Active = true;
         CurrentMap.Load();
+
+        EventBus.EmitSignal(Events.EventBus.SignalName.AreaChanged, map);
 
         if (CurrentPlayer is not null)
         {
@@ -224,12 +231,14 @@ public partial class World : Node
             };
         };
 
+        /*
         CurrentPlayer.Hurt += (Events.HurtArgs args) =>
         {
             // TODO: move this to UI controller and add a setup method
             var bar = UIController.GetNode<UI.HealthBar>("Top/Margin/HealthBar");
             bar.ProgressBar.Value = args.NewHealth;
         };
+        */
 
         return CurrentPlayer;
     }

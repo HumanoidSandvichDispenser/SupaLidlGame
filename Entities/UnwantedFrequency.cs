@@ -12,9 +12,13 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
 
     public Utils.Trail Trail { get; private set; }
 
+    public Utils.Trail Trail2 { get; private set; }
+
     public Node2D TrailRotation { get; private set; }
 
     public Node2D TrailPosition { get; private set; }
+
+    public Node2D TrailPosition2 { get; private set; }
 
     public GpuParticles2D DeathParticles { get; private set; }
 
@@ -30,7 +34,9 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
     {
         TrailRotation = GetNode<Node2D>("TrailRotation");
         TrailPosition = TrailRotation.GetNode<Node2D>("TrailPosition");
+        TrailPosition2 = TrailRotation.GetNode<Node2D>("TrailPosition2");
         Trail = TrailPosition.GetNode<Utils.Trail>("Trail");
+        Trail2 = TrailPosition2.GetNode<Utils.Trail>("Trail");
         DeferDeathTimer = GetNode<Timer>("DeferDeath");
         DeathParticles = GetNode<GpuParticles2D>("DeathParticles");
         SpawnParticles = GetNode<GpuParticles2D>("SpawnParticles");
@@ -51,6 +57,7 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
         float radians = (float)_currentLifetime * 24;
         TrailRotation.Rotation = Direction.Angle();
         TrailPosition.Position = new Vector2(0, 4 * Mathf.Sin(radians));
+        TrailPosition2.Position = -TrailPosition.Position;
 
         if (CharacterTarget is not null)
         {
@@ -64,7 +71,7 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
 
     public override void Die()
     {
-        IsDead = Trail.IsDead = true;
+        IsDead = Trail.IsDead = Trail2.IsDead = true;
         Hitbox.SetDeferred("monitoring", false);
         DeferDeathTimer.Timeout += () =>
         {

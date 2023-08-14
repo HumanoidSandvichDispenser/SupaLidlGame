@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://c271rdjhd1gfo"]
+
+[ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Dialogue/balloon.tscn" id="1_atjb1"]
+[ext_resource type="Script" path="res://UI/UIController.cs" id="2_b4b6l"]
+[ext_resource type="PackedScene" uid="uid://bxo553hblp6nf" path="res://UI/HealthBar.tscn" id="3_j1j6h"]
+[ext_resource type="PackedScene" uid="uid://01d24ij5av1y" path="res://UI/BossBar.tscn" id="4_igi28"]
+[ext_resource type="PackedScene" uid="uid://c77754nvmckn" path="res://UI/LocationDisplay.tscn" id="5_cr6vo"]
+
+[node name="BaseUI" type="CanvasLayer"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+
+[node name="UIViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="DialogBalloon" parent="SubViewportContainer/UIViewport" instance=ExtResource("1_atjb1")]
+layer = 2
+
+[node name="MainUILayer" type="CanvasLayer" parent="SubViewportContainer/UIViewport"]
+
+[node name="Main" type="Control" parent="SubViewportContainer/UIViewport/MainUILayer" node_paths=PackedStringArray("BossBar")]
+z_index = 128
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_b4b6l")
+BossBar = NodePath("Bottom/BossBar")
+
+[node name="Top" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Margin" type="MarginContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+
+[node name="HealthBar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Margin" instance=ExtResource("3_j1j6h")]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bottom" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -44.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="BossBar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Bottom" instance=ExtResource("4_igi28")]
+visible = false
+layout_mode = 2
+
+[node name="LocationDisplay" parent="SubViewportContainer/UIViewport/MainUILayer" instance=ExtResource("5_cr6vo")]

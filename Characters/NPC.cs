@@ -90,10 +90,7 @@ public partial class NPC : Character
             {
                 if (AttackAnimation is not null)
                 {
-                    if (AttackAnimation.HasAnimation("attack"))
-                    {
-                        AttackAnimation.Play("attack");
-                    }
+                    AttackAnimation.TryPlay("attack");
                 }
             }
         };

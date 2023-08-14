@@ -30,7 +30,7 @@ public partial class Character : CharacterBody2D, IFaction
     public float Stealth { get; protected set; } = 0;
 
     [Signal]
-    public delegate void HealthChangedEventHandler(float oldHP, float newHP);
+    public delegate void HealthChangedEventHandler(Events.HealthChangedArgs args);
 
     [Signal]
     public delegate void HurtEventHandler(Events.HurtArgs args);
@@ -59,6 +59,13 @@ public partial class Character : CharacterBody2D, IFaction
             {
                 return;
             }
+
+            var args = new Events.HealthChangedArgs
+            {
+                OldHealth = _health,
+                NewHealth = value,
+            };
+            EmitSignal(SignalName.HealthChanged, args);
 
             _health = value;
             if (_health <= 0)
