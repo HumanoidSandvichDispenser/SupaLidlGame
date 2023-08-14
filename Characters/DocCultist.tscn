@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://3bcudbixirkj"]
+[gd_scene load_steps=44 format=3 uid="uid://3bcudbixirkj"]
 
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_2lfeo"]
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="2_l16dp"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://State/Thinker/PursueState.cs" id="7_q01ij"]
 [ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="8_n0iqj"]
 [ext_resource type="Script" path="res://State/Thinker/AttackState.cs" id="8_woh6n"]
+[ext_resource type="Script" path="res://State/Thinker/IdleState.cs" id="9_kypol"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="9_x36vb"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="10_io6bw"]
 [ext_resource type="Material" uid="uid://2tsvsp45elru" path="res://Assets/Sprites/Particles/NPCDeathParticles.tres" id="10_yyggy"]
@@ -422,24 +423,36 @@ Character = NodePath("../..")
 
 [node name="ThinkerStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("6_8y4xc")
-InitialState = NodePath("Pursue")
+InitialState = NodePath("Idle")
 
-[node name="Pursue" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NavigationAgent", "AttackState", "NPC")]
+[node name="Pursue" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NavigationAgent", "AttackState", "PassiveState", "NPC")]
 script = ExtResource("7_q01ij")
 NavigationAgent = NodePath("../../NavigationAgent2D")
 AttackState = NodePath("../Attack")
+PassiveState = NodePath("../Idle")
 MinDistanceToTarget = 96.0
+MaxDistanceFromOrigin = 256.0
 ThinkDelta = 0.05
 NPC = NodePath("../..")
 
 [node name="Attack" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PassiveState", "PursueState", "NPC")]
 script = ExtResource("8_woh6n")
 MaxDistanceToTarget = 128.0
+UseItemDistance = 128.0
 PassiveState = NodePath("../Pursue")
 PursueState = NodePath("../Pursue")
+PursueOnLineOfSight = false
 NPC = NodePath("../..")
 
-[node name="Idle" type="Node" parent="ThinkerStateMachine"]
+[node name="Idle" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PursueState", "NavigationAgent", "NPC")]
+script = ExtResource("9_kypol")
+PursueState = NodePath("../Pursue")
+MinTargetDistance = 32.0
+PursueOnLineOfSight = true
+MinLineOfSightDistance = 128.0
+ShouldReturnToOriginalPosition = true
+NavigationAgent = NodePath("../../NavigationAgent2D")
+NPC = NodePath("../..")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 debug_enabled = true
@@ -524,6 +537,7 @@ script = ExtResource("17_sjq8t")
 [node name="ProjectileSpawner" parent="Inventory" instance=ExtResource("17_dmlbb")]
 Projectile = ExtResource("18_lwg36")
 ShouldOverrideProjectileDamage = false
+ShouldOverrideVelocity = false
 ShouldRotate = false
 UseTime = 2.0
 

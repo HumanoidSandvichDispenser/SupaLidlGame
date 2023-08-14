@@ -40,6 +40,9 @@ public partial class AttackState : ThinkerState
     [Export]
     public ThinkerState PursueState { get; set; }
 
+    [Export]
+    public bool PursueOnLineOfSight { get; set; } = true;
+
     protected Characters.Character _bestTarget;
 
     protected float _preferredWeightDistance = 64.0f;
@@ -167,7 +170,12 @@ public partial class AttackState : ThinkerState
             if (PursueState is not null)
             {
                 // pursue the player if they can not be seen or is too far away
-                if (dist > MaxDistanceToTarget || !NPC.HasLineOfSight(bestTarget))
+                if (dist > MaxDistanceToTarget)
+                {
+                    return PursueState;
+                }
+
+                if (PursueOnLineOfSight && !NPC.HasLineOfSight(bestTarget))
                 {
                     return PursueState;
                 }

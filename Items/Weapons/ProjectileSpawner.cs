@@ -23,7 +23,11 @@ public partial class ProjectileSpawner : Ranged
         projectile.Hitbox.Faction = Character.Faction;
         projectile.Direction = Character.Target.Normalized();
         projectile.GlobalPosition = GlobalPosition;
-        projectile.Speed = InitialVelocity;
+
+        if (ShouldOverrideVelocity)
+        {
+            projectile.Speed = InitialVelocity;
+        }
 
         if (ShouldRotate)
         {
@@ -45,5 +49,7 @@ public partial class ProjectileSpawner : Ranged
                 target.CharacterTarget = npc.FindBestTarget();
             }
         }
+
+        Character.Inventory.EmitSignal("UsedItem", this);
     }
 }

@@ -473,7 +473,6 @@ hframes = 3
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Node"]
 top_level = true
-remote_path = NodePath("../../Shield")
 update_position = false
 
 [node name="Shield" type="Sprite2D" parent="."]

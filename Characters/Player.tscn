@@ -324,7 +324,6 @@ script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
 DirectionMarker = NodePath("Direction2D")
 Speed = 80.0
-Stealth = 1.0
 HandTexture = ExtResource("3_3dqh7")
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
