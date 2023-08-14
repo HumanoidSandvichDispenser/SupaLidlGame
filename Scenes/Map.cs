@@ -39,7 +39,7 @@ public partial class Map : TileMap
         }
         set
         {
-            _active = Visible = value;
+            _active = value;
             SetProcess(value);
         }
     }
