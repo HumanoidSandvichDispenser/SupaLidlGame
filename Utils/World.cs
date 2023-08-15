@@ -229,6 +229,7 @@ public partial class World : Node
             {
                 SpawnPlayer();
             };
+            GlobalState.Stats.DeathCount++;
         };
 
         /*
