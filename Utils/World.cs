@@ -99,6 +99,8 @@ public partial class World : Node
         {
             MoveToArea(args.Area, args.Connector);
         };
+        EventBus.RegisteredBoss += RegisterBoss;
+        EventBus.DeregisteredBoss += DeregisterBoss;
 
         _uiViewport = GetNode<SubViewport>("CanvasLayer/SubViewportContainer/UIViewport");
 
@@ -111,10 +113,9 @@ public partial class World : Node
         base._Ready();
     }
 
-    public void RegisterBoss(Boss boss)
+    private void RegisterBoss(Boss boss)
     {
         CurrentBoss = boss;
-        UIController.BossBar.Boss = boss;
         MusicPlayer.Stream = boss?.Music;
         // TODO: use an audio manager
         if (MusicPlayer.Stream is null)
@@ -127,10 +128,9 @@ public partial class World : Node
         }
     }
 
-    public void DeregisterBoss(Boss boss)
+    private void DeregisterBoss(Boss boss)
     {
         CurrentBoss = null;
-        UIController.BossBar.Boss = null;
         MusicPlayer.Stop();
     }
 
@@ -304,7 +304,8 @@ public partial class World : Node
         }
         else
         {
-            return new Save();
+            return ResourceLoader.Load("res://Assets/default-save.tres")
+                .Duplicate(true) as Save;
         }
     }
 

@@ -331,7 +331,7 @@ public partial class Character : CharacterBody2D, IFaction
         if (Health <= 0)
         {
             EmitSignal(SignalName.Death, args);
-            GetNode<GpuParticles2D>("DeathParticles")
+            GetNode<GpuParticles2D>("DeathParticles")?
                 .CloneOnWorld<GpuParticles2D>()
                 .EmitOneShot();
         }

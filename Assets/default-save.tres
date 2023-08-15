@@ -1,0 +1,25 @@
+[gd_resource type="Resource" load_steps=8 format=3 uid="uid://betjy08c65fp1"]
+
+[ext_resource type="Script" path="res://State/Global/MapState.cs" id="1_aydul"]
+[ext_resource type="Script" path="res://State/Global/Progression.cs" id="2_y82md"]
+[ext_resource type="Script" path="res://State/Global/Stats.cs" id="3_rktrk"]
+[ext_resource type="Script" path="res://Utils/Save.cs" id="4_n4440"]
+
+[sub_resource type="Resource" id="Resource_nf41v"]
+script = ExtResource("1_aydul")
+_state = {}
+
+[sub_resource type="Resource" id="Resource_7l14i"]
+script = ExtResource("2_y82md")
+
+[sub_resource type="Resource" id="Resource_e5qnf"]
+script = ExtResource("3_rktrk")
+SaveLocation = Vector2(252, 0)
+SaveMapKey = "res://Scenes/Maps/ArenaExterior.tscn"
+DeathCount = 0
+
+[resource]
+script = ExtResource("4_n4440")
+Progression = SubResource("Resource_7l14i")
+MapState = SubResource("Resource_nf41v")
+Stats = SubResource("Resource_e5qnf")

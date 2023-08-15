@@ -18,4 +18,10 @@ public partial class EventBus : Node
 
     [Signal]
     public delegate void PlayerHealthChangedEventHandler(HealthChangedArgs args);
+
+    [Signal]
+    public delegate void RegisteredBossEventHandler(Characters.Boss boss);
+
+    [Signal]
+    public delegate void DeregisteredBossEventHandler(Characters.Boss boss);
 }

@@ -67,7 +67,7 @@ public class CacheStore<TKey, TVal>
 
     public bool IsItemValid(TKey key)
     {
-        return !IsItemStale(key) && _store.ContainsKey(key);
+        return key is not null && _store.ContainsKey(key) && !IsItemStale(key);
     }
 
     public bool ContainsKey(TKey key)

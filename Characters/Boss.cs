@@ -20,6 +20,7 @@ public abstract partial class Boss : Enemy
     public abstract int Intensity { get; }
 
     private bool _isActive;
+    private Events.EventBus _eventBus;
 
     [Export]
     public virtual bool IsActive
@@ -30,7 +31,10 @@ public abstract partial class Boss : Enemy
             _isActive = value;
 
             // register or deregister ourselves when we are active/inactive
-            this.GetWorld().RegisterBoss(_isActive ? this : null);
+            _eventBus.EmitSignal(
+                Events.EventBus.SignalName.RegisteredBoss,
+                _isActive ? this : null
+            );
         }
     }
 
@@ -47,6 +51,8 @@ public abstract partial class Boss : Enemy
         {
             Reset();
         };
+
+        _eventBus = this.GetEventBus();
     }
 
     protected void UpdateBossStatus(bool status)

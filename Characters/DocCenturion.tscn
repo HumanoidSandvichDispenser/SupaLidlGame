@@ -315,7 +315,6 @@ MaxDistanceToTarget = 128.0
 UseItemDistance = 48.0
 PassiveState = NodePath("../Idle")
 PursueState = NodePath("../Idle")
-PursueOnLineOfSight = false
 NPC = NodePath("../..")
 
 [node name="Idle" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PursueState", "NavigationAgent", "NPC")]

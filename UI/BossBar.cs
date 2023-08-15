@@ -1,13 +1,16 @@
 using Godot;
 using SupaLidlGame.Characters;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.UI;
 
 public partial class BossBar : VBoxContainer
 {
     public TextureProgressBar ProgressBar { get; set; }
+
     public Label BossNameLabel { get; set; }
 
+    private Events.EventBus _eventBus;
     private Boss _boss;
 
     public Boss Boss
@@ -24,6 +27,19 @@ public partial class BossBar : VBoxContainer
     {
         ProgressBar = GetNode<TextureProgressBar>("BarMargin/BossBar");
         BossNameLabel = GetNode<Label>("LabelMargin/BossNameLabel");
+        _eventBus = this.GetEventBus();
+        _eventBus.RegisteredBoss += RegisterBoss;
+        _eventBus.DeregisteredBoss += DeregisterBoss;
+    }
+
+    private void RegisterBoss(Boss boss)
+    {
+        Boss = boss;
+    }
+
+    private void DeregisterBoss(Boss boss)
+    {
+        Boss = null;
     }
 
     private void OnBossHurt(Events.HurtArgs args)
