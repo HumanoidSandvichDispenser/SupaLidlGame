@@ -30,6 +30,14 @@ public abstract partial class PlayerState : CharacterState
             {
                 inventory.SelectedItem = inventory.GetItemByMap("equip_3");
             }
+            else if (@event.IsActionPressed("next_item"))
+            {
+                inventory.EquipIndex(++inventory.CurrentQuickSwitchIndex);
+            }
+            else if (@event.IsActionPressed("prev_item"))
+            {
+                inventory.EquipIndex(--inventory.CurrentQuickSwitchIndex);
+            }
 
             if (@event.IsActionPressed("interact"))
             {
