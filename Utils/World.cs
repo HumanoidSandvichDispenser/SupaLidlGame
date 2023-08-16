@@ -97,7 +97,7 @@ public partial class World : Node
         EventBus = this.GetEventBus();
         EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
         {
-            MoveToArea(args.Area, args.Connector);
+            CallDeferred(MethodName.MoveToArea, args.Area, args.Connector);
         };
         EventBus.RegisteredBoss += RegisterBoss;
         EventBus.DeregisteredBoss += DeregisterBoss;
@@ -138,14 +138,17 @@ public partial class World : Node
     {
         GD.Print("Loading map " + map.Name);
 
+        var root = GetTree().Root;
+
         if (CurrentMap is not null)
         {
+            _maps.Update(CurrentMap.SceneFilePath);
             CurrentMap.Entities.RemoveChild(CurrentPlayer);
-            GetTree().Root.RemoveChild(CurrentMap);
+            root.RemoveChild(CurrentMap);
             CurrentMap.Active = false;
         }
 
-        GetTree().Root.AddChild(map);
+        root.AddChild(map);
         InitTilemap(map);
 
         CurrentMap = map;
@@ -168,11 +171,6 @@ public partial class World : Node
 
     public void LoadScene(PackedScene scene)
     {
-        if (CurrentMap is not null)
-        {
-            _maps.Update(CurrentMap.SceneFilePath);
-        }
-
         Map map;
         string path = scene.ResourcePath;
 
@@ -251,19 +249,8 @@ public partial class World : Node
 
     private void MovePlayerToConnector(string name)
     {
-        // find the first connector with the specified name
-        // TODO: replace this with event buses
-        //var connector = CurrentMap.Areas.GetChildren().First((child) =>
-        //{
-        //    if (child is BoundingBoxes.ConnectorBox connector)
-        //    {
-        //        return connector.Identifier == name;
-        //    }
-        //    return false;
-        //}) as BoundingBoxes.ConnectorBox;
-
-        //CurrentPlayer.GlobalPosition = connector.GlobalPosition;
-        CurrentPlayer.GlobalPosition = Vector2.Zero;
+        var marker = CurrentMap.Markers.GetNode<Marker2D>(name);
+        CurrentPlayer.GlobalPosition = marker?.GlobalPosition ?? Vector2.Zero;
     }
 
     public void MoveToArea(string path, string connector)

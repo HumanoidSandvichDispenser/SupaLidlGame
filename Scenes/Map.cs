@@ -15,6 +15,9 @@ public partial class Map : TileMap
     public Node2D Spawners { get; set; }
 
     [Export]
+    public Node2D Markers { get; set; }
+
+    [Export]
     public Vector2 CameraLowerBound { get; set; }
 
     [Export]

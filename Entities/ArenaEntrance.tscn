@@ -29,13 +29,11 @@ offset_bottom = -28.0
 [node name="Label" parent="InteractionTrigger/Popup" index="0"]
 text = "Enter"
 
-[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("InteractionTrigger", "Collision")]
+[node name="Area2D" type="Area2D" parent="." node_paths=PackedStringArray("InteractionTrigger")]
 script = ExtResource("3_4rsih")
 ToArea = "res://Scenes/Maps/Arena.tscn"
-ToConnector = "entrance"
-Identifier = "arena_entrance"
+ToConnector = "Entrance"
 InteractionTrigger = NodePath("../InteractionTrigger")
-Collision = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_djn8q")

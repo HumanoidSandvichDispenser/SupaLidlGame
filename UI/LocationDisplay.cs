@@ -27,6 +27,7 @@ public partial class LocationDisplay : CenterContainer
         _subtitle.Visible = map.AreaName != map.MapName;
         _mapName.Text = map.MapName;
         _subtitle.Text = map.AreaName;
+        _animPlayer.Stop();
         _animPlayer.Play("show");
     }
 }

@@ -29,20 +29,13 @@ public partial class ConnectorBox : Area2D
     [Export]
     public InteractionTrigger InteractionTrigger { get; set; }
 
-    [Export]
-    public CollisionShape2D Collision { get; set; }
-
     private Player _player = null;
 
     public override void _Ready()
     {
-        if (Collision is null)
-        {
-            throw new NullReferenceException("Collision not specified");
-        }
-
         BodyEntered += (Node2D body) =>
         {
+            GD.Print(body.Name + " entered");
             if (body is Player && InteractionTrigger is null)
             {
                 OnInteraction();
