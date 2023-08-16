@@ -5,6 +5,9 @@ namespace SupaLidlGame.Items.Weapons;
 public abstract partial class Ranged : Weapon
 {
     [Export]
+    public float CharacterRecoil { get; set; } = 0;
+
+    [Export]
     public float AngleDeviation { get; set; }
 
     [Export]

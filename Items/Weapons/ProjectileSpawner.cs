@@ -67,6 +67,11 @@ public partial class ProjectileSpawner : Ranged
 
         Vector2 target = Character.Target.Normalized();
 
+        if (CharacterRecoil > 0)
+        {
+            Character.ApplyImpulse(-target * CharacterRecoil);
+        }
+
         // avoid unnecessary math if only spawning 1 projectile
         if (ProjectileCount == 1)
         {

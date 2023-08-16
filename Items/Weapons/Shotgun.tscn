@@ -253,6 +253,7 @@ script = ExtResource("1_4xyyt")
 Projectile = ExtResource("2_p3wx2")
 ProjectileCount = 3
 ProjectileAngleDeviation = 10.0
+CharacterRecoil = 128.0
 StateMachine = NodePath("State")
 Damage = 12.0
 UseTime = 1.5
