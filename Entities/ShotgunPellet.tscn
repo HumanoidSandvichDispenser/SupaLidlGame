@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://da1do2r2pbayb"]
+
+[ext_resource type="Script" path="res://Entities/Projectile.cs" id="1_seunk"]
+[ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="2_yu7xh"]
+[ext_resource type="Shader" path="res://Shaders/SpeedLines.gdshader" id="3_eb2yu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mwhod"]
+radius = 2.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_u1hr7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wli7"]
+shader = ExtResource("3_eb2yu")
+shader_parameter/value_threshold = 0.5
+shader_parameter/color_max = Color(1, 1, 1, 1)
+shader_parameter/color_min = Color(1, 1, 1, 0)
+shader_parameter/speed = 16.0
+shader_parameter/stretch_factor = 8.0
+shader_parameter/end_alpha_x = 0.0
+shader_parameter/end_alpha_y = 0.1
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qk51l"]
+seed = 1
+frequency = 0.1
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_l6snh"]
+width = 16
+height = 4
+noise = SubResource("FastNoiseLite_qk51l")
+
+[node name="ShotgunPellet" type="RigidBody2D" node_paths=PackedStringArray("Hitbox")]
+script = ExtResource("1_seunk")
+ProjectileName = "Pellet"
+Hitbox = NodePath("Hitbox")
+
+[node name="Hitbox" parent="." instance=ExtResource("2_yu7xh")]
+Knockback = 64.0
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+shape = SubResource("CircleShape2D_mwhod")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(0.105882, 0.0470588, 0.117647, 1)
+scale = Vector2(4, 2)
+texture = SubResource("CanvasTexture_u1hr7")
+
+[node name="SpeedLines" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_5wli7")
+position = Vector2(-6, 0)
+texture = SubResource("NoiseTexture2D_l6snh")
+region_rect = Rect2(0, 0, 40.4088, 33.6735)
+
+[editable path="Hitbox"]

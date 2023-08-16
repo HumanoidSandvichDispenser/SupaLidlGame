@@ -1,75 +1,26 @@
-[gd_scene load_steps=18 format=3 uid="uid://d1d4vg7we5rjr"]
+[gd_scene load_steps=26 format=3 uid="uid://d1d4vg7we5rjr"]
 
 [ext_resource type="Script" path="res://Items/Weapons/ProjectileSpawner.cs" id="1_4xyyt"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_ag6rd"]
-[ext_resource type="PackedScene" uid="uid://bqvseo3sbs1aj" path="res://Entities/RailBeam.tscn" id="2_k2n4h"]
+[ext_resource type="PackedScene" uid="uid://da1do2r2pbayb" path="res://Entities/ShotgunPellet.tscn" id="2_p3wx2"]
 [ext_resource type="Script" path="res://State/Weapon/RangedIdleState.cs" id="3_dd6bh"]
 [ext_resource type="Script" path="res://State/Weapon/RangedFireState.cs" id="4_bwqd6"]
 [ext_resource type="Texture2D" uid="uid://b1omx2kdb2x1n" path="res://Assets/Sprites/Items/shotgun.png" id="5_g8d45"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="6_va8ee"]
 [ext_resource type="AudioStream" uid="uid://5fybh24xashp" path="res://Assets/Sounds/shotgun.wav" id="7_ucxp5"]
+[ext_resource type="AudioStream" uid="uid://cb5olv6rxm4f1" path="res://Assets/Sounds/shotgun-cycle.wav" id="8_sfyq7"]
+[ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="9_xrus5"]
+[ext_resource type="Texture2D" uid="uid://25euyff77a4d" path="res://Assets/Sprites/Misc/shell.png" id="10_vu81g"]
+[ext_resource type="Script" path="res://Utils/CloneableParticles.cs" id="10_vx4wq"]
 
-[sub_resource type="Animation" id="Animation_i0e06"]
-resource_name = "fire"
+[sub_resource type="CanvasTexture" id="CanvasTexture_wvatk"]
+
+[sub_resource type="Animation" id="Animation_vijrc"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Vector2(-4, 0), Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("GPUParticles2D:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-tracks/2/type = "audio"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AudioStreamPlayer2D")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("7_ucxp5")
-}],
-"times": PackedFloat32Array(0)
-}
-tracks/2/use_blend = true
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.5, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-
-[sub_resource type="Animation" id="Animation_sqn2o"]
-resource_name = "idle"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("Anchor:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -81,7 +32,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/path = NodePath("Anchor:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -90,13 +41,136 @@ tracks/1/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PointLight2D:enabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
-[sub_resource type="Animation" id="Animation_vijrc"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_i0e06"]
+resource_name = "fire"
+length = 1.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/path = NodePath("Anchor:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(-4, 0), Vector2(0, 0)]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 1.04,
+"start_offset": 0.0,
+"stream": ExtResource("7_ucxp5")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Anchor:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [6.28319, 6.28319, 0.0]
+}
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AudioStreamPlayer2D2")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 0.15,
+"start_offset": 0.0,
+"stream": ExtResource("8_sfyq7")
+}],
+"times": PackedFloat32Array(1)
+}
+tracks/3/use_blend = true
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ShellParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(1.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("ShellParticles")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"restart"
+}]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("PointLight2D:enabled")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("GPUParticles2D")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EmitOnWorld"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_sqn2o"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -108,22 +182,10 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("GPUParticles2D:emitting")
+tracks/1/path = NodePath("Anchor:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -138,39 +200,63 @@ _data = {
 }
 
 [sub_resource type="Gradient" id="Gradient_uphon"]
-colors = PackedColorArray(1, 1, 1, 0.498039, 1, 1, 1, 0)
+offsets = PackedFloat32Array(0, 0.237037, 1)
+colors = PackedColorArray(2, 1.8, 1.25, 1, 1, 1, 1, 0.498039, 1, 1, 1, 0)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_83h4s"]
 gradient = SubResource("Gradient_uphon")
 
 [sub_resource type="Curve" id="Curve_mqgo6"]
-_data = [Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0.8), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.9), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CurveTexture" id="CurveTexture_3omj5"]
 curve = SubResource("Curve_mqgo6")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_uexo4"]
 particle_flag_disable_z = true
-direction = Vector3(0, -1, 0)
-spread = 90.0
+flatness = 1.0
 gravity = Vector3(0, -4, 0)
-initial_velocity_min = 3.0
-initial_velocity_max = 4.0
+initial_velocity_min = -8.0
+initial_velocity_max = 24.0
 orbit_velocity_min = 0.0
 orbit_velocity_max = 0.0
-scale_min = 0.1
-scale_max = 0.1
+scale_min = 0.75
 scale_curve = SubResource("CurveTexture_3omj5")
 color_ramp = SubResource("GradientTexture1D_83h4s")
 
+[sub_resource type="Gradient" id="Gradient_jks7f"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_eeskk"]
+gradient = SubResource("Gradient_jks7f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rta5n"]
+particle_flag_disable_z = true
+direction = Vector3(-1, -2, 0)
+spread = 10.0
+gravity = Vector3(0, 64, 0)
+initial_velocity_min = 16.0
+initial_velocity_max = 32.0
+angular_velocity_min = 30.0
+angular_velocity_max = 60.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 2.0
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_eeskk")
+
 [node name="Shotgun" type="Node2D" node_paths=PackedStringArray("StateMachine")]
+y_sort_enabled = true
 script = ExtResource("1_4xyyt")
-Projectile = ExtResource("2_k2n4h")
+Projectile = ExtResource("2_p3wx2")
+ProjectileCount = 3
+ProjectileAngleDeviation = 10.0
 StateMachine = NodePath("State")
-Damage = 20.0
-UseTime = 1.0
-InitialVelocity = 256.0
+Damage = 12.0
+UseTime = 1.5
+InitialVelocity = 220.0
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_ag6rd")
@@ -190,27 +276,62 @@ IdleState = NodePath("../Idle")
 AnimationPlayer = NodePath("../../AnimationPlayer")
 AnimationKey = "fire"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Anchor" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Anchor"]
+y_sort_enabled = true
 texture_filter = 1
+position = Vector2(4.00001, 5.99998)
 texture = ExtResource("5_g8d45")
 centered = false
-offset = Vector2(0, -2)
+offset = Vector2(-4, -10)
+
+[node name="Marker2D" type="Marker2D" parent="Anchor"]
+
+[node name="YSortHint" type="Sprite2D" parent="Anchor"]
+visible = false
+position = Vector2(4.00001, 5.99998)
+texture = SubResource("CanvasTexture_wvatk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_si0kh")
 }
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+volume_db = -2.0
+max_distance = 256.0
+bus = &"Effects"
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+max_distance = 256.0
+bus = &"Effects"
+
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(16, -1)
+position = Vector2(17, -3)
 emitting = false
-amount = 4
 process_material = SubResource("ParticleProcessMaterial_uexo4")
 texture = ExtResource("6_va8ee")
-lifetime = 0.5
+lifetime = 3.0
+one_shot = true
+preprocess = 0.1
+explosiveness = 1.0
+script = ExtResource("10_vx4wq")
+
+[node name="ShellParticles" type="GPUParticles2D" parent="."]
+position = Vector2(3, 0)
+emitting = false
+amount = 1
+process_material = SubResource("ParticleProcessMaterial_rta5n")
+texture = ExtResource("10_vu81g")
 one_shot = true
 explosiveness = 1.0
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-max_distance = 256.0
-bus = &"Effects"
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(8, 8)
+enabled = false
+color = Color(0.941176, 0.843137, 0.470588, 1)
+energy = 0.25
+texture = ExtResource("9_xrus5")
+texture_scale = 0.25
