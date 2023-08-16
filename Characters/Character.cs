@@ -104,6 +104,8 @@ public partial class Character : CharacterBody2D, IFaction
 
     public AnimationPlayer AttackAnimation { get; set; }
 
+    private UI.DamageText _curDamageText;
+
     public override void _Ready()
     {
         // TODO: 80+ char line
@@ -268,6 +270,20 @@ public partial class Character : CharacterBody2D, IFaction
         float knockback,
         Vector2 knockbackDir = default) => damage;
 
+    protected void CreateDamageText(float damage)
+    {
+        // create damage text
+        var textScene = GD.Load<PackedScene>("res://UI/DamageText.tscn");
+        if (_curDamageText is null || !IsInstanceValid(_curDamageText))
+        {
+            _curDamageText = textScene.Instantiate<UI.DamageText>();
+            this.GetWorld().CurrentMap.AddChild(_curDamageText);
+        }
+        _curDamageText.Damage += damage;
+        _curDamageText.Timer.Start();
+        _curDamageText.GlobalPosition = GlobalPosition;
+        _curDamageText.ShowText();
+    }
 
     protected virtual void OnReceivedDamage(
         float damage,
@@ -281,7 +297,8 @@ public partial class Character : CharacterBody2D, IFaction
         }
 
         float oldHealth = Health;
-        Health -= ReceiveDamage(damage, inflictor, knockback, knockbackDir);
+        damage = ReceiveDamage(damage, inflictor, knockback, knockbackDir);
+        Health -= damage;
 
         var hurtParticles = GetNode<GpuParticles2D>("Effects/HurtParticles");
         if (hurtParticles is not null)
@@ -289,15 +306,9 @@ public partial class Character : CharacterBody2D, IFaction
             hurtParticles.SetDirection(knockbackDir);
         }
 
-        // create damage text
-        var textScene = GD.Load<PackedScene>("res://UI/FloatingText.tscn");
-        var instance = textScene.Instantiate<UI.FloatingText>();
-        instance.Text = Mathf.Round(damage).ToString();
-        instance.GlobalPosition = GlobalPosition;
-        this.GetAncestor<TileMap>().AddChild(instance);
+        CreateDamageText(damage);
 
         // apply knockback
-
         ApplyImpulse(knockbackDir.Normalized() * knockback);
 
         // play damage animation

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://b05ormmtofbw1"]
+
+[ext_resource type="PackedScene" uid="uid://be80n7mxp62jd" path="res://UI/FloatingText.tscn" id="1_dggpv"]
+[ext_resource type="Script" path="res://UI/DamageText.cs" id="2_psgc1"]
+
+[node name="FloatingText" instance=ExtResource("1_dggpv")]
+z_index = 16
+script = ExtResource("2_psgc1")

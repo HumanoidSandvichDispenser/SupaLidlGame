@@ -5,10 +5,11 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_gs6ch"]
 font = ExtResource("1_yns15")
-font_color = Color(1, 0.792157, 0, 1)
+font_color = Color(0.941176, 0.843137, 0.470588, 1)
 outline_size = 2
-outline_color = Color(0.635294, 0.415686, 0, 1)
-shadow_color = Color(0, 0, 0, 1)
+outline_color = Color(0.713726, 0.372549, 0.105882, 1)
+shadow_size = 2
+shadow_color = Color(0.176471, 0.0901961, 0.172549, 1)
 
 [node name="FloatingText" type="Node2D"]
 scale = Vector2(0.5, 0.5)
@@ -24,3 +25,7 @@ text = "gruppa krovi"
 label_settings = SubResource("LabelSettings_gs6ch")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
