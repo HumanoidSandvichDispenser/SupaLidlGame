@@ -66,7 +66,7 @@ public partial class BossBar : VBoxContainer
             newBoss.Hurt += OnBossHurt;
             newBoss.Death += OnBossDeath;
 
-            ProgressBar.MaxValue = newBoss.Health;
+            ProgressBar.MaxValue = newBoss.MaxHealth;
             ProgressBar.Value = newBoss.Health;
 
             Visible = true;

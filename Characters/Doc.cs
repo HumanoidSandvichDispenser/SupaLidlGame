@@ -39,6 +39,10 @@ public partial class Doc : Boss
                 var coll = trig.GetNode<CollisionShape2D>("CollisionShape2D");
                 coll.Disabled = true;
             }
+            else
+            {
+                Reset();
+            }
         }
     }
 
@@ -130,5 +134,14 @@ public partial class Doc : Boss
             BossStateMachine.Process(delta);
         }
         base._Process(delta);
+    }
+
+    protected override void Reset()
+    {
+        base.Reset();
+        GlobalPosition = Vector2.Zero;
+        var trig = GetNode<InteractionTrigger>("InteractionTrigger");
+        var coll = trig.GetNode<CollisionShape2D>("CollisionShape2D");
+        coll.Disabled = false;
     }
 }

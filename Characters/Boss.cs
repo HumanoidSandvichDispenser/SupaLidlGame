@@ -38,6 +38,9 @@ public abstract partial class Boss : Enemy
         }
     }
 
+    [Export]
+    public float MaxHealth { get; set; }
+
     public override void _Ready()
     {
         base._Ready();
@@ -49,7 +52,7 @@ public abstract partial class Boss : Enemy
 
         this.GetWorld().CurrentPlayer.Death += (args) =>
         {
-            Reset();
+            IsActive = false;
         };
 
         _eventBus = this.GetEventBus();
@@ -63,8 +66,6 @@ public abstract partial class Boss : Enemy
 
     protected virtual void Reset()
     {
-        IsActive = false;
-
         // reset animations
         foreach (var child in GetNode("Animations").GetChildren())
         {
@@ -79,5 +80,6 @@ public abstract partial class Boss : Enemy
 
         StateMachine.ChangeState(StateMachine.InitialState);
         ThinkerStateMachine.ChangeState(ThinkerStateMachine.InitialState);
+        Health = MaxHealth;
     }
 }

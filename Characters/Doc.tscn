@@ -565,6 +565,7 @@ Lance = NodePath("Inventory/DocLance")
 BossStateMachine = NodePath("BossStateMachine")
 BossName = "Doc, The Two-Time"
 Music = ExtResource("3_eo4lg")
+MaxHealth = 900.0
 DefaultSelectedItem = NodePath("Inventory/DocLance")
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
 HandTexture = ExtResource("4_8lqj6")
