@@ -22,7 +22,7 @@ public partial class InteractionRay : RayCast2D
                 }
             }
 
-            if (_trigger is not null)
+            if (_trigger is not null && IsInstanceValid(_trigger))
             {
                 if (_trigger != value)
                 {
