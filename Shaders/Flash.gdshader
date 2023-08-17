@@ -7,6 +7,8 @@ uniform float alpha_modulate : hint_range(0.0, 1.0) = 1.0;
 void fragment() {
     vec4 tex = texture(TEXTURE, UV);
     tex.rgb = mix(tex.rgb, color.rgb, intensity);
-    COLOR = tex;
+    COLOR.r = tex.r;
+    COLOR.g = tex.g;
+    COLOR.b = tex.b;
     COLOR.a *= alpha_modulate;
 }
