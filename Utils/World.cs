@@ -97,7 +97,7 @@ public partial class World : Node
         EventBus = this.GetEventBus();
         EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
         {
-            CallDeferred(MethodName.MoveToArea, args.Area, args.Connector);
+            CallDeferred(nameof(MoveToArea), args.Area, args.Connector);
         };
         EventBus.RegisteredBoss += RegisterBoss;
         EventBus.DeregisteredBoss += DeregisterBoss;

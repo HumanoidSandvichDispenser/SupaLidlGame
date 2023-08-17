@@ -36,11 +36,10 @@ public partial class PursueState : ThinkerState
             NPC.Target = NPC.GlobalPosition.DirectionTo(pos);
             NPC.LastSeenPosition = pos;
 
-            if (NPC.GlobalPosition.DistanceTo(pos) < MinDistanceToTarget)
+            if (NPC.HasLineOfSight(bestTarget))
             {
-                if (NPC.HasLineOfSight(bestTarget))
+                if (NPC.GlobalPosition.DistanceTo(pos) < MinDistanceToTarget)
                 {
-                    GD.Print("To attack state");
                     return AttackState;
                 }
             }
@@ -48,11 +47,9 @@ public partial class PursueState : ThinkerState
         else
         {
             // go to last seen position of last best target
-            GD.Print("Last seen " + NPC.LastSeenPosition);
             NavigationAgent.TargetPosition = NPC.LastSeenPosition;
         }
-
-        return PassiveState ?? base.Think();
+        return null;
     }
 
     public override ThinkerState PhysicsProcess(double delta)
