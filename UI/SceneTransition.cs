@@ -25,6 +25,8 @@ public partial class SceneTransition : Control
 
     public void Exit()
     {
-        _animPlayer.Play("exit");
+        // call deferred to wait for new map to process
+        // this avoids a jumpy transition when a new map loads
+        _animPlayer.CallDeferred("play", "exit");
     }
 }

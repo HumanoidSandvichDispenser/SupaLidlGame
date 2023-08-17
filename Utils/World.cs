@@ -260,8 +260,8 @@ public partial class World : Node
             LoadScene(path);
         }
 
-        EventBus.EmitSignal(EventBus.SignalName.ExitTransition);
         GetTree().Paused = false;
+        EventBus.EmitSignal(EventBus.SignalName.ExitTransition);
 
         // after finished loading, move our player to the connector
         MovePlayerToConnector(connector);
