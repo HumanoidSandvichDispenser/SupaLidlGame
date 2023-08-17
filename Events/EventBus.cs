@@ -24,4 +24,18 @@ public partial class EventBus : Node
 
     [Signal]
     public delegate void DeregisteredBossEventHandler(Characters.Boss boss);
+
+    [Signal]
+    public delegate void EnterTransitionEventHandler();
+
+    [Signal]
+    public delegate void TransitionFinishedEventHandler();
+
+    [Signal]
+    public delegate void ExitTransitionEventHandler();
+
+    public override void _Ready()
+    {
+        ProcessMode = ProcessModeEnum.Always;
+    }
 }

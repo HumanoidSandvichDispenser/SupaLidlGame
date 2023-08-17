@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c271rdjhd1gfo" path="res://UI/Base.tscn" id="2_mm0qt"]
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("MusicPlayer", "DialogueBalloon")]
+process_mode = 3
 script = ExtResource("1_1k6ew")
 MusicPlayer = NodePath("MusicPlayer")
 DialogueBalloon = NodePath("CanvasLayer/SubViewportContainer/UIViewport/DialogBalloon")

@@ -3,6 +3,7 @@ using SupaLidlGame.Characters;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Scenes;
 using SupaLidlGame.State.Global;
+using SupaLidlGame.Events;
 
 namespace SupaLidlGame.Utils;
 
@@ -58,7 +59,7 @@ public partial class World : Node
 
     public State.Global.GlobalState GlobalState { get; set; }
 
-    public Events.EventBus EventBus { get; set; }
+    public EventBus EventBus { get; set; }
 
     private CacheStore<string, Map> _maps = new();
 
@@ -95,9 +96,10 @@ public partial class World : Node
         UIController = this.GetMainUI();
 
         EventBus = this.GetEventBus();
-        EventBus.RequestMoveToArea += (Events.RequestAreaArgs args) =>
+        EventBus.RequestMoveToArea += (RequestAreaArgs args) =>
         {
-            CallDeferred(nameof(MoveToArea), args.Area, args.Connector);
+            //CallDeferred(nameof(MoveToArea), args.Area, args.Connector);
+            MoveToArea(args.Area, args.Connector);
         };
         EventBus.RegisteredBoss += RegisterBoss;
         EventBus.DeregisteredBoss += DeregisterBoss;
@@ -155,7 +157,7 @@ public partial class World : Node
         CurrentMap.Active = true;
         CurrentMap.Load();
 
-        EventBus.EmitSignal(Events.EventBus.SignalName.AreaChanged, map);
+        EventBus.EmitSignal(EventBus.SignalName.AreaChanged, map);
 
         if (CurrentPlayer is not null)
         {
@@ -220,7 +222,7 @@ public partial class World : Node
     {
         CurrentPlayer = _playerScene.Instantiate<Player>();
 
-        CurrentPlayer.Death += (Events.HurtArgs args) =>
+        CurrentPlayer.Death += (HurtArgs args) =>
         {
             // TODO: respawn the player at the last campfire.
             GetTree().CreateTimer(3).Timeout += () =>
@@ -229,15 +231,6 @@ public partial class World : Node
             };
             GlobalState.Stats.DeathCount++;
         };
-
-        /*
-        CurrentPlayer.Hurt += (Events.HurtArgs args) =>
-        {
-            // TODO: move this to UI controller and add a setup method
-            var bar = UIController.GetNode<UI.HealthBar>("Top/Margin/HealthBar");
-            bar.ProgressBar.Value = args.NewHealth;
-        };
-        */
 
         return CurrentPlayer;
     }
@@ -253,15 +246,22 @@ public partial class World : Node
         CurrentPlayer.GlobalPosition = marker?.GlobalPosition ?? Vector2.Zero;
     }
 
-    public void MoveToArea(string path, string connector)
+    public async void MoveToArea(string path, string connector)
     {
         _currentConnector = connector;
         GD.Print($"Moving to area {path} - {connector}");
+
+        EventBus.EmitSignal(EventBus.SignalName.EnterTransition);
+        GetTree().Paused = true;
+        await ToSignal(EventBus, EventBus.SignalName.TransitionFinished);
+
         if (path != CurrentMap.SceneFilePath)
         {
             LoadScene(path);
-            //_currentMapResourcePath = path;
         }
+
+        EventBus.EmitSignal(EventBus.SignalName.ExitTransition);
+        GetTree().Paused = false;
 
         // after finished loading, move our player to the connector
         MovePlayerToConnector(connector);

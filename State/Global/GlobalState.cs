@@ -17,7 +17,10 @@ public partial class GlobalState : Node
     [Signal]
     public delegate void SummonBossEventHandler(string bossName);
 
-    public void Print(string str) => GD.Print(str);
+    public override void _Ready()
+    {
+        ProcessMode = ProcessModeEnum.Always;
+    }
 
     public void ImportFromSave(Save save)
     {

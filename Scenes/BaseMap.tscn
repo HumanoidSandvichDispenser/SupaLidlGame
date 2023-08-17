@@ -1833,6 +1833,7 @@ glow_enabled = true
 glow_hdr_threshold = 1.4
 
 [node name="TileMap" type="TileMap" node_paths=PackedStringArray("Entities", "Areas", "Spawners", "Markers")]
+process_mode = 1
 y_sort_enabled = true
 texture_filter = 3
 tile_set = SubResource("TileSet_18c7j")
