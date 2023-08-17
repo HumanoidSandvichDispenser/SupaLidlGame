@@ -337,5 +337,18 @@ public partial class World : Node
         CurrentPlayer.Spawn();
     }
 
+    public void StaleCache()
+    {
+        foreach (var kv in _maps)
+        {
+            var map = kv.Value?.Value;
+            if (map is not null && IsInstanceValid(map))
+            {
+                GD.Print($"Staling {kv.Key}");
+                kv.Value.Stale();
+            }
+        }
+    }
+
     public Node FindEntity(string name) => CurrentMap.Entities.GetNode(name);
 }

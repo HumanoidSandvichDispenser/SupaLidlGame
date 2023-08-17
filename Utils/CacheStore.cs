@@ -1,12 +1,12 @@
 using Godot;
 using System.Collections.Generic;
 
-public class CacheStore<TKey, TVal>
+public class CacheStore<TKey, TVal> : IEnumerable<KeyValuePair<TKey, CacheItem<TVal>>>
 {
     // default TTL is 1 min
     public ulong TimeToLive { get; } = 60000;
 
-    private Dictionary<TKey, CacheItem<TVal>> _store = new();
+    private readonly Dictionary<TKey, CacheItem<TVal>> _store = new();
 
     public CacheItem<TVal> this[TKey key]
     {
@@ -29,6 +29,16 @@ public class CacheStore<TKey, TVal>
                 _store.Add(key, value);
             }
         }
+    }
+
+    public IEnumerator<KeyValuePair<TKey, CacheItem<TVal>>> GetEnumerator()
+    {
+        return _store.GetEnumerator();
+    }
+
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    {
+        return this.GetEnumerator();
     }
 
     public TVal Retrieve(TKey key)
