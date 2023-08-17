@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://cdj50hb84aujp"]
+[gd_scene load_steps=43 format=3 uid="uid://cdj50hb84aujp"]
 
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_hvgeb"]
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="2_h5w5n"]
@@ -6,9 +6,11 @@
 [ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="4_1ngkf"]
 [ext_resource type="Script" path="res://State/Character/NPCMoveState.cs" id="5_wcpa1"]
 [ext_resource type="Script" path="res://State/Thinker/ThinkerStateMachine.cs" id="6_121gp"]
-[ext_resource type="Script" path="res://State/Thinker/AttackState.cs" id="8_8a6v2"]
+[ext_resource type="Script" path="res://State/Character/CharacterDashState.cs" id="6_pwguk"]
+[ext_resource type="Script" path="res://State/Thinker/DashDefensive.cs" id="8_n8t7f"]
 [ext_resource type="Script" path="res://State/Thinker/IdleState.cs" id="9_ewnq3"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="9_ssmee"]
+[ext_resource type="Script" path="res://State/Thinker/PursueState.cs" id="9_u7gxx"]
 [ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="10_oplmj"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="11_qcw5x"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="12_rlelw"]
@@ -142,18 +144,6 @@ tracks/3/keys = {
 "update": 1,
 "values": [false]
 }
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprites/Node2D/Character:frame")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [8]
-}
 
 [sub_resource type="Animation" id="Animation_lhc4c"]
 resource_name = "death"
@@ -225,18 +215,6 @@ tracks/2/keys = {
 "method": &"restart"
 }]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = false
-tracks/3/path = NodePath("Sprites/Node2D/Character:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [8]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rc55s"]
 _data = {
@@ -306,11 +284,12 @@ script = ExtResource("2_h5w5n")
 DefaultSelectedItem = NodePath("Inventory/DocLance")
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
 Speed = 56.0
-Health = 170.0
+Health = 130.0
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
+metadata/_edit_vertical_guides_ = []
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_04p3j")
@@ -327,21 +306,28 @@ script = ExtResource("5_wcpa1")
 IdleState = NodePath("../Idle")
 Character = NodePath("../..")
 
+[node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("6_pwguk")
+IdleState = NodePath("../Idle")
+TimeToDash = 0.1
+VelocityModifier = 4.0
+Character = NodePath("../..")
+
 [node name="ThinkerStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("6_121gp")
 InitialState = NodePath("Idle")
 
 [node name="Attack" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PassiveState", "PursueState", "NPC")]
-script = ExtResource("8_8a6v2")
+script = ExtResource("8_n8t7f")
 MaxDistanceToTarget = 128.0
 UseItemDistance = 64.0
 PassiveState = NodePath("../Idle")
-PursueState = NodePath("../Idle")
+PursueState = NodePath("../Pursue")
 NPC = NodePath("../..")
 
 [node name="Idle" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PursueState", "NavigationAgent", "NPC")]
 script = ExtResource("9_ewnq3")
-PursueState = NodePath("../Attack")
+PursueState = NodePath("../Pursue")
 MinTargetDistance = 24.0
 PursueOnLineOfSight = true
 MinLineOfSightDistance = 256.0
@@ -349,9 +335,17 @@ ShouldReturnToOriginalPosition = true
 NavigationAgent = NodePath("../../NavigationAgent2D")
 NPC = NodePath("../..")
 
+[node name="Pursue" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NavigationAgent", "AttackState", "PassiveState", "NPC")]
+script = ExtResource("9_u7gxx")
+NavigationAgent = NodePath("../../NavigationAgent2D")
+AttackState = NodePath("../Attack")
+PassiveState = NodePath("../Idle")
+MinDistanceToTarget = 72.0
+MaxDistanceFromOrigin = 128.0
+NPC = NodePath("../..")
+
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 target_desired_distance = 16.0
-debug_enabled = true
 
 [node name="Animations" type="Node" parent="."]
 script = ExtResource("9_ssmee")

@@ -25,8 +25,21 @@ public partial class DashDefensive : AttackState
             Vector2 pos = bestTarget.GlobalPosition;
             NPC.Target = pos - NPC.GlobalPosition;
             Vector2 dir = NPC.GlobalPosition.DirectionTo(pos);
-            float dist = NPC.GlobalPosition.DistanceSquaredTo(pos);
+            float dist = NPC.GlobalPosition.DistanceTo(pos);
             UpdateWeights(pos);
+
+            if (dist > MaxDistanceToTarget)
+            {
+                if (PursueState is not null)
+                {
+                    return PursueState;
+                }
+
+                if (PassiveState is not null)
+                {
+                    return PassiveState;
+                }
+            }
 
             if (NPC.CanAttack && NPC.StunTime <= 0)
             {
@@ -48,17 +61,16 @@ public partial class DashDefensive : AttackState
 
                 // doc will still dash if you are farther than normal but
                 // moving towards him
-                float distThreshold = 2500 - (dot * 400);
-
-                // or just directly dash towards you if you are too far
-                float distTowardsThreshold = 22500;
+                float distThreshold = 50 - (dot * 20);
 
                 // dash towards if lance in anticipate state
+                // or just directly dash towards you if you are too far
                 shouldDashTowards = (isTargetStunned || _dashedAway) &&
                     swordState is State.Weapon.SwordAnticipateState ||
-                    dist > distTowardsThreshold;
+                    dist > MaxDistanceToTarget;
 
-                shouldDashAway = dist < distThreshold && !isTargetStunned;
+                shouldDashAway = dist < distThreshold && !isTargetStunned &&
+                    swordState is not State.Weapon.SwordAnticipateState;
 
                 //if (!isTargetStunned && dist < 2500 && !_dashedAway)
                 if (shouldDashAway && !shouldDashTowards)
@@ -83,10 +95,14 @@ public partial class DashDefensive : AttackState
                     DashTo(NPC.GlobalPosition.DirectionTo(newPos));
                     _dashedAway = false;
                 }
+                else if (isTargetStunned)
+                {
+                    NPC.UseCurrentItem();
+                }
             }
         }
 
-        return null;
+        return PursueState ?? PassiveState;
     }
 
     private void DashTo(Vector2 direction)

@@ -23,7 +23,7 @@ public partial class CharacterDashState : CharacterState
         _timeLeftToDash = TimeToDash;
         // dash the direction we were previously moving in
         DashDirection = Character.Direction;
-        Character.MovementAnimation.Play("dash");
+        Character.MovementAnimation.TryPlay("dash");
         Character.MovementAnimation.Queue("idle");
 
         // create ghost effect

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="4_47f2d"]
 [ext_resource type="Script" path="res://State/Character/NPCMoveState.cs" id="5_iphm1"]
 [ext_resource type="Script" path="res://State/Thinker/ThinkerStateMachine.cs" id="6_6516i"]
-[ext_resource type="Script" path="res://State/Thinker/BlockAttackState.cs" id="7_vgjig"]
+[ext_resource type="Script" path="res://State/Thinker/CenturionAttackState.cs" id="7_n2slg"]
 [ext_resource type="Script" path="res://State/Thinker/IdleState.cs" id="8_5neew"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="9_fgnr2"]
 [ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="10_1erll"]
@@ -308,8 +308,11 @@ Character = NodePath("../..")
 script = ExtResource("6_6516i")
 InitialState = NodePath("Idle")
 
-[node name="Attack" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PassiveState", "PursueState", "NPC")]
-script = ExtResource("7_vgjig")
+[node name="Attack" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NavigationAgent", "PassiveState", "PursueState", "NPC")]
+script = ExtResource("7_n2slg")
+FollowTeammate = true
+NavigationAgent = NodePath("../../NavigationAgent2D")
+PathfindingDistance = 4.0
 PreferredWeightDistance = 24.0
 MaxDistanceToTarget = 128.0
 UseItemDistance = 48.0

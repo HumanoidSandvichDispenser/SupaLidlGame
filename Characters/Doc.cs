@@ -19,6 +19,15 @@ public partial class Doc : Boss
         get => base.IsActive;
         set
         {
+            // if player not alive or doesn't exist then don't activate
+            if (!this.GetWorld()?.CurrentPlayer?.IsAlive ?? true)
+            {
+                if (value)
+                {
+                    return;
+                }
+            }
+
             base.IsActive = value;
             var introState = BossStateMachine
                 .GetNode<State.NPC.Doc.DocIntroState>("Intro");
@@ -101,10 +110,12 @@ public partial class Doc : Boss
         };
 
 
+        CanAttack = false;
+
         // when we are hurt, start the boss fight
         Hurt += (Events.HurtArgs args) =>
         {
-            if (!IsActive)
+            if (this.GetWorld().CurrentPlayer.IsAlive && !IsActive)
             {
                 IsActive = true;
                 Inventory.SelectedItem = Lance;

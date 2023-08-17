@@ -38,4 +38,9 @@ public static class Node2DExtensions
         node.GlobalPosition = position;
         return node;
     }
+
+    public static float DistanceTo(this Node2D node, Node2D other)
+    {
+        return node.GlobalPosition.DistanceTo(other.GlobalPosition);
+    }
 }

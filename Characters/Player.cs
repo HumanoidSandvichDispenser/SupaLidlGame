@@ -48,6 +48,15 @@ public sealed partial class Player : Character
         };
     }
 
+    public override void _Process(double delta)
+    {
+        base._Process(delta);
+
+        var mod = Sprite.SelfModulate;
+        mod.A = 1 - (Stealth / 2);
+        Sprite.SelfModulate = mod;
+    }
+
     public override void _Input(InputEvent @event)
     {
         if (StateMachine != null)
