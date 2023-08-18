@@ -1,25 +1,17 @@
-[gd_scene load_steps=23 format=3 uid="uid://b2x17su05ou5w"]
+[gd_scene load_steps=19 format=3 uid="uid://b2x17su05ou5w"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_x0mh7"]
 [ext_resource type="PackedScene" uid="uid://d2skjvvx6fal0" path="res://Characters/Doc.tscn" id="4_ej0f3"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="5_h8k5p"]
-[ext_resource type="Texture2D" uid="uid://dl2q3k0w8e4fp" path="res://Assets/Sprites/Props/tree-dark.png" id="5_wlxp1"]
 [ext_resource type="PackedScene" uid="uid://c1w7t6irnohfx" path="res://Entities/Torch.tscn" id="6_1wwor"]
-[ext_resource type="Texture2D" uid="uid://ds0xg848g3jid" path="res://Assets/Sprites/Props/tree-dark-5.png" id="6_flapa"]
 [ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="6_jy3pc"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="7_y7j0e"]
 [ext_resource type="AudioStream" uid="uid://dy4qjflo1k28b" path="res://Assets/Sounds/calm-storm-ambient.mp3" id="8_wox7d"]
 [ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="9_fg062"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="11_yjp7m"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2sl6o"]
-light_mode = 1
-
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mv7qr"]
-light_mode = 1
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tywlr"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pl6cr"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Vector4(1, 1, 1, 1)
@@ -109,64 +101,44 @@ position = Vector2(120, 95)
 y_sort_enabled = true
 position = Vector2(97, 120)
 
-[node name="Static@TorchLamp14" parent="Props" index="8" instance=ExtResource("6_jy3pc")]
-y_sort_enabled = true
-position = Vector2(0, 120)
-
-[node name="Static@TorchLamp16" parent="Props" index="9" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp16" parent="Props" index="8" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-96, 120)
 
-[node name="Static@TorchLamp17" parent="Props" index="10" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp17" parent="Props" index="9" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, 95)
 
-[node name="Static@TorchLamp19" parent="Props" index="11" instance=ExtResource("6_jy3pc")]
+[node name="Static@TorchLamp19" parent="Props" index="10" instance=ExtResource("6_jy3pc")]
 y_sort_enabled = true
 position = Vector2(-120, -1)
 
-[node name="Static@Torch" parent="Props" index="12" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch" parent="Props" index="11" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-120, -112)
 
-[node name="Static@Torch2" parent="Props" index="13" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch2" parent="Props" index="12" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-72, -112)
 
-[node name="Static@Torch3" parent="Props" index="14" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch3" parent="Props" index="13" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(-24, -113)
 
-[node name="Static@Torch4" parent="Props" index="15" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch4" parent="Props" index="14" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(24, -112)
 
-[node name="Static@Torch5" parent="Props" index="16" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch5" parent="Props" index="15" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(72, -112)
 
-[node name="Static@Torch6" parent="Props" index="17" instance=ExtResource("6_1wwor")]
+[node name="Static@Torch6" parent="Props" index="16" instance=ExtResource("6_1wwor")]
 visible = false
 position = Vector2(120, -112)
 
-[node name="Tree" type="Node2D" parent="Props" index="18"]
-z_index = 2
-position = Vector2(136, 147)
-
-[node name="Sprite2D" type="Sprite2D" parent="Props/Tree" index="0"]
-material = SubResource("CanvasItemMaterial_2sl6o")
-texture = ExtResource("5_wlxp1")
-
-[node name="Tree2" type="Node2D" parent="Props" index="19"]
-z_index = 2
-position = Vector2(168, 51)
-
-[node name="Sprite2D" type="Sprite2D" parent="Props/Tree2" index="0"]
-material = SubResource("CanvasItemMaterial_mv7qr")
-texture = ExtResource("6_flapa")
-
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_tywlr")
+material = SubResource("ShaderMaterial_pl6cr")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="1"]
 position = Vector2(168, -42)

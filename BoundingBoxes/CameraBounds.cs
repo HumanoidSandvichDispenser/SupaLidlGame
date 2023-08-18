@@ -2,11 +2,18 @@ using Godot;
 
 namespace SupaLidlGame.BoundingBoxes;
 
-public partial class CameraBounds : Area2D
+public partial class CameraBounds : Node
 {
+    [Export]
+    public Area2D Trigger { get; set; }
+
+    [Export]
+    public RectangleShape2D Bounds { get; set; }
+
     public override void _Ready()
     {
-        BodyEntered += OnBodyEntered;
+        Trigger.BodyEntered += OnBodyEntered;
+        Trigger.BodyExited += OnBodyExited;
         base._Ready();
     }
 
@@ -15,7 +22,15 @@ public partial class CameraBounds : Area2D
         if (body is Characters.Player player)
         {
             var camera = player.Camera;
-            //camera.LimitLeft = 
+        }
+    }
+
+    private void OnBodyExited(Node2D body)
+    {
+        if (body is Characters.Player player)
+        {
+            var camera = player.Camera;
+            camera.LimitLeft = -1024;
         }
     }
 }

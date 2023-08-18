@@ -6,6 +6,9 @@ namespace SupaLidlGame.Entities;
 
 public partial class Projectile : RigidBody2D
 {
+    [Signal]
+    public delegate void HitEventHandler(BoundingBox box);
+
     //public virtual Vector2 Velocity => Direction * Speed;
     public virtual Vector2 Velocity
     {
@@ -88,6 +91,7 @@ public partial class Projectile : RigidBody2D
                 Hitbox.Knockback,
                 knockbackVector: Direction
             );
+            EmitSignal(SignalName.Hit, box);
         }
     }
 
