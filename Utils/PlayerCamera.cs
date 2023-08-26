@@ -46,4 +46,21 @@ public partial class PlayerCamera : Camera2D
         ret.Y = (rng.Randf() - 0.5f) * intensity;
         return ret;
     }
+
+    public void SetCameraBoundsToMap(Scenes.Map map)
+    {
+        //var bounds = map.GetUsedRect();
+        //LimitLeft = bounds.Position;
+
+    }
+
+    public void SetCameraBounds(Rect2I rect)
+    {
+        var start = rect.Position;
+        var end = rect.End;
+        LimitLeft = start.X;
+        LimitTop = start.Y;
+        LimitRight = end.X;
+        LimitBottom = end.Y;
+    }
 }

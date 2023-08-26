@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://malbos18dh7l"]
+
+[ext_resource type="Script" path="res://BoundingBoxes/CameraBounds.cs" id="1_vaknk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b2lli"]
+size = Vector2(256, 272)
+
+[node name="CameraBounds" type="Node2D" node_paths=PackedStringArray("Trigger")]
+position = Vector2(0, -89)
+script = ExtResource("1_vaknk")
+Trigger = NodePath("Area2D")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_b2lli")
+debug_color = Color(0.631373, 0.345098, 1, 0.419608)
+
+[node name="TopLeft" type="Marker2D" parent="."]
+position = Vector2(-256, -40)
+
+[node name="BottomRight" type="Marker2D" parent="."]
+position = Vector2(256, 216)

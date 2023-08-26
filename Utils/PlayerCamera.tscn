@@ -5,6 +5,8 @@
 [node name="Camera2D" type="Camera2D"]
 zoom = Vector2(2, 2)
 process_callback = 0
+limit_smoothed = true
+position_smoothing_speed = 32.0
 script = ExtResource("1_jabhk")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
