@@ -442,7 +442,6 @@ stream = ExtResource("12_vvem5")
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 zoom = Vector2(4, 4)
-limit_smoothed = true
 position_smoothing_speed = 8.0
 
 [node name="Sprites" type="Node2D" parent="."]
@@ -531,7 +530,6 @@ collide_with_bodies = false
 script = ExtResource("13_hs3u1")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-visible = false
 position = Vector2(0, -8)
 blend_mode = 2
 shadow_enabled = true

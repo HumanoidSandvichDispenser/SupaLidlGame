@@ -24,7 +24,6 @@ public partial class CameraBounds : Node2D
 
     private void OnBodyEntered(Node2D body)
     {
-        GD.Print("body entered " + body.Name);
         if (body is Characters.Player player)
         {
             var camera = player.Camera;
