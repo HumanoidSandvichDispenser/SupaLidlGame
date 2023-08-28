@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="11_j2620"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="11_yjp7m"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ov5gu"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_64d08"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Vector4(1, 1, 1, 1)
@@ -139,7 +139,7 @@ visible = false
 position = Vector2(120, -112)
 
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_ov5gu")
+material = SubResource("ShaderMaterial_64d08")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="1"]
 position = Vector2(168, -42)
@@ -164,6 +164,7 @@ texture = ExtResource("11_yjp7m")
 lifetime = 2.5
 explosiveness = 0.1
 randomness = 0.2
+fixed_fps = 8
 
 [node name="Entrance" type="Area2D" parent="Areas" index="0"]
 position = Vector2(0, 384)
@@ -176,22 +177,8 @@ ToConnector = "ArenaEntrance"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Entrance" index="0"]
 shape = SubResource("RectangleShape2D_2xagi")
 
-[node name="ArenaCameraBounds" parent="Areas" index="1" node_paths=PackedStringArray("TopLeft", "BottomRight") instance=ExtResource("11_j2620")]
-position = Vector2(0, -1)
-TopLeft = NodePath("TopLeft")
-BottomRight = NodePath("BottomRight")
-
-[node name="Area2D" parent="Areas/ArenaCameraBounds" index="0"]
-monitoring = false
-
-[node name="TopLeft" parent="Areas/ArenaCameraBounds" index="1"]
-position = Vector2(-256, -127)
-
-[node name="BottomRight" parent="Areas/ArenaCameraBounds" index="2"]
-position = Vector2(256, 129)
-
-[node name="EntranceCameraBounds" parent="Areas" index="2" node_paths=PackedStringArray("TopLeft", "BottomRight") instance=ExtResource("11_j2620")]
-TopLeft = NodePath("../ArenaCameraBounds/TopLeft")
+[node name="EntranceCameraBounds" parent="Areas" index="1" node_paths=PackedStringArray("TopLeft", "BottomRight") instance=ExtResource("11_j2620")]
+TopLeft = NodePath("")
 BottomRight = NodePath("BottomRight")
 
 [node name="Area2D" parent="Areas/EntranceCameraBounds" index="0"]
@@ -209,5 +196,4 @@ position = Vector2(256, 440)
 [node name="Entrance" type="Marker2D" parent="Markers" index="0"]
 position = Vector2(0, 352)
 
-[editable path="Areas/ArenaCameraBounds"]
 [editable path="Areas/EntranceCameraBounds"]
