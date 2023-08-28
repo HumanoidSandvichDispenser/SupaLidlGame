@@ -178,7 +178,7 @@ ToConnector = "ArenaEntrance"
 shape = SubResource("RectangleShape2D_2xagi")
 
 [node name="EntranceCameraBounds" parent="Areas" index="1" node_paths=PackedStringArray("TopLeft", "BottomRight") instance=ExtResource("11_j2620")]
-TopLeft = NodePath("")
+TopLeft = NodePath("TopLeft")
 BottomRight = NodePath("BottomRight")
 
 [node name="Area2D" parent="Areas/EntranceCameraBounds" index="0"]

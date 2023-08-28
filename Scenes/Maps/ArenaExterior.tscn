@@ -767,9 +767,11 @@ position = Vector2(-404, 505)
 material = SubResource("ShaderMaterial_sq2yd")
 position = Vector2(191, 567)
 
-[node name="CameraBounds" parent="Areas" index="0" instance=ExtResource("33_e4gty")]
+[node name="CameraBounds" parent="Areas" index="0" node_paths=PackedStringArray("TopLeft", "BottomRight") instance=ExtResource("33_e4gty")]
 visible = false
 position = Vector2(576, 511)
+TopLeft = NodePath("TopLeft")
+BottomRight = NodePath("BottomRight")
 
 [node name="TopLeft" parent="Areas/CameraBounds" index="1"]
 position = Vector2(-384, -192)

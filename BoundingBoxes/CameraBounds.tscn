@@ -5,10 +5,12 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b2lli"]
 size = Vector2(256, 272)
 
-[node name="CameraBounds" type="Node2D" node_paths=PackedStringArray("Trigger")]
+[node name="CameraBounds" type="Node2D" node_paths=PackedStringArray("Trigger", "TopLeft", "BottomRight")]
 position = Vector2(0, -89)
 script = ExtResource("1_vaknk")
 Trigger = NodePath("Area2D")
+TopLeft = NodePath("TopLeft")
+BottomRight = NodePath("BottomRight")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
