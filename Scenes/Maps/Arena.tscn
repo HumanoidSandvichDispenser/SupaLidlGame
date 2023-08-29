@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="11_j2620"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="11_yjp7m"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_64d08"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0gej"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Vector4(1, 1, 1, 1)
@@ -139,7 +139,7 @@ visible = false
 position = Vector2(120, -112)
 
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_64d08")
+material = SubResource("ShaderMaterial_y0gej")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="1"]
 position = Vector2(168, -42)
@@ -177,9 +177,7 @@ ToConnector = "ArenaEntrance"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Entrance" index="0"]
 shape = SubResource("RectangleShape2D_2xagi")
 
-[node name="EntranceCameraBounds" parent="Areas" index="1" node_paths=PackedStringArray("TopLeft", "BottomRight") instance=ExtResource("11_j2620")]
-TopLeft = NodePath("TopLeft")
-BottomRight = NodePath("BottomRight")
+[node name="EntranceCameraBounds" parent="Areas" index="1" instance=ExtResource("11_j2620")]
 
 [node name="Area2D" parent="Areas/EntranceCameraBounds" index="0"]
 position = Vector2(0, 377)

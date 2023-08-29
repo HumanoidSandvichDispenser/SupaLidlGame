@@ -6,7 +6,6 @@
 size = Vector2(256, 272)
 
 [node name="CameraBounds" type="Node2D" node_paths=PackedStringArray("Trigger", "TopLeft", "BottomRight")]
-position = Vector2(0, -89)
 script = ExtResource("1_vaknk")
 Trigger = NodePath("Area2D")
 TopLeft = NodePath("TopLeft")
@@ -22,7 +21,5 @@ shape = SubResource("RectangleShape2D_b2lli")
 debug_color = Color(0.631373, 0.345098, 1, 0.419608)
 
 [node name="TopLeft" type="Marker2D" parent="."]
-position = Vector2(-256, -40)
 
 [node name="BottomRight" type="Marker2D" parent="."]
-position = Vector2(256, 216)
