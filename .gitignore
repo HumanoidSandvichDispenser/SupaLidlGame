@@ -9,3 +9,6 @@ Build/
 
 # cache
 .cache/
+
+# binaries
+bin/
