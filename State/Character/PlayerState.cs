@@ -68,13 +68,23 @@ public abstract partial class PlayerState : CharacterState
 
             if (!weapon.ShouldHideIdle || isAttack1On)
             {
-                if (joystick.IsZeroApprox())
+                var inputMethod = Utils.World.Instance.GlobalState
+                    .Settings.InputMethod;
+                switch (inputMethod)
                 {
-                    Character.Target = Character.Direction;
-                }
-                else
-                {
-                    Character.Target = joystick;
+                    case Global.InputMethod.Joystick:
+                        if (joystick.IsZeroApprox())
+                        {
+                            Character.Target = Character.Direction;
+                        }
+                        else
+                        {
+                            Character.Target = joystick;
+                        }
+                        break;
+                    default:
+                        Character.Target = dirToMouse;
+                        break;
                 }
             }
 
