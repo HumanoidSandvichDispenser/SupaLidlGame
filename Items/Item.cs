@@ -23,6 +23,12 @@ public abstract partial class Item : Node2D
 
     public Character CharacterOwner { get; set; }
 
+    /// <summary>
+    /// Determines if the item is being used. This property determines if
+    /// a character can use another item or not.
+    /// See <see cref="Character.UseCurrentItem"/>
+    /// </summary>
+    /// 
     public virtual bool IsUsing => false;
 
     /// <summary>

@@ -51,10 +51,6 @@ public sealed partial class Player : Character
     public override void _Process(double delta)
     {
         base._Process(delta);
-
-        var mod = Sprite.SelfModulate;
-        mod.A = 1 - (Stealth / 2);
-        Sprite.SelfModulate = mod;
     }
 
     public override void _Input(InputEvent @event)
@@ -65,6 +61,9 @@ public sealed partial class Player : Character
         }
     }
 
+    /// <summary>
+    /// Respawns the player with full health and plays spawn animation
+    /// </summary>
     public void Spawn()
     {
         Health = 100;

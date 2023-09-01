@@ -7,6 +7,9 @@ using SupaLidlGame.State.Weapon;
 
 namespace SupaLidlGame.Items.Weapons;
 
+/// <summary>
+/// A basic melee weapon.
+/// </summary>
 public partial class Sword : Weapon, IParryable
 {
     public bool IsAttacking { get; protected set; }
@@ -77,6 +80,9 @@ public partial class Sword : Weapon, IParryable
         EnableParry(Time.GetTicksMsec());
     }
 
+    /// <summary>
+    /// Makes this melee weapon be able to parry and be parried.
+    /// </summary>
     public void EnableParry(ulong parryTimeOrigin)
     {
         IsParried = false;
@@ -84,6 +90,9 @@ public partial class Sword : Weapon, IParryable
         ParryTimeOrigin = parryTimeOrigin;
     }
 
+    /// <summary>
+    /// Makes this melee weapon be able to parry and be parried.
+    /// </summary>
     public void DisableParry()
     {
         IsParryable = false;
@@ -113,6 +122,10 @@ public partial class Sword : Weapon, IParryable
         base.DeuseAlt();
     }
 
+    /// <summary>
+    /// Enables the weapon's hitbox. Prefer to call this from a state machine
+    /// rather than managing state through the weapon script.
+    /// </summary>
     public void Attack()
     {
         //RemainingAttackTime = AttackTime;
@@ -120,6 +133,9 @@ public partial class Sword : Weapon, IParryable
         Hitbox.IsDisabled = false;
     }
 
+    /// <summary>
+    /// Disables the weapon's hitbox and processes all hurtboxes it hit.
+    /// </summary>
     public void Deattack()
     {
         IsAttacking = false;
@@ -161,6 +177,9 @@ public partial class Sword : Weapon, IParryable
         base._Process(delta);
     }
 
+    /// <summary>
+    /// Processes all hits and applies damages to hurtboxes.
+    /// </summary>
     public void ProcessHits()
     {
         if (IsParried)
@@ -199,6 +218,10 @@ public partial class Sword : Weapon, IParryable
         }
     }
 
+    /// <summary>
+    /// Stuns the wepaon holder. This is unique to swords and melee weapons
+    /// if they can parry.
+    /// </summary>
     public void Stun()
     {
         IsParried = true;
@@ -237,10 +260,5 @@ public partial class Sword : Weapon, IParryable
                 }
             }
         }
-    }
-
-    protected void SetAnimationCondition(string condition, bool value)
-    {
-
     }
 }
