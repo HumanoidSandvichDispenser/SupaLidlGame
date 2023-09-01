@@ -92,7 +92,6 @@ public partial class ProjectileSpawner : Ranged
         for (int i = 0; i < ProjectileCount; i++)
         {
             float curDeviation = -i + maxAngleDeviations;
-            GD.Print(curDeviation);
             SpawnProjectile(map, target.Rotated(curDeviation * theta));
         }
     }

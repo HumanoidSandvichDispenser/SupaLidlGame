@@ -344,7 +344,6 @@ public partial class Character : CharacterBody2D, IFaction
         if (this.GetNode("Effects/HurtSound") is AudioStreamPlayer2D sound)
         {
             // very small pitch deviation
-            GD.Print("hurt sound");
             sound.At(GlobalPosition).WithPitchDeviation(0.125f).PlayOneShot();
         }
 

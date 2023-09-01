@@ -25,11 +25,6 @@ public sealed partial class Player : Character
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
-        Death += async (Events.HurtArgs args) =>
-        {
-            HurtAnimation.Play("death");
-            await ToSignal(HurtAnimation, "animation_finished");
-        };
 
         base._Ready();
 
@@ -101,8 +96,7 @@ public sealed partial class Player : Character
 
     public override void Die()
     {
-        GD.Print("died");
-        //base.Die();
+        HurtAnimation.Play("death");
     }
 
     protected override void DrawTarget()

@@ -50,7 +50,6 @@ public partial class Inventory : Node2D
         {
             if (child is Item item)
             {
-                GD.Print("Adding item " + item.Name);
                 AddItem(item);
             }
         }

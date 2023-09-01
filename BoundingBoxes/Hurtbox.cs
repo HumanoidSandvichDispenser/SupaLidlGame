@@ -30,7 +30,6 @@ public partial class Hurtbox : BoundingBox, IFaction
         {
             InvincibilityTimer.Timeout += () =>
             {
-                GD.Print("invincibility off");
                 Monitorable = true;
             };
         }
@@ -77,7 +76,6 @@ public partial class Hurtbox : BoundingBox, IFaction
             InvincibilityTimer.Start();
             //Monitorable = false;
             SetDeferred("monitorable", false);
-            GD.Print("invincible");
         }
 
         EmitSignal(
