@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://p7oijq6dbvvk"]
+[gd_scene load_steps=22 format=3 uid="uid://p7oijq6dbvvk"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_1oyma"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_c41ov"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://State/Weapon/SwordAnticipateState.cs" id="4_t7af2"]
 [ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_i5v42"]
 [ext_resource type="Texture2D" uid="uid://o7enu13gvji5" path="res://Assets/Sprites/doc-lance.png" id="6_7t87o"]
+[ext_resource type="Texture2D" uid="uid://d75jkoev5v3w" path="res://Assets/Sprites/Particles/circle-64.png" id="8_gufhv"]
 [ext_resource type="Material" uid="uid://cbfaqolx1ydvv" path="res://Assets/Sprites/Particles/ParryParticles.tres" id="8_y2qyn"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="9_buajm"]
 [ext_resource type="Texture2D" uid="uid://cmvh6pc71ir1m" path="res://Assets/Sprites/sword-swing-large.png" id="11_46l1i"]
@@ -183,46 +184,33 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrgwb"]
 size = Vector2(10, 34)
 
-[node name="DocLance" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
+[node name="DocLance" type="Node2D"]
 y_sort_enabled = true
 texture_filter = 3
 script = ExtResource("1_1oyma")
-Hitbox = NodePath("Hitbox")
-AnimationPlayer = NodePath("AnimationPlayer")
 AttackTime = 0.2
 AttackAnimationDuration = 0.75
-ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
 NPCAnticipateTime = 0.3
-StateMachine = NodePath("State")
-Anchor = NodePath("Anchor")
 Damage = 20.0
 UseTime = 0.55
 Knockback = 64.0
 ShouldHideIdle = true
-HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 ItemName = "VSM-93"
 Description = "\"Violence. Speed. Momentum.\""
 
-[node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+[node name="State" type="Node" parent="."]
 script = ExtResource("2_c41ov")
-InitialState = NodePath("Idle")
 UsedItemStates = Array[NodePath]([NodePath("Attack")])
 DeusedItemStates = Array[NodePath]([NodePath("Idle")])
 
-[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("UseState", "Sword")]
+[node name="Idle" type="Node" parent="State"]
 script = ExtResource("3_sxffm")
-UseState = NodePath("../Anticipate")
-Sword = NodePath("../..")
 
-[node name="Anticipate" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AttackState")]
+[node name="Anticipate" type="Node" parent="State"]
 script = ExtResource("4_t7af2")
-Sword = NodePath("../..")
-AttackState = NodePath("../Attack")
 
-[node name="Attack" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState")]
+[node name="Attack" type="Node" parent="State"]
 script = ExtResource("5_i5v42")
-Sword = NodePath("../..")
-IdleState = NodePath("../Idle")
 
 [node name="Anchor" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -239,17 +227,14 @@ texture = ExtResource("6_7t87o")
 
 [node name="ParryParticles" type="GPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
 modulate = Color(1.2, 1.2, 1.2, 1)
-position = Vector2(-0.221825, -3.12132)
+position = Vector2(0, -3)
 rotation = 0.785398
-emitting = false
 amount = 16
 process_material = ExtResource("8_y2qyn")
+texture = ExtResource("8_gufhv")
 lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
-trail_enabled = true
-trail_lifetime = 0.1
-trail_sections = 4
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
 position = Vector2(-2.28882e-05, -6)

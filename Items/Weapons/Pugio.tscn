@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://5y1acxl4j4n7"]
+[gd_scene load_steps=29 format=3 uid="uid://5y1acxl4j4n7"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mai31"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_5ramr"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dfpe74vxvuwal" path="res://Assets/Sprites/Items/pugio.png" id="6_d28k5"]
 [ext_resource type="Script" path="res://State/Weapon/SwordBlockState.cs" id="6_yvm8x"]
 [ext_resource type="Material" uid="uid://cbfaqolx1ydvv" path="res://Assets/Sprites/Particles/ParryParticles.tres" id="8_we1sv"]
+[ext_resource type="Texture2D" uid="uid://d75jkoev5v3w" path="res://Assets/Sprites/Particles/circle-64.png" id="9_3p5s2"]
 [ext_resource type="AudioStream" uid="uid://m1sbk3c4eask" path="res://Assets/Sounds/metal-bash2.wav" id="9_b6yro"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="9_qimey"]
 [ext_resource type="AudioStream" uid="uid://kao8wbfaum27" path="res://Assets/Sounds/metal-bash3.wav" id="10_istfq"]
@@ -369,52 +370,35 @@ shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[node name="Pugio" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
+[node name="Pugio" type="Node2D"]
 y_sort_enabled = true
 texture_filter = 3
 script = ExtResource("1_mai31")
-Hitbox = NodePath("Hitbox")
-AnimationPlayer = NodePath("AnimationPlayer")
 AttackTime = 0.2
 AttackAltTime = 0.75
 AttackAnimationDuration = 0.5
-ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
 NPCAnticipateTime = 0.3
-StateMachine = NodePath("State")
-Anchor = NodePath("Anchor")
 Damage = 20.0
 UseTime = 0.55
 UseAltTime = 1.5
 Knockback = 64.0
-HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
-[node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+[node name="State" type="Node" parent="."]
 script = ExtResource("2_5ramr")
-InitialState = NodePath("Idle")
 UsedItemStates = Array[NodePath]([NodePath("Attack"), NodePath("Block")])
 DeusedItemStates = Array[NodePath]([NodePath("Idle")])
 
-[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("UseState", "UseAltState", "Sword")]
+[node name="Idle" type="Node" parent="State"]
 script = ExtResource("3_fwkit")
-UseState = NodePath("../Anticipate")
-UseAltState = NodePath("../Block")
-Sword = NodePath("../..")
 
-[node name="Anticipate" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AttackState")]
+[node name="Anticipate" type="Node" parent="State"]
 script = ExtResource("4_nsn1q")
-Sword = NodePath("../..")
-AttackState = NodePath("../Attack")
 
-[node name="Attack" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState")]
+[node name="Attack" type="Node" parent="State"]
 script = ExtResource("5_g1en5")
-Sword = NodePath("../..")
-IdleState = NodePath("../Idle")
 
-[node name="Block" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState", "UseState")]
+[node name="Block" type="Node" parent="State"]
 script = ExtResource("6_yvm8x")
-Sword = NodePath("../..")
-IdleState = NodePath("../Idle")
-UseState = NodePath("../Anticipate")
 BlockAnimKey = "block"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -435,17 +419,14 @@ texture = ExtResource("6_d28k5")
 
 [node name="ParryParticles" type="GPUParticles2D" parent="Anchor/Node2D/Sprite2D"]
 modulate = Color(1.2, 1.2, 1.2, 1)
-position = Vector2(-0.221825, -3.12132)
+position = Vector2(0, -3)
 rotation = 0.785398
-emitting = false
 amount = 16
 process_material = ExtResource("8_we1sv")
+texture = ExtResource("9_3p5s2")
 lifetime = 2.0
 one_shot = true
 explosiveness = 1.0
-trail_enabled = true
-trail_lifetime = 0.1
-trail_sections = 4
 
 [node name="Hand" type="Sprite2D" parent="Anchor/Node2D/Sprite2D"]
 position = Vector2(-2.52724e-05, 7)
