@@ -4,6 +4,8 @@ namespace SupaLidlGame.Events;
 
 public partial class EventBus : Node
 {
+    public static EventBus Instance { get; private set; }
+
     [Signal]
     public delegate void RequestMoveToAreaEventHandler(RequestAreaArgs args);
 
@@ -15,6 +17,15 @@ public partial class EventBus : Node
 
     [Signal]
     public delegate void PlayerHurtEventHandler(HurtArgs args);
+
+    [Signal]
+    public delegate void PlayerHitEventHandler(HitArgs args);
+
+    [Signal]
+    public delegate void PlayerXPChangedEventHandler(double xp);
+
+    [Signal]
+    public delegate void PlayerLevelChangedEventHandler(int level);
 
     [Signal]
     public delegate void PlayerHealthChangedEventHandler(HealthChangedArgs args);
@@ -37,5 +48,10 @@ public partial class EventBus : Node
     public override void _Ready()
     {
         ProcessMode = ProcessModeEnum.Always;
+        if (Instance is not null)
+        {
+            throw new MultipleSingletonsException();
+        }
+        Instance = this;
     }
 }

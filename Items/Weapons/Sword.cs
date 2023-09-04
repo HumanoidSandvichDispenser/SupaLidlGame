@@ -191,7 +191,11 @@ public partial class Sword : Weapon, IParryable
         {
             if (box is Hurtbox hurtbox)
             {
-                hurtbox.InflictDamage(Damage, Character, Knockback);
+                hurtbox.InflictDamage(
+                    Damage,
+                    Character,
+                    Knockback,
+                    this);
             }
         }
     }

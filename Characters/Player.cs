@@ -81,6 +81,7 @@ public sealed partial class Player : Character
         float damage,
         Character inflictor,
         float knockback,
+        Items.Weapon weapon = null,
         Vector2 knockbackDir = default)
     {
         if (damage >= 10 && IsAlive)
@@ -91,7 +92,11 @@ public sealed partial class Player : Character
         GetNode<GpuParticles2D>("Effects/HurtParticles")
             .SetDirection(knockbackDir);
 
-        base.OnReceivedDamage(damage, inflictor, knockback, knockbackDir);
+        base.OnReceivedDamage(damage,
+            inflictor,
+            knockback,
+            weapon,
+            knockbackDir);
     }
 
     public override void Die()

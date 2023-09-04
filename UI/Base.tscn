@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c271rdjhd1gfo"]
+[gd_scene load_steps=8 format=3 uid="uid://c271rdjhd1gfo"]
 
 [ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Dialogue/balloon.tscn" id="1_atjb1"]
 [ext_resource type="Script" path="res://UI/UIController.cs" id="2_b4b6l"]
 [ext_resource type="PackedScene" uid="uid://bxo553hblp6nf" path="res://UI/HealthBar.tscn" id="3_j1j6h"]
 [ext_resource type="PackedScene" uid="uid://01d24ij5av1y" path="res://UI/BossBar.tscn" id="4_igi28"]
+[ext_resource type="PackedScene" uid="uid://cr7tkxctmyags" path="res://UI/LevelBar.tscn" id="4_rcekd"]
 [ext_resource type="PackedScene" uid="uid://c77754nvmckn" path="res://UI/LocationDisplay.tscn" id="5_cr6vo"]
 [ext_resource type="PackedScene" uid="uid://d3q1yu3n7cqfj" path="res://UI/SceneTransition.tscn" id="6_j0nhv"]
 
@@ -47,7 +48,7 @@ BossBar = NodePath("Bottom/BossBar")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 40.0
+offset_bottom = 64.0
 grow_horizontal = 2
 
 [node name="Margin" type="MarginContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top"]
@@ -55,9 +56,21 @@ layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 
-[node name="HealthBar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Margin" instance=ExtResource("3_j1j6h")]
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Margin"]
 layout_mode = 2
-size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="HealthBar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Margin/VBoxContainer" instance=ExtResource("3_j1j6h")]
+layout_mode = 2
+
+[node name="LevelBar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Margin/VBoxContainer" instance=ExtResource("4_rcekd")]
+layout_mode = 2
+
+[node name="Margin2" type="MarginContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Margin/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
 
 [node name="Bottom" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
 layout_mode = 1

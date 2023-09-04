@@ -308,6 +308,7 @@ public partial class Character : CharacterBody2D, IFaction
         float damage,
         Character inflictor,
         float knockback,
+        Weapon weapon = null,
         Vector2 knockbackDir = default)
     {
         if (Health <= 0)
@@ -352,10 +353,16 @@ public partial class Character : CharacterBody2D, IFaction
             Attacker = inflictor,
             OldHealth = oldHealth,
             NewHealth = Health,
+            Weapon = weapon,
             Damage = damage,
         };
 
         EmitSignal(SignalName.Hurt, args);
+
+        if (inflictor is Player)
+        {
+            EmitPlayerHitSignal(args);
+        }
 
         if (Health <= 0)
         {
@@ -364,6 +371,25 @@ public partial class Character : CharacterBody2D, IFaction
                 .CloneOnWorld<GpuParticles2D>()
                 .EmitOneShot();
         }
+    }
+
+    /// <summary>
+    /// Converts a HurtArgs to HitArgs if the attacker was a player and emits
+    /// the <c>EventBus.PlayerHit</c> signal.
+    /// </summary>
+    private void EmitPlayerHitSignal(Events.HurtArgs args)
+    {
+        var newArgs = new Events.HitArgs
+        {
+            OldHealth = args.OldHealth,
+            NewHealth = args.NewHealth,
+            Damage = args.Damage,
+            Weapon = args.Weapon,
+            Victim = this,
+        };
+
+        var bus = Events.EventBus.Instance;
+        bus.EmitSignal(Events.EventBus.SignalName.PlayerHit, newArgs);
     }
 
 #if DEBUG

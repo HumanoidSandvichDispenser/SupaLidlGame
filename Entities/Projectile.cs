@@ -43,7 +43,10 @@ public partial class Projectile : RigidBody2D
     [Export]
     public double Delay { get; set; } = 0;
 
+    [System.Obsolete]
     public Character Character { get; set; }
+
+    public Items.Weapon Weapon { get; set; }
 
     public bool IsDead { get; set; }
 
@@ -87,8 +90,9 @@ public partial class Projectile : RigidBody2D
         {
             hurtbox.InflictDamage(
                 Hitbox.Damage,
-                Character,
+                Hitbox.Inflictor,
                 Hitbox.Knockback,
+                weapon: Weapon,
                 knockbackVector: Direction
             );
             EmitSignal(SignalName.Hit, box);

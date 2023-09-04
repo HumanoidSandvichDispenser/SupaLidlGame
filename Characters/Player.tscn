@@ -1,12 +1,15 @@
-[gd_scene load_steps=63 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=66 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
 [ext_resource type="Texture2D" uid="uid://dpepm54hjuyga" path="res://Assets/Sprites/Characters/forsen-hand.png" id="3_3dqh7"]
 [ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="4_5vird"]
+[ext_resource type="Script" path="res://Utils/PlayerStats.cs" id="4_06oya"]
 [ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="5_rgckv"]
+[ext_resource type="Script" path="res://Utils/Values/DoubleValue.cs" id="5_txl0r"]
 [ext_resource type="Script" path="res://State/Character/CharacterDashState.cs" id="6_rft7p"]
+[ext_resource type="Script" path="res://Utils/Values/IntValue.cs" id="6_sunc5"]
 [ext_resource type="Script" path="res://State/Character/PlayerIdleState.cs" id="6_wkfdm"]
 [ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
 [ext_resource type="Script" path="res://State/Character/PlayerMoveState.cs" id="7_dfqd8"]
@@ -330,6 +333,15 @@ Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
 Faction = 1
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("4_06oya")
+
+[node name="XP" type="Node" parent="Stats"]
+script = ExtResource("5_txl0r")
+
+[node name="Level" type="Node" parent="Stats"]
+script = ExtResource("6_sunc5")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("5_rgckv")

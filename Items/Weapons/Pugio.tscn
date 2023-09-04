@@ -370,35 +370,53 @@ shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[node name="Pugio" type="Node2D"]
+[node name="Pugio" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
 y_sort_enabled = true
 texture_filter = 3
 script = ExtResource("1_mai31")
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
 AttackTime = 0.2
 AttackAltTime = 0.75
 AttackAnimationDuration = 0.5
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
 NPCAnticipateTime = 0.3
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
 Damage = 20.0
 UseTime = 0.55
 UseAltTime = 1.5
 Knockback = 64.0
+PlayerLevelGain = 1.0
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
-[node name="State" type="Node" parent="."]
+[node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_5ramr")
+InitialState = NodePath("Idle")
 UsedItemStates = Array[NodePath]([NodePath("Attack"), NodePath("Block")])
 DeusedItemStates = Array[NodePath]([NodePath("Idle")])
 
-[node name="Idle" type="Node" parent="State"]
+[node name="Idle" type="Node" parent="State" node_paths=PackedStringArray("UseState", "UseAltState", "Sword")]
 script = ExtResource("3_fwkit")
+UseState = NodePath("../Anticipate")
+UseAltState = NodePath("../Block")
+Sword = NodePath("../..")
 
-[node name="Anticipate" type="Node" parent="State"]
+[node name="Anticipate" type="Node" parent="State" node_paths=PackedStringArray("Sword", "AttackState")]
 script = ExtResource("4_nsn1q")
+Sword = NodePath("../..")
+AttackState = NodePath("../Attack")
 
-[node name="Attack" type="Node" parent="State"]
+[node name="Attack" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState")]
 script = ExtResource("5_g1en5")
+Sword = NodePath("../..")
+IdleState = NodePath("../Idle")
 
-[node name="Block" type="Node" parent="State"]
+[node name="Block" type="Node" parent="State" node_paths=PackedStringArray("Sword", "IdleState", "UseState")]
 script = ExtResource("6_yvm8x")
+Sword = NodePath("../..")
+IdleState = NodePath("../Idle")
+UseState = NodePath("../Anticipate")
 BlockAnimKey = "block"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

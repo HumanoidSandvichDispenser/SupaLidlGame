@@ -49,6 +49,9 @@ public partial class ProjectileSpawner : Ranged
             }
         }
 
+        projectile.Hitbox.Inflictor = Character;
+        projectile.Weapon = this;
+
         if (projectile is Utils.ITarget target)
         {
             if (Character is Characters.NPC npc)

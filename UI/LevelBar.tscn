@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr7tkxctmyags"]
+
+[ext_resource type="Script" path="res://UI/LevelBar.cs" id="1_eqetx"]
+[ext_resource type="Texture2D" uid="uid://b75oak1nd2q6x" path="res://Assets/Sprites/UI/over-under-bar.png" id="2_f332l"]
+[ext_resource type="Texture2D" uid="uid://co7xm7i5f6n51" path="res://Assets/Sprites/UI/progress-bar.png" id="3_arvub"]
+
+[node name="LevelBar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 8.0
+script = ExtResource("1_eqetx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_right = 128.0
+offset_bottom = 8.0
+
+[node name="XPBar" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 4.0
+step = 0.01
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_f332l")
+texture_progress = ExtResource("3_arvub")
+
+[node name="Level1Bar" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+max_value = 1.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_f332l")
+texture_progress = ExtResource("3_arvub")
+
+[node name="Level2Bar" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+max_value = 1.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_f332l")
+texture_progress = ExtResource("3_arvub")
+
+[node name="Level3Bar" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+max_value = 1.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_f332l")
+texture_progress = ExtResource("3_arvub")
+
+[node name="Level4Bar" type="TextureProgressBar" parent="HBoxContainer"]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 2
+max_value = 1.0
+nine_patch_stretch = true
+stretch_margin_left = 3
+stretch_margin_top = 3
+stretch_margin_right = 3
+stretch_margin_bottom = 3
+texture_under = ExtResource("2_f332l")
+texture_progress = ExtResource("3_arvub")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 4
