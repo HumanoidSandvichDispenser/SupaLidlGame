@@ -119,4 +119,26 @@ public sealed partial class Player : Character
             .WithPitchDeviation(0.125f)
             .Play();
     }
+
+    public Vector2 GetDesiredInputFromInput()
+    {
+        Vector2 mousePos = GetGlobalMousePosition();
+        Vector2 dirToMouse = GlobalPosition.DirectionTo(mousePos);
+        Vector2 joystick = Godot.Input.GetVector("look_left", "look_right",
+                                                 "look_up", "look_down");
+
+        var inputMethod = Utils.World.Instance.GlobalState
+            .Settings.InputMethod;
+        switch (inputMethod)
+        {
+            case State.Global.InputMethod.Joystick:
+                if (joystick.IsZeroApprox())
+                {
+                    return Direction;
+                }
+                return joystick;
+            default:
+                return dirToMouse;
+        }
+    }
 }

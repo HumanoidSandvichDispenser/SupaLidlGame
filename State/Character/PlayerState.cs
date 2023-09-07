@@ -55,10 +55,8 @@ public abstract partial class PlayerState : CharacterState
                                                     "up", "down");
         Character.LookTowardsDirection();
 
-        Vector2 mousePos = Character.GetGlobalMousePosition();
-        Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
-        Vector2 joystick = Godot.Input.GetVector("look_left", "look_right",
-                                                 "look_up", "look_down");
+        var player = _player;
+        player.DesiredTarget = player.GetDesiredInputFromInput();
 
         if (Character.Inventory.SelectedItem is Items.Weapon weapon)
         {
@@ -67,24 +65,7 @@ public abstract partial class PlayerState : CharacterState
 
             if (!weapon.ShouldHideIdle || isAttack1On)
             {
-                var inputMethod = Utils.World.Instance.GlobalState
-                    .Settings.InputMethod;
-                switch (inputMethod)
-                {
-                    case Global.InputMethod.Joystick:
-                        if (joystick.IsZeroApprox())
-                        {
-                            Character.Target = Character.Direction;
-                        }
-                        else
-                        {
-                            Character.Target = joystick;
-                        }
-                        break;
-                    default:
-                        Character.Target = dirToMouse;
-                        break;
-                }
+                player.Target = player.DesiredTarget;
             }
 
             if (isAttack1On)
@@ -95,7 +76,6 @@ public abstract partial class PlayerState : CharacterState
             {
                 Character.UseCurrentItemAlt();
             }
-
         }
 
         return base.Process(delta);
