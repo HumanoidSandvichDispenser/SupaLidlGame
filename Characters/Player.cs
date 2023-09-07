@@ -26,6 +26,8 @@ public sealed partial class Player : Character
         }
     }
 
+    private TargetTracer _targetTracer;
+
     [Export]
     public PlayerCamera Camera { get; set; }
 
@@ -40,6 +42,8 @@ public sealed partial class Player : Character
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
+
+        _targetTracer = GetNode<TargetTracer>("%TargetTracer");
 
         base._Ready();
 
@@ -61,6 +65,8 @@ public sealed partial class Player : Character
     public override void _Process(double delta)
     {
         base._Process(delta);
+
+        _targetTracer.Rotation = DesiredTarget.Angle();
     }
 
     public override void _Input(InputEvent @event)

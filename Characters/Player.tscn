@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=67 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -31,6 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
 [ext_resource type="PackedScene" uid="uid://g7wfcubs6bdd" path="res://Items/Weapons/Railgun.tscn" id="21_n8w32"]
+[ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
 [ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="22_mqpn7"]
 [ext_resource type="PackedScene" uid="uid://d1d4vg7we5rjr" path="res://Items/Weapons/Shotgun.tscn" id="22_rmciq"]
 
@@ -452,6 +453,10 @@ stream = ExtResource("13_bxguv")
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("12_vvem5")
 
+[node name="TargetTracer" parent="Effects" instance=ExtResource("22_hxi53")]
+unique_name_in_owner = true
+position = Vector2(0, -4)
+
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 zoom = Vector2(4, 4)
 position_smoothing_speed = 8.0
@@ -513,6 +518,9 @@ UseTime = 0.2
 
 [node name="DocLance" parent="Inventory" instance=ExtResource("14_bj0lo")]
 
+[node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
+position = Vector2(0, 4)
+
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("9_avyu4")]
 visible = false
 InvincibilityTimer = NodePath("Timer")
@@ -527,7 +535,6 @@ shape = SubResource("RectangleShape2D_cjk6b")
 one_shot = true
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
-visible = false
 current = true
 
 [node name="Direction2D" type="Marker2D" parent="."]
