@@ -11,6 +11,8 @@ public sealed partial class Player : Character
 {
     private string _spriteAnim;
 
+    public Vector2 DesiredTarget { get; set; }
+
     [Export]
     public PlayerCamera Camera { get; set; }
 
@@ -107,9 +109,7 @@ public sealed partial class Player : Character
     protected override void DrawTarget()
     {
         base.DrawTarget();
-        DirectionMarker.GlobalRotation = DirectionMarker.GlobalPosition
-            .DirectionTo(GetGlobalMousePosition())
-            .Angle();
+        DirectionMarker.GlobalRotation = DesiredTarget.Angle();
     }
 
     public override void Footstep()
