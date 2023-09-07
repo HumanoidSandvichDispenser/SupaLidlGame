@@ -26,9 +26,6 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
-    [Export]
-    public float Stealth { get; protected set; } = 0;
-
     [Signal]
     public delegate void HealthChangedEventHandler(Events.HealthChangedArgs args);
 
@@ -168,6 +165,9 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
+    /// <summary>
+    /// Handles the <c>Character</c>'s death.
+    /// </summary>
     public virtual void Die()
     {
         if (HurtAnimation.HasAnimation("death"))
@@ -190,11 +190,20 @@ public partial class Character : CharacterBody2D, IFaction
         NetImpulse += impulse / Mass;
     }
 
+    /// <summary>
+    /// Stuns the <c>Chararacter</c> for an amount of time. If
+    /// <paramref name="time"/> is less than the <c>Character</c>'s current
+    /// stun time left, it will have no effect.
+    /// </summary>
     public virtual void Stun(float time)
     {
         StunTime = Mathf.Max(time, StunTime);
     }
 
+    /// <summary>
+    /// Draws the character so that its sprite and inventory items face the
+    /// character's direction.
+    /// </summary>
     protected virtual void DrawTarget()
     {
         Vector2 target = Target;
@@ -213,6 +222,10 @@ public partial class Character : CharacterBody2D, IFaction
         Inventory.Rotation = angle;
     }
 
+    /// <summary>
+    /// Use the current item the character is using. Prefer to call this over
+    /// <c>Item.Use</c> as it will check if the character is stunned or alive.
+    /// </summary>
     public void UseCurrentItem()
     {
         if (StunTime > 0 || !IsAlive)
@@ -264,6 +277,9 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
+    /// <summary>
+    /// Override this method to modify the damage the character takes.
+    /// </summary>
     protected virtual float ReceiveDamage(
         float damage,
         Character inflictor,
@@ -285,10 +301,14 @@ public partial class Character : CharacterBody2D, IFaction
         _curDamageText.ShowText();
     }
 
+    /// <summary>
+    /// Handles the character taking damage.
+    /// </summary>
     protected virtual void OnReceivedDamage(
         float damage,
         Character inflictor,
         float knockback,
+        Weapon weapon = null,
         Vector2 knockbackDir = default)
     {
         if (Health <= 0)
@@ -325,7 +345,6 @@ public partial class Character : CharacterBody2D, IFaction
         if (this.GetNode("Effects/HurtSound") is AudioStreamPlayer2D sound)
         {
             // very small pitch deviation
-            GD.Print("hurt sound");
             sound.At(GlobalPosition).WithPitchDeviation(0.125f).PlayOneShot();
         }
 
@@ -334,10 +353,16 @@ public partial class Character : CharacterBody2D, IFaction
             Attacker = inflictor,
             OldHealth = oldHealth,
             NewHealth = Health,
+            Weapon = weapon,
             Damage = damage,
         };
 
         EmitSignal(SignalName.Hurt, args);
+
+        if (inflictor is Player)
+        {
+            EmitPlayerHitSignal(args);
+        }
 
         if (Health <= 0)
         {
@@ -349,13 +374,38 @@ public partial class Character : CharacterBody2D, IFaction
     }
 
     /// <summary>
+    /// Converts a HurtArgs to HitArgs if the attacker was a player and emits
+    /// the <c>EventBus.PlayerHit</c> signal.
+    /// </summary>
+    private void EmitPlayerHitSignal(Events.HurtArgs args)
+    {
+        var newArgs = new Events.HitArgs
+        {
+            OldHealth = args.OldHealth,
+            NewHealth = args.NewHealth,
+            Damage = args.Damage,
+            Weapon = args.Weapon,
+            Victim = this,
+        };
+
+        var bus = Events.EventBus.Instance;
+        bus.EmitSignal(Events.EventBus.SignalName.PlayerHit, newArgs);
+    }
+
+#if DEBUG
+    /// <summary>
     /// For debugging purposes
     /// </summary>
     public void Inflict(float damage)
     {
         OnReceivedDamage(damage, null, 0);
     }
+#endif
 
+    /// <summary>
+    /// Plays a footstep sound. This should be called through an
+    /// <c>AnimationPlayer</c> to sync sounds with animations.
+    /// </summary>
     public virtual void Footstep()
     {
         if (GetNode("Effects/Footstep") is AudioStreamPlayer2D player)
@@ -364,6 +414,15 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
+    /// <summary>
+    /// Returns whether the <c>Character</c> has line of sight with
+    /// <paramref name="character"/>.
+    /// </summary>
+    /// <param name="character">The character to check for LOS</param>
+    /// <param name="excludeClip">
+    /// Determines whether the raycast should pass through world clips (physics
+    /// layer 5)
+    /// </param>
     public bool HasLineOfSight(Character character, bool excludeClip = false)
     {
         var exclude = new Godot.Collections.Array<Godot.Rid>();

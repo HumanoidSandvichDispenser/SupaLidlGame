@@ -49,6 +49,9 @@ public partial class ProjectileSpawner : Ranged
             }
         }
 
+        projectile.Hitbox.Inflictor = Character;
+        projectile.Weapon = this;
+
         if (projectile is Utils.ITarget target)
         {
             if (Character is Characters.NPC npc)
@@ -92,7 +95,6 @@ public partial class ProjectileSpawner : Ranged
         for (int i = 0; i < ProjectileCount; i++)
         {
             float curDeviation = -i + maxAngleDeviations;
-            GD.Print(curDeviation);
             SpawnProjectile(map, target.Rotated(curDeviation * theta));
         }
     }

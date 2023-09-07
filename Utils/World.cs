@@ -327,8 +327,6 @@ public partial class World : Node
     public void SpawnPlayer()
     {
         // TODO: add max health property
-        //CurrentPlayer.Health = 100;
-        //CurrentPlayer.Sprite.Visible = true;
         if (CurrentMap.SceneFilePath != GlobalState.Stats.SaveMapKey)
         {
             LoadScene(GlobalState.Stats.SaveMapKey);

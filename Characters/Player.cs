@@ -11,6 +11,8 @@ public sealed partial class Player : Character
 {
     private string _spriteAnim;
 
+    public Vector2 DesiredTarget { get; set; }
+
     [Export]
     public PlayerCamera Camera { get; set; }
 
@@ -25,11 +27,6 @@ public sealed partial class Player : Character
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
-        Death += async (Events.HurtArgs args) =>
-        {
-            HurtAnimation.Play("death");
-            await ToSignal(HurtAnimation, "animation_finished");
-        };
 
         base._Ready();
 
@@ -51,10 +48,6 @@ public sealed partial class Player : Character
     public override void _Process(double delta)
     {
         base._Process(delta);
-
-        var mod = Sprite.SelfModulate;
-        mod.A = 1 - (Stealth / 2);
-        Sprite.SelfModulate = mod;
     }
 
     public override void _Input(InputEvent @event)
@@ -65,6 +58,9 @@ public sealed partial class Player : Character
         }
     }
 
+    /// <summary>
+    /// Respawns the player with full health and plays spawn animation
+    /// </summary>
     public void Spawn()
     {
         Health = 100;
@@ -87,6 +83,7 @@ public sealed partial class Player : Character
         float damage,
         Character inflictor,
         float knockback,
+        Items.Weapon weapon = null,
         Vector2 knockbackDir = default)
     {
         if (damage >= 10 && IsAlive)
@@ -97,21 +94,22 @@ public sealed partial class Player : Character
         GetNode<GpuParticles2D>("Effects/HurtParticles")
             .SetDirection(knockbackDir);
 
-        base.OnReceivedDamage(damage, inflictor, knockback, knockbackDir);
+        base.OnReceivedDamage(damage,
+            inflictor,
+            knockback,
+            weapon,
+            knockbackDir);
     }
 
     public override void Die()
     {
-        GD.Print("died");
-        //base.Die();
+        HurtAnimation.Play("death");
     }
 
     protected override void DrawTarget()
     {
         base.DrawTarget();
-        DirectionMarker.GlobalRotation = DirectionMarker.GlobalPosition
-            .DirectionTo(GetGlobalMousePosition())
-            .Angle();
+        DirectionMarker.GlobalRotation = DesiredTarget.Angle();
     }
 
     public override void Footstep()

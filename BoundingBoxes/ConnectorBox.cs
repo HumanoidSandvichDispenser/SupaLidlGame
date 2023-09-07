@@ -35,7 +35,6 @@ public partial class ConnectorBox : Area2D
     {
         BodyEntered += (Node2D body) =>
         {
-            GD.Print(body.Name + " entered");
             if (body is Player && InteractionTrigger is null)
             {
                 OnInteraction();

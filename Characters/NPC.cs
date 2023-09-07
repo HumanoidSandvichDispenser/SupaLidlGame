@@ -96,29 +96,9 @@ public partial class NPC : Character
         };
     }
 
-    public override void _Draw()
-    {
-#if DEBUG
-        for (int i = 0; i < 16; i++)
-        {
-            Vector2 vec = _weightDirs[i] * _weights[i] * 32;
-            Color c = Colors.Green;
-            if (_bestWeightIdx == i)
-            {
-                c = Colors.Blue;
-            }
-            else if (_weights[i] < 0)
-            {
-                c = Colors.Red;
-                vec = -vec;
-            }
-            DrawLine(Vector2.Zero, vec, c);
-        }
-#endif
-
-        base._Draw();
-    }
-
+    /// <summary>
+    /// Finds the NPC's best character to target.
+    /// </summary>
     public virtual Character FindBestTarget()
     {
         float bestScore = float.MaxValue;
@@ -136,21 +116,9 @@ public partial class NPC : Character
 
                 float score = 0;
                 score += Position.DistanceTo(character.Position);
-                score *= (character.Stealth + 1);
-
-                // if the character has enough stealth, the dot product of the
-                // enemy's current direction and to the character will affect
-                // the score
-                // TODO: implement
 
                 if (score < bestScore)
                 {
-                    // if the character has enough stealth, they won't be
-                    // targeted if the NPC is not able to see
-                    if (!HasLineOfSight(character) && character.Stealth >= 1)
-                    {
-                        continue;
-                    }
                     bestScore = score;
                     bestChar = character;
                 }
@@ -169,133 +137,5 @@ public partial class NPC : Character
     {
         ThinkerStateMachine.PhysicsProcess(delta);
         base._PhysicsProcess(delta);
-    }
-
-    public void ThinkProcess(double delta)
-    {
-        if ((_thinkTimeElapsed += delta) > ThinkTime)
-        {
-            _thinkTimeElapsed = 0;
-            Think();
-#if DEBUG_NPC
-            QueueRedraw();
-#endif
-        }
-
-        if (!ShouldMove || (!ShouldMoveWhenUsingItem && Inventory.IsUsingItem))
-        {
-            Direction = Vector2.Zero;
-        }
-        else
-        {
-            Direction = _weightDirs[_bestWeightIdx];
-        }
-    }
-
-    public void UpdateWeights(Vector2 pos)
-    {
-        // FIXME: TODO: remove all the spaghetti
-        Vector2 dir = Target.Normalized();
-        float distSq = GlobalPosition.DistanceSquaredTo(pos);
-
-        var spaceState = GetWorld2D().DirectSpaceState;
-        var exclude = new Godot.Collections.Array<Godot.Rid>();
-        exclude.Add(this.GetRid());
-
-        // calculate weights based on distance
-        for (int i = 0; i < 16; i++)
-        {
-            float directDot = _weightDirs[i].Dot(dir);
-            // clamp dot from [-1, 1] to [0, 1]
-            directDot = (directDot + 1) / 2;
-
-            float strafeDot = Math.Abs(_weightDirs[i].Dot(dir.Clockwise90()));
-            float currDirDot = (_weightDirs[i].Dot(Direction) + 1) / 16;
-            strafeDot = Mathf.Pow((strafeDot + 1) / 2, 2) + currDirDot;
-
-            // favor strafing when getting closer
-            if (distSq > _preferredWeightDistanceSq)
-            {
-                _weights[i] = directDot;
-            }
-            else if (distSq > _maxWeightDistanceSq)
-            {
-                float dDotWeight = Mathf.Sqrt(distSq / 4096);
-                float sDotWeight = 1 - dDotWeight;
-                _weights[i] = (dDotWeight * directDot) +
-                    (sDotWeight * strafeDot);
-            }
-            else
-            {
-                _weights[i] = strafeDot;
-            }
-        }
-
-        // subtract weights that collide
-        for (int i = 0; i < 16; i++)
-        {
-            var rayParams = new PhysicsRayQueryParameters2D
-            {
-                Exclude = exclude,
-                CollideWithBodies = true,
-                From = GlobalPosition,
-                To = GlobalPosition + (_weightDirs[i] * 24),
-                CollisionMask = 1 + 2 + 16
-            };
-
-            var result = spaceState.IntersectRay(rayParams);
-
-            // if we hit something
-            if (result.Count > 0)
-            {
-                // then we subtract the value of this from the other weights
-                float oldWeight = _weights[i];
-                for (int j = 0; j < 16; j++)
-                {
-                    if (i == j)
-                    {
-                        _weights[i] = 0;
-                    }
-                    else
-                    {
-                        float dot = _weightDirs[i].Dot(_weightDirs[j]);
-                        _weights[j] -= _weights[j] * dot;
-                    }
-                }
-            }
-        }
-
-
-        float bestWeight = 0;
-        for (int i = 0; i < 16; i++)
-        {
-            if (_weights[i] > bestWeight)
-            {
-                _bestWeightIdx = i;
-                bestWeight = _weights[i];
-            }
-        }
-    }
-
-    protected virtual void Think()
-    {
-        // TODO: the entity should wander if it doesn't find a best target
-        Character bestTarget = FindBestTarget();
-        if (bestTarget is not null)
-        {
-            Vector2 pos = FindBestTarget().GlobalPosition;
-            Target = pos - GlobalPosition;
-            Vector2 dir = Target;
-            float dist = GlobalPosition.DistanceSquaredTo(pos);
-            UpdateWeights(pos);
-
-            if (dist < 1600 && CanAttack)
-            {
-                if (Inventory.SelectedItem is Weapon weapon)
-                {
-                    UseCurrentItem();
-                }
-            }
-        }
     }
 }

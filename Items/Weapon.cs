@@ -61,6 +61,9 @@ public abstract partial class Weapon : Item
     public float MaxDistanceHint { get; set; }
 
     [Export]
+    public float PlayerLevelGain { get; set; }
+
+    [Export]
     public Sprite2D HandAnchor { get; set; }
 
     public virtual bool IsParryable { get; protected set; } = false;

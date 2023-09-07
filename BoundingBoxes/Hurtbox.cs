@@ -11,6 +11,7 @@ public partial class Hurtbox : BoundingBox, IFaction
         float damage,
         Character inflictor,
         float knockback,
+        Items.Weapon weapon = null,
         Vector2 knockbackDir = default);
 
     /// <summary>
@@ -30,7 +31,6 @@ public partial class Hurtbox : BoundingBox, IFaction
         {
             InvincibilityTimer.Timeout += () =>
             {
-                GD.Print("invincibility off");
                 Monitorable = true;
             };
         }
@@ -40,6 +40,7 @@ public partial class Hurtbox : BoundingBox, IFaction
         float damage,
         Character inflictor,
         float knockback,
+        Items.Weapon weapon = default,
         Vector2 knockbackOrigin = default,
         Vector2 knockbackVector = default)
     {
@@ -77,7 +78,6 @@ public partial class Hurtbox : BoundingBox, IFaction
             InvincibilityTimer.Start();
             //Monitorable = false;
             SetDeferred("monitorable", false);
-            GD.Print("invincible");
         }
 
         EmitSignal(
@@ -85,6 +85,7 @@ public partial class Hurtbox : BoundingBox, IFaction
             damage,
             inflictor,
             knockback,
+            weapon,
             knockbackDir);
     }
 }

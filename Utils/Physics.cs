@@ -23,12 +23,9 @@ public static class Physics
         var relVel = relIdle + relDir * speed;
         var relSpeed = relVel.Length();
 
-        GD.Print("Relative velocity: " + relVel);
-
         // get t = time to travel
         //       = (|s2| - |s1|)/(|v2| - |v1|)
         time = position.DistanceTo(targetPosition) / relSpeed;
-        GD.Print("Time: " + time);
 
         // predict target's position after time t
         return targetPosition + targetVelocity * time;

@@ -63,6 +63,7 @@ public partial class ShungiteSpike : Projectile
         float damage,
         Characters.Character inflictor,
         float knockback,
+        Items.Weapon weapon,
         Vector2 knockbackDir)
     {
         // if we were hit by the player before the spike freezes,

@@ -71,7 +71,6 @@ public partial class DynamicDoor : StaticBody2D
                 {
                     if (anim.TrackGetPath(i) == nodePath)
                     {
-                        GD.Print($"Disabled anim for {nodePath}");
                         anim.TrackSetEnabled(i, isEnabled);
                     }
                 }
