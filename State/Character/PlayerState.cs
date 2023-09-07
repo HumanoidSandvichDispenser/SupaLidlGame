@@ -34,7 +34,6 @@ public abstract partial class PlayerState : CharacterState
             if (@event.IsActionPressed("interact"))
             {
                 // if looking at a trigger then interact with it
-                GD.Print("interacting");
                 player.InteractionRay.Trigger?.InvokeInteraction();
             }
         }
