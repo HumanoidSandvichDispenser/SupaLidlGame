@@ -130,7 +130,14 @@ public partial class Character : CharacterBody2D, IFaction
             StunAnimation.Stop();
         }
 
-        Sprite.FlipH = Target.X < 0;
+        if (Target.X < 0)
+        {
+            Sprite.FlipH = true;
+        }
+        else if (Target.X > 0)
+        {
+            Sprite.FlipH = false;
+        }
         DrawTarget();
     }
 
@@ -214,7 +221,7 @@ public partial class Character : CharacterBody2D, IFaction
             scale.Y = -1;
             angle = Mathf.Pi - angle;
         }
-        else
+        else if (target.X > 0)
         {
             scale.Y = 1;
         }

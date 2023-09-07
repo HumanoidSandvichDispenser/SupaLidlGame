@@ -11,7 +11,20 @@ public sealed partial class Player : Character
 {
     private string _spriteAnim;
 
-    public Vector2 DesiredTarget { get; set; }
+    private Vector2 _desiredTarget;
+
+    public Vector2 DesiredTarget
+    {
+        get => _desiredTarget;
+        set
+        {
+            if (value.IsZeroApprox())
+            {
+                return;
+            }
+            _desiredTarget = value;
+        }
+    }
 
     [Export]
     public PlayerCamera Camera { get; set; }

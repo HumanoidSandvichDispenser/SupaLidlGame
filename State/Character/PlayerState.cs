@@ -56,7 +56,12 @@ public abstract partial class PlayerState : CharacterState
         Character.LookTowardsDirection();
 
         var player = _player;
-        player.DesiredTarget = player.GetDesiredInputFromInput();
+        var desiredTarget = player.GetDesiredInputFromInput();
+        if (!desiredTarget.IsZeroApprox())
+        {
+            // can never be zero
+            player.DesiredTarget = desiredTarget;
+        }
 
         if (Character.Inventory.SelectedItem is Items.Weapon weapon)
         {
