@@ -11,9 +11,22 @@ public sealed partial class Player : Character
 {
     private string _spriteAnim;
 
-    private TargetTracer _targetTracer;
+    private Vector2 _desiredTarget;
 
-    public Vector2 DesiredTarget { get; set; }
+    public Vector2 DesiredTarget
+    {
+        get => _desiredTarget;
+        set
+        {
+            if (value.IsZeroApprox())
+            {
+                return;
+            }
+            _desiredTarget = value;
+        }
+    }
+
+    private TargetTracer _targetTracer;
 
     [Export]
     public PlayerCamera Camera { get; set; }
@@ -124,5 +137,27 @@ public sealed partial class Player : Character
             .OnWorld()
             .WithPitchDeviation(0.125f)
             .Play();
+    }
+
+    public Vector2 GetDesiredInputFromInput()
+    {
+        Vector2 mousePos = GetGlobalMousePosition();
+        Vector2 dirToMouse = GlobalPosition.DirectionTo(mousePos);
+        Vector2 joystick = Godot.Input.GetVector("look_left", "look_right",
+                                                 "look_up", "look_down");
+
+        var inputMethod = Utils.World.Instance.GlobalState
+            .Settings.InputMethod;
+        switch (inputMethod)
+        {
+            case State.Global.InputMethod.Joystick:
+                if (joystick.IsZeroApprox())
+                {
+                    return Direction;
+                }
+                return joystick;
+            default:
+                return dirToMouse;
+        }
     }
 }

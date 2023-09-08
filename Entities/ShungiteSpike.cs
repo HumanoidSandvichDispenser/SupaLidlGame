@@ -70,8 +70,7 @@ public partial class ShungiteSpike : Projectile
         // spawn a dart towards where the player is aiming
         if (inflictor is Characters.Player player)
         {
-            var mousePos = GetGlobalMousePosition();
-            var dart = CreateDart(GlobalPosition.DirectionTo(mousePos));
+            var dart = CreateDart(player.Target.Normalized());
             dart.Hitbox.Faction = player.Faction;
             Hitbox.IsDisabled = true;
         }
