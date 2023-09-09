@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Audio;
 using SupaLidlGame.Characters;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Scenes;
@@ -123,13 +124,13 @@ public partial class World : Node
             return;
         }
         CurrentBoss = boss;
-        GetNode<AudioManager>("/root/AudioManager").PlayActive(boss.Music);
+        GetNode<AudioManager>("/root/AudioManager").PlayBackground(boss.Music, 2);
     }
 
     private void DeregisterBoss(Boss boss)
     {
         CurrentBoss = null;
-        GetNode<AudioManager>("/root/AudioManager").StopActive();
+        GetNode<AudioManager>("/root/AudioManager").StopBackground(2);
     }
 
     private void LoadMap(Map map)
