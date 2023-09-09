@@ -27,6 +27,20 @@ public partial class Inventory : Node2D
         set => EquipItem(value, ref _selectedItem);
     }
 
+    private int _quickSwitchIndex = -1;
+
+    public const int QUICKSWITCH_SIZE = 3;
+
+    public int CurrentQuickSwitchIndex
+    {
+        get => _quickSwitchIndex;
+        set
+        {
+            const int size = QUICKSWITCH_SIZE;
+            _quickSwitchIndex = (value % size + size) % size;
+        }
+    }
+
     public bool IsUsingItem => SelectedItem?.IsUsing ?? false;
 
     public Inventory()
@@ -54,6 +68,16 @@ public partial class Inventory : Node2D
             }
         }
         base._Ready();
+    }
+
+    public bool EquipIndex(int index)
+    {
+        if (index < Items.Count)
+        {
+            return EquipItem(Items[index], ref _selectedItem);
+        }
+
+        return EquipItem(null, ref _selectedItem);
     }
 
     private bool EquipItem(Item item, ref Item slot)

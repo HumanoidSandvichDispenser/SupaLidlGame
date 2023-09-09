@@ -30,6 +30,14 @@ public abstract partial class PlayerState : CharacterState
             {
                 inventory.SelectedItem = inventory.GetItemByMap("equip_3");
             }
+            else if (@event.IsActionPressed("next_item"))
+            {
+                inventory.EquipIndex(++inventory.CurrentQuickSwitchIndex);
+            }
+            else if (@event.IsActionPressed("prev_item"))
+            {
+                inventory.EquipIndex(--inventory.CurrentQuickSwitchIndex);
+            }
 
             if (@event.IsActionPressed("interact"))
             {
@@ -47,8 +55,13 @@ public abstract partial class PlayerState : CharacterState
                                                     "up", "down");
         Character.LookTowardsDirection();
 
-        Vector2 mousePos = Character.GetGlobalMousePosition();
-        Vector2 dirToMouse = Character.GlobalPosition.DirectionTo(mousePos);
+        var player = _player;
+        var desiredTarget = player.GetDesiredInputFromInput();
+        if (!desiredTarget.IsZeroApprox())
+        {
+            // can never be zero
+            player.DesiredTarget = desiredTarget;
+        }
 
         if (Character.Inventory.SelectedItem is Items.Weapon weapon)
         {
@@ -57,7 +70,7 @@ public abstract partial class PlayerState : CharacterState
 
             if (!weapon.ShouldHideIdle || isAttack1On)
             {
-                Character.Target = dirToMouse;
+                player.Target = player.DesiredTarget;
             }
 
             if (isAttack1On)
@@ -68,7 +81,6 @@ public abstract partial class PlayerState : CharacterState
             {
                 Character.UseCurrentItemAlt();
             }
-
         }
 
         return base.Process(delta);
