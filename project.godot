@@ -22,6 +22,7 @@ GlobalState="*res://State/Global/GlobalState.cs"
 EventBus="*res://Events/EventBus.cs"
 BaseUI="*res://UI/Base.tscn"
 World="*res://Scenes/Level.tscn"
+AudioManager="*res://Utils/AudioManager.cs"
 DebugConsole="*res://Debug/DebugConsole.cs"
 Panku="*res://addons/panku_console/console.tscn"
 

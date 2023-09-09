@@ -117,23 +117,19 @@ public partial class World : Node
 
     private void RegisterBoss(Boss boss)
     {
+        if (boss is null)
+        {
+            DeregisterBoss(CurrentBoss);
+            return;
+        }
         CurrentBoss = boss;
-        MusicPlayer.Stream = boss?.Music;
-        // TODO: use an audio manager
-        if (MusicPlayer.Stream is null)
-        {
-            MusicPlayer.Stop();
-        }
-        else
-        {
-            MusicPlayer.Play();
-        }
+        GetNode<AudioManager>("/root/AudioManager").PlayActive(boss.Music);
     }
 
     private void DeregisterBoss(Boss boss)
     {
         CurrentBoss = null;
-        MusicPlayer.Stop();
+        GetNode<AudioManager>("/root/AudioManager").StopActive();
     }
 
     private void LoadMap(Map map)
@@ -230,6 +226,9 @@ public partial class World : Node
                 SpawnPlayer();
             };
             GlobalState.Stats.DeathCount++;
+
+            //EventBus.EmitSignal(EventBus.SignalName.DeregisteredBoss,
+            //    CurrentBoss);
         };
 
         return CurrentPlayer;
