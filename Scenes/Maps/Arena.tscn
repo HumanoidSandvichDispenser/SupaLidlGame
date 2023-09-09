@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="11_j2620"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="11_yjp7m"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_y0gej"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gjy4i"]
 resource_local_to_scene = true
 shader = ExtResource("5_h8k5p")
 shader_parameter/color = Vector4(1, 1, 1, 1)
@@ -35,7 +35,7 @@ curve = SubResource("Curve_d18qq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h14dv"]
 emission_shape = 3
-emission_box_extents = Vector3(192, 192, 1)
+emission_box_extents = Vector3(144, 144, 1)
 particle_flag_disable_z = true
 spread = 180.0
 gravity = Vector3(0, 0, 0)
@@ -139,7 +139,7 @@ visible = false
 position = Vector2(120, -112)
 
 [node name="Doc" parent="Entities" index="0" instance=ExtResource("4_ej0f3")]
-material = SubResource("ShaderMaterial_y0gej")
+material = SubResource("ShaderMaterial_gjy4i")
 
 [node name="PointLight2D" type="PointLight2D" parent="Entities" index="1"]
 position = Vector2(168, -42)

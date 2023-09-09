@@ -32,6 +32,9 @@ public partial class Map : TileMap
     [Export]
     public string MapName { get; set; }
 
+    [Export]
+    public AudioStream Music { get; set; }
+
     private bool _active;
 
     public bool Active
@@ -65,6 +68,7 @@ public partial class Map : TileMap
     public void Load()
     {
         Godot.RenderingServer.SetDefaultClearColor(ClearColor);
+        GetNode<Audio.AudioManager>("/root/AudioManager").PlayBackground(Music);
     }
 
     public Node SpawnEntity(PackedScene scene)
