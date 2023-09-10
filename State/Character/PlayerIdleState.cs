@@ -10,6 +10,9 @@ public partial class PlayerIdleState : PlayerState
     [Export]
     public PlayerEmoteState EmoteState { get; set; }
 
+    [Export]
+    public PlayerHealState HealState { get; set; }
+
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)
     {
         if (previousState is not PlayerMoveState)
@@ -52,6 +55,7 @@ public partial class PlayerIdleState : PlayerState
         {
             return EmoteState;
         }
+
         return base.Input(@event);
     }
 
@@ -62,6 +66,15 @@ public partial class PlayerIdleState : PlayerState
         {
             return MoveState;
         }
+
+        if (Godot.Input.IsActionPressed("ability"))
+        {
+            if (!_player.Inventory.IsUsingItem)
+            {
+                return HealState;
+            }
+        }
+
         return null;
     }
 }

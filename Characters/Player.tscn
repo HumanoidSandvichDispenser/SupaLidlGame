@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=64 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -27,6 +27,7 @@
 [ext_resource type="AudioStream" uid="uid://bkeyg8weaqnuu" path="res://Assets/Sounds/splat-player.ogg" id="12_vvem5"]
 [ext_resource type="AudioStream" uid="uid://cruylv4pu2fo1" path="res://Assets/Sounds/footstep-tile.wav" id="13_bxguv"]
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
+[ext_resource type="Script" path="res://State/Character/PlayerHealState.cs" id="13_t103m"]
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="14_bj0lo"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
@@ -46,38 +47,50 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Sprites/Node2D/Character:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"update": 0,
+"values": [0.0]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../Sprites/Node2D/Character:rotation")
+tracks/1/path = NodePath("%Sprites/Node2D/Character:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
+"update": 1,
+"values": [0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("%Sprites/Node2D/Character:frame")
+tracks/2/path = NodePath("%Effects/HealParticles:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%Effects/HealParticlesPop:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_xt1sg"]
@@ -105,7 +118,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -198,14 +211,38 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Effects/HealParticles:emitting")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%Sprites/Node2D/Character:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
 "values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%Effects/HealParticlesPop:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_3w3u1"]
@@ -214,7 +251,7 @@ length = 0.3
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -224,9 +261,101 @@ tracks/0/keys = {
 "values": [12, 13, 14]
 }
 
+[sub_resource type="Animation" id="Animation_60iyy"]
+resource_name = "heal_cancel"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Effects/HealParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_6twa8"]
+resource_name = "heal_start"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [35]
+}
+
+[sub_resource type="Animation" id="Animation_dyfl4"]
+resource_name = "heal_end"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Effects/HealParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%Effects/HealParticlesPop:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_audkv"]
+resource_name = "heal"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [35]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%Effects/HealParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_73mj7"]
 _data = {
 "RESET": SubResource("Animation_adxyh"),
+"heal": SubResource("Animation_audkv"),
+"heal_cancel": SubResource("Animation_60iyy"),
+"heal_end": SubResource("Animation_dyfl4"),
+"heal_start": SubResource("Animation_6twa8"),
 "sword": SubResource("Animation_3w3u1")
 }
 
@@ -234,60 +363,6 @@ _data = {
 _data = {
 "stun": ExtResource("8_m08fh")
 }
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_kwett"]
-animation = &"idle"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vqdng"]
-animation = &"move"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4np0m"]
-animation = &"roll"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_suhx1"]
-animation = &"stop"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sorqc"]
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ujrp0"]
-advance_condition = &"move"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kjkm8"]
-advance_condition = &"idle"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1ywlq"]
-switch_mode = 2
-advance_mode = 2
-advance_condition = &"idle"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_abs7t"]
-advance_condition = &"roll"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qlka8"]
-advance_condition = &"idle"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_ql2f3"]
-advance_condition = &"move"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_g1yba"]
-advance_condition = &"roll"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0ukul"]
-states/End/position = Vector2(613, 100)
-states/Start/position = Vector2(89, 100)
-states/idle/node = SubResource("AnimationNodeAnimation_kwett")
-states/idle/position = Vector2(259, 100)
-states/move/node = SubResource("AnimationNodeAnimation_vqdng")
-states/move/position = Vector2(259, 18)
-states/roll/node = SubResource("AnimationNodeAnimation_4np0m")
-states/roll/position = Vector2(89, 18)
-states/stop/node = SubResource("AnimationNodeAnimation_suhx1")
-states/stop/position = Vector2(438, 100)
-transitions = ["Start", "idle", SubResource("AnimationNodeStateMachineTransition_sorqc"), "idle", "move", SubResource("AnimationNodeStateMachineTransition_ujrp0"), "move", "stop", SubResource("AnimationNodeStateMachineTransition_kjkm8"), "stop", "idle", SubResource("AnimationNodeStateMachineTransition_1ywlq"), "idle", "roll", SubResource("AnimationNodeStateMachineTransition_abs7t"), "roll", "idle", SubResource("AnimationNodeStateMachineTransition_qlka8"), "roll", "move", SubResource("AnimationNodeStateMachineTransition_ql2f3"), "move", "roll", SubResource("AnimationNodeStateMachineTransition_g1yba")]
-graph_offset = Vector2(-335.315, -63.5708)
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_lrnca"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_852jj"]
 particle_flag_disable_z = true
@@ -305,6 +380,47 @@ scale_max = 0.1
 [sub_resource type="CanvasTexture" id="CanvasTexture_pited"]
 diffuse_texture = ExtResource("9_7gumm")
 
+[sub_resource type="Gradient" id="Gradient_8w5b1"]
+offsets = PackedFloat32Array(0, 0.2)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rvqsx"]
+gradient = SubResource("Gradient_8w5b1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_untv1"]
+emission_shape = 2
+emission_sphere_radius = 24.0
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.01
+orbit_velocity_max = 0.02
+radial_accel_min = -128.0
+radial_accel_max = -128.0
+scale_min = 0.1
+scale_max = 0.1
+color_ramp = SubResource("GradientTexture1D_rvqsx")
+
+[sub_resource type="Gradient" id="Gradient_61bqd"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jb8kb"]
+gradient = SubResource("Gradient_61bqd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1umee"]
+particle_flag_disable_z = true
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 64.0
+initial_velocity_max = 64.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_min = -128.0
+linear_accel_max = -128.0
+scale_min = 0.25
+scale_max = 0.25
+color = Color(0, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_jb8kb")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
 size = Vector2(12, 8)
 
@@ -318,7 +434,7 @@ size = Vector2(8, 8)
 closed = false
 polygon = PackedVector2Array(-3, 0, 2, 0)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "DirectionMarker", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "DirectionMarker", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
@@ -327,6 +443,7 @@ collision_mask = 17
 script = ExtResource("1_flygr")
 Camera = NodePath("Camera2D")
 DirectionMarker = NodePath("Direction2D")
+Stats = NodePath("Stats")
 Speed = 80.0
 HandTexture = ExtResource("3_3dqh7")
 Sprite = NodePath("Sprites/Node2D/Character")
@@ -349,10 +466,11 @@ script = ExtResource("5_rgckv")
 InitialState = NodePath("Idle")
 Character = NodePath("..")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "EmoteState", "IdleState", "Character")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "EmoteState", "HealState", "IdleState", "Character")]
 script = ExtResource("6_wkfdm")
 MoveState = NodePath("../Move")
 EmoteState = NodePath("../Emote")
+HealState = NodePath("../Heal")
 IdleState = NodePath(".")
 Character = NodePath("../..")
 
@@ -380,6 +498,13 @@ script = ExtResource("8_hd2lw")
 IdleState = NodePath("../Idle")
 Character = NodePath("../..")
 
+[node name="Heal" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("13_t103m")
+TimeToHeal = 1.0
+HealAmount = 20.0
+IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
 [node name="Animations" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("7_sdgvb")
@@ -404,14 +529,6 @@ libraries = {
 libraries = {
 "": SubResource("AnimationLibrary_kks2p")
 }
-
-[node name="AnimationTree" type="AnimationTree" parent="Animations"]
-tree_root = SubResource("AnimationNodeStateMachine_0ukul")
-anim_player = NodePath("../Movement")
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_lrnca")
-parameters/conditions/idle = false
-parameters/conditions/move = false
-parameters/conditions/roll = false
 
 [node name="Effects" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -443,6 +560,24 @@ one_shot = true
 preprocess = 0.1
 explosiveness = 0.9
 
+[node name="HealParticles" type="GPUParticles2D" parent="Effects"]
+position = Vector2(0, -4)
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_untv1")
+texture = ExtResource("9_7gumm")
+lifetime = 0.5
+
+[node name="HealParticlesPop" type="GPUParticles2D" parent="Effects"]
+position = Vector2(0, -4)
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_1umee")
+texture = ExtResource("9_7gumm")
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+
 [node name="DeathCry" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("12_vd7j4")
 volume_db = 2.0
@@ -452,6 +587,8 @@ stream = ExtResource("13_bxguv")
 
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("12_vvem5")
+
+[node name="Healing" type="AudioStreamPlayer2D" parent="Effects"]
 
 [node name="TargetTracer" parent="Effects" instance=ExtResource("22_hxi53")]
 unique_name_in_owner = true
@@ -465,6 +602,7 @@ position_smoothing_speed = 8.0
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
+position = Vector2(-0.5, 0)
 rotation = 6.28319
 
 [node name="Node2D" type="Node2D" parent="Sprites"]
@@ -475,7 +613,7 @@ use_parent_material = true
 position = Vector2(0, -8)
 texture = ExtResource("4_5vird")
 offset = Vector2(0, -4)
-hframes = 35
+hframes = 36
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)

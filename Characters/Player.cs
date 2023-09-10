@@ -37,6 +37,9 @@ public sealed partial class Player : Character
     [Export]
     public AnimationTree AnimationTree { get; private set; }
 
+    [Export]
+    public PlayerStats Stats { get; private set; }
+
     public InteractionRay InteractionRay { get; private set; }
 
     public override void _Ready()
@@ -44,6 +47,8 @@ public sealed partial class Player : Character
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
 
         _targetTracer = GetNode<TargetTracer>("%TargetTracer");
+
+        Stats = GetNode<PlayerStats>("Stats");
 
         base._Ready();
 
