@@ -4,12 +4,17 @@ public partial class TargetTracer : Node2D
 {
     private Line2D _line;
 
-    private float Intensity
+    private float _intensity = 127;
+
+    public float Intensity
     {
-        get => SelfModulate.A;
+        get => _intensity;
         set
         {
-            SelfModulate = new Color(SelfModulate, value);
+            var color = new Color(Colors.White, value);
+            (Material as ShaderMaterial)
+                .SetShaderParameter("tint_color", color);
+            _intensity = value;
         }
     }
 

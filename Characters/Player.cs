@@ -71,7 +71,15 @@ public sealed partial class Player : Character
     {
         base._Process(delta);
 
-        _targetTracer.Rotation = DesiredTarget.Angle();
+        float angle = DesiredTarget.Angle();
+        float deltaTheta = Mathf.Abs(_targetTracer.Rotation - angle);
+        _targetTracer.Rotation = angle;
+        // must turn > pi / 4 radians per second to increase intensity
+        _targetTracer.Intensity = Mathf.Min(_targetTracer.Intensity +
+            deltaTheta, 1);
+        _targetTracer.Intensity = Mathf.Max(_targetTracer.Intensity -
+            Mathf.Pi / 4 * (float)delta, 0);
+        GD.Print(_targetTracer.Intensity);
     }
 
     public override void _Input(InputEvent @event)

@@ -3,10 +3,11 @@
 [ext_resource type="Shader" path="res://Shaders/Scrolling.gdshader" id="1_1y0lt"]
 [ext_resource type="Script" path="res://UI/TargetTracer.cs" id="1_mtnfa"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcccp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_46g0j"]
 shader = ExtResource("1_1y0lt")
 shader_parameter/speed = 1.0
 shader_parameter/direction = Vector2(1, 0)
+shader_parameter/tint_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Gradient" id="Gradient_0wna6"]
 interpolation_mode = 1
@@ -19,12 +20,13 @@ width = 2
 height = 1
 
 [node name="TargetTracer" type="Node2D"]
+material = SubResource("ShaderMaterial_46g0j")
 script = ExtResource("1_mtnfa")
 
 [node name="Line2D" type="Line2D" parent="."]
 z_index = 31
 texture_repeat = 2
-material = SubResource("ShaderMaterial_hcccp")
+use_parent_material = true
 scale = Vector2(1, 0.5)
 points = PackedVector2Array(0, 0, 32, 0)
 width = 2.0
