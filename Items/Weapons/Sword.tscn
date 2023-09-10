@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dvqap2uhcah63"]
+[gd_scene load_steps=25 format=3 uid="uid://dvqap2uhcah63"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_vwirq"]
@@ -78,27 +78,13 @@ tracks/3/keys = {
 "update": 1,
 "values": [0.0, 0.0, 0.0]
 }
-tracks/4/type = "method"
+tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath(".")
+tracks/4/path = NodePath("SwingSprite:modulate")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["is_alternate", false],
-"method": &"SetAnimationCondition"
-}]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("SwingSprite:modulate")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -206,21 +192,10 @@ tracks/3/keys = {
 tracks/4/type = "method"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath(".")
+tracks/4/path = NodePath("SwingSound")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"values": []
-}
-tracks/5/type = "method"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("SwingSound")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
 "times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -280,20 +255,6 @@ tracks/3/keys = {
 "update": 1,
 "values": [3.14159, 0.785398]
 }
-tracks/4/type = "method"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath(".")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.2),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": ["is_alternate", false],
-"method": &"SetAnimationCondition"
-}]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tao4k"]
 _data = {
@@ -304,55 +265,6 @@ _data = {
 "attack": SubResource("Animation_6jphj"),
 "attack_alternate": SubResource("Animation_pclfs")
 }
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7lqgd"]
-animation = &"RESET"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0in44"]
-animation = &"anticipate"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2wqg6"]
-animation = &"anticipate_bot"
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_2ei3g"]
-animation = &"use"
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_esyoj"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kg3rd"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_twtoe"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_73wvy"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4wst0"]
-switch_mode = 2
-advance_mode = 2
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_2lfol"]
-switch_mode = 2
-advance_mode = 2
-advance_condition = &"is_player"
-
-[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_q4hbp"]
-states/End/position = Vector2(717, 75)
-states/RESET/node = SubResource("AnimationNodeAnimation_7lqgd")
-states/RESET/position = Vector2(275, 190)
-states/Start/position = Vector2(109, 75)
-states/anticipate/node = SubResource("AnimationNodeAnimation_0in44")
-states/anticipate/position = Vector2(275, 75)
-states/anticipate_bot/node = SubResource("AnimationNodeAnimation_2wqg6")
-states/anticipate_bot/position = Vector2(456, 18)
-states/use/node = SubResource("AnimationNodeAnimation_2ei3g")
-states/use/position = Vector2(609, 75)
-transitions = ["Start", "anticipate", SubResource("AnimationNodeStateMachineTransition_esyoj"), "use", "RESET", SubResource("AnimationNodeStateMachineTransition_kg3rd"), "RESET", "anticipate", SubResource("AnimationNodeStateMachineTransition_twtoe"), "anticipate", "anticipate_bot", SubResource("AnimationNodeStateMachineTransition_73wvy"), "anticipate_bot", "use", SubResource("AnimationNodeStateMachineTransition_4wst0"), "anticipate", "use", SubResource("AnimationNodeStateMachineTransition_2lfol")]
-graph_offset = Vector2(0, -104.073)
-
-[sub_resource type="AnimationNodeStateMachinePlayback" id="AnimationNodeStateMachinePlayback_37556"]
 
 [node name="Sword" type="Node2D" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor")]
 y_sort_enabled = true
@@ -437,13 +349,6 @@ fixed_fps = 16
 libraries = {
 "": SubResource("AnimationLibrary_tao4k")
 }
-
-[node name="AnimationTree" type="AnimationTree" parent="."]
-tree_root = SubResource("AnimationNodeStateMachine_q4hbp")
-anim_player = NodePath("../AnimationPlayer")
-active = true
-parameters/playback = SubResource("AnimationNodeStateMachinePlayback_37556")
-parameters/conditions/is_player = false
 
 [node name="Hitbox" parent="." instance=ExtResource("3_up3ob")]
 IsDisabled = true

@@ -255,7 +255,7 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
-    public void UseCurrentItemAlt()
+    public virtual void UseCurrentItemAlt()
     {
         if (StunTime > 0 || !IsAlive)
         {

@@ -79,7 +79,6 @@ public sealed partial class Player : Character
             deltaTheta, 1);
         _targetTracer.Intensity = Mathf.Max(_targetTracer.Intensity -
             Mathf.Pi / 4 * (float)delta, 0);
-        GD.Print(_targetTracer.Intensity);
     }
 
     public override void _Input(InputEvent @event)
@@ -150,6 +149,22 @@ public sealed partial class Player : Character
             .OnWorld()
             .WithPitchDeviation(0.125f)
             .Play();
+    }
+
+    public override void UseCurrentItemAlt()
+    {
+        // must have at least 1 level to use
+        if (Stats.Level.Value >= 1)
+        {
+            if (Inventory.SelectedItem is Items.Weapon weapon)
+            {
+                if (!weapon.IsUsingAlt)
+                {
+                    Stats.Level.Value--;
+                }
+            }
+            base.UseCurrentItemAlt();
+        }
     }
 
     public Vector2 GetDesiredInputFromInput()

@@ -14,6 +14,9 @@ public abstract partial class Weapon : Item
 
     public virtual bool IsUsingAlt => false;
 
+    [Signal]
+    public delegate void UsedItemAltEventHandler(Weapon weapon);
+
     /// <summary>
     /// How much damage in HP that this weapon deals.
     /// </summary>

@@ -7,8 +7,15 @@ public partial class WeaponStateMachine : StateMachine<WeaponState>
     [Export]
     public override WeaponState InitialState { get; set; }
 
+    /// <summary>
+    /// List of initial states when an item is being used. This should also
+    /// include alt use states.
+    /// </summary>
     [Export]
     public Godot.Collections.Array<NodePath> UsedItemStates { get; protected set; }
+
+    [Export]
+    public Godot.Collections.Array<NodePath> UsedItemAltStates { get; protected set; }
 
     [Export]
     public Godot.Collections.Array<NodePath> DeusedItemStates { get; protected set; }
