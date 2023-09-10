@@ -69,7 +69,9 @@ public partial class AnimationManager : Node
 
     private string NormPath(string path)
     {
-        return path.Replace("../", "").Replace("./", "");
+        return path.Replace("../", "")
+            .Replace("./", "")
+            .Replace("%", "");
     }
 
     private void CheckConflicts(AnimationPlayer p1, int p1Priority,
@@ -87,11 +89,20 @@ public partial class AnimationManager : Node
             // compare each track to see if they conflict nodepaths
             for (int p1Track = 0; p1Track < anim1.GetTrackCount(); p1Track++)
             {
-                string anim1Node = NormPath(anim1.TrackGetPath(p1Track));
+                NodePath anim1Path = anim1.TrackGetPath(p1Track);
+                NodePath anim1Prop = anim1Path.GetConcatenatedSubNames();
+                NodePath anim1Name = anim1Path.GetConcatenatedNames();
+                Node anim1Node = p1.GetParent().GetNode(anim1Name);
+
                 for (int p2Track = 0; p2Track < anim2.GetTrackCount(); p2Track++)
                 {
-                    string anim2Node = NormPath(anim2.TrackGetPath(p2Track));
-                    if (anim1Node == anim2Node)
+                    NodePath anim2Path = anim2.TrackGetPath(p2Track);
+                    NodePath anim2Prop = anim2Path.GetConcatenatedSubNames();
+                    NodePath anim2Name = anim2Path.GetConcatenatedNames();
+                    Node anim2Node = p2.GetParent().GetNode(anim2Name);
+
+                    // check if they point to the same node and property
+                    if (anim1Node == anim2Node && anim1Prop == anim2Prop)
                     {
                         var hold = new AnimationHold();
                         if (p1Priority > p2Priority)
