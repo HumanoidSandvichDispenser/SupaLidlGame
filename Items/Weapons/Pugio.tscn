@@ -439,6 +439,7 @@ texture = ExtResource("6_d28k5")
 modulate = Color(1.2, 1.2, 1.2, 1)
 position = Vector2(0, -3)
 rotation = 0.785398
+emitting = false
 amount = 16
 process_material = ExtResource("8_we1sv")
 texture = ExtResource("9_3p5s2")
