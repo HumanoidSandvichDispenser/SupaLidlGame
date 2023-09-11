@@ -1,0 +1,170 @@
+[gd_scene load_steps=15 format=3 uid="uid://cgg0sfm2qeiwn"]
+
+[ext_resource type="Texture2D" uid="uid://dam6aigkw8xs" path="res://Assets/Sprites/Items/bow-and-arrow.png" id="1_1ghvv"]
+[ext_resource type="Script" path="res://Items/Weapons/ProjectileSpawner.cs" id="1_76bur"]
+[ext_resource type="PackedScene" uid="uid://cjiftn2suskla" path="res://Entities/Arrow.tscn" id="2_mvw0j"]
+[ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="3_pg4gy"]
+[ext_resource type="Script" path="res://State/Weapon/RangedIdleState.cs" id="3_uxif8"]
+[ext_resource type="Script" path="res://State/Weapon/RangedFireState.cs" id="4_moo4d"]
+[ext_resource type="Script" path="res://State/Weapon/RangedChargeState.cs" id="5_k8y6f"]
+[ext_resource type="AudioStream" uid="uid://bkekgj4gu7fw4" path="res://Assets/Sounds/bow-draw.wav" id="7_t07v0"]
+[ext_resource type="AudioStream" uid="uid://cwy4giq8eod5g" path="res://Assets/Sounds/bow-release.wav" id="9_v051g"]
+
+[sub_resource type="Animation" id="Animation_h0fti"]
+resource_name = "RESET"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_8qr8x"]
+resource_name = "charge"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 6, 5]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_t07v0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_bejvb"]
+resource_name = "fire"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.03,
+"stream": ExtResource("9_v051g")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/1/use_blend = true
+
+[sub_resource type="Animation" id="Animation_riv7t"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5vx8d"]
+_data = {
+"RESET": SubResource("Animation_h0fti"),
+"charge": SubResource("Animation_8qr8x"),
+"fire": SubResource("Animation_bejvb"),
+"idle": SubResource("Animation_riv7t")
+}
+
+[node name="Bow" type="Node2D" node_paths=PackedStringArray("StateMachine")]
+y_sort_enabled = true
+script = ExtResource("1_76bur")
+Projectile = ExtResource("2_mvw0j")
+ChargeTime = 0.5
+StateMachine = NodePath("StateMachine")
+Damage = 20.0
+UseTime = 0.5
+Knockback = 64.0
+InitialVelocity = 200.0
+ShouldFreezeAngleOnUse = false
+PlayerLevelGain = 1.0
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("3_pg4gy")
+InitialState = NodePath("Idle")
+UsedItemStates = Array[NodePath]([NodePath("Charge"), NodePath("Fire")])
+DeusedItemStates = Array[NodePath]([NodePath("Idle")])
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("FireState", "Weapon", "AnimationPlayer")]
+script = ExtResource("3_uxif8")
+FireState = NodePath("../Charge")
+Weapon = NodePath("../..")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+AnimationKey = "idle"
+
+[node name="Charge" type="Node" parent="StateMachine" node_paths=PackedStringArray("Weapon", "FireState", "IdleState", "AnimationPlayer")]
+script = ExtResource("5_k8y6f")
+Weapon = NodePath("../..")
+FireState = NodePath("../Fire")
+IdleState = NodePath("../Idle")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+AnimationKey = "charge"
+
+[node name="Fire" type="Node" parent="StateMachine" node_paths=PackedStringArray("Weapon", "IdleState", "AnimationPlayer")]
+script = ExtResource("4_moo4d")
+Weapon = NodePath("../..")
+IdleState = NodePath("../Idle")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+AnimationKey = "fire"
+
+[node name="Anchor" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, 4)
+
+[node name="Sprite2D" type="Sprite2D" parent="Anchor"]
+y_sort_enabled = true
+position = Vector2(4, 2)
+texture = ExtResource("1_1ghvv")
+centered = false
+offset = Vector2(-8, -16)
+hframes = 8
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5vx8d")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

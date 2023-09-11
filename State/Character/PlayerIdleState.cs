@@ -36,6 +36,14 @@ public partial class PlayerIdleState : PlayerState
             // NOTE: more conditions may be added soon
         }
 
+        if (Godot.Input.IsActionPressed("ability"))
+        {
+            if (CanHeal())
+            {
+                return HealState;
+            }
+        }
+
         if (shouldPlayStopAnim)
         {
             _player.MovementAnimation.Play("stop");
@@ -69,12 +77,17 @@ public partial class PlayerIdleState : PlayerState
 
         if (Godot.Input.IsActionPressed("ability"))
         {
-            if (!_player.Inventory.IsUsingItem)
+            if (CanHeal())
             {
                 return HealState;
             }
         }
 
         return null;
+    }
+
+    private bool CanHeal()
+    {
+        return !_player.Inventory.IsUsingItem && _player.Stats.Level.Value > 0;
     }
 }

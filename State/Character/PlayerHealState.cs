@@ -22,6 +22,7 @@ public partial class PlayerHealState : PlayerState
         }
         _timeLeftToHeal = TimeToHeal;
         GD.Print("Heal anim");
+        _player.MovementAnimation.Stop();
         _player.AttackAnimation.Play("heal_start");
         _player.AttackAnimation.Queue("heal");
         _hasHealed = false;

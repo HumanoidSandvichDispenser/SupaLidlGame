@@ -24,7 +24,7 @@ public partial class ProjectileSpawner : Ranged
     [Export]
     public float ProjectileAngleDeviation { get; set; }
 
-    private void SpawnProjectile(Scenes.Map map, Vector2 direction)
+    private void SpawnProjectile(Scenes.Map map, Vector2 direction, float v = 1)
     {
         var projectile = map.SpawnEntity<Entities.Projectile>(Projectile);
         projectile.Hitbox.Faction = Character.Faction;
@@ -33,7 +33,7 @@ public partial class ProjectileSpawner : Ranged
 
         if (ShouldOverrideVelocity)
         {
-            projectile.Speed = InitialVelocity;
+            projectile.Speed = InitialVelocity * v;
         }
 
         if (ShouldRotate)
@@ -64,6 +64,11 @@ public partial class ProjectileSpawner : Ranged
 
     public override void Attack()
     {
+        Attack(1);
+    }
+
+    public override void Attack(float velocityModifier)
+    {
         Character.Inventory.EmitSignal("UsedItem", this);
 
         var map = Utils.World.Instance.CurrentMap;
@@ -78,7 +83,7 @@ public partial class ProjectileSpawner : Ranged
         // avoid unnecessary math if only spawning 1 projectile
         if (ProjectileCount == 1)
         {
-            SpawnProjectile(map, target);
+            SpawnProjectile(map, target, velocityModifier);
             return;
         }
 
@@ -95,7 +100,9 @@ public partial class ProjectileSpawner : Ranged
         for (int i = 0; i < ProjectileCount; i++)
         {
             float curDeviation = -i + maxAngleDeviations;
-            SpawnProjectile(map, target.Rotated(curDeviation * theta));
+            SpawnProjectile(map,
+                target.Rotated(curDeviation * theta),
+                velocityModifier);
         }
     }
 }

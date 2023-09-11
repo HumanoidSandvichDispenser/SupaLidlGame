@@ -23,15 +23,16 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
 
         var item = Character.Inventory.SelectedItem;
 
-        // angle towards item use angle or offhand use angle if not used
-
         bool targetTowards(Items.Item item)
         {
             if (item is Items.Weapon weapon)
             {
                 if (weapon.IsUsing)
                 {
-                    Character.Target = weapon.UseDirection;
+                    if (weapon.ShouldFreezeAngleOnUse)
+                    {
+                        Character.Target = weapon.UseDirection;
+                    }
                     return true;
                 }
             }

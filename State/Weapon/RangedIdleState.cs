@@ -6,7 +6,7 @@ namespace SupaLidlGame.State.Weapon;
 public partial class RangedIdleState : WeaponState
 {
     [Export]
-    public RangedFireState FireState { get; set; }
+    public WeaponState FireState { get; set; }
 
     [Export]
     public Items.Weapons.Ranged Weapon { get; set; }

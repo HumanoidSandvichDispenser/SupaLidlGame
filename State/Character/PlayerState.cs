@@ -68,7 +68,7 @@ public abstract partial class PlayerState : CharacterState
             var isAttack1On = Godot.Input.IsActionPressed("attack1");
             var isAttack2On = Godot.Input.IsActionPressed("attack2");
 
-            if (!weapon.ShouldHideIdle || isAttack1On)
+            if (!weapon.ShouldHideIdle || !weapon.ShouldFreezeAngleOnUse || isAttack1On)
             {
                 player.Target = player.DesiredTarget;
             }
@@ -80,6 +80,11 @@ public abstract partial class PlayerState : CharacterState
             else if (isAttack2On)
             {
                 Character.UseCurrentItemAlt();
+            }
+
+            if (Godot.Input.IsActionJustReleased("attack1"))
+            {
+                Character.DeuseCurrentItem();
             }
         }
 

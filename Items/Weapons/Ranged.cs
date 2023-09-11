@@ -17,7 +17,7 @@ public abstract partial class Ranged : Weapon
     public State.Weapon.WeaponStateMachine StateMachine { get; set; }
 
     public override bool IsUsingPrimary => StateMachine.CurrentState
-        is State.Weapon.RangedFireState;
+        is State.Weapon.RangedFireState or State.Weapon.RangedChargeState;
 
     public bool IsChargeable => ChargeTime > 0;
 
@@ -42,4 +42,6 @@ public abstract partial class Ranged : Weapon
     }
 
     public abstract void Attack();
+
+    public virtual void Attack(float velocityModifier) => Attack();
 }

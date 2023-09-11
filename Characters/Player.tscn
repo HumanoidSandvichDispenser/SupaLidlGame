@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=65 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
 [ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="22_mqpn7"]
 [ext_resource type="PackedScene" uid="uid://d1d4vg7we5rjr" path="res://Items/Weapons/Shotgun.tscn" id="22_rmciq"]
+[ext_resource type="PackedScene" uid="uid://cgg0sfm2qeiwn" path="res://Items/Weapons/Bow.tscn" id="29_7j1fs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -645,16 +646,22 @@ InventoryMap = {
 }
 
 [node name="Sword" parent="Inventory" instance=ExtResource("22_mqpn7")]
+visible = false
 
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
 visible = false
 
+[node name="Bow" parent="Inventory" instance=ExtResource("29_7j1fs")]
+
 [node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
+visible = false
 
 [node name="Railgun" parent="Inventory" instance=ExtResource("21_n8w32")]
+visible = false
 UseTime = 0.2
 
 [node name="DocLance" parent="Inventory" instance=ExtResource("14_bj0lo")]
+visible = false
 
 [node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
 position = Vector2(0, 4)

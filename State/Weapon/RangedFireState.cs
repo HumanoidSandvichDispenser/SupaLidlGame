@@ -17,13 +17,15 @@ public partial class RangedFireState : WeaponState
     [Export]
     public string AnimationKey { get; set; }
 
+    public float VelocityModifier { get; set; }
+
     private double _timeLeft = 0;
 
     public override IState<WeaponState> Enter(IState<WeaponState> prev)
     {
         //_timeLeft
         _timeLeft = Weapon.UseTime;
-        Weapon.Attack();
+        Weapon.Attack(VelocityModifier);
         Weapon.UseDirection = Weapon.Character.Target;
         AnimationPlayer?.TryPlay(AnimationKey);
         return null;
