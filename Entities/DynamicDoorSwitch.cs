@@ -60,9 +60,6 @@ public partial class DynamicDoorSwitch : StaticBody2D
         RefreshMapState(newState);
 
         GD.Print($"Map state \"{MapStateKey}\" {oldState} -> {newState}");
-
-            //var a = _animPlayer.CurrentAnimation;
-            //GetNode<Node2D>(nodePath).SetProcess(true);
     }
 
     public void SetAnimations(bool isEnabled)

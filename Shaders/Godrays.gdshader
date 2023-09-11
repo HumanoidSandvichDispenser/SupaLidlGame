@@ -14,7 +14,7 @@ uniform float angle : hint_range(-5, 5) = -0.3;
 uniform float position = -0.2;
 uniform float spread : hint_range(0.0, 1.0) = 0.5;
 uniform float cutoff : hint_range(-1.0, 1.0) = 0.1;
-uniform float falloff : hint_range(0.0, 1.0) = 0.2;
+uniform float falloff : hint_range(0.0, 2.0) = 0.2;
 uniform float edge_fade : hint_range(0.0, 1.0) = 0.15;
 
 uniform float speed = 1.0;
@@ -29,8 +29,9 @@ uniform float seed = 5.0;
 
 // Random and noise functions from Book of Shader's chapter on Noise.
 float random(vec2 _uv) {
+	_uv += min(TIME,0.0);
     return fract(sin(dot(_uv.xy,
-                         vec2(12.9898, 78.233))) *
+        vec2(12.9898, 78.233))) *
         43758.5453123);
 }
 
@@ -65,6 +66,15 @@ vec4 screen(vec4 base, vec4 blend){
 	return 1.0 - (1.0 - base) * (1.0 - blend);
 }
 
+float custom_smooth_step(float limit1, float limit2, float x) {
+    if (x <= limit1) {
+        return 0.0;
+    } else if (x >= limit2) {
+        return 1.0;
+    }
+    return (limit1 + x) / (limit1 + limit2);
+}
+
 void fragment()
 {
 	
@@ -93,7 +103,7 @@ void fragment()
 	}
 	
 	// Fade out edges
-	rays *= smoothstep(0.0, falloff, (1.0 - UV.y)); // Bottom
+	rays *= custom_smooth_step(0.0, falloff, (1.0 - UV.y)); // Bottom
 	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, transformed_uv.x); // Left
 	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, 1.0 - transformed_uv.x); // Right
 	

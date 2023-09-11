@@ -42,7 +42,6 @@ public partial class RangedChargeState : WeaponState
         }
 
         Weapon.UseDirection = Weapon.Character.Target;
-        GD.Print(Weapon.UseDirection);
 
         return null;
     }
@@ -54,11 +53,9 @@ public partial class RangedChargeState : WeaponState
 
         if (progress > 0.5)
         {
-            GD.Print("not enough");
             return IdleState;
         }
 
-        GD.Print("firing");
         FireState.VelocityModifier = (float)(1 - progress);
         return FireState;
     }
