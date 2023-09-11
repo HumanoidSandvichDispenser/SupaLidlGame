@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://dr3bcvql7burk"]
+[gd_scene load_steps=73 format=3 uid="uid://dr3bcvql7burk"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ci4ij"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_m6h7j"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://cslrhlihsf3vw" path="res://Assets/Sprites/Particles/ray-x4.png" id="3_k4qp5"]
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="3_lgup0"]
 [ext_resource type="Shader" path="res://Shaders/Godrays.gdshader" id="5_11w06"]
+[ext_resource type="Shader" path="res://Shaders/GodraysCompatible.gdshader" id="5_fpv35"]
+[ext_resource type="Texture2D" uid="uid://d75jkoev5v3w" path="res://Assets/Sprites/Particles/circle-64.png" id="6_lctxm"]
 [ext_resource type="PackedScene" uid="uid://c1w7t6irnohfx" path="res://Entities/Torch.tscn" id="6_wx4iy"]
 [ext_resource type="PackedScene" uid="uid://ceadk7pam7vab" path="res://Entities/TorchLamp.tscn" id="8_3rpj6"]
 [ext_resource type="PackedScene" uid="uid://hm3ek8vqt1d4" path="res://Props/Bookshelf.tscn" id="9_qsthf"]
@@ -35,7 +37,6 @@
 [ext_resource type="PackedScene" uid="uid://dhamcei7tfta8" path="res://Characters/DocCenturion.tscn" id="30_qfl2k"]
 [ext_resource type="PackedScene" uid="uid://3bcudbixirkj" path="res://Characters/DocCultist.tscn" id="30_xj4yo"]
 [ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="33_e4gty"]
-[ext_resource type="Texture2D" uid="uid://d3lr2uas6ax8v" path="res://addons/dialogue_manager/assets/icon.svg" id="33_hl01f"]
 
 [sub_resource type="Gradient" id="Gradient_jupxw"]
 offsets = PackedFloat32Array(0.00740741, 0.2, 1)
@@ -62,23 +63,28 @@ attractor_interaction_enabled = false
 closed = false
 polygon = PackedVector2Array(-23, 49, -5, -6, 2, -6, 2, -2, 6, -2, 6, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vyo63"]
-shader = ExtResource("5_11w06")
-shader_parameter/angle = -0.3
-shader_parameter/position = -0.2
-shader_parameter/spread = 0.718
-shader_parameter/cutoff = 0.28
-shader_parameter/falloff = 0.2
-shader_parameter/edge_fade = 0.15
-shader_parameter/speed = 5.0
-shader_parameter/ray1_density = 8.0
-shader_parameter/ray2_density = 30.0
-shader_parameter/ray2_intensity = 0.3
-shader_parameter/color = Color(1, 0.9, 0.65, 0.8)
-shader_parameter/hdr = false
-shader_parameter/seed = 5.0
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k2bka"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_1u3bg"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_x3q71"]
+width = 64
+height = 64
+noise = SubResource("FastNoiseLite_k2bka")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vyo63"]
+shader = ExtResource("5_fpv35")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/alpha = 0.75
+shader_parameter/speed = 4.0
+shader_parameter/spread = 0.416
+shader_parameter/opposite_ray_mult = 1.4
+shader_parameter/negative_intensity = 1.25
+shader_parameter/negative_ray_speed = 5.8
+shader_parameter/cutoff = 0.35
+shader_parameter/smooth_cutoff = 0.1
+shader_parameter/y_cutoff = 0.0
+shader_parameter/y_smooth_cutoff = 1.0
+shader_parameter/angle = 4.42458e-08
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_x3q71")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p0lsf"]
 emission_shape = 3
@@ -106,14 +112,14 @@ polygon = PackedVector2Array(-16, 34, -5, -3, 2, -3, 2, 0, -5, 36)
 shader = ExtResource("5_11w06")
 shader_parameter/angle = -0.3
 shader_parameter/position = -0.2
-shader_parameter/spread = 0.208
-shader_parameter/cutoff = 0.145
-shader_parameter/falloff = 0.2
-shader_parameter/edge_fade = 0.128
+shader_parameter/spread = 0.904
+shader_parameter/cutoff = 0.325
+shader_parameter/falloff = 0.169
+shader_parameter/edge_fade = 0.2
 shader_parameter/speed = 5.0
 shader_parameter/ray1_density = 8.0
 shader_parameter/ray2_density = 30.0
-shader_parameter/ray2_intensity = 0.3
+shader_parameter/ray2_intensity = 1.0
 shader_parameter/color = Color(1, 0.9, 0.65, 0.8)
 shader_parameter/hdr = false
 shader_parameter/seed = 5.0
@@ -133,8 +139,6 @@ shader_parameter/ray2_intensity = 0.435
 shader_parameter/color = Color(0.847059, 1, 0.803922, 0.8)
 shader_parameter/hdr = true
 shader_parameter/seed = 3.0
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_v43gw"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_47ohj"]
 light_mode = 1
@@ -195,91 +199,91 @@ size = Vector2(64, 97)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pcme"]
 size = Vector2(18, 6)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fdnfo"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tw04q"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bndwm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bi7yo"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1rdkk"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p8b3f"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t1quy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vmrhp"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vtj0"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i61s6"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tetra"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_npxxj"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_em14g"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7qb1v"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yuai"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_55hw6"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_iy8k6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_soupg"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hp4tf"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cwwm"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_332kh"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hjkf"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8vk12"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qtxqm"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yhujd"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4txy"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
@@ -328,9 +332,9 @@ texture_scale = 0.25
 
 [node name="Sprite2D" type="Sprite2D" parent="Props/Static@Godrays" index="3"]
 material = SubResource("ShaderMaterial_vyo63")
-position = Vector2(-8, 22)
-scale = Vector2(-33.315, 48)
-texture = SubResource("CanvasTexture_1u3bg")
+position = Vector2(-21, 26)
+scale = Vector2(-1, 1)
+texture = ExtResource("6_lctxm")
 
 [node name="Static@Godrays2" type="Node2D" parent="Props" index="1"]
 z_index = 1
@@ -359,9 +363,9 @@ occluder_light_mask = 8
 
 [node name="Sprite2D" type="Sprite2D" parent="Props/Static@Godrays2" index="3"]
 material = SubResource("ShaderMaterial_vyo63")
-position = Vector2(-9, 22)
-scale = Vector2(-33.315, 48)
-texture = SubResource("CanvasTexture_1u3bg")
+position = Vector2(-21, 29)
+scale = Vector2(-1, 1)
+texture = ExtResource("6_lctxm")
 
 [node name="Static@Godrays3" type="Node2D" parent="Props" index="2"]
 z_index = 1
@@ -392,9 +396,9 @@ occluder_light_mask = 8
 
 [node name="Sprite2D" type="Sprite2D" parent="Props/Static@Godrays3" index="3"]
 material = SubResource("ShaderMaterial_vyo63")
-position = Vector2(-9, 22)
-scale = Vector2(-33.315, 48)
-texture = SubResource("CanvasTexture_1u3bg")
+position = Vector2(-20, 29)
+scale = Vector2(-1, 1)
+texture = ExtResource("6_lctxm")
 
 [node name="Static@Godrays4" type="Node2D" parent="Props" index="3"]
 z_index = 1
@@ -435,9 +439,9 @@ occluder_light_mask = 8
 
 [node name="Sprite2D" type="Sprite2D" parent="Props/Static@Godrays4" index="4"]
 material = SubResource("ShaderMaterial_vyo63")
-position = Vector2(-9, 22)
-scale = Vector2(-33.315, 48)
-texture = SubResource("CanvasTexture_1u3bg")
+position = Vector2(-19, 30)
+scale = Vector2(-1, 1)
+texture = ExtResource("6_lctxm")
 
 [node name="Static@Torch" parent="Props" index="4" instance=ExtResource("6_wx4iy")]
 position = Vector2(-152, -385)
@@ -468,9 +472,9 @@ position = Vector2(256, -80)
 
 [node name="Sprite2D" type="Sprite2D" parent="Props/StaticEntranceGodrays" index="0"]
 material = SubResource("ShaderMaterial_1m7ia")
-position = Vector2(10, -90)
-scale = Vector2(-80, 216)
-texture = SubResource("CanvasTexture_1u3bg")
+position = Vector2(12, -90)
+scale = Vector2(-2, 4)
+texture = ExtResource("6_lctxm")
 
 [node name="PointLight2D" type="PointLight2D" parent="Props/StaticEntranceGodrays" index="1"]
 texture = ExtResource("3_lgup0")
@@ -515,7 +519,22 @@ frame = 13
 [node name="TopRight" parent="Props/StaticBookshelf3" index="3"]
 frame = 5
 
-[node name="Static@ArenaEntranceLighting" type="Node2D" parent="Props" index="16"]
+[node name="StaticBookshelf4" parent="Props" index="16" instance=ExtResource("9_qsthf")]
+position = Vector2(176, 456)
+
+[node name="BottomLeft" parent="Props/StaticBookshelf4" index="0"]
+frame = 14
+
+[node name="BottomRight" parent="Props/StaticBookshelf4" index="1"]
+frame = 13
+
+[node name="TopLeft" parent="Props/StaticBookshelf4" index="2"]
+frame = 2
+
+[node name="TopRight" parent="Props/StaticBookshelf4" index="3"]
+frame = 5
+
+[node name="Static@ArenaEntranceLighting" type="Node2D" parent="Props" index="17"]
 position = Vector2(576, 464)
 
 [node name="PointLight2D" type="PointLight2D" parent="Props/Static@ArenaEntranceLighting" index="0"]
@@ -527,12 +546,12 @@ texture = ExtResource("3_lgup0")
 
 [node name="Rays" type="Sprite2D" parent="Props/Static@ArenaEntranceLighting" index="1"]
 material = SubResource("ShaderMaterial_qvhmg")
-position = Vector2(-0.5, 16)
-scale = Vector2(191, 274)
-texture = SubResource("CanvasTexture_v43gw")
+position = Vector2(-0.5, -104)
+scale = Vector2(4, 4)
+texture = ExtResource("6_lctxm")
 offset = Vector2(0, -0.4)
 
-[node name="Static@Node2D" type="Node2D" parent="Props" index="17"]
+[node name="Static@Node2D" type="Node2D" parent="Props" index="18"]
 z_index = 1
 position = Vector2(472, 595)
 
@@ -549,7 +568,7 @@ position = Vector2(-16, 24)
 texture = ExtResource("10_i5qot")
 offset = Vector2(32, -32)
 
-[node name="Static@Node2D2" type="Node2D" parent="Props" index="18"]
+[node name="Static@Node2D2" type="Node2D" parent="Props" index="19"]
 z_index = 2
 material = SubResource("ShaderMaterial_so677")
 position = Vector2(696, 559)
@@ -567,7 +586,7 @@ position = Vector2(40, 24)
 texture = ExtResource("10_sx2hw")
 offset = Vector2(-48, -64)
 
-[node name="StaticNode2D2" type="Node2D" parent="Props" index="19"]
+[node name="StaticNode2D2" type="Node2D" parent="Props" index="20"]
 z_index = 1
 material = SubResource("ShaderMaterial_b00lw")
 position = Vector2(705, 447)
@@ -584,7 +603,7 @@ position = Vector2(40, 24)
 texture = ExtResource("12_md5xh")
 offset = Vector2(-48, -64)
 
-[node name="Static@Node2D3" type="Node2D" parent="Props" index="20"]
+[node name="Static@Node2D3" type="Node2D" parent="Props" index="21"]
 z_index = 3
 position = Vector2(710, 603)
 
@@ -601,7 +620,7 @@ position = Vector2(64, 56)
 texture = ExtResource("11_wjfe8")
 offset = Vector2(-48, -64)
 
-[node name="StaticNode2D3" type="Node2D" parent="Props" index="21"]
+[node name="StaticNode2D3" type="Node2D" parent="Props" index="22"]
 z_index = 1
 position = Vector2(494, 455)
 rotation = 1.5708
@@ -619,7 +638,7 @@ position = Vector2(64, 79)
 texture = ExtResource("13_j84wc")
 offset = Vector2(-48, -64)
 
-[node name="Stairs" type="Node2D" parent="Props" index="22"]
+[node name="Stairs" type="Node2D" parent="Props" index="23"]
 z_index = -2
 position = Vector2(496, 512)
 
@@ -637,7 +656,7 @@ texture = ExtResource("14_i2ht5")
 region_enabled = true
 region_rect = Rect2(0, 0, 64, 32)
 
-[node name="Water" type="Node2D" parent="Props" index="23"]
+[node name="Water" type="Node2D" parent="Props" index="24"]
 z_index = -1
 position = Vector2(512, 549)
 
@@ -678,7 +697,7 @@ visible = false
 position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_wi532")
 
-[node name="DocStatue" type="StaticBody2D" parent="Props" index="24"]
+[node name="DocStatue" type="StaticBody2D" parent="Props" index="25"]
 z_index = -1
 position = Vector2(544, 410)
 
@@ -689,7 +708,7 @@ texture = ExtResource("19_u6j17")
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_5pcme")
 
-[node name="DocStatue2" type="StaticBody2D" parent="Props" index="25"]
+[node name="DocStatue2" type="StaticBody2D" parent="Props" index="26"]
 z_index = -1
 position = Vector2(608, 410)
 
@@ -701,7 +720,7 @@ flip_h = true
 position = Vector2(0, 9)
 shape = SubResource("RectangleShape2D_5pcme")
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Props" index="26"]
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Props" index="27"]
 z_index = 5
 position = Vector2(576, 436)
 amount = 16
@@ -712,7 +731,7 @@ explosiveness = 0.2
 randomness = 0.5
 fixed_fps = 12
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Props" index="27"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Props" index="28"]
 position = Vector2(576, 504)
 stream = ExtResource("26_2g1h3")
 volume_db = -4.0
@@ -755,55 +774,55 @@ position = Vector2(256, -9)
 position = Vector2(80, 373)
 
 [node name="Centurion" parent="Entities" index="8" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_fdnfo")
+material = SubResource("ShaderMaterial_tw04q")
 position = Vector2(-360, 31)
 
 [node name="Centurion2" parent="Entities" index="9" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_bndwm")
+material = SubResource("ShaderMaterial_bi7yo")
 position = Vector2(-224, 131)
 
 [node name="Centurion3" parent="Entities" index="10" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_1rdkk")
+material = SubResource("ShaderMaterial_p8b3f")
 position = Vector2(-280, 411)
 
 [node name="Centurion4" parent="Entities" index="11" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_t1quy")
+material = SubResource("ShaderMaterial_vmrhp")
 position = Vector2(-232, 728)
 
 [node name="Legionary" parent="Entities" index="12" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_0vtj0")
+material = SubResource("ShaderMaterial_i61s6")
 position = Vector2(-214, 72)
 
 [node name="Legionary2" parent="Entities" index="13" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_tetra")
+material = SubResource("ShaderMaterial_npxxj")
 position = Vector2(-496, 15)
 
 [node name="Legionary3" parent="Entities" index="14" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_em14g")
+material = SubResource("ShaderMaterial_7qb1v")
 position = Vector2(-384, 118)
 
 [node name="Legionary4" parent="Entities" index="15" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_5yuai")
+material = SubResource("ShaderMaterial_55hw6")
 position = Vector2(-300, 384)
 
 [node name="Legionary5" parent="Entities" index="16" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_iy8k6")
+material = SubResource("ShaderMaterial_soupg")
 position = Vector2(-152, 728)
 
 [node name="Legionary6" parent="Entities" index="17" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_hp4tf")
+material = SubResource("ShaderMaterial_0cwwm")
 position = Vector2(-258, 455)
 
 [node name="Legionary7" parent="Entities" index="18" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_332kh")
+material = SubResource("ShaderMaterial_1hjkf")
 position = Vector2(-556, 402)
 
 [node name="Legionary8" parent="Entities" index="19" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_8vk12")
+material = SubResource("ShaderMaterial_qtxqm")
 position = Vector2(-404, 505)
 
 [node name="Cultist" parent="Entities" index="20" instance=ExtResource("30_xj4yo")]
-material = SubResource("ShaderMaterial_yhujd")
+material = SubResource("ShaderMaterial_r4txy")
 position = Vector2(191, 567)
 
 [node name="CameraBounds" parent="Areas" index="0" instance=ExtResource("33_e4gty")]
@@ -819,13 +838,9 @@ position = Vector2(384, 384)
 [node name="ArenaEntrance" type="Marker2D" parent="Markers" index="0"]
 position = Vector2(576, 431)
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="7"]
-modulate = Color(42, 4, 4, 1)
-position = Vector2(67, 360)
-texture = ExtResource("33_hl01f")
-
 [editable path="Props/StaticBookshelf"]
 [editable path="Props/StaticBookshelf/InteractionTrigger"]
 [editable path="Props/StaticBookshelf2"]
 [editable path="Props/StaticBookshelf3"]
+[editable path="Props/StaticBookshelf4"]
 [editable path="Areas/CameraBounds"]

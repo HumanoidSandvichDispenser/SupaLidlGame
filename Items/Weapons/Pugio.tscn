@@ -306,7 +306,7 @@ tracks/2/keys = {
 "start_offset": 0.0,
 "stream": ExtResource("10_istfq")
 }],
-"times": PackedFloat32Array(0, 0.7)
+"times": PackedFloat32Array(0, 0.6)
 }
 tracks/2/use_blend = true
 
@@ -451,6 +451,5 @@ pitch_scale = 1.2
 stream = ExtResource("13_t5wmj")
 
 [node name="ShieldSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("13_t5wmj")
 
 [editable path="Hitbox"]

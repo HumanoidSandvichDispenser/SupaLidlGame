@@ -33,7 +33,7 @@ script = ExtResource("1_8ijcc")
 ProjectileName = "Arrow"
 Speed = 256.0
 Hitbox = NodePath("Hitbox")
-Lifetime = 3.0
+Lifetime = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-11, -2)
