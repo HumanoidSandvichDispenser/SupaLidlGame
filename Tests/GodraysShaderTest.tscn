@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://c6mdm4v1hl11g"]
+
+[ext_resource type="Shader" path="res://Shaders/GodraysCompatible.gdshader" id="1_ra5uy"]
+[ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="2_cswa3"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7shef"]
+frequency = 0.1
+fractal_octaves = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hbf0f"]
+width = 64
+height = 64
+invert = true
+seamless = true
+noise = SubResource("FastNoiseLite_7shef")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pf4uj"]
+shader = ExtResource("1_ra5uy")
+shader_parameter/tint_color = Color(1, 0.996078, 0.752941, 1)
+shader_parameter/alpha = 0.75
+shader_parameter/speed = 0.5
+shader_parameter/spread = 0.5
+shader_parameter/opposite_ray_mult = 2.0
+shader_parameter/negative_intensity = 1.5
+shader_parameter/negative_ray_speed = 0.157
+shader_parameter/cutoff = 0.393
+shader_parameter/smooth_cutoff = 0.101
+shader_parameter/y_cutoff = 0.0
+shader_parameter/y_smooth_cutoff = 0.5
+shader_parameter/angle = -0.423
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_hbf0f")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o88yv"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j64mt"]
+noise = SubResource("FastNoiseLite_o88yv")
+
+[node name="GodraysShaderTest" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_pf4uj")
+scale = Vector2(64, 64)
+texture = ExtResource("2_cswa3")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-229, -768)
+scale = Vector2(0.167969, 1)
+texture = SubResource("NoiseTexture2D_j64mt")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(-420.5, 520)
+scale = Vector2(0.388672, 0.1875)
+texture = SubResource("NoiseTexture2D_j64mt")
