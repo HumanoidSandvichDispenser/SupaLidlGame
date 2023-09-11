@@ -72,13 +72,22 @@ public sealed partial class Player : Character
         base._Process(delta);
 
         float angle = DesiredTarget.Angle();
-        float deltaTheta = Mathf.Abs(_targetTracer.Rotation - angle);
+
+        if (Inventory.IsUsingItem)
+        {
+            _targetTracer.Intensity = 1;
+        }
+        else
+        {
+            // must turn > pi / 4 radians per second to increase intensity
+            float deltaTheta = Mathf.Abs(_targetTracer.Rotation - angle);
+            _targetTracer.Intensity = Mathf.Min(_targetTracer.Intensity +
+                deltaTheta, 1);
+            _targetTracer.Intensity = Mathf.Max(_targetTracer.Intensity -
+                Mathf.Pi / 4 * (float)delta, 0);
+        }
+
         _targetTracer.Rotation = angle;
-        // must turn > pi / 4 radians per second to increase intensity
-        _targetTracer.Intensity = Mathf.Min(_targetTracer.Intensity +
-            deltaTheta, 1);
-        _targetTracer.Intensity = Mathf.Max(_targetTracer.Intensity -
-            Mathf.Pi / 4 * (float)delta, 0);
     }
 
     public override void _Input(InputEvent @event)
