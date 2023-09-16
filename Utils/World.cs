@@ -148,7 +148,6 @@ public partial class World : Node
         }
 
         root.AddChild(map);
-        InitTilemap(map);
 
         CurrentMap = map;
         CurrentMap.Active = true;
@@ -235,11 +234,6 @@ public partial class World : Node
         return CurrentPlayer;
     }
 
-    private void InitTilemap(Map map)
-    {
-        // this is being replaced with interaction triggers
-    }
-
     private void MovePlayerToConnector(string name)
     {
         var marker = CurrentMap.Markers.GetNode<Marker2D>(name);
@@ -265,14 +259,6 @@ public partial class World : Node
 
         // after finished loading, move our player to the connector
         MovePlayerToConnector(connector);
-    }
-
-    public void _on_area_2d_requested_enter(
-        BoundingBoxes.ConnectorBox box,
-        Player player)
-    {
-        GD.Print("Requesting to enter " + box.ToConnector);
-        MoveToArea(box.ToArea, box.ToConnector);
     }
 
     public void SaveGame()
