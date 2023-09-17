@@ -5,10 +5,7 @@ namespace SupaLidlGame.State.Character;
 public partial class PlayerMoveState : PlayerState
 {
     [Export]
-    public PlayerRollState RollState { get; set; }
-
-    [Export]
-    public CharacterDashState DashState { get; set; }
+    public CharacterState AbilityState { get; set; }
 
     public double MoveDuration { get; private set; }
 
@@ -36,14 +33,21 @@ public partial class PlayerMoveState : PlayerState
         {
             if (Character.Inventory.SelectedItem is Items.Weapon weapon)
             {
-                if (!weapon.IsUsing)
+                bool canUseAbility = true;
+
+                if (!AbilityState.CanEnterWhileUsingItem && weapon.IsUsing)
                 {
-                    return RollState;
+                    canUseAbility = false;
+                }
+
+                if (canUseAbility)
+                {
+                    return AbilityState;
                 }
             }
             else
             {
-                return RollState;
+                return AbilityState;
             }
         }
         return base.Input(@event);

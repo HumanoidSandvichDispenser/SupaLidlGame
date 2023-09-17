@@ -10,6 +10,11 @@ public partial class PlayerRollState : PlayerState
 
     private GpuParticles2D _particles;
 
+    public PlayerRollState()
+    {
+        CanEnterWhileUsingItem = false;
+    }
+
     public override void _Ready()
     {
         base._Ready();

@@ -7,6 +7,8 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
     [Export]
     public Characters.Character Character { get; set; }
 
+    public bool CanEnterWhileUsingItem { get; set; }
+
     public virtual IState<CharacterState> Enter(IState<CharacterState> prev) => null;
 
     public virtual void Exit(IState<CharacterState> next)

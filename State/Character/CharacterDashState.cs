@@ -18,6 +18,11 @@ public partial class CharacterDashState : CharacterState
 
     public Vector2 DashDirection = Vector2.Zero;
 
+    public CharacterDashState()
+    {
+        CanEnterWhileUsingItem = true;
+    }
+
     public override IState<CharacterState> Enter(IState<CharacterState> previousState)
     {
         _timeLeftToDash = TimeToDash;
