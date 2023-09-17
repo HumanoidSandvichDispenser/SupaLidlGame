@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=70 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cl56eadpklnbo" path="res://Utils/PlayerCamera.tscn" id="4_ym125"]
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="5_rgckv"]
 [ext_resource type="Script" path="res://Utils/Values/DoubleValue.cs" id="5_txl0r"]
-[ext_resource type="Script" path="res://State/Character/CharacterDashState.cs" id="6_rft7p"]
 [ext_resource type="Script" path="res://Utils/Values/IntValue.cs" id="6_sunc5"]
 [ext_resource type="Script" path="res://State/Character/PlayerIdleState.cs" id="6_wkfdm"]
 [ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
@@ -23,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="9_avyu4"]
 [ext_resource type="AnimationLibrary" uid="uid://epe31b7x1nt1" path="res://Assets/Animations/player_hurt.res" id="9_g42dl"]
 [ext_resource type="Material" uid="uid://ra02tvwd5o5g" path="res://Assets/Sprites/Particles/PlayerDeathProcessMaterial.tres" id="10_agw51"]
+[ext_resource type="Script" path="res://State/Character/CharacterDashState.cs" id="10_vsvfh"]
 [ext_resource type="AudioStream" uid="uid://bbqdpexvknma2" path="res://Assets/Sounds/never-lucky.mp3" id="12_vd7j4"]
 [ext_resource type="AudioStream" uid="uid://bkeyg8weaqnuu" path="res://Assets/Sounds/splat-player.ogg" id="12_vvem5"]
 [ext_resource type="AudioStream" uid="uid://cruylv4pu2fo1" path="res://Assets/Sounds/footstep-tile.wav" id="13_bxguv"]
@@ -31,10 +31,13 @@
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="14_bj0lo"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
+[ext_resource type="AudioStream" uid="uid://st8qgqiygy5a" path="res://Assets/Sounds/electricity.wav" id="15_61bua"]
+[ext_resource type="AudioStream" uid="uid://b1jmusgltouak" path="res://Assets/Sounds/lightning.wav" id="16_fo4my"]
 [ext_resource type="PackedScene" uid="uid://g7wfcubs6bdd" path="res://Items/Weapons/Railgun.tscn" id="21_n8w32"]
 [ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
 [ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="22_mqpn7"]
 [ext_resource type="PackedScene" uid="uid://d1d4vg7we5rjr" path="res://Items/Weapons/Shotgun.tscn" id="22_rmciq"]
+[ext_resource type="Texture2D" uid="uid://bcgm3r168qjn3" path="res://Assets/Sprites/Particles/cast-effect.png" id="24_njn4h"]
 [ext_resource type="PackedScene" uid="uid://cgg0sfm2qeiwn" path="res://Items/Weapons/Bow.tscn" id="29_7j1fs"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
@@ -245,6 +248,106 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%Effects/Cast:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%Effects/Cast:frame")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_dbsas"]
+resource_name = "cast"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%Animations/..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"Footstep"
+}, {
+"args": [],
+"method": &"Footstep"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%Effects/Cast:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%Effects/Cast:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("%Effects/MaxLevel")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 2.31782,
+"start_offset": 0.141459,
+"stream": ExtResource("15_61bua")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("16_fo4my")
+}],
+"times": PackedFloat32Array(0.075, 0.3)
+}
+tracks/4/use_blend = true
 
 [sub_resource type="Animation" id="Animation_audkv"]
 resource_name = "heal"
@@ -353,6 +456,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_73mj7"]
 _data = {
 "RESET": SubResource("Animation_adxyh"),
+"cast": SubResource("Animation_dbsas"),
 "heal": SubResource("Animation_audkv"),
 "heal_cancel": SubResource("Animation_60iyy"),
 "heal_end": SubResource("Animation_dyfl4"),
@@ -422,6 +526,9 @@ scale_max = 0.25
 color = Color(0, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_jb8kb")
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ejdrf"]
+light_mode = 1
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
 size = Vector2(12, 8)
 
@@ -475,18 +582,17 @@ HealState = NodePath("../Heal")
 IdleState = NodePath(".")
 Character = NodePath("../..")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("RollState", "DashState", "IdleState", "Character")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("AbilityState", "IdleState", "Character")]
 script = ExtResource("7_dfqd8")
-RollState = NodePath("../Roll")
-DashState = NodePath("../Dash")
+AbilityState = NodePath("../Roll")
 IdleState = NodePath("../Idle")
 Character = NodePath("../..")
 
 [node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
-script = ExtResource("6_rft7p")
+script = ExtResource("10_vsvfh")
 IdleState = NodePath("../Idle")
 TimeToDash = 0.1
-VelocityModifier = 5.0
+VelocityModifier = 4.0
 Character = NodePath("../..")
 
 [node name="Roll" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
@@ -591,9 +697,21 @@ stream = ExtResource("12_vvem5")
 
 [node name="Healing" type="AudioStreamPlayer2D" parent="Effects"]
 
+[node name="MaxLevel" type="AudioStreamPlayer2D" parent="Effects"]
+
 [node name="TargetTracer" parent="Effects" instance=ExtResource("22_hxi53")]
 unique_name_in_owner = true
 position = Vector2(0, -4)
+
+[node name="Cast" type="Sprite2D" parent="Effects"]
+visible = false
+y_sort_enabled = true
+material = SubResource("CanvasItemMaterial_ejdrf")
+position = Vector2(2, 1)
+texture = ExtResource("24_njn4h")
+centered = false
+offset = Vector2(-9.5, -14)
+hframes = 6
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 zoom = Vector2(4, 4)
@@ -614,7 +732,7 @@ use_parent_material = true
 position = Vector2(0, -8)
 texture = ExtResource("4_5vird")
 offset = Vector2(0, -4)
-hframes = 36
+hframes = 46
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
@@ -652,6 +770,7 @@ visible = false
 visible = false
 
 [node name="Bow" parent="Inventory" instance=ExtResource("29_7j1fs")]
+visible = false
 
 [node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
 visible = false

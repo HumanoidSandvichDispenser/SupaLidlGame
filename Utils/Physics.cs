@@ -4,6 +4,16 @@ namespace SupaLidlGame.Utils;
 
 public static class Physics
 {
+    public static readonly float COS_30_DEG;
+
+    public static readonly float COS_150_DEG;
+
+    static Physics()
+    {
+        COS_30_DEG = Mathf.Cos(Mathf.DegToRad(30));
+        COS_150_DEG = Mathf.Cos(Mathf.DegToRad(150));
+    }
+
     /// <summary>
     /// Returns the predicted position of a target after a time t at which a
     /// projectile is predicted to hit a target.

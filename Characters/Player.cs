@@ -13,6 +13,11 @@ public sealed partial class Player : Character
 
     private Vector2 _desiredTarget;
 
+    private Node2D _effects;
+
+    [Node]
+    private TargetTracer _targetTracer;
+
     public Vector2 DesiredTarget
     {
         get => _desiredTarget;
@@ -25,8 +30,6 @@ public sealed partial class Player : Character
             _desiredTarget = value;
         }
     }
-
-    private TargetTracer _targetTracer;
 
     [Export]
     public PlayerCamera Camera { get; set; }
@@ -45,6 +48,8 @@ public sealed partial class Player : Character
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
+
+        _effects = GetNode<Node2D>("%Effects");
 
         _targetTracer = GetNode<TargetTracer>("%TargetTracer");
 
@@ -126,6 +131,25 @@ public sealed partial class Player : Character
         Items.Weapon weapon = null,
         Vector2 knockbackDir = default)
     {
+        if (StateMachine.CurrentState is State.Character.PlayerRollState)
+        {
+            // dodge dots:
+            // melee: 
+            float dot = Direction.Dot(knockbackDir);
+            GD.Print(dot);
+            if (weapon is Items.Weapons.Sword)
+            {
+                // if melee weapon then check if dot is away
+                GD.Print("sword");
+                if (dot > Utils.Physics.COS_30_DEG)
+                {
+                    // ignore hit
+                    GD.Print("ignore hit");
+                    return;
+                }
+            }
+        }
+
         if (damage >= 10 && IsAlive)
         {
             Camera.Shake(2, 0.5f);
