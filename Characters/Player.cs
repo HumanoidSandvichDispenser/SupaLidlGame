@@ -15,6 +15,8 @@ public sealed partial class Player : Character
 
     private Node2D _effects;
 
+    private Node2D _characterEffects;
+
     [Node]
     private TargetTracer _targetTracer;
 
@@ -50,6 +52,8 @@ public sealed partial class Player : Character
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
 
         _effects = GetNode<Node2D>("%Effects");
+
+        _characterEffects = GetNode<Node2D>("%CharacterEffects");
 
         _targetTracer = GetNode<TargetTracer>("%TargetTracer");
 
@@ -174,6 +178,14 @@ public sealed partial class Player : Character
     {
         base.DrawTarget();
         DirectionMarker.GlobalRotation = DesiredTarget.Angle();
+        if (Target.X < 0)
+        {
+            _characterEffects.Scale = new Vector2(-1, 1);
+        }
+        else if (Target.X > 0)
+        {
+            _characterEffects.Scale = new Vector2(1, 1);
+        }
     }
 
     public override void Footstep()

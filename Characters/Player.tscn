@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=77 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -28,15 +28,16 @@
 [ext_resource type="AudioStream" uid="uid://cruylv4pu2fo1" path="res://Assets/Sounds/footstep-tile.wav" id="13_bxguv"]
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
 [ext_resource type="Script" path="res://State/Character/PlayerHealState.cs" id="13_t103m"]
+[ext_resource type="Script" path="res://State/Character/PlayerMaxLevelState.cs" id="14_1sn10"]
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="14_bj0lo"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
 [ext_resource type="AudioStream" uid="uid://st8qgqiygy5a" path="res://Assets/Sounds/electricity.wav" id="15_61bua"]
-[ext_resource type="AudioStream" uid="uid://b1jmusgltouak" path="res://Assets/Sounds/lightning.wav" id="16_fo4my"]
 [ext_resource type="PackedScene" uid="uid://g7wfcubs6bdd" path="res://Items/Weapons/Railgun.tscn" id="21_n8w32"]
 [ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
 [ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="22_mqpn7"]
 [ext_resource type="PackedScene" uid="uid://d1d4vg7we5rjr" path="res://Items/Weapons/Shotgun.tscn" id="22_rmciq"]
+[ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="22_uefct"]
 [ext_resource type="Texture2D" uid="uid://bcgm3r168qjn3" path="res://Assets/Sprites/Particles/cast-effect.png" id="24_njn4h"]
 [ext_resource type="PackedScene" uid="uid://cgg0sfm2qeiwn" path="res://Items/Weapons/Bow.tscn" id="29_7j1fs"]
 
@@ -251,7 +252,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("%Effects/Cast:visible")
+tracks/3/path = NodePath("../Sprites/CharacterEffects/Cast:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -263,7 +264,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("%Effects/Cast:frame")
+tracks/4/path = NodePath("../Sprites/CharacterEffects/Cast:frame")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -308,7 +309,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("%Effects/Cast:visible")
+tracks/2/path = NodePath("../Sprites/CharacterEffects/Cast:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -320,7 +321,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("%Effects/Cast:frame")
+tracks/3/path = NodePath("../Sprites/CharacterEffects/Cast:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -337,17 +338,33 @@ tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
 "clips": [{
-"end_offset": 2.31782,
+"end_offset": 1.59007,
 "start_offset": 0.141459,
 "stream": ExtResource("15_61bua")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("16_fo4my")
 }],
-"times": PackedFloat32Array(0.075, 0.3)
+"times": PackedFloat32Array(0.075)
 }
 tracks/4/use_blend = true
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("%Animations/../StateMachine/MaxLevel")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.5, 0.7, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"Cast"
+}, {
+"args": [],
+"method": &"Cast"
+}, {
+"args": [],
+"method": &"Cast"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_audkv"]
 resource_name = "heal"
@@ -526,6 +543,32 @@ scale_max = 0.25
 color = Color(0, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_jb8kb")
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y1v5m"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_80g57"]
+offsets = PackedFloat32Array(0.2, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3jlnh"]
+gradient = SubResource("Gradient_80g57")
+
+[sub_resource type="Curve" id="Curve_xcuxr"]
+_data = [Vector2(0, 0.2), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_80m7d"]
+curve = SubResource("Curve_xcuxr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4jub4"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_curve = SubResource("CurveTexture_80m7d")
+color = Color(1, 1, 1, 0.25098)
+color_ramp = SubResource("GradientTexture1D_3jlnh")
+
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ejdrf"]
 light_mode = 1
 
@@ -574,18 +617,20 @@ script = ExtResource("5_rgckv")
 InitialState = NodePath("Idle")
 Character = NodePath("..")
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "EmoteState", "HealState", "IdleState", "Character")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("MoveState", "EmoteState", "HealState", "IdleState", "MaxLevelState", "Character")]
 script = ExtResource("6_wkfdm")
 MoveState = NodePath("../Move")
 EmoteState = NodePath("../Emote")
 HealState = NodePath("../Heal")
 IdleState = NodePath(".")
+MaxLevelState = NodePath("../MaxLevel")
 Character = NodePath("../..")
 
-[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("AbilityState", "IdleState", "Character")]
+[node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("AbilityState", "IdleState", "MaxLevelState", "Character")]
 script = ExtResource("7_dfqd8")
 AbilityState = NodePath("../Roll")
 IdleState = NodePath("../Idle")
+MaxLevelState = NodePath("../MaxLevel")
 Character = NodePath("../..")
 
 [node name="Dash" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
@@ -609,6 +654,14 @@ Character = NodePath("../..")
 script = ExtResource("13_t103m")
 TimeToHeal = 1.0
 HealAmount = 20.0
+IdleState = NodePath("../Idle")
+Character = NodePath("../..")
+
+[node name="MaxLevel" type="Node" parent="StateMachine" node_paths=PackedStringArray("IdleState", "Character")]
+script = ExtResource("14_1sn10")
+CastDistance = 128.0
+CastTime = 1.0
+LevelCost = 4
 IdleState = NodePath("../Idle")
 Character = NodePath("../..")
 
@@ -685,6 +738,16 @@ lifetime = 0.8
 one_shot = true
 explosiveness = 1.0
 
+[node name="CastParticles" type="GPUParticles2D" parent="Effects"]
+material = SubResource("CanvasItemMaterial_y1v5m")
+position = Vector2(0, -4)
+emitting = false
+amount = 2
+process_material = SubResource("ParticleProcessMaterial_4jub4")
+texture = ExtResource("22_uefct")
+lifetime = 0.5
+one_shot = true
+
 [node name="DeathCry" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("12_vd7j4")
 volume_db = 2.0
@@ -702,16 +765,6 @@ stream = ExtResource("12_vvem5")
 [node name="TargetTracer" parent="Effects" instance=ExtResource("22_hxi53")]
 unique_name_in_owner = true
 position = Vector2(0, -4)
-
-[node name="Cast" type="Sprite2D" parent="Effects"]
-visible = false
-y_sort_enabled = true
-material = SubResource("CanvasItemMaterial_ejdrf")
-position = Vector2(2, 1)
-texture = ExtResource("24_njn4h")
-centered = false
-offset = Vector2(-9.5, -14)
-hframes = 6
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 zoom = Vector2(4, 4)
@@ -733,6 +786,19 @@ position = Vector2(0, -8)
 texture = ExtResource("4_5vird")
 offset = Vector2(0, -4)
 hframes = 46
+
+[node name="CharacterEffects" type="Node2D" parent="Sprites"]
+unique_name_in_owner = true
+
+[node name="Cast" type="Sprite2D" parent="Sprites/CharacterEffects"]
+visible = false
+y_sort_enabled = true
+material = SubResource("CanvasItemMaterial_ejdrf")
+position = Vector2(2.5, 0.999989)
+texture = ExtResource("24_njn4h")
+centered = false
+offset = Vector2(-9.5, -14)
+hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
@@ -763,7 +829,7 @@ InventoryMap = {
 "equip_3": 2
 }
 
-[node name="Sword" parent="Inventory" instance=ExtResource("22_mqpn7")]
+[node name="DocLance" parent="Inventory" instance=ExtResource("14_bj0lo")]
 visible = false
 
 [node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
@@ -772,15 +838,15 @@ visible = false
 [node name="Bow" parent="Inventory" instance=ExtResource("29_7j1fs")]
 visible = false
 
+[node name="Sword" parent="Inventory" instance=ExtResource("22_mqpn7")]
+visible = false
+
 [node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
 visible = false
 
 [node name="Railgun" parent="Inventory" instance=ExtResource("21_n8w32")]
 visible = false
 UseTime = 0.2
-
-[node name="DocLance" parent="Inventory" instance=ExtResource("14_bj0lo")]
-visible = false
 
 [node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
 position = Vector2(0, 4)

@@ -39,6 +39,7 @@ public partial class PlayerHealState : PlayerState
         {
             _player.AttackAnimation.Play("heal_cancel");
         }
+        base.Exit(nextState);
     }
 
     public override CharacterState Process(double delta)

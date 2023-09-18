@@ -10,6 +10,9 @@ public abstract partial class PlayerState : CharacterState
     [Export]
     public PlayerIdleState IdleState { get; set; }
 
+    [Export]
+    public PlayerMaxLevelState MaxLevelState { get; set; }
+
     public override CharacterState Input(InputEvent @event)
     {
         var inventory = Character.Inventory;
@@ -43,6 +46,14 @@ public abstract partial class PlayerState : CharacterState
             {
                 // if looking at a trigger then interact with it
                 player.InteractionRay.Trigger?.InvokeInteraction();
+            }
+
+            if (@event.IsActionPressed("cast"))
+            {
+                if (_player.Stats.Level.Value >= MaxLevelState.LevelCost)
+                {
+                    return MaxLevelState;
+                }
             }
         }
 
