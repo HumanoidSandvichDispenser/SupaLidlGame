@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://be8bc4eivsg4s"]
+[gd_scene load_steps=3 format=3 uid="uid://be8bc4eivsg4s"]
+
+[ext_resource type="Script" path="res://Debug/DebugConsole.cs" id="1_3fw5a"]
+[ext_resource type="Script" path="res://Debug/Entry.cs" id="2_kdlsh"]
 
 [node name="DebugUI" type="Control"]
 layout_mode = 3
@@ -8,11 +11,47 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+[node name="Window" type="Window" parent="."]
+disable_3d = true
+gui_embed_subwindows = true
+title = "Supa Developer Console"
+position = Vector2i(32, 32)
+size = Vector2i(1280, 720)
+always_on_top = true
+
+[node name="DebugConsole" type="Control" parent="Window"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+script = ExtResource("1_3fw5a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window/DebugConsole"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Output" type="RichTextLabel" parent="Window/DebugConsole/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
+text = "[b]/root/World:[/b] \\echo :CurrentPlayer:Health
+100
+"
+scroll_following = true
+
+[node name="Entry" type="LineEdit" parent="Window/DebugConsole/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+placeholder_text = "Enter a GDScript expression or \\command..."
+draw_control_chars = true
+script = ExtResource("2_kdlsh")

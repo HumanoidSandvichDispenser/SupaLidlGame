@@ -23,8 +23,8 @@ EventBus="*res://Events/EventBus.cs"
 BaseUI="*res://UI/Base.tscn"
 World="*res://Scenes/Level.tscn"
 AudioManager="*res://Audio/AudioManager.cs"
-DebugConsole="*res://Debug/DebugConsole.cs"
 Panku="*res://addons/panku_console/console.tscn"
+DebugUi="*res://UI/Debug/DebugUI.tscn"
 
 [dialogue_manager]
 

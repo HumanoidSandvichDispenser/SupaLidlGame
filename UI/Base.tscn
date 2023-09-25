@@ -29,6 +29,7 @@ stretch = true
 stretch_shrink = 3
 
 [node name="UIViewport" type="SubViewport" parent="SubViewportContainer"]
+disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 size = Vector2i(640, 360)

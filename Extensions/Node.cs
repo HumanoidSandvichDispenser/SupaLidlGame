@@ -5,28 +5,6 @@ namespace SupaLidlGame.Extensions;
 public static class NodeExtensions
 {
     /// <summary>
-    /// Iterates through each ancestor until it finds an ancestor of type
-    /// <c>T</c>
-    /// </summary>
-    [System.Obsolete]
-    public static T GetAncestorDeprecated<T>(this Node node) where T : Node
-    {
-        Node parent;
-
-        while ((parent = node.GetParent()) != null)
-        {
-            if (parent is T t)
-            {
-                return t;
-            }
-
-            node = parent;
-        }
-
-        return null;
-    }
-
-    /// <summary>
     /// A version <c>GetNode</c> that returns null rather than cause an
     /// exception if the node is not found or is not the same type.
     /// </summary>
