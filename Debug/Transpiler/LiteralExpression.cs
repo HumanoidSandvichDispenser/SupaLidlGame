@@ -17,7 +17,7 @@ public class LiteralExpression : Expression
         if (Literal.Type == TokenType.NodePath)
         {
             var val = Regex.Escape(Literal.Value);
-            return $"from.call({val})";
+            return $"from.call(\"{val}\")";
         }
         else if (Literal.Type == TokenType.String)
         {
