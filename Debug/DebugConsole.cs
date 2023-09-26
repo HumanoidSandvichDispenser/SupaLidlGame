@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 namespace SupaLidlGame.Debug;
 
@@ -55,11 +56,21 @@ public sealed partial class DebugConsole : Control
         Property
     };
 
-    public Variant From(NodePath path)
+    public IEnumerable<NodePathToken> SplitPath(NodePath path)
     {
         CharIterator iterator = new(path);
+        return NodePathParser.ParseNodePath(iterator);
+    }
+
+    public NodePath ToNodePath(string path)
+    {
+        return Variant.From(path).AsNodePath();
+    }
+
+    public Variant From(NodePath path)
+    {
         Variant variant = Context ?? this;
-        foreach (var subpath in NodePathParser.ParseNodePath(iterator))
+        foreach (var subpath in SplitPath(path))
         {
             if (variant.VariantType == Variant.Type.Object)
             {
@@ -83,14 +94,44 @@ public sealed partial class DebugConsole : Control
         return variant;
     }
 
-    public void SetProp(NodePath path, Variant value)
+    public void SetProp(Variant prop, Variant value)
     {
-        var node = GetNode(path.GetAsPropertyPath());
-        //var ent = CurrentMap.Entities.GetNodeOrNull(entityName);
-        //if (ent is not null)
-        //{
-        //    ent.Set(property, value);
-        //}
+        if (prop.VariantType == Variant.Type.NodePath)
+        {
+            var tokens = new List<NodePathToken>(SplitPath(prop.AsNodePath()));
+            Node variant = Context ?? this;
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                var subpath = tokens[i];
+                GD.Print(subpath);
+                if (i == tokens.Count - 1)
+                {
+                    if (subpath.Type == NodePathTokenType.Property)
+                    {
+                        variant.SetIndexed(":" + subpath.Path, value);
+                    }
+                }
+                else
+                {
+                    if (subpath.Type == NodePathTokenType.Node)
+                    {
+                        if (subpath.Path != "")
+                        {
+                            variant = variant.GetNode(subpath.Path);
+                        }
+                    }
+                    else
+                    {
+                        variant = variant.GetIndexed(subpath.Path)
+                            .AsGodotObject() as Node;
+                    }
+                }
+            }
+        }
+        else
+        {
+
+        }
     }
 
     public string CallMethod(
@@ -115,18 +156,21 @@ public sealed partial class DebugConsole : Control
 
     public void Execute(string str)
     {
-        str = Sanitizer.Sanitize(str);
+        //str = Sanitizer.Sanitize(str);
+        str = Transpiler.Transpiler.Transpile(str);
         string inputMirror = $"[b]{Context.GetPath()}:[/b] {str}";
         _output.Text += inputMirror + "\n";
         var context = Context;
 
         Godot.Expression exp = new();
 
-        string[] reserved = { "from", "set_context", "context" };
+        string[] reserved = { "from", "set_context", "context", "set_prop", "to_node_path" };
         Godot.Collections.Array reservedMap = new();
         reservedMap.Add(new Callable(this, MethodName.From));
         reservedMap.Add(new Callable(this, MethodName.SetContext));
         reservedMap.Add(Context);
+        reservedMap.Add(new Callable(this, MethodName.SetProp));
+        reservedMap.Add(new Callable(this, MethodName.ToNodePath));
 
         var err = exp.Parse(str, reserved);
         if (err != Error.Ok)

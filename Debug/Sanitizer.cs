@@ -1,4 +1,3 @@
-using Godot;
 using System.Text.RegularExpressions;
 
 namespace SupaLidlGame.Debug;
@@ -7,7 +6,7 @@ public static class Sanitizer
 {
     private static Regex _nonAlphanum = new("[^a-zA-Z0-9_]");
 
-    private static Regex _nonNodeName = new("[^a-zA-Z0-9_\\-\\/]");
+    private static Regex _nonNodeName = new("[^a-zA-Z0-9_\\-\\/\\.\\:]");
 
     private static string ScanString(CharIterator iterator)
     {
@@ -69,12 +68,12 @@ public static class Sanitizer
         return ret;
     }
 
-    private static string ScanUntilOrEOL(CharIterator iterator, char delim)
+    private static string ScanUntilOrEOL(CharIterator iterator, char? delim)
     {
         string ret = "";
         while (iterator.GetNext() != '\0')
         {
-            char c = iterator.GetNext();
+            char c = iterator.MoveNext();
             if (c == delim)
             {
                 return ret;
@@ -124,6 +123,15 @@ public static class Sanitizer
                 // \global -> global.call
                 string command = ScanGlobalCommand(iterator);
                 ret += $"{command}.call";
+            }
+            else if (c == '=')
+            {
+                if (iterator.GetNext(-2) != '!')
+                {
+                    var val = ScanUntilOrEOL(iterator, null);
+                    ret = ret.Replace("from.call", "to_node_path.call");
+                    ret = $"set_prop.call({ret}, {val})";
+                }
             }
             else
             {

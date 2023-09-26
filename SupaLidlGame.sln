@@ -2,11 +2,13 @@
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupaLidlGame", "SupaLidlGame.csproj", "{BC071CA6-9462-4CEC-AA20-B0CA618321E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{5D279483-BBEE-46A7-B5B9-68F335BDD6ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-	Debug|Any CPU = Debug|Any CPU
-	ExportDebug|Any CPU = ExportDebug|Any CPU
-	ExportRelease|Any CPU = ExportRelease|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -15,5 +17,11 @@ Global
 		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
 		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{BC071CA6-9462-4CEC-AA20-B0CA618321E5}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{5D279483-BBEE-46A7-B5B9-68F335BDD6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D279483-BBEE-46A7-B5B9-68F335BDD6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D279483-BBEE-46A7-B5B9-68F335BDD6ED}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D279483-BBEE-46A7-B5B9-68F335BDD6ED}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{5D279483-BBEE-46A7-B5B9-68F335BDD6ED}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D279483-BBEE-46A7-B5B9-68F335BDD6ED}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

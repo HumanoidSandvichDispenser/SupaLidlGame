@@ -4,6 +4,9 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="UnitTests/**/*" />
+    <Compile Remove="UnitTests/**/*" />
+    <None Remove="UnitTests/**/*" />
     <PackageReference Include="Firebelley.GodotUtilities" Version="4.0.4" />
   </ItemGroup>
 </Project>

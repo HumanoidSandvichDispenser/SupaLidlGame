@@ -1,6 +1,6 @@
 namespace SupaLidlGame.Debug;
 
-internal sealed class CharIterator : Iterator<char>
+public class CharIterator : Iterator<char>
 {
     public CharIterator(string str) : base(str.ToCharArray())
     {
