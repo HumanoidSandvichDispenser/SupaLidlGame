@@ -12,23 +12,31 @@ public class LiteralExpression : Expression
         Literal = literal;
     }
 
+    public string EscapedLiteral()
+    {
+        return Literal.Value.Replace("\"", "\\\"")
+            .Replace("'", "\\'")
+            .Replace("\n", "\\n")
+            .Replace("\t", "\\t");
+    }
+
     public override string Transpile()
     {
+        var val = EscapedLiteral();
         if (Literal.Type == TokenType.NodePath)
         {
-            var val = Regex.Escape(Literal.Value);
             return $"from.call(\"{val}\")";
         }
         else if (Literal.Type == TokenType.String)
         {
-            return $"\"{Literal.Value}\"";
+            return $"\"{val}\"";
         }
         return Literal.Value;
     }
 
     public string TranspileNodePath()
     {
-        var val = Regex.Escape(Literal.Value);
+        var val = EscapedLiteral();
         return $"to_node_path.call(\"{val}\")";
     }
 }

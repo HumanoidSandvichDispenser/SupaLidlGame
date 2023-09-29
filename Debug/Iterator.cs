@@ -4,10 +4,6 @@ namespace SupaLidlGame.Debug;
 
 public class Iterator<T> where T : struct
 {
-    public int Line { get; protected set; } = 1;
-
-    public int Column { get; protected set; } = 0;
-
     public int Index { get; protected set; } = -1;
 
     protected List<T> _elements;

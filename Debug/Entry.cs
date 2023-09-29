@@ -1,4 +1,6 @@
 using Godot;
+using GodotUtilities;
+using System.Linq;
 
 namespace SupaLidlGame.Debug;
 
@@ -10,6 +12,9 @@ public partial class Entry : CodeEdit
     public override void _Ready()
     {
         GuiInput += OnGuiInput;
+
+        AddStringDelimiter("\'", "\"", true);
+        AddStringDelimiter("'", "'", true);
     }
 
     /*
@@ -28,12 +33,12 @@ public partial class Entry : CodeEdit
 
     public void OnGuiInput(InputEvent @event)
     {
-        if (@event is InputEventKey key)
+        if (@event is InputEventKey key && key.Pressed)
         {
             if (key.KeyLabel == Key.Enter)
             {
                 AcceptEvent();
-                if (!key.Pressed)
+                if (key.Pressed)
                 {
                     EmitSignal(SignalName.ConsoleInput, Text);
 
@@ -44,5 +49,18 @@ public partial class Entry : CodeEdit
                 }
             }
         }
+    }
+
+    public void SetContext(Node context)
+    {
+        var properties = context.GetPropertyList();
+        var propNames = properties.Select((prop) => prop["name"].ToString());
+        foreach (var prop in propNames)
+        {
+            AddCodeCompletionOption(
+                CodeCompletionKind.Member,
+                prop, prop);
+        }
+        UpdateCodeCompletionOptions(true);
     }
 }

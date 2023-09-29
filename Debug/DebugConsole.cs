@@ -18,6 +18,7 @@ public sealed partial class DebugConsole : Control
                 {
                     _entry.PlaceholderText = "Enter Godot expression from " +
                         _context.GetPath();
+                    _entry.SetContext(_context);
                     GetParent<Window>().Title = "Supa Developer Console: " +
                         _context.GetPath();
                 }
@@ -26,6 +27,8 @@ public sealed partial class DebugConsole : Control
     }
 
     private Entry _entry;
+
+    public Entry Entry => _entry;
 
     private RichTextLabel _output;
 
@@ -45,16 +48,20 @@ public sealed partial class DebugConsole : Control
             }
             catch (InterpreterException ex)
             {
-                _output.Text += ex.Message + '\n';
+                _output.Text += ex.Message;
+                if (!ex.Message.StartsWith("Error occurred while"))
+                {
+                    _output.Text += $" @{ex.Line}:{ex.Column}" + '\n';
+                    _output.Text += input + '\n';
+                    _output.Text += new string(' ', ex.Column - 1) + "^\n";
+                }
+                else
+                {
+                    _output.Text += '\n';
+                }
             }
         };
     }
-
-    enum PathType
-    {
-        Node,
-        Property
-    };
 
     public IEnumerable<NodePathToken> SplitPath(NodePath path)
     {
@@ -65,6 +72,40 @@ public sealed partial class DebugConsole : Control
     public NodePath ToNodePath(string path)
     {
         return Variant.From(path).AsNodePath();
+    }
+
+    public object GetNodeOrProperty(NodePath path)
+    {
+        var tokens = new List<NodePathToken>(SplitPath(path));
+        Node variant = Context ?? this;
+        for (int i = 0; i < tokens.Count; i++)
+        {
+            var subpath = tokens[i];
+            if (i == tokens.Count - 1)
+            {
+                if (subpath.Type == NodePathTokenType.Property)
+                {
+                    return new PropertyPointer(variant, subpath.Path);
+                }
+            }
+            else
+            {
+                if (subpath.Type == NodePathTokenType.Node)
+                {
+                    if (subpath.Path != "")
+                    {
+                        variant = variant.GetNode(subpath.Path);
+                    }
+                }
+                else
+                {
+                    variant = variant.GetIndexed(subpath.Path)
+                        .AsGodotObject() as Node;
+                }
+            }
+        }
+
+        return variant;
     }
 
     public Variant From(NodePath path)
@@ -103,7 +144,6 @@ public sealed partial class DebugConsole : Control
             for (int i = 0; i < tokens.Count; i++)
             {
                 var subpath = tokens[i];
-                GD.Print(subpath);
                 if (i == tokens.Count - 1)
                 {
                     if (subpath.Type == NodePathTokenType.Property)
@@ -152,6 +192,11 @@ public sealed partial class DebugConsole : Control
     public void Print(string text)
     {
         GD.Print(text);
+    }
+
+    public void Inspect(NodePath node)
+    {
+
     }
 
     public void Execute(string str)

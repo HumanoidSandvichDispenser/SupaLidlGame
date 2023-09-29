@@ -2,6 +2,10 @@ namespace SupaLidlGame.Debug;
 
 public class CharIterator : Iterator<char>
 {
+    public int Line { get; protected set; } = 1;
+
+    public int Column { get; protected set; } = 0;
+
     public CharIterator(string str) : base(str.ToCharArray())
     {
 
@@ -18,7 +22,7 @@ public class CharIterator : Iterator<char>
         if (c == '\n')
         {
             Line++;
-            Column = 0;
+            Column = 1;
         }
         else
         {
