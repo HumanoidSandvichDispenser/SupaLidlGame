@@ -92,14 +92,14 @@ public partial class AnimationManager : Node
                 NodePath anim1Path = anim1.TrackGetPath(p1Track);
                 NodePath anim1Prop = anim1Path.GetConcatenatedSubNames();
                 NodePath anim1Name = anim1Path.GetConcatenatedNames();
-                Node anim1Node = p1.GetParent().GetNode(anim1Name);
+                Node anim1Node = p1.GetNode(p1.RootNode)?.GetNode(anim1Name);
 
                 for (int p2Track = 0; p2Track < anim2.GetTrackCount(); p2Track++)
                 {
                     NodePath anim2Path = anim2.TrackGetPath(p2Track);
                     NodePath anim2Prop = anim2Path.GetConcatenatedSubNames();
                     NodePath anim2Name = anim2Path.GetConcatenatedNames();
-                    Node anim2Node = p2.GetParent().GetNode(anim2Name);
+                    Node anim2Node = p2.GetNode(p2.RootNode)?.GetNode(anim2Name);
 
                     // check if they point to the same node and property
                     if (anim1Node == anim2Node && anim1Prop == anim2Prop)

@@ -51,7 +51,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -68,7 +68,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -351,11 +351,13 @@ target_desired_distance = 16.0
 script = ExtResource("9_ssmee")
 
 [node name="Movement" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_uqsue")
 }
 
 [node name="Attack" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_sxq14")
 }
@@ -367,6 +369,7 @@ libraries = {
 }
 
 [node name="Stun" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_kks2p")
 }

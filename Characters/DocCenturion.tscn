@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://dhamcei7tfta8"]
+[gd_scene load_steps=36 format=3 uid="uid://dhamcei7tfta8"]
 
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_msit5"]
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="2_pkari"]
@@ -9,7 +9,8 @@
 [ext_resource type="Script" path="res://State/Thinker/CenturionAttackState.cs" id="7_n2slg"]
 [ext_resource type="Script" path="res://State/Thinker/IdleState.cs" id="8_5neew"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="9_fgnr2"]
-[ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="10_1erll"]
+[ext_resource type="AnimationLibrary" uid="uid://xs6g84fkepjr" path="res://Assets/Animations/npc_hurt.res" id="10_bbwbd"]
+[ext_resource type="AnimationLibrary" uid="uid://f1aqhnxndybx" path="res://Assets/Animations/npc_stun.res" id="11_a0f8a"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="11_p7yev"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="12_t3nnt"]
 [ext_resource type="Material" uid="uid://2tsvsp45elru" path="res://Assets/Sprites/Particles/NPCDeathParticles.tres" id="13_nm3wd"]
@@ -66,7 +67,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("./Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -92,158 +93,20 @@ _data = {
 "RESET": SubResource("Animation_adxyh")
 }
 
-[sub_resource type="Animation" id="Animation_k6l16"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/intensity")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:material:shader_parameter/alpha_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [1.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("%Effects/DeathParticles:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("%Effects/HurtParticles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_lhc4c"]
-resource_name = "death"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("%Effects/DeathParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:material:shader_parameter/alpha_modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [1.0, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_0vgmg"]
-resource_local_to_scene = true
-resource_name = "hurt"
-length = 0.2
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:material:shader_parameter/intensity")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.2),
-"transitions": PackedFloat32Array(4, 4, 4, 4),
-"update": 0,
-"values": [1.0, 0.0, 1.0, 0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("%Effects/HurtParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("%Effects/HurtParticles")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"restart"
-}]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_rc55s"]
-_data = {
-"RESET": SubResource("Animation_k6l16"),
-"death": SubResource("Animation_lhc4c"),
-"hurt": SubResource("Animation_0vgmg")
-}
-
-[sub_resource type="Animation" id="Animation_7j54f"]
-length = 0.001
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_kks2p"]
-_data = {
-"RESET": SubResource("Animation_7j54f"),
-"stun": ExtResource("10_1erll")
-}
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_pited"]
 diffuse_texture = ExtResource("14_o5rd3")
 
 [sub_resource type="Gradient" id="Gradient_b2o0f"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_iyaih"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tfqqu"]
 gradient = SubResource("Gradient_b2o0f")
 
 [sub_resource type="Curve" id="Curve_30p4b"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.5), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_5uulw"]
+[sub_resource type="CurveTexture" id="CurveTexture_pcpms"]
 curve = SubResource("Curve_30p4b")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qdhau"]
@@ -262,9 +125,9 @@ tangential_accel_min = 8.0
 tangential_accel_max = 8.0
 scale_min = 0.13
 scale_max = 0.25
-scale_curve = SubResource("CurveTexture_5uulw")
+scale_curve = SubResource("CurveTexture_pcpms")
 color = Color(1, 0, 0, 1)
-color_ramp = SubResource("GradientTexture1D_iyaih")
+color_ramp = SubResource("GradientTexture1D_tfqqu")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
 size = Vector2(12, 8)
@@ -338,11 +201,13 @@ debug_enabled = true
 script = ExtResource("9_fgnr2")
 
 [node name="Movement" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_uqsue")
 }
 
 [node name="Attack" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_sxq14")
 }
@@ -350,12 +215,13 @@ libraries = {
 [node name="Hurt" type="AnimationPlayer" parent="Animations"]
 root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_rc55s")
+"": ExtResource("10_bbwbd")
 }
 
 [node name="Stun" type="AnimationPlayer" parent="Animations"]
+root_node = NodePath("../..")
 libraries = {
-"": SubResource("AnimationLibrary_kks2p")
+"": ExtResource("11_a0f8a")
 }
 
 [node name="Effects" type="Node2D" parent="."]
@@ -403,6 +269,7 @@ use_parent_material = true
 texture = ExtResource("16_6uxxp")
 offset = Vector2(0, -12)
 hframes = 7
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)

@@ -123,7 +123,7 @@ public partial class Character : CharacterBody2D, IFaction
 
         if (StunTime > 0 && !StunAnimation.IsPlaying())
         {
-            StunAnimation.Play("stun");
+            StunAnimation.TryPlayAny("stun", "npc_stun/stun");
         }
         else if (StunTime < 0 && StunAnimation.IsPlaying())
         {
@@ -177,9 +177,9 @@ public partial class Character : CharacterBody2D, IFaction
     /// </summary>
     public virtual void Die()
     {
-        if (HurtAnimation.HasAnimation("death"))
+        if (HurtAnimation.TryPlayAny(out var name, "death", "npc_hurt/death"))
         {
-            HurtAnimation.Play("death");
+            HurtAnimation.Play(name);
             HurtAnimation.AnimationFinished += (StringName name) =>
                 QueueFree();
         }
@@ -342,11 +342,8 @@ public partial class Character : CharacterBody2D, IFaction
         if (HurtAnimation is not null && Health > 0)
         {
             HurtAnimation.Stop();
-            HurtAnimation.Play("hurt");
-            if (HurtAnimation.HasAnimation("hurt_flash"))
-            {
-                HurtAnimation.Queue("hurt_flash");
-            }
+            HurtAnimation.TryPlayAny("hurt", "npc_hurt/hurt");
+            HurtAnimation.TryQueue("hurt_flash");
         }
 
         if (this.GetNode("Effects/HurtSound") is AudioStreamPlayer2D sound)
