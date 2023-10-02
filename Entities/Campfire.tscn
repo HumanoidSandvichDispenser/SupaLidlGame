@@ -1,13 +1,16 @@
-[gd_scene load_steps=7 format=3 uid="uid://dhl071rj5wyvx"]
+[gd_scene load_steps=8 format=3 uid="uid://dhl071rj5wyvx"]
 
 [ext_resource type="Script" path="res://Entities/Campfire.cs" id="1_w4gfp"]
 [ext_resource type="Resource" uid="uid://c2om4y0fm81yr" path="res://Assets/Dialogue/clone-machine.dialogue" id="2_s6cen"]
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="3_lm3vq"]
-[ext_resource type="Texture2D" uid="uid://bqc7k0rstj7xt" path="res://Assets/Sprites/lidl-okayeg-placeholder.png" id="3_o7u16"]
+[ext_resource type="Texture2D" uid="uid://dbiyfs4wohp20" path="res://Assets/Sprites/Props/outhouse.png" id="3_p1ha3"]
 [ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="4_yoo3p"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pdkmj"]
 radius = 20.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bw3hg"]
+size = Vector2(20, 23)
 
 [node name="Campfire" type="StaticBody2D"]
 texture_filter = 3
@@ -16,10 +19,12 @@ script = ExtResource("1_w4gfp")
 DialogueResource = ExtResource("2_s6cen")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -8)
-texture = ExtResource("3_o7u16")
+texture = ExtResource("3_p1ha3")
+centered = false
+offset = Vector2(-12, -28)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 color = Color(0.996078, 0.780392, 0.615686, 1)
 energy = 2.0
 blend_mode = 2
@@ -39,5 +44,9 @@ offset_bottom = -19.0
 
 [node name="Label" parent="InteractionTrigger/Popup" index="0"]
 text = "Clone Machine"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_bw3hg")
 
 [editable path="InteractionTrigger"]
