@@ -132,7 +132,7 @@ texture = ExtResource("2_klp8v")
 hframes = 5
 
 [node name="Hitbox" parent="." instance=ExtResource("3_kojrj")]
-Damage = 45.0
+Damage = 40.0
 Knockback = 200.0
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
