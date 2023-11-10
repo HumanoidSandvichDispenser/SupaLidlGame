@@ -22,6 +22,7 @@
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="12_iwry7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_etlnr"]
+resource_local_to_scene = true
 shader = ExtResource("1_alo0e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
@@ -206,7 +207,6 @@ PursueState = NodePath("../Attack")
 MinTargetDistance = 24.0
 PursueOnLineOfSight = true
 MinLineOfSightDistance = 256.0
-ShouldReturnToOriginalPosition = true
 NavigationAgent = NodePath("../../NavigationAgent2D")
 NPC = NodePath("../..")
 

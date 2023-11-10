@@ -1,10 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://bxtpv6jqodj4v"]
+[gd_scene load_steps=12 format=3 uid="uid://bxtpv6jqodj4v"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_vly6f"]
 [ext_resource type="Texture2D" uid="uid://dl2h266oa2x31" path="res://Assets/Sprites/night-grass.png" id="2_ote21"]
-[ext_resource type="PackedScene" uid="uid://bf55wbq7m1gpp" path="res://Characters/ExampleEnemy.tscn" id="3_hwof6"]
-[ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="4_mwgaq"]
 [ext_resource type="PackedScene" uid="uid://5nvn1tw56m8e" path="res://Utils/Spawner.tscn" id="4_pi4df"]
+[ext_resource type="PackedScene" uid="uid://cdj50hb84aujp" path="res://Characters/DocLegionary.tscn" id="5_7upx6"]
 [ext_resource type="PackedScene" uid="uid://dhl071rj5wyvx" path="res://Entities/Campfire.tscn" id="6_r6kxn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvbe3"]
@@ -212,36 +211,6 @@ physics_layer_0/collision_mask = 16
 physics_layer_1/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_dvbe3")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ho8d"]
-resource_local_to_scene = true
-shader = ExtResource("4_mwgaq")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tic7i"]
-resource_local_to_scene = true
-shader = ExtResource("4_mwgaq")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oh7dr"]
-resource_local_to_scene = true
-shader = ExtResource("4_mwgaq")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_x6kxt"]
-resource_local_to_scene = true
-shader = ExtResource("4_mwgaq")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_uuq2q"]
-resource_local_to_scene = true
-shader = ExtResource("4_mwgaq")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
-shader_parameter/intensity = 0.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oods2"]
 size = Vector2(128, 64)
 
@@ -267,28 +236,7 @@ layer_3/tile_data = PackedInt32Array(786426, 262144, 1, 851962, 262144, 1, 91749
 layer_4/tile_data = PackedInt32Array(1114105, 196608, 3, 1114106, 262144, 3, 1114107, 262144, 3, 1114108, 262144, 3, 1179644, 458752, 2, 1179641, 393216, 2, 1179642, 458752, 2, 1179643, 458752, 2, 1310716, 196608, 3, 1310717, 262144, 3, 1310718, 262144, 3, 1245182, 262144, 3, 1048572, 262144, 3, 1572862, 196608, 3, 1507340, 327680, 3, 1572863, 262144, 3, 1507328, 262144, 3, 1507329, 262144, 3, 1507330, 262144, 3, 1507331, 262144, 3, 1507332, 262144, 3, 1507333, 262144, 3, 1507334, 262144, 3, 1507335, 262144, 3, 1507336, 262144, 3, 1507337, 262144, 3, 1507338, 262144, 3, 1507339, 262144, 3, 1245177, 393216, 3, 1245178, 458752, 3, 1245179, 458752, 3, 1245180, 458752, 3, 1376253, 458752, 2, 1638399, 458752, 2, 1572875, 458752, 2, 1572874, 458752, 2, 1572873, 458752, 2, 1572872, 458752, 2, 1572871, 458752, 2, 1572870, 458752, 2, 1572869, 458752, 2, 1572868, 458752, 2, 1572867, 458752, 2, 1572866, 458752, 2, 1572865, 458752, 2, 1572864, 458752, 2, 1638398, 393216, 2, 1572876, 524288, 2, 1376252, 393216, 2, 1376254, 458752, 2, 1441788, 393216, 3, 1441789, 458752, 3, 1441790, 458752, 3, 1703934, 393216, 3, 1638412, 524288, 3, 1703935, 458752, 3, 1638400, 458752, 3, 1638401, 458752, 3, 1638402, 458752, 3, 1638403, 458752, 3, 1638404, 458752, 3, 1638405, 458752, 3, 1638406, 458752, 3, 1638407, 458752, 3, 1638408, 458752, 3, 1638409, 458752, 3, 1638410, 458752, 3, 1638411, 458752, 3, 983054, 458752, 2, 983053, 458752, 2, 983055, 524288, 2, 983052, 458752, 2, 983051, 458752, 2, 983050, 458752, 2, 983049, 458752, 2, 983048, 458752, 2, 983047, 458752, 2, 983046, 393216, 2, 851971, 393216, 2, 851972, 458752, 2, 851973, 458752, 2, 851974, 458752, 2, 786434, 458752, 2, 786435, 458752, 2, 786433, 458752, 2, 720897, 262144, 3, 720899, 262144, 3, 786438, 262144, 3, 524303, 524288, 2, 524302, 458752, 2, 524301, 458752, 2, 458765, 262144, 3, 196611, 524288, 2, 196610, 458752, 2, 196609, 458752, 2, 196608, 458752, 2, 262143, 458752, 2, 262142, 458752, 2, 262141, 458752, 2, 262140, 393216, 2, 131075, 458752, 2, 131076, 458752, 2, 131077, 458752, 2, 131078, 458752, 2, 131079, 458752, 2, 131080, 458752, 2, 131081, 458752, 2, 131082, 458752, 2, 65546, 262144, 3, 65539, 262144, 3, 851970, 458752, 3, 851969, 458752, 3, 917507, 393216, 3, 917508, 458752, 3, 917509, 458752, 3, 917510, 458752, 3, 1048582, 393216, 3, 1048583, 458752, 3, 1048584, 458752, 3, 1048585, 458752, 3, 1048586, 458752, 3, 1048587, 458752, 3, 1048588, 458752, 3, 1048589, 458752, 3, 1048590, 458752, 3, 1048591, 524288, 3, 589839, 524288, 3, 589838, 458752, 3, 589837, 458752, 3, 196612, 458752, 3, 196613, 458752, 3, 196614, 458752, 3, 196615, 458752, 3, 196616, 458752, 3, 196617, 458752, 3, 196618, 458752, 3, 327676, 393216, 3, 327677, 458752, 3, 327678, 458752, 3, 327679, 458752, 3, 262144, 458752, 3, 262145, 458752, 3, 262146, 458752, 3, 262147, 524288, 3, 1441799, 262144, 3, 1900559, 262144, 1, 1900558, 262144, 1, 1900560, 262144, 1, 1900561, 262144, 1, 1900562, 262144, 1, 1900563, 262144, 1, 1900557, 262144, 1, 1835019, 262144, 0, 1835031, 262144, 1, 1769495, 262144, 3, 1769483, 262144, 3, 1835021, 262144, 3, 1835026, 262144, 3, 1769480, 262144, 3, 1769481, 262144, 3, 1769482, 262144, 3, 1703946, 262144, 3, 1769479, 196608, 3, 2359306, 458752, 2, 2359307, 458752, 2, 2359308, 458752, 2, 2359309, 458752, 2, 2359310, 458752, 2, 2359311, 458752, 2, 2359312, 458752, 2, 2359313, 458752, 2, 2359314, 458752, 2, 2359315, 458752, 2, 2359316, 458752, 2, 2359317, 458752, 2, 2359318, 458752, 2, 2359319, 458752, 2, 2097160, 458752, 2, 1769499, 458752, 2, 1769500, 458752, 2, 2097161, 458752, 2, 2097159, 393216, 2, 2359305, 393216, 2, 2359320, 524288, 2, 2228249, 524288, 2, 2228248, 458752, 2, 2293784, 458752, 3, 2293785, 524288, 3, 2424856, 524288, 3, 2424841, 393216, 3, 2162695, 393216, 3, 2162696, 458752, 3, 2162697, 458752, 3, 2424842, 458752, 3, 2424843, 458752, 3, 2424844, 458752, 3, 2424845, 458752, 3, 2424846, 458752, 3, 2424847, 458752, 3, 2424848, 458752, 3, 2424849, 458752, 3, 2424850, 458752, 3, 2424851, 458752, 3, 2424852, 458752, 3, 2424853, 458752, 3, 2424854, 458752, 3, 2424855, 458752, 3, 1835018, 262144, 3, 1835017, 262144, 3, 1835016, 262144, 3, 1835015, 196608, 3, 1769501, 524288, 2, 1769498, 458752, 2, 1703962, 262144, 3, 1835037, 524288, 3, 1835036, 458752, 3, 1835035, 458752, 3, 1835034, 524288, 2, 1835033, 458752, 2, 1900570, 524288, 3, 1900569, 458752, 3)
 layer_5/tile_data = PackedInt32Array(786438, 262144, 3, 720899, 262144, 3, 851971, 458752, 3, 196611, 458752, 3, 1835019, 262144, 3, 1835034, 458752, 3)
 
-[node name="ExampleEnemy" parent="Entities" index="0" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_5ho8d")
-position = Vector2(169, 115)
-
-[node name="ExampleEnemy2" parent="Entities" index="1" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_tic7i")
-position = Vector2(75, 130)
-
-[node name="ExampleEnemy3" parent="Entities" index="2" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_oh7dr")
-position = Vector2(140, 177)
-
-[node name="ExampleEnemy4" parent="Entities" index="3" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_x6kxt")
-position = Vector2(14, 159)
-
-[node name="ExampleEnemy5" parent="Entities" index="4" instance=ExtResource("3_hwof6")]
-material = SubResource("ShaderMaterial_uuq2q")
-position = Vector2(10, 22)
-Faction = 1
-
-[node name="Campfire" parent="Entities" index="5" instance=ExtResource("6_r6kxn")]
+[node name="Campfire" parent="Entities" index="0" instance=ExtResource("6_r6kxn")]
 position = Vector2(155, -27)
 
 [node name="PointLight2D" parent="Entities/Campfire" index="1"]
@@ -296,13 +244,13 @@ color = Color(0.996078, 0.780392, 0.501961, 1)
 
 [node name="Spawner" parent="Spawners" index="0" instance=ExtResource("4_pi4df")]
 position = Vector2(250, 512)
-Character = ExtResource("3_hwof6")
+Character = ExtResource("5_7upx6")
 SpawnTime = 5.0
 
 [node name="CollisionShape2D" parent="Spawners/Spawner/Area2D" index="0"]
 shape = SubResource("RectangleShape2D_oods2")
 
-[node name="WorldEnvironment" parent="." index="5"]
+[node name="WorldEnvironment" parent="." index="6"]
 environment = SubResource("Environment_c0b2h")
 
 [editable path="Entities/Campfire"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=3 uid="uid://dr3bcvql7burk"]
+[gd_scene load_steps=75 format=3 uid="uid://dr3bcvql7burk"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ci4ij"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_m6h7j"]
@@ -37,6 +37,7 @@
 [ext_resource type="PackedScene" uid="uid://dhamcei7tfta8" path="res://Characters/DocCenturion.tscn" id="30_qfl2k"]
 [ext_resource type="PackedScene" uid="uid://3bcudbixirkj" path="res://Characters/DocCultist.tscn" id="30_xj4yo"]
 [ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="33_e4gty"]
+[ext_resource type="PackedScene" uid="uid://glh1bi8fq0y3" path="res://Characters/Weeb.tscn" id="36_w0bf2"]
 
 [sub_resource type="Gradient" id="Gradient_jupxw"]
 offsets = PackedFloat32Array(0.00740741, 0.2, 1)
@@ -199,91 +200,98 @@ size = Vector2(64, 97)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5pcme"]
 size = Vector2(18, 6)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tw04q"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pbb5y"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bi7yo"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6i52h"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p8b3f"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kiiyr"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vmrhp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y56wk"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_i61s6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o2vky"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_npxxj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6yf0d"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7qb1v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ntxic"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_55hw6"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gs51l"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_soupg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fnftc"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0cwwm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hujns"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1hjkf"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_upcev"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qtxqm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t5irn"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4txy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oe4qf"]
+resource_local_to_scene = true
+shader = ExtResource("28_b3suq")
+shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bw64p"]
 resource_local_to_scene = true
 shader = ExtResource("28_b3suq")
 shader_parameter/color = Vector4(1, 1, 1, 1)
@@ -771,58 +779,62 @@ MapStateKey = "b_arena_depths_2"
 position = Vector2(256, -9)
 
 [node name="Campfire2" parent="Entities" index="7" instance=ExtResource("23_mykt8")]
-position = Vector2(80, 373)
+position = Vector2(80, 351)
 
 [node name="Centurion" parent="Entities" index="8" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_tw04q")
+material = SubResource("ShaderMaterial_pbb5y")
 position = Vector2(-360, 31)
 
 [node name="Centurion2" parent="Entities" index="9" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_bi7yo")
+material = SubResource("ShaderMaterial_6i52h")
 position = Vector2(-224, 131)
 
 [node name="Centurion3" parent="Entities" index="10" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_p8b3f")
+material = SubResource("ShaderMaterial_kiiyr")
 position = Vector2(-280, 411)
 
 [node name="Centurion4" parent="Entities" index="11" instance=ExtResource("30_qfl2k")]
-material = SubResource("ShaderMaterial_vmrhp")
+material = SubResource("ShaderMaterial_y56wk")
 position = Vector2(-232, 728)
 
 [node name="Legionary" parent="Entities" index="12" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_i61s6")
+material = SubResource("ShaderMaterial_o2vky")
 position = Vector2(-214, 72)
 
 [node name="Legionary2" parent="Entities" index="13" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_npxxj")
+material = SubResource("ShaderMaterial_6yf0d")
 position = Vector2(-496, 15)
 
 [node name="Legionary3" parent="Entities" index="14" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_7qb1v")
+material = SubResource("ShaderMaterial_ntxic")
 position = Vector2(-384, 118)
 
 [node name="Legionary4" parent="Entities" index="15" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_55hw6")
+material = SubResource("ShaderMaterial_gs51l")
 position = Vector2(-300, 384)
 
 [node name="Legionary5" parent="Entities" index="16" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_soupg")
+material = SubResource("ShaderMaterial_fnftc")
 position = Vector2(-152, 728)
 
 [node name="Legionary6" parent="Entities" index="17" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_0cwwm")
+material = SubResource("ShaderMaterial_hujns")
 position = Vector2(-258, 455)
 
 [node name="Legionary7" parent="Entities" index="18" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_1hjkf")
+material = SubResource("ShaderMaterial_upcev")
 position = Vector2(-556, 402)
 
 [node name="Legionary8" parent="Entities" index="19" instance=ExtResource("27_84gw4")]
-material = SubResource("ShaderMaterial_qtxqm")
+material = SubResource("ShaderMaterial_t5irn")
 position = Vector2(-404, 505)
 
-[node name="Cultist" parent="Entities" index="20" instance=ExtResource("30_xj4yo")]
-material = SubResource("ShaderMaterial_r4txy")
+[node name="Weeb" parent="Entities" index="20" instance=ExtResource("36_w0bf2")]
+material = SubResource("ShaderMaterial_oe4qf")
+position = Vector2(-111, 1)
+
+[node name="Cultist" parent="Entities" index="21" instance=ExtResource("30_xj4yo")]
+material = SubResource("ShaderMaterial_bw64p")
 position = Vector2(191, 567)
 
 [node name="CameraBounds" parent="Areas" index="0" instance=ExtResource("33_e4gty")]
