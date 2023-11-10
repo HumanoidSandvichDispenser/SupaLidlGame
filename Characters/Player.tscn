@@ -693,6 +693,8 @@ libraries = {
 "": SubResource("AnimationLibrary_kks2p")
 }
 
+[node name="Buffs" type="Node2D" parent="."]
+
 [node name="Effects" type="Node2D" parent="."]
 unique_name_in_owner = true
 

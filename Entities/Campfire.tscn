@@ -10,7 +10,7 @@
 radius = 20.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bw3hg"]
-size = Vector2(20, 23)
+size = Vector2(20, 16)
 
 [node name="Campfire" type="StaticBody2D"]
 texture_filter = 3
@@ -46,7 +46,6 @@ offset_bottom = -19.0
 text = "Clone Machine"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -3.5)
 shape = SubResource("RectangleShape2D_bw3hg")
 
 [editable path="InteractionTrigger"]

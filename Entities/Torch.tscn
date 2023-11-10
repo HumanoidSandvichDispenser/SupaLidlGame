@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1w7t6irnohfx"]
+[gd_scene load_steps=12 format=3 uid="uid://c1w7t6irnohfx"]
 
 [ext_resource type="Texture2D" uid="uid://har1bd5u4dq3" path="res://Assets/Sprites/Misc/torch.png" id="1_14bgb"]
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="2_hotvd"]
@@ -60,6 +60,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ljsf5"]
+radius = 4.0
+
 [node name="Torch" type="Node2D"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -77,3 +80,12 @@ shadow_filter_smooth = 3.0
 texture = ExtResource("2_hotvd")
 offset = Vector2(0, 2)
 texture_scale = 0.25
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(0, -8)
+collision_layer = 128
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_ljsf5")

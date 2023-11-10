@@ -396,16 +396,6 @@ public partial class Character : CharacterBody2D, IFaction
         bus.EmitSignal(Events.EventBus.SignalName.PlayerHit, newArgs);
     }
 
-#if DEBUG
-    /// <summary>
-    /// For debugging purposes
-    /// </summary>
-    public void Inflict(float damage)
-    {
-        OnReceivedDamage(damage, null, 0);
-    }
-#endif
-
     /// <summary>
     /// Plays a footstep sound. This should be called through an
     /// <c>AnimationPlayer</c> to sync sounds with animations.

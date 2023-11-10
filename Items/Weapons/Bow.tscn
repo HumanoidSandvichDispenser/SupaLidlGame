@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cgg0sfm2qeiwn"]
+[gd_scene load_steps=16 format=3 uid="uid://cgg0sfm2qeiwn"]
 
 [ext_resource type="Texture2D" uid="uid://dam6aigkw8xs" path="res://Assets/Sprites/Items/bow-and-arrow.png" id="1_1ghvv"]
 [ext_resource type="Script" path="res://Items/Weapons/ProjectileSpawner.cs" id="1_76bur"]
@@ -109,6 +109,8 @@ _data = {
 "idle": SubResource("Animation_riv7t")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_6b356"]
+
 [node name="Bow" type="Node2D" node_paths=PackedStringArray("StateMachine")]
 y_sort_enabled = true
 script = ExtResource("1_76bur")
@@ -170,3 +172,12 @@ libraries = {
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 volume_db = -8.0
 bus = &"Effects"
+
+[node name="IgnitionArea" type="Area2D" parent="."]
+position = Vector2(8, 0)
+collision_layer = 0
+collision_mask = 128
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IgnitionArea"]
+shape = SubResource("CircleShape2D_6b356")

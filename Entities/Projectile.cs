@@ -43,8 +43,8 @@ public partial class Projectile : RigidBody2D
     [Export]
     public double Delay { get; set; } = 0;
 
-    [System.Obsolete]
-    public Character Character { get; set; }
+    [Export(PropertyHint.File, "*.tscn")]
+    public Godot.Collections.Array<string> Buffs { get; set; }
 
     public Items.Weapon Weapon { get; set; }
 

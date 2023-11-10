@@ -24,7 +24,8 @@ public partial class ProjectileSpawner : Ranged
     [Export]
     public float ProjectileAngleDeviation { get; set; }
 
-    private void SpawnProjectile(Scenes.Map map, Vector2 direction, float v = 1)
+    protected virtual void SpawnProjectile(Scenes.Map map,
+        Vector2 direction, float velocityModifier = 1)
     {
         var projectile = map.SpawnEntity<Entities.Projectile>(Projectile);
         projectile.Hitbox.Faction = Character.Faction;
@@ -33,7 +34,7 @@ public partial class ProjectileSpawner : Ranged
 
         if (ShouldOverrideVelocity)
         {
-            projectile.Speed = InitialVelocity * v;
+            projectile.Speed = InitialVelocity * velocityModifier;
         }
 
         if (ShouldRotate)
