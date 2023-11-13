@@ -28,7 +28,7 @@ public partial class PursueState : ThinkerState
     public override ThinkerState Think()
     {
         var bestTarget = NPC.FindBestTarget();
-        if (bestTarget is not null)
+        if (bestTarget is not null && NPC.HasLineOfSight(bestTarget))
         {
             // navigate towards the best target
             var pos = bestTarget.GlobalPosition;
@@ -36,18 +36,16 @@ public partial class PursueState : ThinkerState
             NPC.Target = NPC.GlobalPosition.DirectionTo(pos);
             NPC.LastSeenPosition = pos;
 
-            if (NPC.HasLineOfSight(bestTarget))
+            if (NPC.GlobalPosition.DistanceTo(pos) < MinDistanceToTarget)
             {
-                if (NPC.GlobalPosition.DistanceTo(pos) < MinDistanceToTarget)
-                {
-                    return AttackState;
-                }
+                return AttackState;
             }
         }
         else
         {
             // go to last seen position of last best target
             NavigationAgent.TargetPosition = NPC.LastSeenPosition;
+            GD.Print(NPC.LastSeenPosition);
         }
         return null;
     }

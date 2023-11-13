@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://glh1bi8fq0y3"]
+[gd_scene load_steps=38 format=3 uid="uid://glh1bi8fq0y3"]
 
 [ext_resource type="Script" path="res://Characters/NPC.cs" id="1_7fqw6"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_alo0e"]
@@ -14,6 +14,7 @@
 [ext_resource type="AnimationLibrary" uid="uid://xs6g84fkepjr" path="res://Assets/Animations/npc_hurt.res" id="8_3yuxr"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="8_dh32x"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="8_t3yoe"]
+[ext_resource type="Script" path="res://State/Thinker/PursueState.cs" id="8_vu75d"]
 [ext_resource type="AnimationLibrary" uid="uid://f1aqhnxndybx" path="res://Assets/Animations/npc_stun.res" id="9_bpu34"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="9_g45p5"]
 [ext_resource type="Material" uid="uid://2tsvsp45elru" path="res://Assets/Sprites/Particles/NPCDeathParticles.tres" id="10_8f2hb"]
@@ -201,9 +202,18 @@ PassiveState = NodePath("../Idle")
 PursueState = NodePath("../Idle")
 NPC = NodePath("../..")
 
+[node name="Pursue" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NavigationAgent", "AttackState", "PassiveState", "NPC")]
+script = ExtResource("8_vu75d")
+NavigationAgent = NodePath("../../NavigationAgent2D")
+AttackState = NodePath("../Attack")
+PassiveState = NodePath("../Idle")
+MinDistanceToTarget = 64.0
+MaxDistanceFromOrigin = 256.0
+NPC = NodePath("../..")
+
 [node name="Idle" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PursueState", "NavigationAgent", "NPC")]
 script = ExtResource("7_w5q4u")
-PursueState = NodePath("../Attack")
+PursueState = NodePath("../Pursue")
 MinTargetDistance = 24.0
 PursueOnLineOfSight = true
 MinLineOfSightDistance = 256.0

@@ -41,7 +41,7 @@ public partial class AttackState : ThinkerState
     public ThinkerState PursueState { get; set; }
 
     [Export]
-    public bool PursueOnLineOfSight { get; set; } = true;
+    public bool PursueOnNoLOS { get; set; } = true;
 
     protected Characters.Character _bestTarget;
 
@@ -175,11 +175,13 @@ public partial class AttackState : ThinkerState
                     return PursueState;
                 }
 
-                if (PursueOnLineOfSight && !NPC.HasLineOfSight(bestTarget))
+                if (PursueOnNoLOS && !NPC.HasLineOfSight(bestTarget))
                 {
                     return PursueState;
                 }
             }
+
+            NPC.LastSeenPosition = bestTarget.GlobalPosition;
 
             UpdateWeights(pos);
 
