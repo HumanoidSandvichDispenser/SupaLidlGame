@@ -50,6 +50,11 @@ public partial class CenturionAttackState : BlockAttackState
     {
         base.Think();
 
+        if (_bestTarget?.StunTime > 0)
+        {
+            return null;
+        }
+
         var teammate = FindBestTeammate();
         if (teammate is not null)
         {
