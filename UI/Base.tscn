@@ -104,7 +104,6 @@ z_index = 1
 
 [node name="PostProcessing" type="CanvasLayer" parent="SubViewportContainer/UIViewport"]
 layer = 2
-visible = false
 
 [node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UIViewport/PostProcessing"]
 material = SubResource("ShaderMaterial_fmdjb")

@@ -45,7 +45,6 @@ public partial class PursueState : ThinkerState
         {
             // go to last seen position of last best target
             NavigationAgent.TargetPosition = NPC.LastSeenPosition;
-            GD.Print(NPC.LastSeenPosition);
         }
         return null;
     }

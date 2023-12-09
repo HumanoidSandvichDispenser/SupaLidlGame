@@ -68,56 +68,56 @@ sources/0 = SubResource("TileSetAtlasSource_j354e")
 closed = false
 polygon = PackedVector2Array(142, -2, 8, 32, -55, 18)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ncjj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dap58"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_36pks"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tgpe5"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_eove5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oqgvr"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bgpic"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k1kq6"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fv8tp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbypa"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bfbhx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_re0th"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bdydc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1l3ye"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ilpum"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eiin3"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
 shader_parameter/color = Quaternion(1, 1, 1, 1)
@@ -149,35 +149,35 @@ visible = false
 occluder = SubResource("OccluderPolygon2D_l6t22")
 
 [node name="Weeb" parent="Entities" index="0" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_5ncjj")
+material = SubResource("ShaderMaterial_dap58")
 position = Vector2(128, 0)
 
 [node name="Weeb2" parent="Entities" index="1" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_36pks")
+material = SubResource("ShaderMaterial_tgpe5")
 position = Vector2(128, 32)
 
 [node name="Weeb3" parent="Entities" index="2" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_eove5")
+material = SubResource("ShaderMaterial_oqgvr")
 position = Vector2(184, 32)
 
 [node name="Weeb4" parent="Entities" index="3" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_bgpic")
+material = SubResource("ShaderMaterial_k1kq6")
 position = Vector2(184, -40)
 
 [node name="Weeb5" parent="Entities" index="4" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_fv8tp")
+material = SubResource("ShaderMaterial_lbypa")
 position = Vector2(-96, 1)
 
 [node name="Weeb7" parent="Entities" index="5" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_bfbhx")
+material = SubResource("ShaderMaterial_re0th")
 position = Vector2(-38, 48)
 
 [node name="Weeb8" parent="Entities" index="6" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_bdydc")
+material = SubResource("ShaderMaterial_1l3ye")
 position = Vector2(42, 48)
 
 [node name="Weeb6" parent="Entities" index="7" instance=ExtResource("4_bs3am")]
-material = SubResource("ShaderMaterial_ilpum")
+material = SubResource("ShaderMaterial_eiin3")
 position = Vector2(104, -64)
 
 [node name="Campfire" parent="Entities" index="8" instance=ExtResource("7_l0kul")]

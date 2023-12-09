@@ -1160,14 +1160,13 @@ y_sort_enabled = true
 
 [node name="Areas" type="Node2D" parent="."]
 
-[node name="Area2D" type="Area2D" parent="Areas" node_paths=PackedStringArray("Collision")]
+[node name="Area2D" type="Area2D" parent="Areas"]
 position = Vector2(200, -24)
 collision_mask = 5
 script = ExtResource("5_gxtl8")
 ToArea = "res://Scenes/Maps/Meadow.tscn"
 ToConnector = "meadow_start"
 Identifier = "forest_to_meadow"
-Collision = NodePath("CollisionShape2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area2D"]
 shape = SubResource("RectangleShape2D_drg0k")
