@@ -57,11 +57,6 @@ public partial class PursueState : ThinkerState
 
     public override ThinkerState PhysicsProcess(double delta)
     {
-        //if (!NavigationAgent.IsTargetReachable())
-        //{
-        //    return PassiveState ?? base.PhysicsProcess(delta);
-        //}
-
         var navPos = NavigationAgent.GetNextPathPosition();
         NPC.Direction = NPC.GlobalPosition.DirectionTo(navPos);
 

@@ -12,7 +12,7 @@ public partial class DynamicDoorSwitch : StaticBody2D
     public string MapStateKey { get; set; }
 
     [Export]
-    public Godot.Collections.Array<NodePath> VisibleOnToggle { get; set; } = new();
+    public Godot.Collections.Array<NodePath> VisibleOnToggle { get; set; }
 
     private AnimationPlayer _animPlayer;
 
