@@ -33,7 +33,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -50,7 +50,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../Sprites/Node2D/Character:frame")
+tracks/0/path = NodePath("%Sprites/Node2D/Character:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -112,13 +112,11 @@ curve = SubResource("Curve_30p4b")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qdhau"]
 particle_flag_disable_z = true
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 32.0
 initial_velocity_max = 32.0
 angular_velocity_min = 90.0
 angular_velocity_max = 90.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 linear_accel_min = -64.0
 linear_accel_max = -32.0
 tangential_accel_min = 8.0
@@ -256,6 +254,7 @@ texture = ExtResource("14_o5rd3")
 stream = ExtResource("15_8yg1g")
 
 [node name="Sprites" type="Node2D" parent="."]
+unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
 position = Vector2(-0.5, 0)
@@ -269,16 +268,16 @@ use_parent_material = true
 texture = ExtResource("16_6uxxp")
 offset = Vector2(0, -12)
 hframes = 7
-frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_bfqew")
 
-[node name="Inventory" type="Node2D" parent="."]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
 y_sort_enabled = true
 position = Vector2(0, -4)
 script = ExtResource("17_6fh5y")
+Items = []
 
 [node name="Sword" parent="Inventory" instance=ExtResource("18_7l8tj")]
 

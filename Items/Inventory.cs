@@ -45,10 +45,10 @@ public partial class Inventory : Node2D
 
     public Inventory()
     {
-        InventoryMap = new Dictionary<string, int>();
-        InventoryMap.Add("equip_1", 0);
-        InventoryMap.Add("equip_2", 1);
-        InventoryMap.Add("equip_3", 2);
+        //InventoryMap = new Dictionary<string, int>();
+        //InventoryMap.Add("equip_1", 0);
+        //InventoryMap.Add("equip_2", 1);
+        //InventoryMap.Add("equip_3", 2);
     }
 
     public override void _Ready()
