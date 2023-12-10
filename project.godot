@@ -45,6 +45,13 @@ project/assembly_name="SupaLidlGame"
 
 enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://Assets/": "red",
+"res://Scenes/": "green"
+}
+
 [input]
 
 ui_accept={
