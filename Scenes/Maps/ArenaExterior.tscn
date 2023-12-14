@@ -300,6 +300,7 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(-128, -128, 128, -128, 128, 128, 16, 128, 16, 192, -16, 192, -16, 128, -128, 128)])
 source_geometry_mode = 1
 source_geometry_group_name = &"navigation"
+cell_size = 16.0
 agent_radius = 8.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_w3lwn"]

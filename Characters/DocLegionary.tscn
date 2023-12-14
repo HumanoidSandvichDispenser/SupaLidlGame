@@ -267,7 +267,7 @@ color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_iyaih")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(12, 8)
+size = Vector2(8, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjgc"]
 size = Vector2(12, 16)
@@ -421,12 +421,13 @@ offset = Vector2(0, -12)
 hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
 position = Vector2(0, -4)
 script = ExtResource("17_5rur0")
+Items = []
 
 [node name="DocLance" parent="Inventory" instance=ExtResource("18_jblpi")]
 

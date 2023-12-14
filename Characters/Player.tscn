@@ -566,7 +566,7 @@ color_ramp = SubResource("GradientTexture1D_3jlnh")
 light_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(12, 8)
+size = Vector2(12, 4)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5h1n"]
 font_size = 24
@@ -799,7 +799,7 @@ offset = Vector2(-9.5, -14)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Debug" type="Control" parent="."]
