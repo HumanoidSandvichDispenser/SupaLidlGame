@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=76 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -33,7 +33,6 @@
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
 [ext_resource type="AudioStream" uid="uid://st8qgqiygy5a" path="res://Assets/Sounds/electricity.wav" id="15_61bua"]
-[ext_resource type="PackedScene" uid="uid://g7wfcubs6bdd" path="res://Items/Weapons/Railgun.tscn" id="21_n8w32"]
 [ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
 [ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="22_mqpn7"]
 [ext_resource type="PackedScene" uid="uid://d1d4vg7we5rjr" path="res://Items/Weapons/Shotgun.tscn" id="22_rmciq"]
@@ -178,7 +177,7 @@ tracks/0/path = NodePath("%Sprites/Node2D/Character:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.45),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 6.28319]
@@ -489,11 +488,9 @@ _data = {
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_852jj"]
 particle_flag_disable_z = true
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 8.0
 initial_velocity_max = 16.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 linear_accel_min = -32.0
 linear_accel_max = -16.0
 scale_min = 0.1
@@ -510,12 +507,12 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
 gradient = SubResource("Gradient_8w5b1")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_untv1"]
+particle_flag_disable_z = true
 emission_shape = 2
 emission_sphere_radius = 24.0
-particle_flag_disable_z = true
-gravity = Vector3(0, 0, 0)
 orbit_velocity_min = 0.01
 orbit_velocity_max = 0.02
+gravity = Vector3(0, 0, 0)
 radial_accel_min = -128.0
 radial_accel_max = -128.0
 scale_min = 0.1
@@ -531,11 +528,9 @@ gradient = SubResource("Gradient_61bqd")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1umee"]
 particle_flag_disable_z = true
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 64.0
 initial_velocity_max = 64.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 linear_accel_min = -128.0
 linear_accel_max = -128.0
 scale_min = 0.25
@@ -563,8 +558,6 @@ curve = SubResource("Curve_xcuxr")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4jub4"]
 particle_flag_disable_z = true
 gravity = Vector3(0, 0, 0)
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
 scale_curve = SubResource("CurveTexture_80m7d")
 color = Color(1, 1, 1, 0.25098)
 color_ramp = SubResource("GradientTexture1D_3jlnh")
@@ -573,7 +566,7 @@ color_ramp = SubResource("GradientTexture1D_3jlnh")
 light_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(12, 8)
+size = Vector2(12, 4)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5h1n"]
 font_size = 24
@@ -806,7 +799,7 @@ offset = Vector2(-9.5, -14)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Debug" type="Control" parent="."]
@@ -824,10 +817,11 @@ text = "lol"
 label_settings = SubResource("LabelSettings_q5h1n")
 horizontal_alignment = 1
 
-[node name="Inventory" type="Node2D" parent="."]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
 y_sort_enabled = true
 position = Vector2(0, -4)
 script = ExtResource("7_xyenu")
+Items = []
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1,
@@ -848,10 +842,6 @@ visible = false
 
 [node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
 visible = false
-
-[node name="Railgun" parent="Inventory" instance=ExtResource("21_n8w32")]
-visible = false
-UseTime = 0.2
 
 [node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
 position = Vector2(0, 4)

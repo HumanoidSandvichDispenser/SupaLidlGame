@@ -25,6 +25,12 @@ public partial class PursueState : ThinkerState
     [Export]
     public float MaxDistanceFromOrigin { get; set; }
 
+    public override IState<ThinkerState> Enter(IState<ThinkerState> prev)
+    {
+        GD.Print("pursuing");
+        return base.Enter(prev);
+    }
+
     public override ThinkerState Think()
     {
         var bestTarget = NPC.FindBestTarget();
@@ -51,11 +57,6 @@ public partial class PursueState : ThinkerState
 
     public override ThinkerState PhysicsProcess(double delta)
     {
-        if (!NavigationAgent.IsTargetReachable())
-        {
-            return PassiveState ?? base.PhysicsProcess(delta);
-        }
-
         var navPos = NavigationAgent.GetNextPathPosition();
         NPC.Direction = NPC.GlobalPosition.DirectionTo(navPos);
 

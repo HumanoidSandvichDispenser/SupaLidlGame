@@ -66,6 +66,12 @@ public partial class AttackState : ThinkerState
         }
     }
 
+    public override IState<ThinkerState> Enter(IState<ThinkerState> prev)
+    {
+        GD.Print("attacking");
+        return base.Enter(prev);
+    }
+
     public void UpdateWeights(Vector2 pos)
     {
         // FIXME: TODO: remove all the spaghetti

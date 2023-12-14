@@ -22,16 +22,14 @@ point_count = 3
 curve = SubResource("Curve_0565g")
 
 [resource]
+particle_flag_disable_z = true
 emission_shape = 2
 emission_sphere_radius = 8.0
-particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
 spread = 90.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 128.0
 initial_velocity_max = 256.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 tangential_accel_min = -16.0
 tangential_accel_max = 16.0
 scale_min = 0.25

@@ -9,19 +9,17 @@ gradient = SubResource("Gradient_p5otp")
 
 [resource]
 lifetime_randomness = 0.5
+particle_flag_disable_z = true
 emission_shape = 6
 emission_ring_axis = Vector3(0, 0, 1)
 emission_ring_height = 1.0
 emission_ring_radius = 128.0
 emission_ring_inner_radius = 64.0
-particle_flag_disable_z = true
 direction = Vector3(2, 1, 0)
-gravity = Vector3(32, 32, 0)
 initial_velocity_min = 32.0
 initial_velocity_max = 64.0
 angular_velocity_max = 30.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(32, 32, 0)
 linear_accel_min = -64.0
 linear_accel_max = -32.0
 color_ramp = SubResource("GradientTexture1D_4a2pn")

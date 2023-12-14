@@ -3,10 +3,11 @@ using Godot.Collections;
 
 namespace SupaLidlGame.State.Global;
 
+[GlobalClass]
 public partial class MapState : Resource
 {
     [Export]
-    private Dictionary<string, Variant> _state = new();
+    private Dictionary<string, Variant> _state;
 
     [Signal]
     public delegate void MapStateChangedEventHandler(string key, Variant value);

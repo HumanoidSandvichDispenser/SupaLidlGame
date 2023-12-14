@@ -2,6 +2,7 @@ using Godot;
 
 namespace SupaLidlGame.State.Global;
 
+[GlobalClass]
 public partial class Stats : Resource
 {
     [Export]

@@ -6,19 +6,27 @@ namespace SupaLidlGame.State.Global;
 public partial class GlobalState : Node
 {
     [Export]
-    public Progression Progression { get; set; } = new();
+    public Progression Progression { get; set; }
 
     [Export]
-    public MapState MapState { get; set; } = new();
+    public MapState MapState { get; set; }
 
     [Export]
-    public Stats Stats { get; set; } = new();
+    public Stats Stats { get; set; }
 
     [Export]
-    public GameSettings Settings { get; set; } = new();
+    public GameSettings Settings { get; set; }
 
     [Signal]
     public delegate void SummonBossEventHandler(string bossName);
+
+    public GlobalState()
+    {
+        Progression = new();
+        MapState = new();
+        Stats = new();
+        Settings = new();
+    }
 
     public override void _Ready()
     {
@@ -28,13 +36,13 @@ public partial class GlobalState : Node
 
     public override void _Notification(int what)
     {
-        if (what == NotificationWMCloseRequest)
-        {
-            // TODO: quit prompt
-            GetTree().Root
-                .PropagateNotification((int)NotificationWMCloseRequest);
-            SaveSettings();
-        }
+        //if (what == NotificationWMCloseRequest)
+        //{
+        //    // TODO: quit prompt
+        //    GetTree().Root
+        //        .PropagateNotification((int)NotificationWMCloseRequest);
+        //    SaveSettings();
+        //}
     }
 
     private void LoadSettings()

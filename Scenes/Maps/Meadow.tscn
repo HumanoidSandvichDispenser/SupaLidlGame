@@ -71,56 +71,56 @@ polygon = PackedVector2Array(142, -2, 8, 32, -55, 18)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dap58"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tgpe5"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oqgvr"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k1kq6"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lbypa"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_re0th"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1l3ye"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eiin3"]
 resource_local_to_scene = true
 shader = ExtResource("5_dtu2e")
-shader_parameter/color = Quaternion(1, 1, 1, 1)
+shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 

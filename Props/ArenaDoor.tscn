@@ -23,15 +23,13 @@ point_count = 2
 curve = SubResource("Curve_fbk1d")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5k2ug"]
+particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(16, 1, 1)
-particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 4.0
 initial_velocity_max = 8.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 scale_min = 0.25
 scale_max = 0.25
 scale_curve = SubResource("CurveTexture_scj30")
@@ -131,6 +129,33 @@ tracks/3/keys = {
 }
 tracks/3/use_blend = true
 
+[sub_resource type="Animation" id="Animation_5kkkm"]
+resource_name = "close_init"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Gate:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_1nbqx"]
 resource_name = "open"
 tracks/0/type = "value"
@@ -200,33 +225,6 @@ tracks/1/keys = {
 "values": [true]
 }
 
-[sub_resource type="Animation" id="Animation_5kkkm"]
-resource_name = "close_init"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Gate:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3eva7"]
 _data = {
 "RESET": SubResource("Animation_ylaba"),
@@ -236,11 +234,12 @@ _data = {
 "open_init": SubResource("Animation_s143f")
 }
 
-[node name="ArenaDoor" type="StaticBody2D"]
+[node name="ArenaDoor" type="StaticBody2D" node_paths=PackedStringArray("Rebake")]
 collision_mask = 0
 script = ExtResource("1_t6mj1")
 MapStateKey = "b_arena_depths_door_1"
 VisibleOnToggle = [NodePath("GPUParticles2D"), NodePath("AudioStreamPlayer2D")]
+Rebake = []
 
 [node name="Gate" type="Sprite2D" parent="."]
 texture = ExtResource("2_kvtjv")
@@ -267,3 +266,7 @@ libraries = {
 max_distance = 512.0
 attenuation = 8.0
 bus = &"Effects"
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+avoidance_enabled = false
+vertices = PackedVector2Array(-16, -8, 16, -8, 16, 0, -16, 0)

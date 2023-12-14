@@ -9,7 +9,10 @@ public partial class DynamicDoor : StaticBody2D
     public string MapStateKey { get; set; }
 
     [Export]
-    public Godot.Collections.Array<NodePath> VisibleOnToggle { get; set; } = new();
+    public Godot.Collections.Array<NodePath> VisibleOnToggle { get; set; }
+
+    [Export]
+    public Godot.Collections.Array<NavigationRegion2D> Rebake { get; set; }
 
     [Export]
     public bool DefaultState { get; set; }
@@ -36,7 +39,7 @@ public partial class DynamicDoor : StaticBody2D
         }
     }
 
-    private void RefreshMapState(bool value)
+    private async void RefreshMapState(bool value)
     {
         if (value)
         {
@@ -45,6 +48,19 @@ public partial class DynamicDoor : StaticBody2D
         else
         {
             Close();
+        }
+
+        await ToSignal(_animPlayer,
+            AnimationPlayer.SignalName.AnimationFinished);
+
+        if (Rebake is not null)
+        {
+            foreach (var navmesh in Rebake)
+            {
+                // rebake navmesh so NPCs can correctly travel conditionally
+                GD.Print("rebaking");
+                navmesh.BakeNavigationPolygon();
+            }
         }
     }
 
@@ -62,6 +78,13 @@ public partial class DynamicDoor : StaticBody2D
 
     public void SetAnimations(bool isEnabled)
     {
+        if (VisibleOnToggle is null)
+        {
+            GD.PushWarning($"DynamicDoor {GetPath()} has no VisibleOnToggle " +
+                "array. Set this to empty array to disable this warning.");
+            return;
+        }
+
         foreach (var animKey in _animPlayer.GetAnimationList())
         {
             var anim = _animPlayer.GetAnimation(animKey);

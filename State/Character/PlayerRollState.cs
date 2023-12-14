@@ -47,6 +47,12 @@ public partial class PlayerRollState : PlayerState
         _timeLeftToRoll = 0;
         _rollDirection = Character.Direction;
         _particles.Emitting = false;
+        if (_player.MovementAnimation.CurrentAnimation == "roll")
+        {
+            // prevents player's sprite from being at an angle when exiting too
+            // soon
+            _player.MovementAnimation.Stop();
+        }
         base.Exit(nextState);
     }
 

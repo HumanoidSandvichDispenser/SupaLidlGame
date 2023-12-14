@@ -9,6 +9,7 @@ public enum InputMethod
     MouseCentered,
 }
 
+[GlobalClass]
 public partial class GameSettings : Resource
 {
     [Export]
