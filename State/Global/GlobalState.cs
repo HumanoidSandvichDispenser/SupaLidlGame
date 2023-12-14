@@ -36,13 +36,13 @@ public partial class GlobalState : Node
 
     public override void _Notification(int what)
     {
-        if (what == NotificationWMCloseRequest)
-        {
-            // TODO: quit prompt
-            GetTree().Root
-                .PropagateNotification((int)NotificationWMCloseRequest);
-            SaveSettings();
-        }
+        //if (what == NotificationWMCloseRequest)
+        //{
+        //    // TODO: quit prompt
+        //    GetTree().Root
+        //        .PropagateNotification((int)NotificationWMCloseRequest);
+        //    SaveSettings();
+        //}
     }
 
     private void LoadSettings()
