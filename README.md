@@ -6,10 +6,8 @@ Forsen-related game
 
 ## Building
 
-This is currently being developed on a custom dev branch of Godot 4.1.1:
-https://github.com/ryze312/godot/tree/x11_event_fix
-
-Try to avoid using newer versions of Godot as they are unstable with C#.
+This is currently being developed on the stable version of 4.2.0. Requires
+.NET version >=7.0.
 
 ## Notes
 
