@@ -6,7 +6,7 @@ Forsen-related game
 
 ## Building
 
-This is currently being developed on the stable version of 4.2.0. Requires
+This is currently being developed on the stable version of 4.2.1. Requires
 .NET version >=7.0.
 
 ## Notes
