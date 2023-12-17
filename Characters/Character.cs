@@ -167,7 +167,7 @@ public partial class Character : CharacterBody2D, IFaction
         // TODO: make PlayerRollState a CharacterRollState instead
         else if (state is State.Character.PlayerRollState rollState)
         {
-            Velocity *= 2;
+            Velocity *= rollState.VelocityModifier;
             //Velocity *= rollState.VelocityModifier;
         }
     }

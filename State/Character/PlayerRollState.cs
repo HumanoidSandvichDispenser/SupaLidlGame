@@ -10,6 +10,8 @@ public partial class PlayerRollState : PlayerState
 
     private GpuParticles2D _particles;
 
+    public float VelocityModifier { get; set; } = 1.5f;
+
     public PlayerRollState()
     {
         CanEnterWhileUsingItem = false;
