@@ -601,9 +601,11 @@ script = ExtResource("4_06oya")
 
 [node name="XP" type="Node" parent="Stats"]
 script = ExtResource("5_txl0r")
+Value = null
 
 [node name="Level" type="Node" parent="Stats"]
 script = ExtResource("6_sunc5")
+Value = null
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("5_rgckv")
@@ -690,6 +692,7 @@ libraries = {
 
 [node name="Effects" type="Node2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(0, 2)
 
 [node name="RollParticles" type="GPUParticles2D" parent="Effects"]
 emitting = false
@@ -772,7 +775,7 @@ position_smoothing_speed = 8.0
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-0.5, 0)
+position = Vector2(0, 2)
 rotation = 6.28319
 
 [node name="Node2D" type="Node2D" parent="Sprites"]
@@ -799,7 +802,6 @@ offset = Vector2(-9.5, -14)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Debug" type="Control" parent="."]
@@ -819,7 +821,7 @@ horizontal_alignment = 1
 
 [node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
 y_sort_enabled = true
-position = Vector2(0, -4)
+position = Vector2(0, -2)
 script = ExtResource("7_xyenu")
 Items = []
 InventoryMap = {
@@ -852,8 +854,6 @@ InvincibilityTimer = NodePath("Timer")
 Faction = 1
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
-visible = false
-position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_cjk6b")
 
 [node name="Timer" type="Timer" parent="Hurtbox"]
@@ -863,7 +863,7 @@ one_shot = true
 current = true
 
 [node name="Direction2D" type="Marker2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0, -2)
 
 [node name="InteractionRay" type="RayCast2D" parent="Direction2D"]
 target_position = Vector2(16, 0)
