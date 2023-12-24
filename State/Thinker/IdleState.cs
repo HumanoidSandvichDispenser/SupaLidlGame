@@ -20,7 +20,7 @@ public partial class IdleState : ThinkerState
 
     [ExportGroup("Returning")]
     [Export]
-    public bool ShouldReturnToOriginalPosition { get; set; }
+    public bool ShouldReturnToOriginalPosition { get; set; } = true;
 
     [Export]
     public NavigationAgent2D NavigationAgent { get; set; }
