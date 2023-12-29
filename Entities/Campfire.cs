@@ -2,6 +2,7 @@ using Godot;
 using GodotUtilities;
 using SupaLidlGame.BoundingBoxes;
 using SupaLidlGame.Extensions;
+using GodotUtilities.SourceGenerators;
 using DialogueManagerRuntime;
 
 namespace SupaLidlGame.Entities;
@@ -9,8 +10,10 @@ namespace SupaLidlGame.Entities;
 [Scene]
 public partial class Campfire : StaticBody2D, Utils.IInteractive
 {
+    [Node("PointLight2D")]
     private PointLight2D _light;
 
+    [Node("InteractionTrigger")]
     public InteractionTrigger InteractionTrigger { get; set; }
 
     [Signal]
@@ -19,11 +22,16 @@ public partial class Campfire : StaticBody2D, Utils.IInteractive
     [Export(PropertyHint.File, "*.dialogue")]
     public Resource DialogueResource { get; set; }
 
+    public override void _Notification(int what)
+    {
+        if (what == NotificationSceneInstantiated)
+        {
+            WireNodes();
+        }
+    }
+
     public override void _Ready()
     {
-        InteractionTrigger = GetNode<InteractionTrigger>("InteractionTrigger");
-        _light = GetNode<PointLight2D>("PointLight2D");
-
         InteractionTrigger.Interaction += () =>
         {
             // save the player's spawn position to be their position on interaction
@@ -36,7 +44,6 @@ public partial class Campfire : StaticBody2D, Utils.IInteractive
 
             //this.GetAncestor<Utils.World>().SetSpawn(GlobalPosition);
             world.DialogueBalloon.Start(DialogueResource, "start");
-            //DialogueManager.ShowExampleDialogueBalloon(DialogueResource, "start");
         };
     }
 
