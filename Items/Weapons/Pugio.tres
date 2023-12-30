@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemMetadata" load_steps=4 format=3 uid="uid://iqe6rgnb3jur"]
+
+[ext_resource type="Script" path="res://Utils/ScenePath.cs" id="1_o026a"]
+[ext_resource type="Script" path="res://Items/ItemMetadata.cs" id="2_j4tmu"]
+
+[sub_resource type="Resource" id="Resource_abrg1"]
+script = ExtResource("1_o026a")
+Path = "res://Items/Weapons/Pugio.tscn"
+
+[resource]
+script = ExtResource("2_j4tmu")
+Instance = SubResource("Resource_abrg1")
+Name = "Pugio"
+Description = "A sidearm dagger."

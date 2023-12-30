@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://5y1acxl4j4n7"]
+[gd_scene load_steps=30 format=3 uid="uid://5y1acxl4j4n7"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mai31"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_5ramr"]
+[ext_resource type="Resource" uid="uid://iqe6rgnb3jur" path="res://Items/Weapons/Pugio.tres" id="2_ulca0"]
 [ext_resource type="Script" path="res://State/Weapon/SwordIdleState.cs" id="3_fwkit"]
 [ext_resource type="Script" path="res://State/Weapon/SwordAnticipateState.cs" id="4_nsn1q"]
 [ext_resource type="Script" path="res://State/Weapon/SwordAttackState.cs" id="5_g1en5"]
@@ -350,6 +351,7 @@ UseAltTime = 1.5
 Knockback = 64.0
 PlayerLevelGain = 1.0
 HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
+Metadata = ExtResource("2_ulca0")
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_5ramr")

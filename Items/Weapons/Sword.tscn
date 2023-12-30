@@ -1,6 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://dvqap2uhcah63"]
+[gd_scene load_steps=29 format=3 uid="uid://dvqap2uhcah63"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
+[ext_resource type="Script" path="res://Utils/ScenePath.cs" id="2_g8hkw"]
+[ext_resource type="Script" path="res://Items/ItemMetadata.cs" id="2_gy7e7"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_vwirq"]
 [ext_resource type="Script" path="res://State/Weapon/SwordIdleState.cs" id="3_nw6r0"]
 [ext_resource type="Texture2D" uid="uid://dp7osg05ip5oo" path="res://Assets/Sprites/sword.png" id="3_r75ni"]
@@ -14,6 +16,16 @@
 [ext_resource type="Shape2D" uid="uid://dw4e4r2yxwk1b" path="res://Items/Weapons/SwordCollisionShape.tres" id="9_wsprl"]
 [ext_resource type="Texture2D" uid="uid://cmvh6pc71ir1m" path="res://Assets/Sprites/sword-swing-large.png" id="10_672jv"]
 [ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="10_mfnl7"]
+
+[sub_resource type="Resource" id="Resource_qqiwa"]
+script = ExtResource("2_g8hkw")
+Path = "res://Items/Weapons/Sword.tscn"
+
+[sub_resource type="Resource" id="Resource_advps"]
+script = ExtResource("2_gy7e7")
+Instance = SubResource("Resource_qqiwa")
+Name = "The Fool's Sword"
+Description = "The Top Right's Sword"
 
 [sub_resource type="Environment" id="Environment_72txp"]
 background_mode = 3
@@ -320,6 +332,7 @@ Knockback = 64.0
 ShouldHideIdle = true
 PlayerLevelGain = 1.0
 HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
+Metadata = SubResource("Resource_advps")
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_vwirq")

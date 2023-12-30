@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://cgg0sfm2qeiwn"]
+[gd_scene load_steps=17 format=3 uid="uid://cgg0sfm2qeiwn"]
 
 [ext_resource type="Texture2D" uid="uid://dam6aigkw8xs" path="res://Assets/Sprites/Items/bow-and-arrow.png" id="1_1ghvv"]
 [ext_resource type="Script" path="res://Items/Weapons/ProjectileSpawner.cs" id="1_76bur"]
 [ext_resource type="PackedScene" uid="uid://cjiftn2suskla" path="res://Entities/Arrow.tscn" id="2_mvw0j"]
+[ext_resource type="Resource" uid="uid://cjsh0dcgbfn77" path="res://Items/Weapons/Bow.tres" id="3_j7q7r"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="3_pg4gy"]
 [ext_resource type="Script" path="res://State/Weapon/RangedIdleState.cs" id="3_uxif8"]
 [ext_resource type="Script" path="res://State/Weapon/RangedFireState.cs" id="4_moo4d"]
@@ -123,6 +124,7 @@ Knockback = 64.0
 InitialVelocity = 200.0
 ShouldFreezeAngleOnUse = false
 PlayerLevelGain = 1.0
+Metadata = ExtResource("3_j7q7r")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("3_pg4gy")

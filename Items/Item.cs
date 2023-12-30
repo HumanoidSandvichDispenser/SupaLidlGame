@@ -9,13 +9,10 @@ public abstract partial class Item : Node2D
     public delegate void UsedItemEventHandler(Item item);
 
     [Export]
-    public string ItemName { get; set; }
-
-    [Export]
-    public string Description { get; set; }
-
-    [Export]
     public bool CanStack { get; set; } = false;
+
+    [Export]
+    public ItemMetadata Metadata { get; set; }
 
     public int Count { get; set; } = 1;
 
@@ -41,7 +38,7 @@ public abstract partial class Item : Node2D
             return false;
         }
 
-        if (ItemName != item.ItemName)
+        if (Metadata.Name != item.Metadata.Name)
         {
             return false;
         }

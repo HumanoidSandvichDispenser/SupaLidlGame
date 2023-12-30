@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://p7oijq6dbvvk"]
+[gd_scene load_steps=23 format=3 uid="uid://p7oijq6dbvvk"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_1oyma"]
+[ext_resource type="Resource" uid="uid://cud7l7t0qsc65" path="res://Items/Weapons/DocLance.tres" id="2_5r5mm"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_c41ov"]
 [ext_resource type="Script" path="res://State/Weapon/SwordIdleState.cs" id="3_sxffm"]
 [ext_resource type="Script" path="res://State/Weapon/SwordAnticipateState.cs" id="4_t7af2"]
@@ -185,8 +186,7 @@ UseTime = 0.55
 Knockback = 64.0
 ShouldHideIdle = true
 HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
-ItemName = "VSM-93"
-Description = "\"Violence. Speed. Momentum.\""
+Metadata = ExtResource("2_5r5mm")
 
 [node name="State" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
 script = ExtResource("2_c41ov")
@@ -251,6 +251,7 @@ libraries = {
 
 [node name="Hitbox" parent="." instance=ExtResource("9_buajm")]
 position = Vector2(16, -4)
+priority = 5
 IsDisabled = true
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
