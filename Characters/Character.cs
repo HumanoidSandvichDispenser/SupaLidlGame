@@ -116,6 +116,11 @@ public partial class Character : CharacterBody2D, IFaction
 
     public override void _Process(double delta)
     {
+        if (StunTime > 0)
+        {
+            StunTime -= delta;
+        }
+
         if (StateMachine != null)
         {
             StateMachine.Process(delta);

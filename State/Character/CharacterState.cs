@@ -18,11 +18,6 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
 
     public virtual CharacterState Process(double delta)
     {
-        if (Character.StunTime > 0)
-        {
-            Character.StunTime -= delta;
-        }
-
         var item = Character.Inventory.SelectedItem;
 
         bool targetTowards(Items.Item item)
