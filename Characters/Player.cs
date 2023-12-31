@@ -74,6 +74,8 @@ public sealed partial class Player : Character
             var signal = Events.EventBus.SignalName.PlayerHealthChanged;
             this.GetEventBus().EmitSignal(signal, args);
         };
+
+        Inventory.AddItemToHotbar(Inventory.Items[0]);
     }
 
     public override void _Process(double delta)
@@ -224,6 +226,7 @@ public sealed partial class Player : Character
         switch (inputMethod)
         {
             case State.Global.InputMethod.Joystick:
+                GD.Print(joystick);
                 if (joystick.IsZeroApprox())
                 {
                     return Direction;

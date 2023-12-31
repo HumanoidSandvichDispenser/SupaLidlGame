@@ -9,7 +9,10 @@ public partial class Inventory : Node2D
     public Character Character { get; private set; }
 
     [Export]
-    public Array<Item> Items { get; private set; }
+    public Array<Item> Hotbar { get; private set; }
+
+    [Export]
+    public Array<ItemMetadata> Items { get; private set; }
 
     [Export]
     public Dictionary<string, int> InventoryMap { get; set; }
@@ -17,7 +20,7 @@ public partial class Inventory : Node2D
     [Signal]
     public delegate void UsedItemEventHandler(Item item);
 
-    public const int MaxCapacity = 32;
+    public const int MaxCapacity = 3;
 
     private Item _selectedItem;
 
@@ -53,12 +56,18 @@ public partial class Inventory : Node2D
 
     public override void _Ready()
     {
-        if (Items is null)
+        if (Hotbar is null)
         {
             // instantiating a new array will prevent characters from
             // sharing inventories
-            Items = new Array<Item>();
+            Hotbar = new();
         }
+
+        if (Items is null)
+        {
+            Items = new();
+        }
+
         Character = GetParent<Character>();
         foreach (Node child in GetChildren())
         {
@@ -67,14 +76,17 @@ public partial class Inventory : Node2D
                 AddItem(item);
             }
         }
+
+        Events.EventBus.Instance.EmitSignal(
+            Events.EventBus.SignalName.PlayerInventoryUpdate, this);
         base._Ready();
     }
 
     public bool EquipIndex(int index)
     {
-        if (index < Items.Count)
+        if (index < Hotbar.Count)
         {
-            return EquipItem(Items[index], ref _selectedItem);
+            return EquipItem(Hotbar[index], ref _selectedItem);
         }
 
         return EquipItem(null, ref _selectedItem);
@@ -84,7 +96,7 @@ public partial class Inventory : Node2D
     {
         if (item is not null)
         {
-            if (!Items.Contains(item))
+            if (!Hotbar.Contains(item))
             {
                 GD.PrintErr("Tried to equip an item not in the inventory.");
                 return false;
@@ -103,6 +115,9 @@ public partial class Inventory : Node2D
             item.Equip(Character);
         }
 
+        Events.EventBus.Instance.EmitSignal(
+            Events.EventBus.SignalName.PlayerInventoryUpdate, this);
+
         return true;
     }
 
@@ -111,27 +126,36 @@ public partial class Inventory : Node2D
         if (InventoryMap.ContainsKey(keymap))
         {
             int idx = InventoryMap[keymap];
-            if (idx < Items.Count)
+            if (idx < Hotbar.Count)
             {
-                return Items[InventoryMap[keymap]];
+                return Hotbar[InventoryMap[keymap]];
             }
         }
         else GD.Print(keymap + " does not exist");
         return null;
     }
 
+    public Item AddItemToHotbar(ItemMetadata metadata)
+    {
+        var item = metadata.Instance.Instantiate<Item>();
+        AddItem(item);
+        AddChild(item);
+        GD.Print("Added " + item.Metadata.Name);
+        return item;
+    }
+
     public Item AddItem(Item item)
     {
-        if (Items.Count >= MaxCapacity)
+        if (Hotbar.Count >= MaxCapacity)
         {
             return null;
         }
 
         item.CharacterOwner = Character;
         item.Visible = false;
-        if (!Items.Contains(item))
+        if (!Hotbar.Contains(item))
         {
-            Items.Add(item);
+            Hotbar.Add(item);
         }
         return item;
     }

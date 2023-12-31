@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ItemMetadata" load_steps=4 format=3 uid="uid://cl7jvdu2lnv2d"]
+[gd_resource type="Resource" script_class="ItemMetadata" load_steps=5 format=3 uid="uid://cl7jvdu2lnv2d"]
 
+[ext_resource type="Texture2D" uid="uid://dfpe74vxvuwal" path="res://Assets/Sprites/Items/pugio.png" id="1_j0i86"]
 [ext_resource type="Script" path="res://Utils/ScenePath.cs" id="1_mh5y8"]
 [ext_resource type="Script" path="res://Items/ItemMetadata.cs" id="2_asbkr"]
 
@@ -10,5 +11,6 @@ Path = "res://Items/Weapons/Sword.tscn"
 [resource]
 script = ExtResource("2_asbkr")
 Instance = SubResource("Resource_qqiwa")
-Name = "Sword"
-Description = "A basic sword."
+Icon = ExtResource("1_j0i86")
+Name = "The Fool's Sword"
+Description = ""

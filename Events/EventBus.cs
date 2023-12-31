@@ -28,6 +28,9 @@ public partial class EventBus : Node
     public delegate void PlayerLevelChangedEventHandler(int level);
 
     [Signal]
+    public delegate void PlayerInventoryUpdateEventHandler(Items.Inventory inventory);
+
+    [Signal]
     public delegate void PlayerHealthChangedEventHandler(HealthChangedArgs args);
 
     [Signal]

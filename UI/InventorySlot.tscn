@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctad0dkoyw8ad"]
+
+[ext_resource type="Script" path="res://UI/InventorySlot.cs" id="1_llonk"]
+[ext_resource type="Texture2D" uid="uid://bd81g8aivb2ql" path="res://Assets/Sprites/UI/menu-rect-no-bg-32.png" id="2_vvog5"]
+[ext_resource type="Texture2D" uid="uid://b16461tjso0j7" path="res://Assets/Sprites/UI/hotbar-inactive.png" id="3_jr23q"]
+
+[node name="InventorySlot" type="ColorRect"]
+custom_minimum_size = Vector2(32, 32)
+color = Color(1, 1, 1, 0)
+script = ExtResource("1_llonk")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 3
+
+[node name="Selected" type="NinePatchRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vvog5")
+
+[node name="Unselected" type="NinePatchRect" parent="."]
+self_modulate = Color(1, 1, 1, 0.5)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_jr23q")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=72 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -10,7 +10,6 @@
 [ext_resource type="Script" path="res://Utils/Values/DoubleValue.cs" id="5_txl0r"]
 [ext_resource type="Script" path="res://Utils/Values/IntValue.cs" id="6_sunc5"]
 [ext_resource type="Script" path="res://State/Character/PlayerIdleState.cs" id="6_wkfdm"]
-[ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="7_4rxuv"]
 [ext_resource type="Script" path="res://State/Character/PlayerMoveState.cs" id="7_dfqd8"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="7_sdgvb"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
@@ -29,16 +28,13 @@
 [ext_resource type="Script" path="res://BoundingBoxes/InteractionRay.cs" id="13_hs3u1"]
 [ext_resource type="Script" path="res://State/Character/PlayerHealState.cs" id="13_t103m"]
 [ext_resource type="Script" path="res://State/Character/PlayerMaxLevelState.cs" id="14_1sn10"]
-[ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="14_bj0lo"]
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="15_3hahh"]
 [ext_resource type="Script" path="res://Utils/DamageTime.cs" id="15_4xl06"]
 [ext_resource type="AudioStream" uid="uid://st8qgqiygy5a" path="res://Assets/Sounds/electricity.wav" id="15_61bua"]
 [ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
-[ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="22_mqpn7"]
-[ext_resource type="PackedScene" uid="uid://d1d4vg7we5rjr" path="res://Items/Weapons/Shotgun.tscn" id="22_rmciq"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="22_uefct"]
 [ext_resource type="Texture2D" uid="uid://bcgm3r168qjn3" path="res://Assets/Sprites/Particles/cast-effect.png" id="24_njn4h"]
-[ext_resource type="PackedScene" uid="uid://cgg0sfm2qeiwn" path="res://Items/Weapons/Bow.tscn" id="29_7j1fs"]
+[ext_resource type="Resource" uid="uid://cl7jvdu2lnv2d" path="res://Items/Weapons/Sword.tres" id="31_vr68e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -566,7 +562,7 @@ color_ramp = SubResource("GradientTexture1D_3jlnh")
 light_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(12, 4)
+size = Vector2(12, 6)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5h1n"]
 font_size = 24
@@ -601,11 +597,9 @@ script = ExtResource("4_06oya")
 
 [node name="XP" type="Node" parent="Stats"]
 script = ExtResource("5_txl0r")
-Value = null
 
 [node name="Level" type="Node" parent="Stats"]
 script = ExtResource("6_sunc5")
-Value = null
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("5_rgckv")
@@ -623,7 +617,7 @@ Character = NodePath("../..")
 
 [node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("AbilityState", "IdleState", "MaxLevelState", "Character")]
 script = ExtResource("7_dfqd8")
-AbilityState = NodePath("../Roll")
+AbilityState = NodePath("../Dash")
 IdleState = NodePath("../Idle")
 MaxLevelState = NodePath("../MaxLevel")
 Character = NodePath("../..")
@@ -802,6 +796,7 @@ offset = Vector2(-9.5, -14)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Debug" type="Control" parent="."]
@@ -819,31 +814,17 @@ text = "lol"
 label_settings = SubResource("LabelSettings_q5h1n")
 horizontal_alignment = 1
 
-[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 y_sort_enabled = true
 position = Vector2(0, -2)
 script = ExtResource("7_xyenu")
-Items = []
+Hotbar = []
+Items = [ExtResource("31_vr68e")]
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1,
 "equip_3": 2
 }
-
-[node name="DocLance" parent="Inventory" instance=ExtResource("14_bj0lo")]
-visible = false
-
-[node name="Node2D" parent="Inventory" instance=ExtResource("7_4rxuv")]
-visible = false
-
-[node name="Bow" parent="Inventory" instance=ExtResource("29_7j1fs")]
-visible = false
-
-[node name="Sword" parent="Inventory" instance=ExtResource("22_mqpn7")]
-visible = false
-
-[node name="Shotgun" parent="Inventory" instance=ExtResource("22_rmciq")]
-visible = false
 
 [node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
 position = Vector2(0, 4)
