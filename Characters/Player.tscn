@@ -12,7 +12,6 @@
 [ext_resource type="Script" path="res://State/Character/PlayerIdleState.cs" id="6_wkfdm"]
 [ext_resource type="Script" path="res://State/Character/PlayerMoveState.cs" id="7_dfqd8"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="7_sdgvb"]
-[ext_resource type="Script" path="res://Items/Inventory.cs" id="7_xyenu"]
 [ext_resource type="Script" path="res://State/Character/PlayerRollState.cs" id="8_fy0v5"]
 [ext_resource type="Script" path="res://State/Character/PlayerEmoteState.cs" id="8_hd2lw"]
 [ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="8_m08fh"]
@@ -34,7 +33,8 @@
 [ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="22_uefct"]
 [ext_resource type="Texture2D" uid="uid://bcgm3r168qjn3" path="res://Assets/Sprites/Particles/cast-effect.png" id="24_njn4h"]
-[ext_resource type="Resource" uid="uid://cl7jvdu2lnv2d" path="res://Items/Weapons/Sword.tres" id="31_vr68e"]
+[ext_resource type="Script" path="res://Items/PlayerInventory.cs" id="30_y2wmw"]
+[ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="31_ql4as"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -817,9 +817,8 @@ horizontal_alignment = 1
 [node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 y_sort_enabled = true
 position = Vector2(0, -2)
-script = ExtResource("7_xyenu")
-Hotbar = []
-Items = [ExtResource("31_vr68e")]
+script = ExtResource("30_y2wmw")
+Hotbar = [NodePath("Sword"), null, null]
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1,
@@ -828,6 +827,9 @@ InventoryMap = {
 
 [node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
 position = Vector2(0, 4)
+
+[node name="Sword" parent="Inventory" instance=ExtResource("31_ql4as")]
+visible = false
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("9_avyu4")]
 visible = false

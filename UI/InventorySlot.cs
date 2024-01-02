@@ -29,7 +29,8 @@ public partial class InventorySlot : ColorRect
 
             if (_item is null)
             {
-                _textureRect.Texture = _placeholderTexture;
+                //_textureRect.Texture = _placeholderTexture;
+                _textureRect.Texture = null;
             }
             else
             {

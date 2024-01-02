@@ -15,12 +15,12 @@ public partial class Hotbar : GridContainer
 
     public void OnInventoryUpdate(Inventory inventory)
     {
+        GD.Print($"UPDATE: {inventory.SelectedIndex} is selected index.");
         for (int i = 0; i < 3; i++)
         {
             var slot = _slots[i];
-            slot.Item = inventory.Hotbar[i].Metadata;
-            slot.IsSelected = inventory.SelectedItem == inventory.Hotbar[i];
-            GD.Print(inventory.Hotbar[i].Metadata.Name);
+            slot.Item = inventory.Hotbar[i]?.Metadata;
+            slot.IsSelected = inventory.SelectedIndex == i;
         }
     }
 }

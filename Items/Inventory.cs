@@ -27,7 +27,15 @@ public partial class Inventory : Node2D
     public Item SelectedItem
     {
         get => _selectedItem;
-        set => EquipItem(value, ref _selectedItem);
+        set => EquipItem(value);
+    }
+
+    private int _selectedIndex;
+
+    public int SelectedIndex
+    {
+        get => _selectedIndex;
+        set => EquipIndex(value);
     }
 
     private int _quickSwitchIndex = -1;
@@ -45,14 +53,6 @@ public partial class Inventory : Node2D
     }
 
     public bool IsUsingItem => SelectedItem?.IsUsing ?? false;
-
-    public Inventory()
-    {
-        //InventoryMap = new Dictionary<string, int>();
-        //InventoryMap.Add("equip_1", 0);
-        //InventoryMap.Add("equip_2", 1);
-        //InventoryMap.Add("equip_3", 2);
-    }
 
     public override void _Ready()
     {
@@ -77,50 +77,50 @@ public partial class Inventory : Node2D
             }
         }
 
-        Events.EventBus.Instance.EmitSignal(
-            Events.EventBus.SignalName.PlayerInventoryUpdate, this);
         base._Ready();
     }
 
-    public bool EquipIndex(int index)
+    public virtual bool EquipIndex(int index)
     {
-        if (index < Hotbar.Count)
+        if (index >= Hotbar.Count)
         {
-            return EquipItem(Hotbar[index], ref _selectedItem);
+            return false;
         }
 
-        return EquipItem(null, ref _selectedItem);
-    }
+        _selectedItem?.Unequip(Character);
+        _selectedIndex = index;
 
-    private bool EquipItem(Item item, ref Item slot)
-    {
-        if (item is not null)
+        if (index >= 0)
         {
-            if (!Hotbar.Contains(item))
-            {
-                GD.PrintErr("Tried to equip an item not in the inventory.");
-                return false;
-            }
+            _selectedItem = Hotbar[index];
+            _selectedItem?.Equip(Character);
+        }
+        else
+        {
+            _selectedItem = null;
         }
 
-        if (slot is not null)
-        {
-            slot.Unequip(Character);
-        }
-
-        slot = item;
-
-        if (item is not null)
-        {
-            item.Equip(Character);
-        }
-
-        Events.EventBus.Instance.EmitSignal(
-            Events.EventBus.SignalName.PlayerInventoryUpdate, this);
+        GD.Print($"Inventory: {index} is new selected index.");
 
         return true;
     }
 
+    protected virtual bool EquipItem(Item item)
+    {
+        if (item is null)
+        {
+            EquipIndex(-1);
+        }
+
+        int index = Hotbar.IndexOf(item);
+        if (index < 0)
+        {
+            GD.PushWarning("Trying to equip item not in the hot inventory.");
+        }
+        return EquipIndex(index);
+    }
+
+    [System.Obsolete]
     public Item GetItemByMap(string keymap)
     {
         if (InventoryMap.ContainsKey(keymap))

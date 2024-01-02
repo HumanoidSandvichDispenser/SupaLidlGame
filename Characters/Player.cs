@@ -75,7 +75,9 @@ public sealed partial class Player : Character
             this.GetEventBus().EmitSignal(signal, args);
         };
 
-        Inventory.AddItemToHotbar(Inventory.Items[0]);
+        //GD.Print("Inventory: " + Inventory.Items);
+        //Inventory.AddItemToHotbar(Inventory.Items[0]);
+        Inventory.SelectedIndex = 0;
     }
 
     public override void _Process(double delta)

@@ -23,15 +23,18 @@ public abstract partial class PlayerState : CharacterState
         {
             if (@event.IsActionPressed("equip_1"))
             {
-                inventory.SelectedItem = inventory.GetItemByMap("equip_1");
+                //inventory.SelectedItem = inventory.GetItemByMap("equip_1");
+                inventory.SelectedIndex = 0;
             }
             else if (@event.IsActionPressed("equip_2"))
             {
-                inventory.SelectedItem = inventory.GetItemByMap("equip_2");
+                //inventory.SelectedItem = inventory.GetItemByMap("equip_2");
+                inventory.SelectedIndex = 1;
             }
             else if (@event.IsActionPressed("equip_3"))
             {
-                inventory.SelectedItem = inventory.GetItemByMap("equip_3");
+                //inventory.SelectedItem = inventory.GetItemByMap("equip_3");
+                inventory.SelectedIndex = 2;
             }
             else if (@event.IsActionPressed("next_item"))
             {
