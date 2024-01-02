@@ -52,7 +52,7 @@ turbulence_enabled = true
 size = Vector2(40, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iw8cv"]
-size = Vector2(64, 192)
+size = Vector2(64, 360)
 
 [node name="Arena" instance=ExtResource("1_ifiic")]
 tile_set = ExtResource("2_x0mh7")
@@ -184,10 +184,10 @@ position = Vector2(0, 377)
 shape = SubResource("RectangleShape2D_iw8cv")
 
 [node name="TopLeft" parent="Areas/EntranceCameraBounds" index="1"]
-position = Vector2(-256, 88)
+position = Vector2(-256, 0)
 
 [node name="BottomRight" parent="Areas/EntranceCameraBounds" index="2"]
-position = Vector2(256, 440)
+position = Vector2(256, 384)
 
 [node name="Entrance" type="Marker2D" parent="Markers" index="0"]
 position = Vector2(0, 352)
