@@ -39,11 +39,11 @@ curve = SubResource("Curve_8kv0q")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eh1hw"]
 particle_flag_disable_z = true
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 25.0
 initial_velocity_max = 50.0
 orbit_velocity_min = 1.0
 orbit_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
 linear_accel_min = -8.0
 tangential_accel_max = 8.0
 scale_min = 0.1
@@ -68,11 +68,9 @@ curve = SubResource("Curve_wt1cb")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_olfm2"]
 particle_flag_disable_z = true
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 8.0
 initial_velocity_max = 16.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 scale_curve = SubResource("CurveTexture_n73if")
 color_ramp = SubResource("GradientTexture1D_1bgot")
 
@@ -126,7 +124,8 @@ Delay = 1.0
 [node name="Hitbox" parent="." instance=ExtResource("2_gxtvd")]
 collision_layer = 0
 monitorable = false
-Damage = 12.0
+priority = 5
+Damage = 20.0
 Knockback = 324.0
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]

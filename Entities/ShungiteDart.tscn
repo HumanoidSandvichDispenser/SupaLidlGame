@@ -291,7 +291,8 @@ frame_progress = 0.227702
 speed_scale = 4.0
 
 [node name="Hitbox" parent="." instance=ExtResource("3_gdyk8")]
-Damage = 25.0
+priority = 5
+Damage = 20.0
 Knockback = 64.0
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
