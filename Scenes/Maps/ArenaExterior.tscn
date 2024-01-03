@@ -312,9 +312,9 @@ source_geometry_group_name = &"navigation"
 agent_radius = 8.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_0dq8c"]
-vertices = PackedVector2Array(-216, 200, -232, 200, -232, 169, -216, 169, -216, 88, -232, 88, -232, 49, -216, 49, -120, 8, -232, 8, -232, -8, -120, -8)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-112, -16, -112, 16, -208, 16, -208, 96, -240, 96, -240, -16), PackedVector2Array(-240, 120, -208, 120, -208, 208, -240, 208)])
+vertices = PackedVector2Array(-216, 200, -232, 200, -232, 169, -216, 169, -216, 128, -232, 128, -232, 120, -216, 120, -216, 88, -232, 88, -232, 49, -216, 49, -120, 8, -232, 8, -232, -8, -120, -8)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(12, 13, 14, 15)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-112, -16, -112, 16, -208, 16, -208, 96, -240, 96, -240, -16), PackedVector2Array(-240, 112, -208, 112, -208, 208, -240, 208)])
 source_geometry_mode = 1
 source_geometry_group_name = &"navigation"
 agent_radius = 8.0
