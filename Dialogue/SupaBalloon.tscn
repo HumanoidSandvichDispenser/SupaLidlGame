@@ -1,0 +1,60 @@
+[gd_scene load_steps=3 format=3 uid="uid://b141at03atevw"]
+
+[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="1_d4lar"]
+[ext_resource type="Texture2D" uid="uid://cbu16c4l3d6jk" path="res://Assets/Sprites/UI/menu-rect-cut.png" id="2_8jg73"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+custom_minimum_size = Vector2(128, 64)
+offset_right = 128.0
+offset_bottom = 64.0
+theme = ExtResource("1_d4lar")
+texture = ExtResource("2_8jg73")
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+
+[node name="CharacterLabel" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_shadow_color = Color(0.105882, 0.0470588, 0.117647, 1)
+theme_override_colors/font_outline_color = Color(0.270588, 0.160784, 0.247059, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 4
+bbcode_enabled = true
+text = "Doc, The Two Time"
+fit_content = true
+scroll_active = false
+
+[node name="CharacterLabel2" type="RichTextLabel" parent="NinePatchRect/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 1
+theme_override_colors/font_shadow_color = Color(0.105882, 0.0470588, 0.117647, 1)
+theme_override_colors/font_outline_color = Color(0.270588, 0.160784, 0.247059, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_constants/outline_size = 4
+bbcode_enabled = true
+text = "I bought a whole bunch of shungite."
+fit_content = true
+scroll_active = false
