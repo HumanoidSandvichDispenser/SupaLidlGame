@@ -61,16 +61,16 @@ public partial class DashDefensive : AttackState
 
                 // doc will still dash if you are farther than normal but
                 // moving towards him
-                float distThreshold = 50 - (dot * 20);
+                float distThreshold = UseItemDistance - (dot * 20);
 
                 // dash towards if lance in anticipate state
                 // or just directly dash towards you if you are too far
                 shouldDashTowards = (isTargetStunned || _dashedAway) &&
-                    swordState is State.Weapon.SwordAnticipateState ||
-                    dist > MaxDistanceToTarget;
+                    (swordState is State.Weapon.SwordAnticipateState ||
+                    dist > MaxDistanceToTarget);
 
                 shouldDashAway = dist < distThreshold && !isTargetStunned &&
-                    swordState is not State.Weapon.SwordAnticipateState;
+                    swordState is State.Weapon.SwordIdleState;
 
                 //if (!isTargetStunned && dist < 2500 && !_dashedAway)
                 if (shouldDashAway && !shouldDashTowards)
@@ -83,9 +83,14 @@ public partial class DashDefensive : AttackState
                 }
                 else if (shouldDashTowards && !shouldDashAway)
                 {
+                    // our required velocity is dependent on final distance to target
+                    float maxVelocity = dist / 0.1f;
+                    var dashSpeed = Mathf.Max(maxVelocity,
+                        _originalDashModifier * NPC.Speed);
+                    float ratio = dashSpeed / NPC.Speed;
+                    _dashState.VelocityModifier = ratio;
+
                     // dash to player's predicted position
-                    _dashState.VelocityModifier = _originalDashModifier * 1.75f;
-                    var dashSpeed = _dashState.VelocityModifier * NPC.Speed;
                     var newPos = Utils.Physics.PredictNewPosition(
                         NPC.GlobalPosition,
                         dashSpeed,
@@ -100,6 +105,8 @@ public partial class DashDefensive : AttackState
                     NPC.UseCurrentItem();
                 }
             }
+
+            return null;
         }
 
         return PursueState ?? PassiveState;
