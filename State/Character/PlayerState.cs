@@ -13,7 +13,7 @@ public abstract partial class PlayerState : CharacterState
     [Export]
     public PlayerMaxLevelState MaxLevelState { get; set; }
 
-    public override CharacterState Input(InputEvent @event)
+    public override CharacterState UnhandledInput(InputEvent @event)
     {
         var inventory = Character.Inventory;
         var player = _player;
@@ -60,22 +60,24 @@ public abstract partial class PlayerState : CharacterState
             }
         }
 
-        return base.Input(@event);
+        return base.UnhandledInput(@event);
     }
 
     public override CharacterState Process(double delta)
     {
         Character.Direction = Godot.Input.GetVector("left", "right",
                                                     "up", "down");
-        Character.LookTowardsDirection();
 
         var player = _player;
+
         var desiredTarget = player.GetDesiredInputFromInput();
         if (!desiredTarget.IsZeroApprox())
         {
             // can never be zero
             player.DesiredTarget = desiredTarget;
         }
+
+        Character.LookTowardsDirection();
 
         if (Character.Inventory.SelectedItem is Items.Weapon weapon)
         {

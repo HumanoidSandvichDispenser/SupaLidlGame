@@ -70,4 +70,6 @@ public abstract partial class CharacterState : Node, IState<CharacterState>
     }
 
     public virtual CharacterState Input(InputEvent @event) => null;
+
+    public virtual CharacterState UnhandledInput(InputEvent @event) => null;
 }
