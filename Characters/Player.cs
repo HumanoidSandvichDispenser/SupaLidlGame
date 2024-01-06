@@ -111,6 +111,14 @@ public sealed partial class Player : Character
         }
     }
 
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (StateMachine != null)
+        {
+            StateMachine.UnhandledInput(@event);
+        }
+    }
+
     /// <summary>
     /// Respawns the player with full health and plays spawn animation
     /// </summary>

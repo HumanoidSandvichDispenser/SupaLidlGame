@@ -267,7 +267,7 @@ color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_iyaih")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(8, 4)
+size = Vector2(8, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjgc"]
 size = Vector2(12, 16)
@@ -308,7 +308,7 @@ Character = NodePath("../..")
 script = ExtResource("6_pwguk")
 IdleState = NodePath("../Idle")
 TimeToDash = 0.1
-VelocityModifier = 4.0
+VelocityModifier = 10.0
 Character = NodePath("../..")
 
 [node name="ThinkerStateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
@@ -317,7 +317,7 @@ InitialState = NodePath("Idle")
 
 [node name="Attack" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PassiveState", "PursueState", "NPC")]
 script = ExtResource("8_n8t7f")
-MaxDistanceToTarget = 128.0
+MaxDistanceToTarget = 256.0
 UseItemDistance = 64.0
 PassiveState = NodePath("../Idle")
 PursueState = NodePath("../Pursue")
@@ -329,7 +329,6 @@ PursueState = NodePath("../Pursue")
 MinTargetDistance = 24.0
 PursueOnLineOfSight = true
 MinLineOfSightDistance = 256.0
-ShouldReturnToOriginalPosition = true
 NavigationAgent = NodePath("../../NavigationAgent2D")
 NPC = NodePath("../..")
 
@@ -408,7 +407,7 @@ stream = ExtResource("15_w7mkq")
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-0.5, 0)
+position = Vector2(-0.5, 4)
 rotation = 6.28319
 
 [node name="Node2D" type="Node2D" parent="Sprites"]
@@ -421,17 +420,23 @@ offset = Vector2(0, -12)
 hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_bfqew")
 
-[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
-position = Vector2(0, -4)
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 script = ExtResource("17_5rur0")
+Hotbar = []
 Items = []
 
-[node name="DocLance" parent="Inventory" instance=ExtResource("18_jblpi")]
+[node name="DocLance" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("18_jblpi")]
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="Hurtbox" parent="." instance=ExtResource("20_dwjfv")]
+position = Vector2(0, 4)
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(0, -8)

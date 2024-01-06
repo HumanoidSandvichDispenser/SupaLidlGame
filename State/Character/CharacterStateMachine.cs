@@ -36,4 +36,13 @@ public partial class CharacterStateMachine : StateMachine<CharacterState>
             ChangeState(state);
         }
     }
+
+    public void UnhandledInput(InputEvent @event)
+    {
+        var state = CurrentState.UnhandledInput(@event);
+        if (state is CharacterState)
+        {
+            ChangeState(state);
+        }
+    }
 }

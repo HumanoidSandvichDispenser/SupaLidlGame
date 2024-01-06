@@ -280,19 +280,25 @@ texture = ExtResource("11_wp6i2")
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("12_iwry7")
 
-[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 y_sort_enabled = true
-position = Vector2(0, -4)
 script = ExtResource("3_ktm40")
+Hotbar = []
 Items = []
 
-[node name="Sword" parent="Inventory" instance=ExtResource("4_4gsqu")]
+[node name="Sword" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("4_4gsqu")]
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="Sprites" type="Node2D" parent="."]
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-0.5, 0)
+position = Vector2(-0.5, 4)
 
 [node name="Sprite2D" type="Sprite2D" parent="Sprites"]
 y_sort_enabled = true
@@ -303,11 +309,10 @@ offset = Vector2(-10, -20)
 hframes = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_v8rkj")
 
 [node name="Hurtbox" parent="." instance=ExtResource("11_sj7u0")]
-position = Vector2(0, -8)
+position = Vector2(0, -4)
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 shape = SubResource("RectangleShape2D_kyos5")

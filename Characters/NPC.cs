@@ -115,7 +115,7 @@ public partial class NPC : Character
                 }
 
                 float score = 0;
-                score += Position.DistanceTo(character.Position);
+                score -= Position.DistanceTo(character.Position);
 
                 if (score < bestScore)
                 {

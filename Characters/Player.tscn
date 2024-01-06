@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=74 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -34,7 +34,9 @@
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="22_uefct"]
 [ext_resource type="Texture2D" uid="uid://bcgm3r168qjn3" path="res://Assets/Sprites/Particles/cast-effect.png" id="24_njn4h"]
 [ext_resource type="Script" path="res://Items/PlayerInventory.cs" id="30_y2wmw"]
+[ext_resource type="PackedScene" uid="uid://cgg0sfm2qeiwn" path="res://Items/Weapons/Bow.tscn" id="31_mofvy"]
 [ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="31_ql4as"]
+[ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="32_6ffmm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -562,7 +564,7 @@ color_ramp = SubResource("GradientTexture1D_3jlnh")
 light_mode = 1
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(12, 6)
+size = Vector2(12, 8)
 
 [sub_resource type="LabelSettings" id="LabelSettings_q5h1n"]
 font_size = 24
@@ -686,7 +688,6 @@ libraries = {
 
 [node name="Effects" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, 2)
 
 [node name="RollParticles" type="GPUParticles2D" parent="Effects"]
 emitting = false
@@ -759,7 +760,6 @@ stream = ExtResource("12_vvem5")
 
 [node name="TargetTracer" parent="Effects" instance=ExtResource("22_hxi53")]
 unique_name_in_owner = true
-position = Vector2(0, -4)
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
 zoom = Vector2(4, 4)
@@ -769,7 +769,7 @@ position_smoothing_speed = 8.0
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(0, 2)
+position = Vector2(-0.5, 4)
 rotation = 6.28319
 
 [node name="Node2D" type="Node2D" parent="Sprites"]
@@ -796,7 +796,6 @@ offset = Vector2(-9.5, -14)
 hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_bfqew")
 
 [node name="Debug" type="Control" parent="."]
@@ -816,20 +815,38 @@ horizontal_alignment = 1
 
 [node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 y_sort_enabled = true
-position = Vector2(0, -2)
 script = ExtResource("30_y2wmw")
-Hotbar = [NodePath("Sword"), null, null]
+Hotbar = [NodePath("Sword"), NodePath("Bow"), NodePath("Pugio")]
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1,
 "equip_3": 2
 }
 
+[node name="Bow" parent="Inventory" node_paths=PackedStringArray("StateMachine") instance=ExtResource("31_mofvy")]
+visible = false
+StateMachine = NodePath("StateMachine")
+
 [node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
 position = Vector2(0, 4)
 
-[node name="Sword" parent="Inventory" instance=ExtResource("31_ql4as")]
+[node name="Sword" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("31_ql4as")]
 visible = false
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
+
+[node name="Pugio" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("32_6ffmm")]
+visible = false
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("9_avyu4")]
 visible = false
@@ -857,7 +874,7 @@ collide_with_bodies = false
 script = ExtResource("13_hs3u1")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(0, -4)
 blend_mode = 2
 shadow_enabled = true
 shadow_filter = 2

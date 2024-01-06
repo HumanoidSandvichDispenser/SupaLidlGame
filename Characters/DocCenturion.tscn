@@ -187,7 +187,6 @@ PursueState = NodePath("../Attack")
 MinTargetDistance = 24.0
 PursueOnLineOfSight = true
 MinLineOfSightDistance = 256.0
-ShouldReturnToOriginalPosition = true
 NavigationAgent = NodePath("../../NavigationAgent2D")
 NPC = NodePath("../..")
 
@@ -257,7 +256,7 @@ stream = ExtResource("15_8yg1g")
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-0.5, 0)
+position = Vector2(-0.5, 4)
 rotation = 6.28319
 
 [node name="Node2D" type="Node2D" parent="Sprites"]
@@ -270,18 +269,24 @@ offset = Vector2(0, -12)
 hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_bfqew")
 
-[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Items")]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 y_sort_enabled = true
-position = Vector2(0, -4)
 script = ExtResource("17_6fh5y")
+Hotbar = []
 Items = []
 
-[node name="Sword" parent="Inventory" instance=ExtResource("18_7l8tj")]
+[node name="Sword" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("18_7l8tj")]
+Hitbox = NodePath("Hitbox")
+AnimationPlayer = NodePath("AnimationPlayer")
+ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
+StateMachine = NodePath("State")
+Anchor = NodePath("Anchor")
+HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="Hurtbox" parent="." instance=ExtResource("19_xol7n")]
+position = Vector2(0, 4)
 
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(0, -8)
