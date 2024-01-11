@@ -41,6 +41,11 @@ public partial class DashDefensive : AttackState
                 }
             }
 
+            if (PursueOnNoLOS && !NPC.HasLineOfSight(bestTarget))
+            {
+                return PursueState;
+            }
+
             if (NPC.CanAttack && NPC.StunTime <= 0)
             {
                 bool isTargetStunned = bestTarget.StunTime > 0;
