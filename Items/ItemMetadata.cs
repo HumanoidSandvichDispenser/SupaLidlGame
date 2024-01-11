@@ -16,4 +16,10 @@ public partial class ItemMetadata : Resource
 
     [Export(PropertyHint.MultilineText)]
     public string Description { get; set; }
+
+    [Export]
+    public int BuyPrice { get; set; }
+
+    [Export]
+    public int SellPrice { get; set; }
 }
