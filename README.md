@@ -6,8 +6,13 @@ Forsen-related game
 
 ## Building
 
-This is currently being developed on the stable version of 4.2.1. Requires
-.NET version >=7.0.
+> [!IMPORTANT]
+> This is currently being developed with a [custom branch of
+> Godot](https://github.com/zaevi/godot/tree/fix_csharp_generic_reloading).
+>
+> Please apply this patch if building.
+
+Requires .NET version >=7.0.
 
 ## Notes
 
