@@ -7,10 +7,9 @@ Forsen-related game
 ## Building
 
 > [!IMPORTANT]
-> This is currently being developed with a [custom branch of
-> Godot](https://github.com/zaevi/godot/tree/fix_csharp_generic_reloading).
->
-> Please apply this patch if building.
+> This is currently being developed with Godot 4.3 dev 3 snapshot, which
+> includes a fix for C# generics causing problems and resetting properties to
+> null.
 
 Requires .NET version >=7.0.
 
