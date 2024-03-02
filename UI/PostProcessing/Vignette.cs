@@ -8,7 +8,6 @@ public partial class Vignette : TextureRect
     {
         Events.EventBus.Instance.PlayerHurt += (Events.HurtArgs args) =>
         {
-            GD.Print("TIGHTEN!!!");
             GetNode<AnimationPlayer>("AnimationPlayer").Play("tighten");
         };
     }
