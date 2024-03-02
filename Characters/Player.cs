@@ -174,6 +174,11 @@ public sealed partial class Player : Character
         GetNode<GpuParticles2D>("Effects/HurtParticles")
             .SetDirection(knockbackDir);
 
+        Events.EventBus.Instance.EmitSignal(
+            Events.EventBus.SignalName.PlayerHurt,
+            new Events.HurtArgs { Attacker = inflictor, Weapon = weapon }
+        );
+
         base.OnReceivedDamage(damage,
             inflictor,
             knockback,
