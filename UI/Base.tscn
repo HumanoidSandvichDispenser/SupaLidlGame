@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c271rdjhd1gfo"]
+[gd_scene load_steps=10 format=3 uid="uid://c271rdjhd1gfo"]
 
 [ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Dialogue/balloon.tscn" id="1_atjb1"]
 [ext_resource type="Script" path="res://UI/UIController.cs" id="2_b4b6l"]
@@ -8,14 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c77754nvmckn" path="res://UI/LocationDisplay.tscn" id="5_cr6vo"]
 [ext_resource type="PackedScene" uid="uid://sfs8dpfitpdu" path="res://UI/Hotbar.tscn" id="5_mmp18"]
 [ext_resource type="PackedScene" uid="uid://d3q1yu3n7cqfj" path="res://UI/SceneTransition.tscn" id="6_j0nhv"]
-[ext_resource type="Shader" path="res://Shaders/Vignette.gdshader" id="8_k080s"]
-[ext_resource type="Texture2D" uid="uid://dxtpp41y85tv5" path="res://Assets/Sprites/Misc/white.png" id="9_2hlfh"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmdjb"]
-shader = ExtResource("8_k080s")
-shader_parameter/vignette_intensity = 0.1
-shader_parameter/vignette_opacity = 0.1
-shader_parameter/vignette_rgb = Color(0.92549, 0, 0.937255, 1)
+[ext_resource type="PackedScene" uid="uid://2afbrf8asy2a" path="res://UI/PostProcessing/Vignette.tscn" id="9_p1ubd"]
 
 [node name="BaseUI" type="CanvasLayer"]
 process_mode = 3
@@ -42,7 +35,7 @@ layer = 4
 [node name="MainUILayer" type="CanvasLayer" parent="SubViewportContainer/UIViewport"]
 layer = 3
 
-[node name="Main" type="Control" parent="SubViewportContainer/UIViewport/MainUILayer" node_paths=PackedStringArray("BossBar")]
+[node name="Main" type="Control" parent="SubViewportContainer/UIViewport/MainUILayer"]
 z_index = 128
 layout_mode = 3
 anchors_preset = 15
@@ -53,7 +46,6 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_b4b6l")
-BossBar = NodePath("Bottom/BossBar")
 
 [node name="Top" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
 layout_mode = 1
@@ -116,11 +108,4 @@ z_index = 1
 [node name="PostProcessing" type="CanvasLayer" parent="SubViewportContainer/UIViewport"]
 layer = 2
 
-[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UIViewport/PostProcessing"]
-material = SubResource("ShaderMaterial_fmdjb")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("9_2hlfh")
+[node name="TextureRect" parent="SubViewportContainer/UIViewport/PostProcessing" instance=ExtResource("9_p1ubd")]
