@@ -12,3 +12,5 @@ script = ExtResource("2_hjbs0")
 Instance = SubResource("Resource_mjj1w")
 Name = "Bow"
 Description = "A bow and arrow."
+BuyPrice = 0
+SellPrice = 0

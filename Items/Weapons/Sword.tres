@@ -14,3 +14,5 @@ Instance = SubResource("Resource_qqiwa")
 Icon = ExtResource("1_j0i86")
 Name = "The Fool's Sword"
 Description = ""
+BuyPrice = 0
+SellPrice = 0

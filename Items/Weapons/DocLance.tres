@@ -12,3 +12,5 @@ script = ExtResource("1_fhdpj")
 Instance = SubResource("Resource_clkv8")
 Name = "Shungite Spear"
 Description = "It's a billion year old lance, spear that protects against unwanted invaders."
+BuyPrice = 0
+SellPrice = 0
