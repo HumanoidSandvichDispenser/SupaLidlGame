@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://UI/Hotbar.cs" id="1_2sak2"]
 [ext_resource type="PackedScene" uid="uid://ctad0dkoyw8ad" path="res://UI/InventorySlot.tscn" id="1_ct3cn"]
 
-[node name="GridContainer" type="GridContainer" node_paths=PackedStringArray("_slots")]
+[node name="Hotbar" type="GridContainer" node_paths=PackedStringArray("_slots")]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0

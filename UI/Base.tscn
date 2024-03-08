@@ -81,7 +81,7 @@ layout_mode = 2
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 
-[node name="GridContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Right" node_paths=PackedStringArray("_slots") instance=ExtResource("5_mmp18")]
+[node name="Hotbar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Right" node_paths=PackedStringArray("_slots") instance=ExtResource("5_mmp18")]
 layout_mode = 2
 _slots = [NodePath("InventorySlot"), NodePath("InventorySlot2"), NodePath("InventorySlot3")]
 
