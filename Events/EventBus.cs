@@ -34,6 +34,9 @@ public partial class EventBus : Node
     public delegate void PlayerHealthChangedEventHandler(HealthChangedArgs args);
 
     [Signal]
+    public delegate void PlayerStunEventHandler();
+
+    [Signal]
     public delegate void RegisteredBossEventHandler(Characters.Boss boss);
 
     [Signal]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c271rdjhd1gfo"]
+[gd_scene load_steps=14 format=3 uid="uid://c271rdjhd1gfo"]
 
 [ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Dialogue/balloon.tscn" id="1_atjb1"]
 [ext_resource type="Script" path="res://UI/UIController.cs" id="2_b4b6l"]
@@ -9,6 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://sfs8dpfitpdu" path="res://UI/Hotbar.tscn" id="5_mmp18"]
 [ext_resource type="PackedScene" uid="uid://d3q1yu3n7cqfj" path="res://UI/SceneTransition.tscn" id="6_j0nhv"]
 [ext_resource type="PackedScene" uid="uid://2afbrf8asy2a" path="res://UI/PostProcessing/Vignette.tscn" id="9_p1ubd"]
+[ext_resource type="PackedScene" uid="uid://b1wsryv4bn0cn" path="res://UI/PostProcessing/StunEffect.tscn" id="10_646ma"]
+[ext_resource type="Shader" path="res://Shaders/Grayscale.gdshader" id="11_w4gn1"]
+[ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="12_tyv35"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kbd61"]
+shader = ExtResource("11_w4gn1")
+shader_parameter/grayscale_intensity = 0.0
 
 [node name="BaseUI" type="CanvasLayer"]
 process_mode = 3
@@ -105,7 +112,22 @@ layout_mode = 2
 [node name="SceneTransition" parent="SubViewportContainer/UIViewport/MainUILayer" instance=ExtResource("6_j0nhv")]
 z_index = 1
 
-[node name="PostProcessing" type="CanvasLayer" parent="SubViewportContainer/UIViewport"]
-layer = 2
+[node name="PostProcessing" type="CanvasLayer" parent="."]
 
-[node name="TextureRect" parent="SubViewportContainer/UIViewport/PostProcessing" instance=ExtResource("9_p1ubd")]
+[node name="Vignette" parent="PostProcessing" instance=ExtResource("9_p1ubd")]
+
+[node name="StunEffect" parent="PostProcessing" instance=ExtResource("10_646ma")]
+
+[node name="Sprite2D" type="TextureRect" parent="PostProcessing"]
+visible = false
+material = SubResource("ShaderMaterial_kbd61")
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("12_tyv35")

@@ -137,7 +137,8 @@ public sealed partial class Player : Character
     {
         base.Stun(time);
         Camera.Shake(2, 0.8f);
-        // TODO: implement visual effects for stun
+        Events.EventBus.Instance.EmitSignal(
+            Events.EventBus.SignalName.PlayerStun);
     }
 
     protected override void OnReceivedDamage(
