@@ -119,6 +119,7 @@ public sealed partial class Player : Character
     public void Spawn()
     {
         Health = 100;
+        Velocity = Vector2.Zero; // player retains knockback after respawning
         HurtAnimation.Play("spawn");
     }
 

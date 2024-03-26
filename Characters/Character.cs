@@ -171,7 +171,8 @@ public partial class Character : CharacterBody2D, IFaction
     {
         if (StunTime > 0)
         {
-            Velocity *= 0.25f;
+            //Velocity *= 0.25f;
+            Velocity = Vector2.Zero;
         }
 
         var state = StateMachine.CurrentState;

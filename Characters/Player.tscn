@@ -831,9 +831,6 @@ InventoryMap = {
 visible = false
 StateMachine = NodePath("StateMachine")
 
-[node name="RemoteTransform2D2" type="RemoteTransform2D" parent="Inventory"]
-position = Vector2(0, 4)
-
 [node name="Sword" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("31_ql4as")]
 visible = false
 Hitbox = NodePath("Hitbox")
