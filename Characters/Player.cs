@@ -50,16 +50,12 @@ public sealed partial class Player : Character
     public override void _Ready()
     {
         InteractionRay = GetNode<InteractionRay>("Direction2D/InteractionRay");
-
         _effects = GetNode<Node2D>("%Effects");
-
         _characterEffects = GetNode<Node2D>("%CharacterEffects");
-
         _targetTracer = GetNode<TargetTracer>("%TargetTracer");
 
         base._Ready();
-
-        Stats = base.Stats as PlayerStats;
+        Stats = GetNode<PlayerStats>("Stats");
 
         Inventory.UsedItem += (Items.Item item) =>
         {
@@ -75,8 +71,6 @@ public sealed partial class Player : Character
             this.GetEventBus().EmitSignal(signal, args);
         };
 
-        //GD.Print("Inventory: " + Inventory.Items);
-        //Inventory.AddItemToHotbar(Inventory.Items[0]);
         Inventory.SelectedIndex = 0;
     }
 
