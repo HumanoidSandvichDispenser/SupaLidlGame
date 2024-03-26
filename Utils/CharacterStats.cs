@@ -43,15 +43,12 @@ public partial class CharacterStats : Node
     public void AddStaggerDamage(float damage)
     {
         StaggerDamage.Value += damage * StaggerCoefficient;
-        GD.Print(StaggerDamage.Value);
         if (StaggerDamage.Value >= MaxStagger)
         {
-            GD.Print(StaggerDamage.Value + " >= " + MaxStagger);
             EmitSignal(SignalName.Stagger, 1);
         }
         else
         {
-            GD.Print(StaggerDamage.Value + " < " + MaxStagger);
             _shouldDecayStagger = false;
             _staggerDecayTimer.Stop();
             _staggerDecayTimer.Start(1);
