@@ -56,6 +56,8 @@ public partial class Sword : Weapon, IParryable
     [Export]
     public Node2D Anchor { get; set; }
 
+    public bool HasParried { get; protected set; }
+
     public override bool IsParryable { get; protected set; }
 
     public ulong ParryTimeOrigin { get; protected set; }
@@ -85,6 +87,7 @@ public partial class Sword : Weapon, IParryable
     /// </summary>
     public void EnableParry(ulong parryTimeOrigin)
     {
+        HasParried = false;
         IsParried = false;
         IsParryable = true;
         ParryTimeOrigin = parryTimeOrigin;
@@ -95,6 +98,8 @@ public partial class Sword : Weapon, IParryable
     /// </summary>
     public void DisableParry()
     {
+        HasParried = false;
+        IsParried = false;
         IsParryable = false;
     }
 
@@ -139,9 +144,9 @@ public partial class Sword : Weapon, IParryable
     public void Deattack()
     {
         IsAttacking = false;
-        DisableParry();
         Hitbox.IsDisabled = true;
         ProcessHits();
+        DisableParry();
         Hitbox.ResetIgnoreList();
         AnimationPlayer.SpeedScale = 1;
     }
@@ -182,7 +187,7 @@ public partial class Sword : Weapon, IParryable
     /// </summary>
     public void ProcessHits()
     {
-        if (IsParried)
+        if (IsParried || HasParried)
         {
             return;
         }
@@ -218,6 +223,10 @@ public partial class Sword : Weapon, IParryable
                         b.HasBlocked = true;
                     }
                 }
+            }
+            else
+            {
+                HasParried = true;
             }
         }
     }
