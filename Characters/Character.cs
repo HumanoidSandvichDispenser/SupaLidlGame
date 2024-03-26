@@ -26,6 +26,9 @@ public partial class Character : CharacterBody2D, IFaction
         }
     }
 
+    [Export]
+    public CharacterStats Stats { get; private set; }
+
     [Signal]
     public delegate void HealthChangedEventHandler(Events.HealthChangedArgs args);
 
@@ -105,11 +108,18 @@ public partial class Character : CharacterBody2D, IFaction
 
     public override void _Ready()
     {
-        // TODO: 80+ char line
         MovementAnimation = GetNode<AnimationPlayer>("Animations/Movement");
         HurtAnimation = GetNode<AnimationPlayer>("Animations/Hurt");
         StunAnimation = GetNode<AnimationPlayer>("Animations/Stun");
         AttackAnimation = GetNode<AnimationPlayer>("Animations/Attack");
+
+        if (Stats is not null)
+        {
+            Stats.Stagger += (double time) =>
+            {
+                Stun(time);
+            };
+        }
 
         Hurtbox.ReceivedDamage += OnReceivedDamage;
     }
@@ -207,7 +217,7 @@ public partial class Character : CharacterBody2D, IFaction
     /// <paramref name="time"/> is less than the <c>Character</c>'s current
     /// stun time left, it will have no effect.
     /// </summary>
-    public virtual void Stun(float time)
+    public virtual void Stun(double time)
     {
         StunTime = Mathf.Max(time, StunTime);
     }
@@ -328,10 +338,17 @@ public partial class Character : CharacterBody2D, IFaction
             return;
         }
 
+        // update stats
         float oldHealth = Health;
         damage = ReceiveDamage(damage, inflictor, knockback, knockbackDir);
         Health -= damage;
 
+        if (Stats is not null)
+        {
+            Stats.AddStaggerDamage(damage);
+        }
+
+        // effects
         var hurtParticles = GetNode<GpuParticles2D>("Effects/HurtParticles");
         if (hurtParticles is not null)
         {

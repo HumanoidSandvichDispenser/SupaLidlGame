@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cdj50hb84aujp"]
+[gd_scene load_steps=45 format=3 uid="uid://cdj50hb84aujp"]
 
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_hvgeb"]
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="2_h5w5n"]
@@ -12,7 +12,9 @@
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="9_ssmee"]
 [ext_resource type="Script" path="res://State/Thinker/PursueState.cs" id="9_u7gxx"]
 [ext_resource type="Animation" uid="uid://8e8r3y1imvsx" path="res://Assets/Animations/stun.res" id="10_oplmj"]
+[ext_resource type="Script" path="res://Utils/CharacterStats.cs" id="11_6o2tx"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="11_qcw5x"]
+[ext_resource type="Script" path="res://Utils/Values/DoubleValue.cs" id="12_ds5eh"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="12_rlelw"]
 [ext_resource type="Material" uid="uid://2tsvsp45elru" path="res://Assets/Sprites/Particles/NPCDeathParticles.tres" id="13_kgmsk"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="14_88n3w"]
@@ -272,7 +274,7 @@ size = Vector2(8, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjgc"]
 size = Vector2(12, 16)
 
-[node name="Legionary" type="CharacterBody2D" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Legionary" type="CharacterBody2D" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_2fq6c")
@@ -282,12 +284,19 @@ script = ExtResource("2_h5w5n")
 DefaultSelectedItem = NodePath("Inventory/DocLance")
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
 Speed = 56.0
+Stats = NodePath("Stats")
 Health = 130.0
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
 metadata/_edit_vertical_guides_ = []
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("11_6o2tx")
+
+[node name="StaggerDamage" type="Node" parent="Stats"]
+script = ExtResource("12_ds5eh")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_04p3j")

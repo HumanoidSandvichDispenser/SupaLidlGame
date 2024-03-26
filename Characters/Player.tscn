@@ -576,7 +576,7 @@ size = Vector2(8, 8)
 closed = false
 polygon = PackedVector2Array(-3, 0, 2, 0)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "DirectionMarker", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Camera", "DirectionMarker", "Stats", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_h78y7")
@@ -587,6 +587,7 @@ Camera = NodePath("Camera2D")
 DirectionMarker = NodePath("Direction2D")
 Stats = NodePath("Stats")
 Speed = 80.0
+Stats = NodePath("Stats")
 HandTexture = ExtResource("3_3dqh7")
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
@@ -602,6 +603,9 @@ script = ExtResource("5_txl0r")
 
 [node name="Level" type="Node" parent="Stats"]
 script = ExtResource("6_sunc5")
+
+[node name="StaggerDamage" type="Node" parent="Stats"]
+script = ExtResource("5_txl0r")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("5_rgckv")

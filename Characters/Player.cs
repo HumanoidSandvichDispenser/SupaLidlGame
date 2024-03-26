@@ -43,7 +43,7 @@ public sealed partial class Player : Character
     public AnimationTree AnimationTree { get; private set; }
 
     [Export]
-    public PlayerStats Stats { get; private set; }
+    public new PlayerStats Stats { get; private set; }
 
     public InteractionRay InteractionRay { get; private set; }
 
@@ -57,9 +57,9 @@ public sealed partial class Player : Character
 
         _targetTracer = GetNode<TargetTracer>("%TargetTracer");
 
-        Stats = GetNode<PlayerStats>("Stats");
-
         base._Ready();
+
+        Stats = base.Stats as PlayerStats;
 
         Inventory.UsedItem += (Items.Item item) =>
         {
@@ -133,7 +133,7 @@ public sealed partial class Player : Character
         base.ModifyVelocity();
     }
 
-    public override void Stun(float time)
+    public override void Stun(double time)
     {
         base.Stun(time);
         Camera.Shake(2, 0.8f);

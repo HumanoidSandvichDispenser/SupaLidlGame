@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://glh1bi8fq0y3"]
+[gd_scene load_steps=40 format=3 uid="uid://glh1bi8fq0y3"]
 
 [ext_resource type="Script" path="res://Characters/NPC.cs" id="1_7fqw6"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_alo0e"]
@@ -18,6 +18,8 @@
 [ext_resource type="AnimationLibrary" uid="uid://f1aqhnxndybx" path="res://Assets/Animations/npc_stun.res" id="9_bpu34"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="9_g45p5"]
 [ext_resource type="Material" uid="uid://2tsvsp45elru" path="res://Assets/Sprites/Particles/NPCDeathParticles.tres" id="10_8f2hb"]
+[ext_resource type="Script" path="res://Utils/CharacterStats.cs" id="10_r68bb"]
+[ext_resource type="Script" path="res://Utils/Values/DoubleValue.cs" id="11_hda5d"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="11_sj7u0"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="11_wp6i2"]
 [ext_resource type="AudioStream" uid="uid://k6kpdj1kv0jg" path="res://Assets/Sounds/splat.ogg" id="12_iwry7"]
@@ -160,13 +162,14 @@ size = Vector2(10, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kyos5"]
 size = Vector2(12, 16)
 
-[node name="Weeb" type="CharacterBody2D" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Weeb" type="CharacterBody2D" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 material = SubResource("ShaderMaterial_etlnr")
 collision_layer = 6
 collision_mask = 17
 script = ExtResource("1_7fqw6")
 DefaultSelectedItem = NodePath("Inventory/Sword")
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
+Stats = NodePath("Stats")
 Sprite = NodePath("Sprites/Sprite2D")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
@@ -221,6 +224,12 @@ NPC = NodePath("../..")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 target_desired_distance = 16.0
 debug_enabled = true
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("10_r68bb")
+
+[node name="StaggerDamage" type="Node" parent="Stats"]
+script = ExtResource("11_hda5d")
 
 [node name="Animations" type="Node" parent="."]
 script = ExtResource("8_dh32x")

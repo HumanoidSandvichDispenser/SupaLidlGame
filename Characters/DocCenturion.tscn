@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dhamcei7tfta8"]
+[gd_scene load_steps=38 format=3 uid="uid://dhamcei7tfta8"]
 
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="1_msit5"]
 [ext_resource type="Script" path="res://Characters/Enemy.cs" id="2_pkari"]
@@ -8,7 +8,9 @@
 [ext_resource type="Script" path="res://State/Thinker/ThinkerStateMachine.cs" id="6_6516i"]
 [ext_resource type="Script" path="res://State/Thinker/CenturionAttackState.cs" id="7_n2slg"]
 [ext_resource type="Script" path="res://State/Thinker/IdleState.cs" id="8_5neew"]
+[ext_resource type="Script" path="res://Utils/CharacterStats.cs" id="9_bxrs2"]
 [ext_resource type="Script" path="res://Utils/AnimationManager.cs" id="9_fgnr2"]
+[ext_resource type="Script" path="res://Utils/Values/DoubleValue.cs" id="10_b38kt"]
 [ext_resource type="AnimationLibrary" uid="uid://xs6g84fkepjr" path="res://Assets/Animations/npc_hurt.res" id="10_bbwbd"]
 [ext_resource type="AnimationLibrary" uid="uid://f1aqhnxndybx" path="res://Assets/Animations/npc_stun.res" id="11_a0f8a"]
 [ext_resource type="Material" uid="uid://bat28samf7ukd" path="res://Assets/Sprites/Particles/NPCDamageProcessMaterial.tres" id="11_p7yev"]
@@ -133,7 +135,7 @@ size = Vector2(12, 8)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjgc"]
 size = Vector2(12, 16)
 
-[node name="Centurion" type="CharacterBody2D" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Centurion" type="CharacterBody2D" node_paths=PackedStringArray("DefaultSelectedItem", "ThinkerStateMachine", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_2fq6c")
@@ -144,11 +146,18 @@ DefaultSelectedItem = NodePath("Inventory/Sword")
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
 Speed = 40.0
 Mass = 2.0
+Stats = NodePath("Stats")
 Health = 80.0
 Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("9_bxrs2")
+
+[node name="StaggerDamage" type="Node" parent="Stats"]
+script = ExtResource("10_b38kt")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_2dbgx")

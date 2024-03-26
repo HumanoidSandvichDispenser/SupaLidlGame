@@ -3,7 +3,7 @@ using SupaLidlGame.Events;
 
 namespace SupaLidlGame.Utils;
 
-public partial class PlayerStats : Node
+public partial class PlayerStats : CharacterStats
 {
     public const int MAX_XP_PER_LEVEL = 4;
 
@@ -21,8 +21,22 @@ public partial class PlayerStats : Node
 
     public override void _Ready()
     {
+        base._Ready();
+
         XP = GetNode<DoubleValue>("XP");
         Level = GetNode<IntValue>("Level");
+
+        if (XP is null)
+        {
+            XP = new DoubleValue();
+            AddChild(XP);
+        }
+
+        if (Level is null)
+        {
+            Level = new IntValue();
+            AddChild(Level);
+        }
 
         _xpDecayTimer = new Timer();
         _xpDecayTimer.Timeout += () => _shouldDecayXP = true;
@@ -67,6 +81,8 @@ public partial class PlayerStats : Node
 
     public override void _Process(double delta)
     {
+        base._Process(delta);
+
         if (_shouldDecayXP)
         {
             XP.Value = Mathf.MoveToward(XP.Value, 1, XPDecayVelocity * delta);
