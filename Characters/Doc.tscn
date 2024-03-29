@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=70 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -7,8 +7,10 @@
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="3_t5jjc"]
 [ext_resource type="Texture2D" uid="uid://dpepm54hjuyga" path="res://Assets/Sprites/Characters/forsen-hand.png" id="4_8lqj6"]
 [ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="4_b35px"]
+[ext_resource type="Script" path="res://Utils/PlayerStats.cs" id="5_a7fiw"]
 [ext_resource type="Script" path="res://State/Character/NPCMoveState.cs" id="5_pejsd"]
 [ext_resource type="Script" path="res://State/NPC/NPCStateMachine.cs" id="6_kjpug"]
+[ext_resource type="Script" path="res://Utils/Values/DoubleValue.cs" id="6_kyulo"]
 [ext_resource type="Script" path="res://State/Character/CharacterDashState.cs" id="7_0ks57"]
 [ext_resource type="Script" path="res://State/NPC/Doc/DocTelegraphState.cs" id="7_tfwbh"]
 [ext_resource type="PackedScene" uid="uid://cjgxyhgcyvsv7" path="res://BoundingBoxes/Hurtbox.tscn" id="7_tnve0"]
@@ -570,6 +572,12 @@ Sprite = NodePath("Sprite")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
+
+[node name="Stats" type="Node" parent="."]
+script = ExtResource("5_a7fiw")
+
+[node name="StaggerDamage" type="Node" parent="Stats"]
+script = ExtResource("6_kyulo")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_t5jjc")
