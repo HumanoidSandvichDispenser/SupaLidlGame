@@ -27,7 +27,7 @@ public partial class Character : CharacterBody2D, IFaction
     }
 
     [Export]
-    public CharacterStats Stats { get; private set; }
+    public CharacterStats Stats { get; protected set; }
 
     [Signal]
     public delegate void HealthChangedEventHandler(Events.HealthChangedArgs args);
@@ -115,7 +115,7 @@ public partial class Character : CharacterBody2D, IFaction
 
         if (Stats is not null)
         {
-            Stats.Stagger += (double time) =>
+            Stats.Stagger += (double time, float staggerDamage) =>
             {
                 Stun(time);
             };

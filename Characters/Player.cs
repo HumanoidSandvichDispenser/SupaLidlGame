@@ -42,7 +42,6 @@ public sealed partial class Player : Character
     [Export]
     public AnimationTree AnimationTree { get; private set; }
 
-    [Export]
     public new PlayerStats Stats { get; private set; }
 
     public InteractionRay InteractionRay { get; private set; }
@@ -54,8 +53,10 @@ public sealed partial class Player : Character
         _characterEffects = GetNode<Node2D>("%CharacterEffects");
         _targetTracer = GetNode<TargetTracer>("%TargetTracer");
 
+        base.Stats = GetNode<PlayerStats>("Stats");
+        Stats = (PlayerStats)base.Stats;
+
         base._Ready();
-        Stats = GetNode<PlayerStats>("Stats");
 
         Inventory.UsedItem += (Items.Item item) =>
         {

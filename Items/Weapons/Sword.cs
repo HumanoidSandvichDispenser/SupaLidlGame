@@ -62,6 +62,9 @@ public partial class Sword : Weapon, IParryable
 
     public ulong ParryTimeOrigin { get; protected set; }
 
+    [Export]
+    public float BlockForce { get; set; } = 1;
+
     private Tween _currentTween;
 
     private AnimationNodeStateMachinePlayback _playback;
@@ -214,7 +217,7 @@ public partial class Sword : Weapon, IParryable
             {
                 // our character was parried
                 ParryParticles.CloneOnWorld<GpuParticles2D>().EmitOneShot();
-                Stun();
+                Stun(otherParryable.BlockForce);
 
                 if (otherParryable is Sword sword)
                 {
@@ -235,12 +238,13 @@ public partial class Sword : Weapon, IParryable
     /// Stuns the wepaon holder. This is unique to swords and melee weapons
     /// if they can parry.
     /// </summary>
-    public void Stun()
+    public void Stun(float blockForce)
     {
         IsParried = true;
-        AnimationPlayer.SpeedScale = 0.25f;
-        Character.Stun(2);
-        GetNode<AudioStreamPlayer2D>("ParrySound")
+        Character.Stats.AddStaggerDamage(Damage * blockForce);
+
+        // optionally play parry sound
+        GetNode<AudioStreamPlayer2D>("ParrySound")?
             .OnWorld()
             .WithPitchDeviation(0.125f)
             .PlayOneShot();

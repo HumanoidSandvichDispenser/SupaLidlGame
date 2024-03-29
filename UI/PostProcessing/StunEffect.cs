@@ -8,7 +8,6 @@ public partial class StunEffect : ColorRect
     {
         Events.EventBus.Instance.PlayerStun += () =>
         {
-            GD.Print("PLAYER STUNNED!!!");
             GetNode<AnimationPlayer>("AnimationPlayer").Play("tighten");
         };
     }

@@ -25,9 +25,13 @@ public partial class SwordBlockState : WeaponState
 
     private bool _isAlternate = false;
 
+    private float _oldBlockForce;
+
     public override WeaponState Enter(IState<WeaponState> prevState)
     {
         Sword.EnableParry(ulong.MaxValue);
+        _oldBlockForce = Sword.BlockForce;
+        Sword.BlockForce *= 4;
 
         _useDuration = Sword.UseAltTime;
         _attackDuration = Sword.AttackAltTime;
@@ -55,6 +59,12 @@ public partial class SwordBlockState : WeaponState
 
     public override void Exit(IState<WeaponState> nextState)
     {
+        if (nextState == IdleState)
+        {
+            Sword.AnimationPlayer.Play("RESET");
+        }
+
+        Sword.BlockForce = _oldBlockForce;
         Deattack();
         HasBlocked = false;
     }
@@ -71,7 +81,6 @@ public partial class SwordBlockState : WeaponState
 
         if ((_useDuration -= delta) <= 0)
         {
-            Sword.AnimationPlayer.Play("RESET");
             return IdleState;
         }
 

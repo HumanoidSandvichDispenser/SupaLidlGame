@@ -10,5 +10,7 @@ public interface IParryable
 
     public ulong ParryTimeOrigin { get; }
 
-    public void Stun();
+    public float BlockForce { get; }
+
+    public void Stun(float blockForce);
 }

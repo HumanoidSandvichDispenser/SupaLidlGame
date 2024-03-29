@@ -16,7 +16,7 @@ public partial class CharacterStats : Node
     public double MaxStagger { get; set; } = 25;
 
     [Signal]
-    public delegate void StaggerEventHandler(double time);
+    public delegate void StaggerEventHandler(double time, float damage);
 
     public bool ShouldStagger => StaggerDamage.Value >= MaxStagger;
 
@@ -42,10 +42,12 @@ public partial class CharacterStats : Node
 
     public void AddStaggerDamage(float damage)
     {
-        StaggerDamage.Value += damage * StaggerCoefficient;
+        float delta = damage * (float)StaggerCoefficient; 
+        StaggerDamage.Value += delta;
         if (StaggerDamage.Value >= MaxStagger)
         {
-            EmitSignal(SignalName.Stagger, 1);
+            EmitSignal(SignalName.Stagger, 1, delta);
+            StaggerDamage.Value = 0;
         }
         else
         {
