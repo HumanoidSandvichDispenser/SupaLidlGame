@@ -17,6 +17,9 @@ public partial class SwordBlockState : WeaponState
     [Export]
     public string BlockAnimKey { get; set; }
 
+    [Export]
+    public float BlockForceMultiplier { get; set; } = 4;
+
     public bool HasBlocked { get; set; }
 
     private double _attackDuration = 0;
@@ -31,7 +34,7 @@ public partial class SwordBlockState : WeaponState
     {
         Sword.EnableParry(ulong.MaxValue);
         _oldBlockForce = Sword.BlockForce;
-        Sword.BlockForce *= 4;
+        Sword.BlockForce *= BlockForceMultiplier;
 
         _useDuration = Sword.UseAltTime;
         _attackDuration = Sword.AttackAltTime;
