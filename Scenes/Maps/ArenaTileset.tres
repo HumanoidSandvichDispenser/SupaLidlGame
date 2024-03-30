@@ -1,7 +1,8 @@
-[gd_resource type="TileSet" load_steps=10 format=3 uid="uid://l61kbx31ug4p"]
+[gd_resource type="TileSet" load_steps=12 format=3 uid="uid://l61kbx31ug4p"]
 
 [ext_resource type="Texture2D" uid="uid://b0yiy7w8nxmas" path="res://Assets/Sprites/arena-tileset.png" id="1_kud44"]
 [ext_resource type="Texture2D" uid="uid://j1ekk1ppenm4" path="res://Assets/Sprites/grass-tileset.png" id="2_lihbs"]
+[ext_resource type="Texture2D" uid="uid://udgjrcaexuaq" path="res://Assets/Sprites/Props/arena-arches.png" id="3_hbylw"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_7lhug"]
 vertices = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -696,6 +697,27 @@ texture = ExtResource("2_lihbs")
 2:7/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:7/0/physics_layer_0/angular_velocity = 0.0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u4tjf"]
+texture = ExtResource("3_hbylw")
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+0:1/0 = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0 = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0 = 0
+2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:1/0/physics_layer_0/angular_velocity = 0.0
+
 [resource]
 occlusion_layer_0/light_mask = 1
 physics_layer_0/collision_layer = 1
@@ -712,3 +734,4 @@ terrain_set_1/terrain_1/color = Color(0.5, 0.4375, 0.25, 1)
 navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_fcd6d")
 sources/1 = SubResource("TileSetAtlasSource_mdfpe")
+sources/2 = SubResource("TileSetAtlasSource_u4tjf")
