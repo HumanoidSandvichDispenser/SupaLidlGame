@@ -552,7 +552,7 @@ size = Vector2(16, 19)
 [sub_resource type="CircleShape2D" id="CircleShape2D_8hwat"]
 radius = 16.0
 
-[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("Lance", "BossStateMachine", "DefaultSelectedItem", "ThinkerStateMachine", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("Lance", "BossStateMachine", "DefaultSelectedItem", "ThinkerStateMachine", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_7n7iy")
@@ -566,6 +566,7 @@ Music = ExtResource("3_eo4lg")
 MaxHealth = 900.0
 DefaultSelectedItem = NodePath("Inventory/DocLance")
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
+Stats = NodePath("Stats")
 HandTexture = ExtResource("4_8lqj6")
 Health = 900.0
 Sprite = NodePath("Sprite")

@@ -622,7 +622,7 @@ Character = NodePath("../..")
 
 [node name="Move" type="Node" parent="StateMachine" node_paths=PackedStringArray("AbilityState", "IdleState", "MaxLevelState", "Character")]
 script = ExtResource("7_dfqd8")
-AbilityState = NodePath("../Dash")
+AbilityState = NodePath("../Roll")
 IdleState = NodePath("../Idle")
 MaxLevelState = NodePath("../MaxLevel")
 Character = NodePath("../..")
