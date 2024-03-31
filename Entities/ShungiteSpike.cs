@@ -109,9 +109,13 @@ public partial class ShungiteSpike : Projectile
                 if (!_hasExploded)
                 {
                     CreateDart(Vector2.Up);
-                    CreateDart(Vector2.Down);
-                    CreateDart(Vector2.Left);
+                    CreateDart((Vector2.Up + Vector2.Right).Normalized());
                     CreateDart(Vector2.Right);
+                    CreateDart((Vector2.Down + Vector2.Right).Normalized());
+                    CreateDart(Vector2.Down);
+                    CreateDart((Vector2.Down + Vector2.Left).Normalized());
+                    CreateDart(Vector2.Left);
+                    CreateDart((Vector2.Up + Vector2.Left).Normalized());
                     AnimationPlayer.Play("explode");
                     _hasExploded = true;
                 }
