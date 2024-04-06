@@ -266,7 +266,3 @@ libraries = {
 max_distance = 512.0
 attenuation = 8.0
 bus = &"Effects"
-
-[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-avoidance_enabled = false
-vertices = PackedVector2Array(-16, -8, 16, -8, 16, 0, -16, 0)

@@ -6,6 +6,7 @@
 size = Vector2(28, 8)
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_tsfmt"]
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="Bookshelf" type="StaticBody2D"]
 y_sort_enabled = true
