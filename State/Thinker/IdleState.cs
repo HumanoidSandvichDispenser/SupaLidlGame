@@ -75,13 +75,13 @@ public partial class IdleState : ThinkerState
 
     public override ThinkerState PhysicsProcess(double delta)
     {
-        if (_isReturning && NavigationAgent.IsTargetReachable())
+        if (_isReturning && (NavigationAgent?.IsTargetReachable() ?? false))
         {
             var navPos = NavigationAgent.GetNextPathPosition();
             NPC.Direction = NPC.GlobalPosition.DirectionTo(navPos);
         }
 
-        if (NavigationAgent.IsTargetReached())
+        if (NavigationAgent?.IsTargetReached() ?? false)
         {
             NPC.Direction = Vector2.Zero;
         }
