@@ -9,4 +9,14 @@ public interface IFaction
     /// </summary>
     [Export]
     public ushort Faction { get; set; }
+
+    public bool AlignsWith(IFaction other)
+    {
+        return (Faction & other.Faction) > 0;
+    }
+
+    public bool AlignsFullyWith(IFaction other)
+    {
+        return Faction == other.Faction;
+    }
 }
