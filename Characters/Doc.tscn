@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
-[ext_resource type="AudioStream" uid="uid://ipss4y2gkk3y" path="res://Assets/Music/gillette.mp3" id="3_eo4lg"]
+[ext_resource type="AudioStream" uid="uid://cboxekwt0xc6o" path="res://Assets/Music/alleyways.mp3" id="3_qnxmu"]
 [ext_resource type="Texture2D" uid="uid://baiuqgrqipppt" path="res://Assets/Sprites/Characters/doc.png" id="3_rs44f"]
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="3_t5jjc"]
 [ext_resource type="Texture2D" uid="uid://dpepm54hjuyga" path="res://Assets/Sprites/Characters/forsen-hand.png" id="4_8lqj6"]
@@ -562,7 +562,7 @@ script = ExtResource("2_3elet")
 Lance = NodePath("Inventory/DocLance")
 BossStateMachine = NodePath("BossStateMachine")
 BossName = "Doc, The Two-Time"
-Music = ExtResource("3_eo4lg")
+Music = ExtResource("3_qnxmu")
 MaxHealth = 900.0
 DefaultSelectedItem = NodePath("Inventory/DocLance")
 ThinkerStateMachine = NodePath("ThinkerStateMachine")
