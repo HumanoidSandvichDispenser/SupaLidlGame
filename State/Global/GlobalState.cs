@@ -14,6 +14,8 @@ public partial class GlobalState : Node
     [Export]
     public Stats Stats { get; set; }
 
+    public static GlobalState Instance { get; private set; }
+
     [Export]
     public GameSettings Settings { get; set; }
 
@@ -30,6 +32,13 @@ public partial class GlobalState : Node
 
     public override void _Ready()
     {
+        if (Instance != null)
+        {
+            throw new MultipleSingletonsException();
+        }
+
+        Instance = this;
+
         ProcessMode = ProcessModeEnum.Always;
         LoadSettings();
     }

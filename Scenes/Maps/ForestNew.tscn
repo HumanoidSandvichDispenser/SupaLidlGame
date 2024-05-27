@@ -843,7 +843,7 @@ position = Vector2(1272, 0)
 [node name="Campfire" parent="Entities" index="0" instance=ExtResource("3_ve4i2")]
 position = Vector2(-24, -8)
 
-[node name="Areas" parent="." index="3"]
+[node name="Areas" parent="." index="10"]
 visible = false
 
 [node name="Main" type="NavigationRegion2D" parent="Areas" index="0"]

@@ -24,6 +24,15 @@ public partial class ProjectileSpawner : Ranged
     [Export]
     public float ProjectileAngleDeviation { get; set; }
 
+    public string ProjectilePath
+    {
+        get => Projectile?.ResourcePath;
+        set
+        {
+            Projectile = GD.Load<PackedScene>(value);
+        }
+    }
+
     protected virtual void SpawnProjectile(Scenes.Map map,
         Vector2 direction, float velocityModifier = 1)
     {

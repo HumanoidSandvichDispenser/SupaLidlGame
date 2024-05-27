@@ -34,6 +34,8 @@ public sealed partial class DebugConsole : Control
 
     private Node ctx => Context;
 
+    public const double DEBUG_REFRESH_INTERVAL = 0.25;
+
     public override void _Ready()
     {
         _entry = GetNode<Entry>("%Entry");
@@ -61,6 +63,39 @@ public sealed partial class DebugConsole : Control
                 }
             }
         };
+
+        GD.Print("DebugConsole init");
+        // TODO: put this in a separate class
+        // watch godot.log
+        bool isFileLoggingEnabled = ProjectSettings
+            .GetSetting("debug/file_logging/enable_file_logging.pc")
+            .AsBool();
+
+        if (isFileLoggingEnabled)
+        {
+            GD.Print("File logging is enabled.");
+            string logPath = ProjectSettings
+                .GetSetting("debug/file_logging/log_path")
+                .AsString();
+            var fs = FileAccess.Open(logPath, FileAccess.ModeFlags.Read);
+
+            var timer = new Timer();
+            AddChild(timer);
+            timer.Timeout += () =>
+            {
+                // push 
+                while (fs.GetPosition() < fs.GetLength())
+                {
+                    string line = fs.GetLine();
+                    _output.Text += line;
+                }
+            };
+            timer.Start(DEBUG_REFRESH_INTERVAL);
+        }
+        else
+        {
+            GD.PushWarning("File logging is not enabled.");
+        }
     }
 
     public IEnumerable<NodePathToken> SplitPath(NodePath path)
@@ -209,13 +244,21 @@ public sealed partial class DebugConsole : Control
 
         Godot.Expression exp = new();
 
-        string[] reserved = { "from", "set_context", "context", "set_prop", "to_node_path" };
+        string[] reserved = {
+            "from",
+            "set_context",
+            "context",
+            "set_prop",
+            "to_node_path",
+            "load",
+        };
         Godot.Collections.Array reservedMap = new();
         reservedMap.Add(new Callable(this, MethodName.From));
         reservedMap.Add(new Callable(this, MethodName.SetContext));
         reservedMap.Add(Context);
         reservedMap.Add(new Callable(this, MethodName.SetProp));
         reservedMap.Add(new Callable(this, MethodName.ToNodePath));
+        reservedMap.Add(new Callable(this, MethodName.Load));
 
         var err = exp.Parse(str, reserved);
         if (err != Error.Ok)
@@ -245,5 +288,10 @@ public sealed partial class DebugConsole : Control
     public void SetContext(Node node)
     {
         Context = node;
+    }
+
+    private Resource Load(string path)
+    {
+        return ResourceLoader.Load(path);
     }
 }

@@ -1,0 +1,23 @@
+~ start
+
+Snus Dealer: d
+
+% => test
+% => dont_snus
+
+=> END
+
+~ test
+
+Snus Dealer: asdadsadasd
+
+=> END
+
+~ dont_snus
+
+Snus Dealer: If you don't snus...
+Snus Dealer: you lose.
+
+=> END
+
+~ shop
