@@ -2,21 +2,18 @@ using Godot;
 using GodotUtilities;
 using GodotUtilities.SourceGenerators;
 
-namespace SupaLidlGame.UI;
+namespace SupaLidlGame.UI.Inventory;
 
 [Scene]
 public partial class InventorySlot : ColorRect
 {
     [Node("TextureRect")]
-    private TextureRect _textureRect;
+    protected TextureRect _textureRect;
 
     [Node("Selected")]
-    private NinePatchRect _selected;
+    protected NinePatchRect _frame;
 
-    [Node("Unselected")]
-    private NinePatchRect _unselected;
-
-    private static Texture2D _placeholderTexture;
+    protected static Texture2D _placeholderTexture;
 
     private Items.ItemMetadata _item;
 
@@ -29,26 +26,12 @@ public partial class InventorySlot : ColorRect
 
             if (_item is null)
             {
-                //_textureRect.Texture = _placeholderTexture;
                 _textureRect.Texture = null;
             }
             else
             {
                 _textureRect.Texture = _item.Icon;
             }
-        }
-    }
-
-    private bool _isSelected = false;
-
-    public bool IsSelected
-    {
-        get => _isSelected;
-        set
-        {
-            _isSelected = value;
-            _selected.Visible = _isSelected;
-            _unselected.Visible = !_isSelected;
         }
     }
 
@@ -65,10 +48,5 @@ public partial class InventorySlot : ColorRect
             WireNodes();
         }
         base._Notification(what);
-    }
-
-    public override void _Ready()
-    {
-
     }
 }

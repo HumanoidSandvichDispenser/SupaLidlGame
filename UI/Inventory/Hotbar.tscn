@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://sfs8dpfitpdu"]
 
-[ext_resource type="Script" path="res://UI/Hotbar.cs" id="1_2sak2"]
-[ext_resource type="PackedScene" uid="uid://ctad0dkoyw8ad" path="res://UI/InventorySlot.tscn" id="1_ct3cn"]
+[ext_resource type="Script" path="res://UI/Inventory/Hotbar.cs" id="1_2sak2"]
+[ext_resource type="PackedScene" uid="uid://ctad0dkoyw8ad" path="res://UI/Inventory/InventorySlot.tscn" id="2_upggg"]
 
 [node name="Hotbar" type="GridContainer" node_paths=PackedStringArray("_slots")]
 anchors_preset = 1
@@ -15,11 +15,11 @@ columns = 3
 script = ExtResource("1_2sak2")
 _slots = [NodePath("InventorySlot"), NodePath("InventorySlot2"), NodePath("InventorySlot3")]
 
-[node name="InventorySlot" parent="." instance=ExtResource("1_ct3cn")]
+[node name="InventorySlot" parent="." instance=ExtResource("2_upggg")]
 layout_mode = 2
 
-[node name="InventorySlot2" parent="." instance=ExtResource("1_ct3cn")]
+[node name="InventorySlot2" parent="." instance=ExtResource("2_upggg")]
 layout_mode = 2
 
-[node name="InventorySlot3" parent="." instance=ExtResource("1_ct3cn")]
+[node name="InventorySlot3" parent="." instance=ExtResource("2_upggg")]
 layout_mode = 2

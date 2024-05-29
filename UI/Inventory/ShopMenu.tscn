@@ -1,0 +1,78 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyggkyqosjk36"]
+
+[ext_resource type="Texture2D" uid="uid://uhmowtsi3wfh" path="res://Assets/Sprites/UI/menu-rect-no-bg-white.png" id="2_puklu"]
+[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="3_aj4jx"]
+[ext_resource type="PackedScene" uid="uid://ctad0dkoyw8ad" path="res://UI/Inventory/InventorySlot.tscn" id="4_wawb8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gm1xk"]
+bg_color = Color(0, 0, 0, 0.752941)
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(0, 0, 0, 0)
+border_blend = true
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bvu21"]
+texture = ExtResource("2_puklu")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
+
+[node name="Panel" type="PanelContainer"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -236.0
+offset_top = -175.5
+offset_bottom = 175.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gm1xk")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_bvu21")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_aj4jx")
+text = "Snus Dealer"
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+columns = 4
+
+[node name="InventorySlot" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
+
+[node name="InventorySlot4" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
+
+[node name="InventorySlot5" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
+
+[node name="InventorySlot6" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
+
+[node name="InventorySlot7" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
+
+[node name="InventorySlot8" parent="PanelContainer/VBoxContainer/GridContainer" instance=ExtResource("4_wawb8")]
+layout_mode = 2
