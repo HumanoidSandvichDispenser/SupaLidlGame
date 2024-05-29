@@ -20,6 +20,9 @@ public partial class Inventory : Node2D
     [Signal]
     public delegate void UsedItemEventHandler(Item item);
 
+    [Signal]
+    public delegate void EquippedItemEventHandler(Item newItem, Item prevItem);
+
     public const int MaxCapacity = 3;
 
     private Item _selectedItem;
@@ -87,7 +90,8 @@ public partial class Inventory : Node2D
             return false;
         }
 
-        _selectedItem?.Unequip(Character);
+        Item prevItem = _selectedItem;
+        prevItem?.Unequip(Character);
         _selectedIndex = index;
 
         if (index >= 0)
@@ -99,6 +103,8 @@ public partial class Inventory : Node2D
         {
             _selectedItem = null;
         }
+
+        EmitSignal(SignalName.EquippedItem, prevItem, _selectedItem);
 
         GD.Print($"Inventory: {index} is new selected index.");
 
