@@ -4,16 +4,31 @@ using GodotUtilities.SourceGenerators;
 
 namespace SupaLidlGame.UI.Inventory;
 
-[Scene]
-public partial class InventorySlot : ColorRect
+public partial class InventorySlot : Container
 {
-    [Node("TextureRect")]
-    protected TextureRect _textureRect;
+    private bool _isSelected = false;
 
-    [Node("Selected")]
-    protected NinePatchRect _frame;
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set
+        {
+            _isSelected = value;
+            if (_selectedFrame is not null)
+            {
+                _selectedFrame.Visible = _isSelected;
+                _frame.Visible = !_isSelected;
+            }
+        }
+    }
 
-    protected static Texture2D _placeholderTexture;
+    private TextureRect _textureRect;
+
+    private NinePatchRect _frame;
+
+    private NinePatchRect _selectedFrame;
+
+    private static Texture2D _placeholderTexture;
 
     private Items.ItemMetadata _item;
 
@@ -41,12 +56,10 @@ public partial class InventorySlot : ColorRect
             "res://Assets/Sprites/UI/hotbar-inactive.png");
     }
 
-    public override void _Notification(int what)
+    public override void _Ready()
     {
-        if (what == NotificationSceneInstantiated)
-        {
-            WireNodes();
-        }
-        base._Notification(what);
+        _textureRect = GetNode<TextureRect>("TextureRect");
+        _frame = GetNode<NinePatchRect>("Frame");
+        _selectedFrame = GetNode<NinePatchRect>("SelectedFrame");
     }
 }

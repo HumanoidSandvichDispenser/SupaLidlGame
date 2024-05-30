@@ -5,7 +5,7 @@ namespace SupaLidlGame.UI.Inventory;
 public partial class Hotbar : GridContainer
 {
     [Export]
-    private Godot.Collections.Array<HotbarSlot> _slots;
+    private Godot.Collections.Array<InventorySlot> _slots;
 
     public override void _Ready()
     {
