@@ -51,6 +51,9 @@ public partial class EventBus : Node
     [Signal]
     public delegate void ExitTransitionEventHandler();
 
+    [Signal]
+    public delegate void EnterShopEventHandler(string shopResourcePath);
+
     public override void _Ready()
     {
         ProcessMode = ProcessModeEnum.Always;

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Shop" load_steps=5 format=3 uid="uid://djqd88vdkoi6d"]
+
+[ext_resource type="Script" path="res://Items/Shop.cs" id="1_betbc"]
+[ext_resource type="Resource" uid="uid://cjsh0dcgbfn77" path="res://Items/Weapons/Bow.tres" id="1_ntroj"]
+[ext_resource type="Script" path="res://Items/ShopEntry.cs" id="2_xgvwu"]
+
+[sub_resource type="Resource" id="Resource_jdx0p"]
+script = ExtResource("2_xgvwu")
+Item = ExtResource("1_ntroj")
+MapStateCondition = ""
+
+[resource]
+script = ExtResource("1_betbc")
+Entries = Array[Object]([SubResource("Resource_jdx0p")])
