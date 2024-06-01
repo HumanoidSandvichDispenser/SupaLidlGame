@@ -3,11 +3,10 @@
 [ext_resource type="Script" path="res://Utils/World.cs" id="1_1k6ew"]
 [ext_resource type="PackedScene" uid="uid://c271rdjhd1gfo" path="res://UI/Base.tscn" id="2_mm0qt"]
 
-[node name="World" type="Node2D" node_paths=PackedStringArray("MusicPlayer", "DialogueBalloon")]
+[node name="World" type="Node2D" node_paths=PackedStringArray("MusicPlayer")]
 process_mode = 3
 script = ExtResource("1_1k6ew")
 MusicPlayer = NodePath("MusicPlayer")
-DialogueBalloon = NodePath("CanvasLayer/SubViewportContainer/UIViewport/DialogBalloon")
 
 [node name="CanvasLayer" parent="." instance=ExtResource("2_mm0qt")]
 
@@ -21,6 +20,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Music"

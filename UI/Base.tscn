@@ -1,17 +1,27 @@
-[gd_scene load_steps=14 format=3 uid="uid://c271rdjhd1gfo"]
+[gd_scene load_steps=18 format=3 uid="uid://c271rdjhd1gfo"]
 
-[ext_resource type="PackedScene" uid="uid://73jm5qjy52vq" path="res://Dialogue/balloon.tscn" id="1_atjb1"]
 [ext_resource type="Script" path="res://UI/UIController.cs" id="2_b4b6l"]
 [ext_resource type="PackedScene" uid="uid://bxo553hblp6nf" path="res://UI/HealthBar.tscn" id="3_j1j6h"]
 [ext_resource type="PackedScene" uid="uid://01d24ij5av1y" path="res://UI/BossBar.tscn" id="4_igi28"]
 [ext_resource type="PackedScene" uid="uid://cr7tkxctmyags" path="res://UI/LevelBar.tscn" id="4_rcekd"]
 [ext_resource type="PackedScene" uid="uid://c77754nvmckn" path="res://UI/LocationDisplay.tscn" id="5_cr6vo"]
-[ext_resource type="PackedScene" uid="uid://sfs8dpfitpdu" path="res://UI/Hotbar.tscn" id="5_mmp18"]
+[ext_resource type="PackedScene" uid="uid://sfs8dpfitpdu" path="res://UI/Inventory/Hotbar.tscn" id="5_mmp18"]
 [ext_resource type="PackedScene" uid="uid://d3q1yu3n7cqfj" path="res://UI/SceneTransition.tscn" id="6_j0nhv"]
+[ext_resource type="PackedScene" uid="uid://cyggkyqosjk36" path="res://UI/Inventory/ShopMenu.tscn" id="8_ep3ae"]
 [ext_resource type="PackedScene" uid="uid://2afbrf8asy2a" path="res://UI/PostProcessing/Vignette.tscn" id="9_p1ubd"]
 [ext_resource type="PackedScene" uid="uid://b1wsryv4bn0cn" path="res://UI/PostProcessing/StunEffect.tscn" id="10_646ma"]
 [ext_resource type="Shader" path="res://Shaders/Grayscale.gdshader" id="11_w4gn1"]
+[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="11_wtdum"]
 [ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="12_tyv35"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a504f"]
+bg_color = Color(0.906763, 0, 0.280984, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gheod"]
+bg_color = Color(1, 0.315507, 0.447521, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1nm23"]
+bg_color = Color(0.951511, 0.387714, 0.416256, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kbd61"]
 shader = ExtResource("11_w4gn1")
@@ -19,6 +29,35 @@ shader_parameter/grayscale_intensity = 0.0
 
 [node name="BaseUI" type="CanvasLayer"]
 process_mode = 3
+
+[node name="Button" type="Button" parent="."]
+offset_left = 536.0
+offset_right = 592.0
+offset_bottom = 31.0
+theme_override_styles/focus = SubResource("StyleBoxFlat_a504f")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gheod")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1nm23")
+text = "sdfsdf"
+
+[node name="PostProcessing" type="CanvasLayer" parent="."]
+
+[node name="Vignette" parent="PostProcessing" instance=ExtResource("9_p1ubd")]
+
+[node name="StunEffect" parent="PostProcessing" instance=ExtResource("10_646ma")]
+
+[node name="Sprite2D" type="TextureRect" parent="PostProcessing"]
+visible = false
+material = SubResource("ShaderMaterial_kbd61")
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("12_tyv35")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 15
@@ -36,9 +75,6 @@ handle_input_locally = false
 size = Vector2i(640, 360)
 render_target_update_mode = 4
 
-[node name="DialogBalloon" parent="SubViewportContainer/UIViewport" instance=ExtResource("1_atjb1")]
-layer = 4
-
 [node name="MainUILayer" type="CanvasLayer" parent="SubViewportContainer/UIViewport"]
 layer = 3
 
@@ -52,6 +88,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 script = ExtResource("2_b4b6l")
 
 [node name="Top" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
@@ -78,7 +115,6 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Margin2" type="MarginContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Left/VBoxContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
@@ -91,6 +127,21 @@ theme_override_constants/margin_right = 16
 [node name="Hotbar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Right" node_paths=PackedStringArray("_slots") instance=ExtResource("5_mmp18")]
 layout_mode = 2
 _slots = [NodePath("InventorySlot"), NodePath("InventorySlot2"), NodePath("InventorySlot3")]
+
+[node name="BoxContainer" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -236.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 2
+
+[node name="Panel" parent="SubViewportContainer/UIViewport/MainUILayer/Main/BoxContainer" node_paths=PackedStringArray("_inventoryGrid") instance=ExtResource("8_ep3ae")]
+layout_mode = 2
+_inventoryGrid = NodePath("PanelContainer/VBoxContainer/ScrollContainer/InventoryGrid")
 
 [node name="Bottom" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
 layout_mode = 1
@@ -107,27 +158,20 @@ alignment = 1
 visible = false
 layout_mode = 2
 
+[node name="Button" type="Button" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Bottom"]
+layout_mode = 2
+theme = ExtResource("11_wtdum")
+theme_type_variation = &"InventorySlotButton"
+theme_override_styles/hover = SubResource("StyleBoxFlat_gheod")
+text = "sdfsdfa"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
 [node name="LocationDisplay" parent="SubViewportContainer/UIViewport/MainUILayer" instance=ExtResource("5_cr6vo")]
 
 [node name="SceneTransition" parent="SubViewportContainer/UIViewport/MainUILayer" instance=ExtResource("6_j0nhv")]
 z_index = 1
-
-[node name="PostProcessing" type="CanvasLayer" parent="."]
-
-[node name="Vignette" parent="PostProcessing" instance=ExtResource("9_p1ubd")]
-
-[node name="StunEffect" parent="PostProcessing" instance=ExtResource("10_646ma")]
-
-[node name="Sprite2D" type="TextureRect" parent="PostProcessing"]
-visible = false
-material = SubResource("ShaderMaterial_kbd61")
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -128.0
-offset_top = -128.0
-grow_horizontal = 0
-grow_vertical = 0
-texture = ExtResource("12_tyv35")
