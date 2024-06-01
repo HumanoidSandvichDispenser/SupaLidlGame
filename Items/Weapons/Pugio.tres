@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ItemMetadata" load_steps=4 format=3 uid="uid://iqe6rgnb3jur"]
+[gd_resource type="Resource" script_class="ItemMetadata" load_steps=5 format=3 uid="uid://iqe6rgnb3jur"]
 
+[ext_resource type="Texture2D" uid="uid://vjdyrv8wp7gl" path="res://Assets/Sprites/forsenLevel.png" id="1_3ptey"]
 [ext_resource type="Script" path="res://Utils/ScenePath.cs" id="1_o026a"]
 [ext_resource type="Script" path="res://Items/ItemMetadata.cs" id="2_j4tmu"]
 
@@ -10,6 +11,7 @@ Path = "res://Items/Weapons/Pugio.tscn"
 [resource]
 script = ExtResource("2_j4tmu")
 Instance = SubResource("Resource_abrg1")
+Icon = ExtResource("1_3ptey")
 Name = "Pugio"
 Description = "A sidearm dagger."
 BuyPrice = 0

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemMetadata" load_steps=5 format=3 uid="uid://dkm216ug0vj2h"]
+
+[ext_resource type="Script" path="res://Utils/ScenePath.cs" id="1_owc5r"]
+[ext_resource type="Texture2D" uid="uid://vjdyrv8wp7gl" path="res://Assets/Sprites/forsenLevel.png" id="1_v76vk"]
+[ext_resource type="Script" path="res://Items/ItemMetadata.cs" id="1_vtlr1"]
+
+[sub_resource type="Resource" id="Resource_6sxq7"]
+script = ExtResource("1_owc5r")
+Path = "res://Items/Weapons/Shotgun.tscn"
+
+[resource]
+script = ExtResource("1_vtlr1")
+Instance = SubResource("Resource_6sxq7")
+Icon = ExtResource("1_v76vk")
+Name = "Shotgun"
+Description = ""
+BuyPrice = 1887
+SellPrice = 0
