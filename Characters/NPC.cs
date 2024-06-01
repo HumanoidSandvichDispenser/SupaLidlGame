@@ -3,6 +3,7 @@
 using Godot;
 using SupaLidlGame.Extensions;
 using SupaLidlGame.Items;
+using SupaLidlGame.Utils;
 using System;
 
 namespace SupaLidlGame.Characters;
@@ -109,6 +110,37 @@ public partial class NPC : Character
             if (node is Character character)
             {
                 bool isFriendly = character.Faction == Faction;
+                if (isFriendly || character.Health <= 0)
+                {
+                    continue;
+                }
+
+                float score = 0;
+                score -= Position.DistanceTo(character.Position);
+
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    bestChar = character;
+                }
+            }
+        }
+        return bestChar;
+    }
+
+    /// <summary>
+    /// Finds the best character whose faction aligns with this character's.
+    /// </summary>
+    public virtual Character FindBestNeutral()
+    {
+        float bestScore = float.MaxValue;
+        Character bestChar = null;
+        // NOTE: this relies on all Characters being under the Entities node
+        foreach (Node node in GetParent().GetChildren())
+        {
+            if (node is Character character)
+            {
+                bool isFriendly = ((IFaction)this).AlignsWith(character);
                 if (isFriendly || character.Health <= 0)
                 {
                     continue;

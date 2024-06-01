@@ -4,14 +4,14 @@
 [ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="2_kynkg"]
 [ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="2_s5nik"]
 [ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="3_pcrll"]
-[ext_resource type="Script" path="res://State/Thinker/IdleState.cs" id="3_rgc42"]
 [ext_resource type="Script" path="res://State/Thinker/ThinkerStateMachine.cs" id="4_mo4wj"]
+[ext_resource type="Script" path="res://State/Thinker/VendorIdle.cs" id="5_oau5d"]
 [ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="5_sjs24"]
 [ext_resource type="Script" path="res://Utils/InteractionTriggerDialogue.cs" id="5_yknpw"]
 [ext_resource type="Resource" uid="uid://c4n7vhoxybu70" path="res://Dialogue/snus-dealer.dialogue" id="6_isvnq"]
 [ext_resource type="Script" path="res://Items/Inventory.cs" id="7_vip6b"]
 
-[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("ThinkerStateMachine", "Sprite", "Inventory", "StateMachine")]
+[node name="SnusDealer" type="CharacterBody2D" node_paths=PackedStringArray("ThinkerStateMachine", "Sprite", "Inventory", "StateMachine")]
 script = ExtResource("1_04gcf")
 ThinkerStateMachine = NodePath("Thinker")
 Sprite = NodePath("Sprites/Sprite")
@@ -32,7 +32,7 @@ script = ExtResource("4_mo4wj")
 InitialState = NodePath("Idle")
 
 [node name="Idle" type="Node" parent="Thinker" node_paths=PackedStringArray("NPC")]
-script = ExtResource("3_rgc42")
+script = ExtResource("5_oau5d")
 NPC = NodePath("../..")
 
 [node name="Animations" type="Node" parent="."]
@@ -64,7 +64,7 @@ position = Vector2(0, -4)
 script = ExtResource("5_yknpw")
 InteractionTrigger = NodePath("InteractionTrigger")
 DialogueResource = ExtResource("6_isvnq")
-DialogueTitle = "shop"
+DialogueTitle = "start"
 
 [node name="InteractionTrigger" parent="Interaction" instance=ExtResource("5_sjs24")]
 

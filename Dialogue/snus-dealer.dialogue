@@ -1,23 +1,23 @@
 ~ start
 
-Snus Dealer: d
-
-% => test
-% => dont_snus
-
-=> END
-
-~ test
-
-Snus Dealer: asdadsadasd
+Snus Dealer: Hey kid, wanna buy some snus?
+- Alright. => shop
+- No, I don't think so. => END
+- Snus? => dont_snus
 
 => END
 
 ~ dont_snus
 
+Snus Dealer: You know what they say.
 Snus Dealer: If you don't snus...
 Snus Dealer: you lose.
+- Pepepains
 
-=> END
+=> start
 
 ~ shop
+
+do emit("EnterShop", "res://Items/Shops/SnusDealer.tres")
+
+=> END
