@@ -1,20 +1,41 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctad0dkoyw8ad"]
+[gd_scene load_steps=8 format=3 uid="uid://ctad0dkoyw8ad"]
 
 [ext_resource type="Script" path="res://UI/Inventory/InventorySlot.cs" id="1_fju5i"]
+[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="1_wnu7u"]
+[ext_resource type="StyleBox" uid="uid://nvb4etac7ee2" path="res://UI/Themes/InventorySlotButtonFocus.tres" id="2_3wx0v"]
 [ext_resource type="Texture2D" uid="uid://dc1gcsbhkchvg" path="res://Assets/Sprites/UI/hotbar-active.png" id="2_m56j3"]
+[ext_resource type="StyleBox" uid="uid://pqtn0115bqtp" path="res://UI/Themes/InventorySlotButtonPressed.tres" id="3_46bp6"]
+[ext_resource type="StyleBox" uid="uid://cfqp0ycwvwx7c" path="res://UI/Themes/InventorySlotButtonNormal.tres" id="4_cc2jo"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6jbma"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ajutj"]
+size = Vector2(24, 24)
 
-[node name="InventorySlot" type="PanelContainer"]
+[node name="InventorySlot" type="Button"]
 custom_minimum_size = Vector2(32, 32)
-theme_override_styles/panel = SubResource("StyleBoxEmpty_6jbma")
+theme = ExtResource("1_wnu7u")
+theme_type_variation = &"InventorySlotButton"
+theme_override_styles/focus = ExtResource("2_3wx0v")
+theme_override_styles/pressed = ExtResource("3_46bp6")
+theme_override_styles/normal = ExtResource("4_cc2jo")
+toggle_mode = true
+action_mode = 0
+icon_alignment = 1
 script = ExtResource("1_fju5i")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 layout_mode = 2
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = SubResource("PlaceholderTexture2D_ajutj")
+expand_mode = 2
 stretch_mode = 3
 
 [node name="Frame" type="NinePatchRect" parent="."]
+visible = false
 self_modulate = Color(1, 1, 1, 0.5)
 layout_mode = 2
+offset_right = 32.0
+offset_bottom = 32.0
 texture = ExtResource("2_m56j3")

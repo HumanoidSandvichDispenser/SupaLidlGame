@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://sfs8dpfitpdu"]
+[gd_scene load_steps=4 format=3 uid="uid://sfs8dpfitpdu"]
 
 [ext_resource type="Script" path="res://UI/Inventory/Hotbar.cs" id="1_2sak2"]
 [ext_resource type="PackedScene" uid="uid://dmvu2hjyrwc1y" path="res://UI/Inventory/HotbarSlot.tscn" id="2_3axfe"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6jbma"]
 
 [node name="Hotbar" type="GridContainer" node_paths=PackedStringArray("_slots")]
 anchors_preset = 1
@@ -17,9 +19,12 @@ _slots = [NodePath("InventorySlot"), NodePath("InventorySlot2"), NodePath("Inven
 
 [node name="InventorySlot" parent="." instance=ExtResource("2_3axfe")]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6jbma")
 
 [node name="InventorySlot2" parent="." instance=ExtResource("2_3axfe")]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6jbma")
 
 [node name="InventorySlot3" parent="." instance=ExtResource("2_3axfe")]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_6jbma")

@@ -4,7 +4,7 @@ using GodotUtilities.SourceGenerators;
 
 namespace SupaLidlGame.UI.Inventory;
 
-public partial class InventorySlot : Container
+public partial class InventorySlot : Button
 {
     private bool _isSelected = false;
 
@@ -16,11 +16,14 @@ public partial class InventorySlot : Container
             _isSelected = value;
             if (_selectedFrame is not null)
             {
-                _selectedFrame.Visible = _isSelected;
-                _frame.Visible = !_isSelected;
+                //_selectedFrame.Visible = _isSelected;
+                //_frame.Visible = !_isSelected;
             }
         }
     }
+
+    [Export]
+    public bool UseFocusAsSelected { get; set; } = true;
 
     private TextureRect _textureRect;
 
@@ -41,11 +44,13 @@ public partial class InventorySlot : Container
 
             if (_item is null)
             {
-                _textureRect.Texture = null;
+                //_textureRect.Texture = null;
+                Icon = null;
             }
             else
             {
-                _textureRect.Texture = _item.Icon;
+                //_textureRect.Texture = _item.Icon;
+                Icon = _item.Icon;
             }
         }
     }
@@ -61,5 +66,30 @@ public partial class InventorySlot : Container
         _textureRect = GetNode<TextureRect>("TextureRect");
         _frame = GetNode<NinePatchRect>("Frame");
         _selectedFrame = GetNode<NinePatchRect>("SelectedFrame");
+
+        if (Item is null)
+        {
+            // do this to reset the icon
+            Item = null;
+        }
+
+        if (UseFocusAsSelected)
+        {
+            void focusEntered()
+            {
+                IsSelected = true;
+            }
+
+            void focusExited()
+            {
+                IsSelected = false;
+            }
+
+            Connect(SignalName.FocusEntered, Callable.From(focusEntered));
+            Connect(SignalName.FocusExited, Callable.From(focusExited));
+
+            Connect(SignalName.MouseEntered, Callable.From(focusEntered));
+            Connect(SignalName.MouseExited, Callable.From(focusExited));
+        }
     }
 }

@@ -1,0 +1,14 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://bqhotx2ogucye"]
+
+[ext_resource type="Texture2D" uid="uid://uhmowtsi3wfh" path="res://Assets/Sprites/UI/menu-rect-no-bg-white.png" id="1_cb20l"]
+
+[resource]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+texture = ExtResource("1_cb20l")
+texture_margin_left = 32.0
+texture_margin_top = 32.0
+texture_margin_right = 32.0
+texture_margin_bottom = 32.0
