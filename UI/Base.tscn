@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c271rdjhd1gfo"]
+[gd_scene load_steps=14 format=3 uid="uid://c271rdjhd1gfo"]
 
 [ext_resource type="Script" path="res://UI/UIController.cs" id="2_b4b6l"]
 [ext_resource type="PackedScene" uid="uid://bxo553hblp6nf" path="res://UI/HealthBar.tscn" id="3_j1j6h"]
@@ -11,17 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://2afbrf8asy2a" path="res://UI/PostProcessing/Vignette.tscn" id="9_p1ubd"]
 [ext_resource type="PackedScene" uid="uid://b1wsryv4bn0cn" path="res://UI/PostProcessing/StunEffect.tscn" id="10_646ma"]
 [ext_resource type="Shader" path="res://Shaders/Grayscale.gdshader" id="11_w4gn1"]
-[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="11_wtdum"]
 [ext_resource type="Texture2D" uid="uid://bw052v8ikfget" path="res://icon.svg" id="12_tyv35"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a504f"]
-bg_color = Color(0.906763, 0, 0.280984, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gheod"]
-bg_color = Color(1, 0.315507, 0.447521, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1nm23"]
-bg_color = Color(0.951511, 0.387714, 0.416256, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kbd61"]
 shader = ExtResource("11_w4gn1")
@@ -29,15 +19,6 @@ shader_parameter/grayscale_intensity = 0.0
 
 [node name="BaseUI" type="CanvasLayer"]
 process_mode = 3
-
-[node name="Button" type="Button" parent="."]
-offset_left = 536.0
-offset_right = 592.0
-offset_bottom = 31.0
-theme_override_styles/focus = SubResource("StyleBoxFlat_a504f")
-theme_override_styles/hover = SubResource("StyleBoxFlat_gheod")
-theme_override_styles/normal = SubResource("StyleBoxFlat_1nm23")
-text = "sdfsdf"
 
 [node name="PostProcessing" type="CanvasLayer" parent="."]
 
@@ -139,7 +120,9 @@ grow_horizontal = 0
 grow_vertical = 2
 alignment = 2
 
-[node name="Panel" parent="SubViewportContainer/UIViewport/MainUILayer/Main/BoxContainer" node_paths=PackedStringArray("_inventoryGrid") instance=ExtResource("8_ep3ae")]
+[node name="ShopMenu" parent="SubViewportContainer/UIViewport/MainUILayer/Main/BoxContainer" node_paths=PackedStringArray("_inventoryGrid") instance=ExtResource("8_ep3ae")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 _inventoryGrid = NodePath("PanelContainer/VBoxContainer/ScrollContainer/InventoryGrid")
 
@@ -157,13 +140,6 @@ alignment = 1
 [node name="BossBar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Bottom" instance=ExtResource("4_igi28")]
 visible = false
 layout_mode = 2
-
-[node name="Button" type="Button" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Bottom"]
-layout_mode = 2
-theme = ExtResource("11_wtdum")
-theme_type_variation = &"InventorySlotButton"
-theme_override_styles/hover = SubResource("StyleBoxFlat_gheod")
-text = "sdfsdfa"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
 visible = false

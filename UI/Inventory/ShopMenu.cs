@@ -12,7 +12,6 @@ public partial class ShopMenu : Control, IModal
         get => _source;
         set
         {
-            GD.Print("Set ShopMenu source");
             _source = value;
             _inventoryGrid.Source = value;
         }
@@ -23,24 +22,31 @@ public partial class ShopMenu : Control, IModal
 
     private InventorySlot _selected;
 
+    public void ShowModal()
+    {
+        Show();
+        var animPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
+        animPlayer.Play("open");
+    }
+
     public void HideModal()
     {
         Hide();
         _source = null;
     }
 
+    public async void Close()
+    {
+        var animPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
+        animPlayer.Play("close");
+        await ToSignal(animPlayer, AnimationPlayer.SignalName.AnimationFinished);
+        HideModal();
+    }
+
     public override void _Ready()
     {
-        Events.EventBus.Instance.EnterShop += (string path) =>
-        {
-            var shop = ResourceLoader.Load<Items.Shop>(path);
-            GD.Print("Loaded shop");
-            Source = shop;
-        };
-
         _inventoryGrid.SlotFocused += (InventorySlot slot) =>
         {
-            GD.Print("SlotFocused " + slot.Name);
             if (slot.Item is not null)
             {
                 SetTooltipItem(slot);
@@ -59,10 +65,11 @@ public partial class ShopMenu : Control, IModal
             GetNode<Button>("%BuyButton").GrabFocus();
         };
 
-        GetNode<Button>("%BuyButton").GuiInput += (Godot.InputEvent @event) =>
+        GetNode<Button>("%BuyButton").GuiInput += (InputEvent @event) =>
         {
-            if (@event.IsAction("ui_cancel"))
+            if (@event.IsActionPressed("ui_cancel"))
             {
+                GetViewport().SetInputAsHandled();
                 _selected?.GrabFocus();
             }
         };
@@ -79,6 +86,15 @@ public partial class ShopMenu : Control, IModal
         else
         {
             GetNode<Button>("%BuyButton").Disabled = true;
+        }
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        if (@event.IsActionPressed("ui_cancel"))
+        {
+            GetViewport().SetInputAsHandled();
+            Close();
         }
     }
 }
