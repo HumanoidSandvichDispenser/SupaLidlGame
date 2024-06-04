@@ -87,7 +87,7 @@ public sealed partial class DebugConsole : Control
                 while (fs.GetPosition() < fs.GetLength())
                 {
                     string line = fs.GetLine();
-                    _output.Text += line;
+                    _output.Text += line + "\n";
                 }
             };
             timer.Start(DEBUG_REFRESH_INTERVAL);
