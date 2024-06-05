@@ -238,7 +238,6 @@ public sealed partial class Player : Character
         switch (inputMethod)
         {
             case State.Global.InputMethod.Joystick:
-                GD.Print(joystick);
                 if (joystick.IsZeroApprox())
                 {
                     return Direction;
