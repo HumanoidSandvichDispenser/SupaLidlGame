@@ -91,11 +91,6 @@ public class Parser
         }
         else if (token.Type == TokenType.Grouping)
         {
-            if (token.Value == ")")
-            {
-                throw new InterpreterException("Unexpected )",
-                    token.Line, token.Column);
-            }
             if (prev is LiteralExpression l)
             {
                 // this is a function call
