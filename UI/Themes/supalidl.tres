@@ -1,10 +1,58 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cksjbu3vrup5"]
+[gd_resource type="Theme" load_steps=11 format=3 uid="uid://cksjbu3vrup5"]
 
 [ext_resource type="FontFile" uid="uid://6bvgjbmqovau" path="res://Assets/Fonts/calamity/calamity.ttf" id="1_334fe"]
+[ext_resource type="StyleBox" uid="uid://nvb4etac7ee2" path="res://UI/Themes/InventorySlotButtonFocus.tres" id="2_3w5h1"]
+[ext_resource type="Texture2D" uid="uid://b16461tjso0j7" path="res://Assets/Sprites/UI/hotbar-inactive.png" id="2_6sv27"]
+[ext_resource type="StyleBox" uid="uid://bqhotx2ogucye" path="res://UI/Themes/Panel.tres" id="2_jlgx8"]
+[ext_resource type="StyleBox" uid="uid://cfqp0ycwvwx7c" path="res://UI/Themes/InventorySlotButtonNormal.tres" id="3_nuiio"]
+[ext_resource type="StyleBox" uid="uid://pqtn0115bqtp" path="res://UI/Themes/InventorySlotButtonPressed.tres" id="4_mllnb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wk5ww"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+texture = ExtResource("2_6sv27")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+modulate_color = Color(0.105882, 0.0470588, 0.117647, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5w4ck"]
+bg_color = Color(0.937255, 0.854902, 0.854902, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2qibe"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.976471, 0.956863, 0.956863, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iyd8w"]
+bg_color = Color(0.105882, 0.0470588, 0.117647, 1)
 
 [resource]
 default_font = ExtResource("1_334fe")
 default_font_size = 15
 /colors/background = Color(0.105882, 0.0470588, 0.117647, 1)
-/font_sizes/Normal = 16
+/font_sizes/Normal = 15
 /fonts/Calamity = ExtResource("1_334fe")
+Button/colors/font_color = Color(0.105882, 0.0470588, 0.117647, 1)
+Button/colors/font_focus_color = Color(0.105882, 0.0470588, 0.117647, 1)
+Button/colors/font_hover_color = Color(0.105882, 0.0470588, 0.117647, 1)
+Button/colors/font_pressed_color = Color(0.976471, 0.956863, 0.956863, 1)
+Button/styles/focus = SubResource("StyleBoxTexture_wk5ww")
+Button/styles/hover = SubResource("StyleBoxFlat_5w4ck")
+Button/styles/normal = SubResource("StyleBoxFlat_2qibe")
+Button/styles/pressed = SubResource("StyleBoxFlat_iyd8w")
+InventorySlotButton/base_type = &"Button"
+InventorySlotButton/styles/focus = ExtResource("2_3w5h1")
+InventorySlotButton/styles/hover = ExtResource("2_3w5h1")
+InventorySlotButton/styles/normal = ExtResource("3_nuiio")
+InventorySlotButton/styles/pressed = ExtResource("4_mllnb")
+MarginContainer/constants/margin_bottom = 8
+MarginContainer/constants/margin_left = 8
+MarginContainer/constants/margin_right = 8
+MarginContainer/constants/margin_top = 8
+PanelContainer/styles/panel = ExtResource("2_jlgx8")

@@ -1,0 +1,74 @@
+[gd_scene load_steps=11 format=3 uid="uid://rd08pot25h00"]
+
+[ext_resource type="Script" path="res://Characters/NPC.cs" id="1_04gcf"]
+[ext_resource type="Script" path="res://State/Character/CharacterStateMachine.cs" id="2_kynkg"]
+[ext_resource type="Texture2D" uid="uid://bej8thq7ruyty" path="res://Assets/Sprites/Characters/forsen2.png" id="2_s5nik"]
+[ext_resource type="Script" path="res://State/Character/NPCIdleState.cs" id="3_pcrll"]
+[ext_resource type="Script" path="res://State/Thinker/ThinkerStateMachine.cs" id="4_mo4wj"]
+[ext_resource type="Script" path="res://State/Thinker/VendorIdle.cs" id="5_oau5d"]
+[ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="5_sjs24"]
+[ext_resource type="Script" path="res://Utils/InteractionTriggerDialogue.cs" id="5_yknpw"]
+[ext_resource type="Resource" uid="uid://c4n7vhoxybu70" path="res://Dialogue/snus-dealer.dialogue" id="6_isvnq"]
+[ext_resource type="Script" path="res://Items/Inventory.cs" id="7_vip6b"]
+
+[node name="SnusDealer" type="CharacterBody2D" node_paths=PackedStringArray("ThinkerStateMachine", "Sprite", "Inventory", "StateMachine")]
+script = ExtResource("1_04gcf")
+ThinkerStateMachine = NodePath("Thinker")
+Sprite = NodePath("Sprites/Sprite")
+Inventory = NodePath("Inventory")
+StateMachine = NodePath("StateMachine")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
+script = ExtResource("2_kynkg")
+InitialState = NodePath("Idle")
+Character = NodePath("..")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("Character")]
+script = ExtResource("3_pcrll")
+Character = NodePath("../..")
+
+[node name="Thinker" type="Node" parent="." node_paths=PackedStringArray("InitialState")]
+script = ExtResource("4_mo4wj")
+InitialState = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="Thinker" node_paths=PackedStringArray("NPC")]
+script = ExtResource("5_oau5d")
+NPC = NodePath("../..")
+
+[node name="Animations" type="Node" parent="."]
+
+[node name="Movement" type="AnimationPlayer" parent="Animations"]
+
+[node name="Hurt" type="AnimationPlayer" parent="Animations"]
+
+[node name="Stun" type="AnimationPlayer" parent="Animations"]
+
+[node name="Attack" type="AnimationPlayer" parent="Animations"]
+
+[node name="Stats" type="Node" parent="."]
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="Sprites"]
+texture = ExtResource("2_s5nik")
+centered = false
+offset = Vector2(-12, -20)
+hframes = 46
+
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
+script = ExtResource("7_vip6b")
+Hotbar = []
+
+[node name="Interaction" type="Node2D" parent="." node_paths=PackedStringArray("InteractionTrigger")]
+position = Vector2(0, -4)
+script = ExtResource("5_yknpw")
+InteractionTrigger = NodePath("InteractionTrigger")
+DialogueResource = ExtResource("6_isvnq")
+DialogueTitle = "start"
+
+[node name="InteractionTrigger" parent="Interaction" instance=ExtResource("5_sjs24")]
+
+[node name="Label" parent="Interaction/InteractionTrigger/Popup" index="0"]
+text = "Listen"
+
+[editable path="Interaction/InteractionTrigger"]

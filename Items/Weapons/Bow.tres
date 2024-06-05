@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ItemMetadata" load_steps=4 format=3 uid="uid://cjsh0dcgbfn77"]
+[gd_resource type="Resource" script_class="ItemMetadata" load_steps=5 format=3 uid="uid://cjsh0dcgbfn77"]
 
+[ext_resource type="Texture2D" uid="uid://vjdyrv8wp7gl" path="res://Assets/Sprites/forsenLevel.png" id="1_5blro"]
 [ext_resource type="Script" path="res://Utils/ScenePath.cs" id="1_haiji"]
 [ext_resource type="Script" path="res://Items/ItemMetadata.cs" id="2_hjbs0"]
 
@@ -10,6 +11,7 @@ Path = "res://Items/Weapons/Bow.tscn"
 [resource]
 script = ExtResource("2_hjbs0")
 Instance = SubResource("Resource_mjj1w")
+Icon = ExtResource("1_5blro")
 Name = "Bow"
 Description = "A bow and arrow."
 BuyPrice = 0

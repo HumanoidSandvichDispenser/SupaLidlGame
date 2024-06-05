@@ -45,4 +45,13 @@ public partial class MapState : Resource
             }
         }
     }
+
+    public bool? GetBoolean(string key)
+    {
+        if (_state[key].VariantType == Variant.Type.Bool)
+        {
+            return (bool)_state[key];
+        }
+        return null;
+    }
 }

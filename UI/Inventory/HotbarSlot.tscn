@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmvu2hjyrwc1y"]
+
+[ext_resource type="PackedScene" uid="uid://ctad0dkoyw8ad" path="res://UI/Inventory/InventorySlot.tscn" id="1_fb62b"]
+[ext_resource type="Texture2D" uid="uid://dp7osg05ip5oo" path="res://Assets/Sprites/sword.png" id="2_aqbyo"]
+[ext_resource type="Texture2D" uid="uid://dc1gcsbhkchvg" path="res://Assets/Sprites/UI/hotbar-active.png" id="2_bcv71"]
+
+[node name="InventorySlot" instance=ExtResource("1_fb62b")]
+
+[node name="TextureRect" parent="." index="0"]
+texture = ExtResource("2_aqbyo")
+expand_mode = 3
+
+[node name="SelectedFrame" type="NinePatchRect" parent="." index="2"]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_bcv71")

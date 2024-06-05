@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cumi1cbg6xfdd"]
+[gd_scene load_steps=23 format=3 uid="uid://cumi1cbg6xfdd"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_oy3cp"]
 [ext_resource type="Texture2D" uid="uid://c70cn53osy56w" path="res://Assets/Sprites/dev-tileset.png" id="2_2gdry"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://chwwo6vmf8iri" path="res://Assets/Sprites/Props/tree-autumn-leaves-2.png" id="8_4laic"]
 [ext_resource type="Texture2D" uid="uid://dhf2f5a1ty502" path="res://Assets/Sprites/Props/tree-autumn-leaves-1.png" id="8_hyhpu"]
 [ext_resource type="Texture2D" uid="uid://crvbsxrda5gcj" path="res://Assets/Sprites/Props/tree-autumn-leaves-3.png" id="9_exvkw"]
+[ext_resource type="PackedScene" uid="uid://rd08pot25h00" path="res://Characters/SnusDealer.tscn" id="12_eyny2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s1h2f"]
 texture = ExtResource("2_2gdry")
@@ -458,8 +459,8 @@ cell_size = 16.0
 agent_radius = 8.0
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8xwo5"]
-vertices = PackedVector2Array(280, -232, 280, -120, 276, -120, 216, -232, 216, -40, 276, -72, 296, -72, 296, -88, 392, -88, 392, -136, 472, -136, 472, -40, 440, -40, 440, 8, 488, 8, 488, 24, 440, 24, 440, 72, 424, 72, 424, 24, 424, 8, 376, 24, 376, 8, 424, -40, 296, -40, 296, -56, 276, -56, 276, -40)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 3, 2, 5), PackedInt32Array(6, 7, 8), PackedInt32Array(8, 9, 10, 11, 12), PackedInt32Array(13, 14, 15, 16), PackedInt32Array(16, 17, 18, 19), PackedInt32Array(13, 16, 19, 20), PackedInt32Array(19, 21, 22, 20), PackedInt32Array(12, 13, 20, 23), PackedInt32Array(8, 12, 23), PackedInt32Array(8, 23, 24, 25), PackedInt32Array(6, 8, 25), PackedInt32Array(5, 6, 25, 26), PackedInt32Array(4, 5, 26), PackedInt32Array(4, 26, 27)])
+vertices = PackedVector2Array(392, -88, 392, -136, 472, -136, 472, -40, 440, -40, 440, 8, 488, 8, 488, 24, 440, 24, 440, 72, 424, 72, 424, 24, 424, 8, 376, 24, 376, 8, 424, -40, 216, -40, 280, -88, 216, -232, 280, -232)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(5, 8, 11, 12), PackedInt32Array(11, 13, 14, 12), PackedInt32Array(4, 5, 12, 15), PackedInt32Array(0, 4, 15), PackedInt32Array(0, 15, 16, 17), PackedInt32Array(17, 16, 18, 19)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(208, -240, 208, -32, 416, -32, 416.001, -15.9759, 368.001, -15.9787, 368, 32, 416, 32, 416, 80, 448, 80, 448, 32, 496, 32, 496.001, -15.9713, 448.001, -15.9741, 448, -32, 480, -32, 480.008, -143.972, 384.008, -143.978, 384.006, -95.9778, 288, -96, 288, -240)])
 source_geometry_mode = 1
 source_geometry_group_name = &"navigation"
@@ -478,6 +479,9 @@ Spawners = NodePath("Spawners")
 Markers = NodePath("Markers")
 AreaName = "Forest"
 MapName = "Forest"
+
+[node name="CanvasModulate" parent="." index="7"]
+position = Vector2(0, 1)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Props" index="0"]
 y_sort_enabled = true
@@ -843,7 +847,14 @@ position = Vector2(1272, 0)
 [node name="Campfire" parent="Entities" index="0" instance=ExtResource("3_ve4i2")]
 position = Vector2(-24, -8)
 
-[node name="Areas" parent="." index="3"]
+[node name="SnusDealer" parent="Entities" index="1" node_paths=PackedStringArray("ThinkerStateMachine", "Sprite", "Inventory", "StateMachine") instance=ExtResource("12_eyny2")]
+position = Vector2(79, -6)
+ThinkerStateMachine = NodePath("Thinker")
+Sprite = NodePath("Sprites/Sprite")
+Inventory = NodePath("Inventory")
+StateMachine = NodePath("StateMachine")
+
+[node name="Areas" parent="." index="10"]
 visible = false
 
 [node name="Main" type="NavigationRegion2D" parent="Areas" index="0"]

@@ -1,0 +1,217 @@
+[gd_scene load_steps=15 format=3 uid="uid://cyggkyqosjk36"]
+
+[ext_resource type="StyleBox" uid="uid://bqhotx2ogucye" path="res://UI/Themes/Panel.tres" id="1_2ffty"]
+[ext_resource type="Script" path="res://UI/Inventory/ShopMenu.cs" id="1_8c1y7"]
+[ext_resource type="Shader" path="res://Shaders/WipeXY.gdshader" id="2_jqery"]
+[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="3_aj4jx"]
+[ext_resource type="PackedScene" uid="uid://bsheehtfcdwhh" path="res://UI/Inventory/ItemTooltip.tscn" id="4_n61n7"]
+[ext_resource type="PackedScene" uid="uid://chmokkxsy5vas" path="res://UI/Inventory/InventoryGrid.tscn" id="4_sl632"]
+[ext_resource type="PackedScene" uid="uid://baawkwo8aiwbu" path="res://UI/Inventory/ShopSlot.tscn" id="5_kfyl0"]
+[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="7_rvp1r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gm1xk"]
+bg_color = Color(0, 0, 0, 0.784314)
+border_width_left = 16
+border_width_top = 16
+border_width_right = 16
+border_width_bottom = 16
+border_color = Color(0.145098, 0.145098, 0.145098, 0)
+border_blend = true
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2hdh3"]
+shader = ExtResource("2_jqery")
+shader_parameter/x_amount = 1.0
+shader_parameter/y_amount = 0.5
+
+[sub_resource type="Animation" id="Animation_yj24f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer:material:shader_parameter/y_amount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:material:shader_parameter/x_amount")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_tm2as"]
+resource_name = "close"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer:material:shader_parameter/y_amount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:material:shader_parameter/x_amount")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.05, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.5]
+}
+
+[sub_resource type="Animation" id="Animation_fgj27"]
+resource_name = "open"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer:material:shader_parameter/y_amount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.5]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:material:shader_parameter/x_amount")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0glcp"]
+_data = {
+"RESET": SubResource("Animation_yj24f"),
+"close": SubResource("Animation_tm2as"),
+"open": SubResource("Animation_fgj27")
+}
+
+[node name="Panel" type="PanelContainer" node_paths=PackedStringArray("_inventoryGrid")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -236.0
+offset_top = -175.5
+offset_bottom = 175.5
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gm1xk")
+script = ExtResource("1_8c1y7")
+_inventoryGrid = NodePath("PanelContainer/VBoxContainer/ScrollContainer/InventoryGrid")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+material = SubResource("ShaderMaterial_2hdh3")
+layout_mode = 2
+theme_override_styles/panel = ExtResource("1_2ffty")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_aj4jx")
+text = "Snus Dealer"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="InventoryGrid" parent="PanelContainer/VBoxContainer/ScrollContainer" instance=ExtResource("4_sl632")]
+layout_mode = 2
+size_flags_vertical = 3
+_slotScene = ExtResource("5_kfyl0")
+
+[node name="ItemTooltip" parent="PanelContainer/VBoxContainer" instance=ExtResource("4_n61n7")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BuyButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("7_rvp1r")
+text = "Buy"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_0glcp")
+}

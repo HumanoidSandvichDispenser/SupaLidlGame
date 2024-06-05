@@ -102,12 +102,12 @@ y_sort_enabled = true
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_gf7ku")
 autoplay = "default"
-frame = 6
-frame_progress = 0.743234
+frame = 9
+frame_progress = 0.966501
 offset = Vector2(0, -12)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.9525, 0.85, 1)
+color = Color(1, 0.811765, 0.537255, 1)
 energy = 1.2
 blend_mode = 2
 shadow_filter_smooth = 3.0

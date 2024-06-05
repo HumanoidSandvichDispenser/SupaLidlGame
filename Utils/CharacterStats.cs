@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.Utils;
 
@@ -52,8 +53,7 @@ public partial class CharacterStats : Node
         else
         {
             _shouldDecayStagger = false;
-            _staggerDecayTimer.Stop();
-            _staggerDecayTimer.Start(1);
+            _staggerDecayTimer.Restart(1);
         }
     }
 

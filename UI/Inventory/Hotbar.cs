@@ -1,7 +1,6 @@
 using Godot;
-using SupaLidlGame.Items;
 
-namespace SupaLidlGame.UI;
+namespace SupaLidlGame.UI.Inventory;
 
 public partial class Hotbar : GridContainer
 {
@@ -13,7 +12,7 @@ public partial class Hotbar : GridContainer
         Events.EventBus.Instance.PlayerInventoryUpdate += OnInventoryUpdate;
     }
 
-    public void OnInventoryUpdate(Inventory inventory)
+    public void OnInventoryUpdate(Items.Inventory inventory)
     {
         GD.Print($"UPDATE: {inventory.SelectedIndex} is selected index.");
         for (int i = 0; i < 3; i++)

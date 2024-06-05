@@ -93,8 +93,8 @@ public partial class Character : CharacterBody2D, IFaction
     [Export]
     public BoundingBoxes.Hurtbox Hurtbox { get; set; }
 
-    [Export]
-    public ushort Faction { get; set; }
+    [Export(PropertyHint.Flags)]
+    public FactionName Faction { get; set; }
 
     public AnimationPlayer MovementAnimation { get; set; }
 

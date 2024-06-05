@@ -18,11 +18,10 @@ Doc, The Two Time: Nothing but success.
 Doc, The Two Time: That's what my life's about. Period.
 Doc, The Two Time: And the arena today, ladies and gentlemen...
 Doc, The Two Time: is wide open, and the crowds are flooding in. VIP seating. Skybox section. Reserved for the Slick Daddy Club.
-Doc, The Two Time: The Slick Daddy Club lofoking so damn good today. I'm feeling so damn good. It's obvious.
-Doc, The Two Time: The V of success.
+Doc, The Two Time: The Slick Daddy Club looking so damn good today. I'm feeling so damn good. It's obvious.
 Challenge [b]Doc, The Two Time[/b] to a duel?
 - Yes
 	do emit("SummonBoss", "Doc")
-- No => END
+- No, I'm a little chubby cheek wannabe punk kid. => END
 
 => END

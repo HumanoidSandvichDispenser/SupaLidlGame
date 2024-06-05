@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://baawkwo8aiwbu"]
+
+[ext_resource type="PackedScene" uid="uid://ctad0dkoyw8ad" path="res://UI/Inventory/InventorySlot.tscn" id="1_tdkv2"]
+[ext_resource type="Texture2D" uid="uid://b16461tjso0j7" path="res://Assets/Sprites/UI/hotbar-inactive.png" id="2_af1qu"]
+
+[node name="ShopSlot" instance=ExtResource("1_tdkv2")]
+
+[node name="Frame" parent="." index="1"]
+texture = ExtResource("2_af1qu")
+
+[node name="SelectedFrame" type="NinePatchRect" parent="." index="2"]
+visible = false
+layout_mode = 2
+texture = ExtResource("2_af1qu")

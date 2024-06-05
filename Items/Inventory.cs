@@ -4,7 +4,7 @@ using Godot.Collections;
 
 namespace SupaLidlGame.Items;
 
-public partial class Inventory : Node2D
+public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
 {
     public Character Character { get; private set; }
 
@@ -20,7 +20,15 @@ public partial class Inventory : Node2D
     [Signal]
     public delegate void UsedItemEventHandler(Item item);
 
-    public const int MaxCapacity = 3;
+    [Signal]
+    public delegate void EquippedItemEventHandler(Item newItem, Item prevItem);
+
+    [Signal]
+    public delegate void ItemAddedEventHandler(ItemMetadata newItemMetadata);
+
+    public int Capacity { get; set; } = 30;
+
+    public const int HotbarCapacity = 3;
 
     private Item _selectedItem;
 
@@ -87,7 +95,8 @@ public partial class Inventory : Node2D
             return false;
         }
 
-        _selectedItem?.Unequip(Character);
+        Item prevItem = _selectedItem;
+        prevItem?.Unequip(Character);
         _selectedIndex = index;
 
         if (index >= 0)
@@ -99,6 +108,8 @@ public partial class Inventory : Node2D
         {
             _selectedItem = null;
         }
+
+        EmitSignal(SignalName.EquippedItem, prevItem, _selectedItem);
 
         GD.Print($"Inventory: {index} is new selected index.");
 
@@ -135,8 +146,9 @@ public partial class Inventory : Node2D
         return null;
     }
 
-    public Item AddItemToHotbar(ItemMetadata metadata)
+    public Item AddToHotbar(ItemMetadata metadata)
     {
+        //AddItemMetadata(metadata);
         var item = metadata.Instance.Instantiate<Item>();
         AddItem(item);
         AddChild(item);
@@ -146,7 +158,7 @@ public partial class Inventory : Node2D
 
     public Item AddItem(Item item)
     {
-        if (Hotbar.Count >= MaxCapacity)
+        if (Hotbar.Count >= HotbarCapacity)
         {
             return null;
         }
@@ -157,7 +169,30 @@ public partial class Inventory : Node2D
         {
             Hotbar.Add(item);
         }
+
         return item;
+    }
+
+    public System.Collections.Generic.IEnumerable<ItemMetadata> GetItems()
+    {
+        return Items;
+    }
+
+    public bool Add(ItemMetadata item)
+    {
+        if (Items.Count >= Capacity)
+        {
+            return false;
+        }
+
+        Items.Add(item);
+        EmitSignal(SignalName.ItemAdded, item);
+        return true;
+    }
+
+    public bool Remove(ItemMetadata item)
+    {
+        return Items.Remove(item);
     }
 
     public Item DropItem(Item item)

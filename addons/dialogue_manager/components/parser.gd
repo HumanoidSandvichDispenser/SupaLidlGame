@@ -43,7 +43,7 @@ var TOKEN_DEFINITIONS: Dictionary = {
 	DialogueConstants.TOKEN_DOT: RegEx.create_from_string("^\\."),
 	DialogueConstants.TOKEN_STRING: RegEx.create_from_string("^(\".*?\"|\'.*?\')"),
 	DialogueConstants.TOKEN_NOT: RegEx.create_from_string("^(not( |$)|!)"),
-	DialogueConstants.TOKEN_AND_OR: RegEx.create_from_string("^(and|or)( |$)"),
+	DialogueConstants.TOKEN_AND_OR: RegEx.create_from_string("^(and|or|&&|\\|\\|)( |$)"),
 	DialogueConstants.TOKEN_VARIABLE: RegEx.create_from_string("^[a-zA-Z_][a-zA-Z_0-9]*"),
 	DialogueConstants.TOKEN_COMMENT: RegEx.create_from_string("^#.*"),
 	DialogueConstants.TOKEN_CONDITION: RegEx.create_from_string("^(if|elif|else)"),
@@ -230,6 +230,7 @@ func parse(text: String, path: String) -> Error:
 					line["character"] = first_child.character
 					line["character_replacements"] = first_child.character_replacements
 					line["text"] = first_child.text
+					line["text_replacements"] = extract_dialogue_replacements(line.text, indent_size + 2)
 					line["translation_key"] = first_child.translation_key
 					parsed_lines[str(id) + ".2"] = first_child
 					line["next_id"] = str(id) + ".2"
@@ -691,12 +692,7 @@ func get_line_after_line(id: int, indent_size: int, line: Dictionary) -> String:
 	var next_nonempty_line_id = get_next_nonempty_line_id(id)
 	if next_nonempty_line_id != DialogueConstants.ID_NULL \
 		and indent_size <= get_indent(raw_lines[next_nonempty_line_id.to_int()]):
-		# The next line is a title so we need the next nonempty line after that
-		if is_title_line(raw_lines[next_nonempty_line_id.to_int()]):
-			return get_next_nonempty_line_id(next_nonempty_line_id.to_int())
-		# Otherwise it's a normal line
-		else:
-			return next_nonempty_line_id
+		return next_nonempty_line_id
 	# Otherwise, we grab the ID from the parents next ID after children
 	elif line.has("parent_id") and parsed_lines.has(line.parent_id):
 		return parsed_lines[line.parent_id].next_id_after
@@ -927,8 +923,8 @@ func find_next_line_after_responses(line_number: int) -> String:
 			if get_indent(line) <= expected_indent:
 				return str(line_number)
 
-	# EOF so must be end of conversation
-	return DialogueConstants.ID_END_CONVERSATION
+	# EOF so it's also the end of a block
+	return DialogueConstants.ID_END
 
 
 ## Get the names of any autoloads in the project
@@ -1529,10 +1525,15 @@ func build_token_tree(tokens: Array[Dictionary], line_type: String, expected_clo
 			DialogueConstants.TOKEN_ASSIGNMENT, \
 			DialogueConstants.TOKEN_OPERATOR, \
 			DialogueConstants.TOKEN_AND_OR, \
-			DialogueConstants.TOKEN_VARIABLE: \
+			DialogueConstants.TOKEN_VARIABLE:
+				var value = token.value.strip_edges()
+				if value == "&&":
+					value = "and"
+				elif value == "||":
+					value = "or"
 				tree.append({
 					type = token.type,
-					value = token.value.strip_edges()
+					value = value
 				})
 
 			DialogueConstants.TOKEN_STRING:

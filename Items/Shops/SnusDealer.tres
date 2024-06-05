@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="Shop" load_steps=16 format=3 uid="uid://djqd88vdkoi6d"]
+
+[ext_resource type="Script" path="res://Items/Shop.cs" id="1_betbc"]
+[ext_resource type="Resource" uid="uid://cjsh0dcgbfn77" path="res://Items/Weapons/Bow.tres" id="1_ntroj"]
+[ext_resource type="Script" path="res://Items/ShopEntry.cs" id="2_xgvwu"]
+[ext_resource type="Resource" uid="uid://iqe6rgnb3jur" path="res://Items/Weapons/Pugio.tres" id="3_nfeft"]
+[ext_resource type="Resource" uid="uid://dkm216ug0vj2h" path="res://Items/Weapons/Shotgun.tres" id="4_aw0ju"]
+
+[sub_resource type="Resource" id="Resource_jdx0p"]
+script = ExtResource("2_xgvwu")
+Item = ExtResource("1_ntroj")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_min4b"]
+script = ExtResource("2_xgvwu")
+Item = ExtResource("3_nfeft")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_t0x08"]
+script = ExtResource("2_xgvwu")
+Item = ExtResource("4_aw0ju")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_exmab"]
+script = ExtResource("2_xgvwu")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_jlgb3"]
+script = ExtResource("2_xgvwu")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_8rd47"]
+script = ExtResource("2_xgvwu")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_pqgh5"]
+script = ExtResource("2_xgvwu")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_8mift"]
+script = ExtResource("2_xgvwu")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_4e8it"]
+script = ExtResource("2_xgvwu")
+MapStateCondition = ""
+
+[sub_resource type="Resource" id="Resource_jp7ms"]
+script = ExtResource("2_xgvwu")
+MapStateCondition = ""
+
+[resource]
+script = ExtResource("1_betbc")
+Entries = Array[Object]([SubResource("Resource_jdx0p"), SubResource("Resource_min4b"), SubResource("Resource_t0x08"), SubResource("Resource_exmab"), SubResource("Resource_jlgb3"), SubResource("Resource_8rd47"), SubResource("Resource_pqgh5"), SubResource("Resource_8mift"), SubResource("Resource_4e8it"), SubResource("Resource_jp7ms")])
