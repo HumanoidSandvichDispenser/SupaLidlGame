@@ -18,8 +18,8 @@ public partial class CameraBounds : Node2D
 
     public override void _Ready()
     {
-        Trigger.BodyEntered += OnBodyEntered;
-        Trigger.BodyExited += OnBodyExited;
+        //Trigger.BodyEntered += OnBodyEntered;
+        //Trigger.BodyExited += OnBodyExited;
     }
 
     private void OnBodyEntered(Node2D body)
