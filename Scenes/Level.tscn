@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://1pb3mpmrl7lc"]
+[gd_scene load_steps=4 format=3 uid="uid://1pb3mpmrl7lc"]
 
 [ext_resource type="Script" path="res://Utils/World.cs" id="1_1k6ew"]
 [ext_resource type="PackedScene" uid="uid://c271rdjhd1gfo" path="res://UI/Base.tscn" id="2_mm0qt"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_ge4f0"]
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("MusicPlayer")]
 process_mode = 3
@@ -24,3 +25,8 @@ mouse_filter = 2
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Music"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+script = ExtResource("3_ge4f0")

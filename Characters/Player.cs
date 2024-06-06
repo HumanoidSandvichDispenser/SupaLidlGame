@@ -37,6 +37,9 @@ public sealed partial class Player : Character
     public PlayerCamera Camera { get; set; }
 
     [Export]
+    public GodotObject PCamera { get; set; }
+
+    [Export]
     public Marker2D DirectionMarker { get; private set; }
 
     [Export]
