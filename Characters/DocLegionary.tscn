@@ -290,6 +290,7 @@ Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
+Faction = 2
 metadata/_edit_vertical_guides_ = []
 
 [node name="Stats" type="Node" parent="."]
