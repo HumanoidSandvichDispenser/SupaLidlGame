@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://cyggkyqosjk36"]
 
-[ext_resource type="StyleBox" uid="uid://bqhotx2ogucye" path="res://UI/Themes/Panel.tres" id="1_2ffty"]
+[ext_resource type="StyleBox" path="res://UI/Themes/Panel.tres" id="1_2ffty"]
 [ext_resource type="Script" path="res://UI/Inventory/ShopMenu.cs" id="1_8c1y7"]
 [ext_resource type="Shader" path="res://Shaders/WipeXY.gdshader" id="2_jqery"]
 [ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="3_aj4jx"]
