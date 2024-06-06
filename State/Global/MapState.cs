@@ -54,4 +54,14 @@ public partial class MapState : Resource
         }
         return null;
     }
+
+    public Variant Get(string key)
+    {
+        return this[key];
+    }
+
+    public void Set(string key, Variant value)
+    {
+        this[key] = value;
+    }
 }
