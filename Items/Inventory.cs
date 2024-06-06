@@ -111,8 +111,6 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
 
         EmitSignal(SignalName.EquippedItem, prevItem, _selectedItem);
 
-        GD.Print($"Inventory: {index} is new selected index.");
-
         return true;
     }
 
