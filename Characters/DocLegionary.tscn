@@ -417,7 +417,7 @@ stream = ExtResource("15_w7mkq")
 unique_name_in_owner = true
 y_sort_enabled = true
 use_parent_material = true
-position = Vector2(-0.5, 4)
+position = Vector2(0, 4)
 rotation = 6.28319
 
 [node name="Node2D" type="Node2D" parent="Sprites"]
