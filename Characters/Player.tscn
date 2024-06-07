@@ -608,7 +608,6 @@ priority = 1
 follow_mode = 2
 zoom = Vector2(4, 4)
 tween_resource = SubResource("Resource_535hq")
-tween_on_load = false
 draw_limits = true
 
 [node name="Stats" type="Node" parent="."]
