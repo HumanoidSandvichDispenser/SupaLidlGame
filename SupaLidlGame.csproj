@@ -2,8 +2,11 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
+    <PublishAOT>true</PublishAOT>
   </PropertyGroup>
   <ItemGroup>
+    <TrimmerRootAssembly Include="GodotSharp" />
+    <TrimmerRootAssembly Include="$(TargetName)" />
     <Content Remove="UnitTests/**/*" />
     <Compile Remove="UnitTests/**/*" />
     <None Remove="UnitTests/**/*" />
