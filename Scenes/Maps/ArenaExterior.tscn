@@ -349,7 +349,6 @@ cell_size = 16.0
 agent_radius = 8.0
 
 [node name="ArenaExterior" node_paths=PackedStringArray("Entities", "Areas", "Spawners", "Markers") groups=["navigation"] instance=ExtResource("1_ci4ij")]
-tile_set = ExtResource("2_m6h7j")
 Entities = NodePath("Entities")
 Areas = NodePath("Areas")
 Spawners = NodePath("Spawners")
@@ -384,7 +383,7 @@ tile_set = ExtResource("2_m6h7j")
 [node name="z-index 0 (walls)" parent="Layers" index="6"]
 tile_set = ExtResource("2_m6h7j")
 
-[node name="CanvasModulate" parent="." index="2"]
+[node name="CanvasModulate" parent="." index="1"]
 color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="Static@Godrays" type="Node2D" parent="Props" index="0"]
