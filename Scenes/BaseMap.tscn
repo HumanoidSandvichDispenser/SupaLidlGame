@@ -23,6 +23,7 @@ Spawners = NodePath("Spawners")
 Markers = NodePath("Markers")
 
 [node name="Layers" type="Node2D" parent="."]
+y_sort_enabled = true
 
 [node name="z-index 0" type="TileMapLayer" parent="Layers"]
 y_sort_enabled = true

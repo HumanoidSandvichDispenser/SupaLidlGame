@@ -384,7 +384,7 @@ tile_set = ExtResource("2_m6h7j")
 [node name="z-index 0 (walls)" parent="Layers" index="6"]
 tile_set = ExtResource("2_m6h7j")
 
-[node name="CanvasModulate" parent="." index="1"]
+[node name="CanvasModulate" parent="." index="2"]
 color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="Static@Godrays" type="Node2D" parent="Props" index="0"]

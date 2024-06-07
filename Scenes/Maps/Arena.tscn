@@ -55,7 +55,6 @@ size = Vector2(40, 20)
 size = Vector2(64, 360)
 
 [node name="Arena" node_paths=PackedStringArray("Entities", "Areas", "Spawners", "Markers") instance=ExtResource("1_ifiic")]
-tile_set = ExtResource("2_x0mh7")
 Entities = NodePath("Entities")
 Areas = NodePath("Areas")
 Spawners = NodePath("Spawners")
@@ -89,7 +88,7 @@ tile_set = ExtResource("2_x0mh7")
 [node name="z-index 0 (walls)" parent="Layers" index="6"]
 tile_set = ExtResource("2_x0mh7")
 
-[node name="CanvasModulate" parent="." index="2"]
+[node name="CanvasModulate" parent="." index="1"]
 color = Color(0.317647, 0.184314, 0.345098, 1)
 
 [node name="Static@TorchLamp" parent="Props" index="0" instance=ExtResource("6_jy3pc")]
