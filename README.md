@@ -7,9 +7,8 @@ Forsen-related game
 ## Building
 
 > [!IMPORTANT]
-> This is currently being developed with Godot 4.3 dev 3 snapshot, which
-> includes a fix for C# generics causing problems and resetting properties to
-> null.
+> This is currently being developed with Godot 4.3 beta 1, which > includes
+a fix for C# generics causing problems and resetting properties to > null.
 
 Requires .NET version >=7.0.
 
