@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SupaLidlGame.Scenes;
 
-public partial class Map : TileMap
+public partial class Map : Node2D
 {
     [Export]
     public Node2D Entities { get; set; }
