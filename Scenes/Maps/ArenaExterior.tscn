@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=4 uid="uid://dr3bcvql7burk"]
+[gd_scene load_steps=86 format=4 uid="uid://dr3bcvql7burk"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ci4ij"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_m6h7j"]
@@ -36,7 +36,6 @@
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="28_b3suq"]
 [ext_resource type="PackedScene" uid="uid://dhamcei7tfta8" path="res://Characters/DocCenturion.tscn" id="30_qfl2k"]
 [ext_resource type="PackedScene" uid="uid://3bcudbixirkj" path="res://Characters/DocCultist.tscn" id="30_xj4yo"]
-[ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="33_e4gty"]
 [ext_resource type="PackedScene" uid="uid://glh1bi8fq0y3" path="res://Characters/Weeb.tscn" id="36_w0bf2"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="39_48cwk"]
 [ext_resource type="Script" path="res://BoundingBoxes/CameraTrigger.cs" id="39_50gr5"]
@@ -1032,20 +1031,7 @@ Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
 
-[node name="CameraBounds" parent="Areas" index="0" node_paths=PackedStringArray("Trigger", "TopLeft", "BottomRight") instance=ExtResource("33_e4gty")]
-visible = false
-position = Vector2(576, 511)
-Trigger = NodePath("Area2D")
-TopLeft = NodePath("TopLeft")
-BottomRight = NodePath("BottomRight")
-
-[node name="TopLeft" parent="Areas/CameraBounds" index="1"]
-position = Vector2(-384, -192)
-
-[node name="BottomRight" parent="Areas/CameraBounds" index="2"]
-position = Vector2(384, 384)
-
-[node name="EntranceCamera" type="Area2D" parent="Areas" index="1" node_paths=PackedStringArray("Camera")]
+[node name="EntranceCamera" type="Area2D" parent="Areas" index="0" node_paths=PackedStringArray("Camera")]
 position = Vector2(576, 504)
 collision_layer = 0
 collision_mask = 4
@@ -1067,22 +1053,22 @@ shape = SubResource("RectangleShape2D_htwu3")
 [node name="Path2D" type="Path2D" parent="Areas/EntranceCamera" index="2"]
 curve = SubResource("Curve2D_y7u3v")
 
-[node name="MainNav" type="NavigationRegion2D" parent="Areas" index="2"]
+[node name="MainNav" type="NavigationRegion2D" parent="Areas" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_je8i8")
 
-[node name="BottomDoorNav" type="NavigationRegion2D" parent="Areas" index="3"]
+[node name="BottomDoorNav" type="NavigationRegion2D" parent="Areas" index="2"]
 navigation_polygon = SubResource("NavigationPolygon_w3lwn")
 
-[node name="LeftDoorNav" type="NavigationRegion2D" parent="Areas" index="4"]
+[node name="LeftDoorNav" type="NavigationRegion2D" parent="Areas" index="3"]
 navigation_polygon = SubResource("NavigationPolygon_0dq8c")
 
-[node name="LeftSideNav" type="NavigationRegion2D" parent="Areas" index="5"]
+[node name="LeftSideNav" type="NavigationRegion2D" parent="Areas" index="4"]
 navigation_polygon = SubResource("NavigationPolygon_ag23k")
 
-[node name="BottomNav" type="NavigationRegion2D" parent="Areas" index="6"]
+[node name="BottomNav" type="NavigationRegion2D" parent="Areas" index="5"]
 navigation_polygon = SubResource("NavigationPolygon_lh32d")
 
-[node name="TopNav" type="NavigationRegion2D" parent="Areas" index="7"]
+[node name="TopNav" type="NavigationRegion2D" parent="Areas" index="6"]
 navigation_polygon = SubResource("NavigationPolygon_qjknj")
 
 [node name="ArenaEntrance" type="Marker2D" parent="Markers" index="0"]
@@ -1093,4 +1079,3 @@ position = Vector2(576, 431)
 [editable path="Props/StaticBookshelf2"]
 [editable path="Props/StaticBookshelf3"]
 [editable path="Props/StaticBookshelf4"]
-[editable path="Areas/CameraBounds"]
