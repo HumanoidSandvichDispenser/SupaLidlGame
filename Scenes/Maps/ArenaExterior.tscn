@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=4 uid="uid://dr3bcvql7burk"]
+[gd_scene load_steps=86 format=4 uid="uid://dr3bcvql7burk"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ci4ij"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_m6h7j"]
@@ -36,8 +36,10 @@
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="28_b3suq"]
 [ext_resource type="PackedScene" uid="uid://dhamcei7tfta8" path="res://Characters/DocCenturion.tscn" id="30_qfl2k"]
 [ext_resource type="PackedScene" uid="uid://3bcudbixirkj" path="res://Characters/DocCultist.tscn" id="30_xj4yo"]
-[ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="33_e4gty"]
 [ext_resource type="PackedScene" uid="uid://glh1bi8fq0y3" path="res://Characters/Weeb.tscn" id="36_w0bf2"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="39_48cwk"]
+[ext_resource type="Script" path="res://BoundingBoxes/CameraTrigger.cs" id="39_50gr5"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="40_h1ykh"]
 
 [sub_resource type="Gradient" id="Gradient_jupxw"]
 offsets = PackedFloat32Array(0.00740741, 0.2, 1)
@@ -294,6 +296,21 @@ shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
 
+[sub_resource type="Resource" id="Resource_jfjid"]
+script = ExtResource("40_h1ykh")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htwu3"]
+size = Vector2(256, 512)
+
+[sub_resource type="Curve2D" id="Curve2D_y7u3v"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 256, 0, 0, 0, 0, 0, -64)
+}
+point_count = 2
+
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_je8i8"]
 vertices = PackedVector2Array(8, 184, -8, 184, -8, 169, 8, 169, 104, -17, 104, -37, 120, -120, 120, 120, 40, 63, 81, 40, 95, 40, 40, 75, 31, 72, 40, -81, 40, -101, 104, 31, 40, 95, 8, 75, 17, 72, 40, 43, 63, 40, -8, 63, 8, 63, -8, 75, -17, 72, -120, -120, 8, -101, 8, 11, 8, 31, -8, 31, -8, 11, -81, 40, -72, 31, -63, 40, -120, 120, -49, 40, -40, 31, -31, 40, -40, 43, 31, 40, 40, 31, 49, 40, 72, 31, 8, 43, 17, 40, -8, 43, -17, 40, 8, 95, -8, 95, -40, 75, -31, 72, -40, 63, 8, 120, 8, 128, -8, 128, -8, 120, 8, -81, -8, -81, -8, -101, -40, -101, 8, -69, 8, -49, -8, -49, -8, -69, 8, -37, 8, -17, -8, -17, -8, -37, -81, -8, -72, -17, -63, -8, -49, -8, -40, -17, -31, -8, 31, -8, 40, -17, 49, -8, 63, -8, 72, -17, 81, -8, 40, -49, 40, -69, 31, -72, 17, -72, -17, -72, -40, -69, -31, -72, -40, -81, 31, 104, 17, 104, -17, 104, -31, 104, -40, 95, -95, 40, -104, 31, -104, 11, -40, -49, -104, -37, 31, -40, 17, -40, -17, -40, -31, -40, -17, -8, 17, -8, -104, -17, -95, -8, 104, 11, 95, -8)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(8, 9, 10, 11, 12), PackedInt32Array(6, 5, 13, 14), PackedInt32Array(10, 15, 7), PackedInt32Array(10, 7, 16, 11), PackedInt32Array(12, 11, 17, 18), PackedInt32Array(9, 8, 19, 20), PackedInt32Array(21, 22, 18, 17, 23, 24), PackedInt32Array(25, 6, 14, 26), PackedInt32Array(27, 28, 29, 30), PackedInt32Array(31, 32, 33, 34), PackedInt32Array(35, 36, 37, 38), PackedInt32Array(39, 40, 41, 19), PackedInt32Array(20, 42, 9), PackedInt32Array(41, 20, 19), PackedInt32Array(39, 19, 43, 44), PackedInt32Array(29, 28, 44, 43, 45, 46), PackedInt32Array(43, 22, 21, 45), PackedInt32Array(46, 45, 38, 37), PackedInt32Array(17, 47, 48, 23), PackedInt32Array(24, 23, 49, 50), PackedInt32Array(51, 50, 49), PackedInt32Array(52, 53, 54, 55), PackedInt32Array(26, 56, 57, 58), PackedInt32Array(25, 26, 58), PackedInt32Array(25, 58, 59), PackedInt32Array(60, 61, 62, 63), PackedInt32Array(64, 65, 66, 67), PackedInt32Array(68, 69, 70), PackedInt32Array(71, 72, 73), PackedInt32Array(74, 75, 76), PackedInt32Array(77, 78, 79), PackedInt32Array(5, 80, 81), PackedInt32Array(13, 5, 81), PackedInt32Array(82, 13, 81), PackedInt32Array(82, 81, 60, 83), PackedInt32Array(57, 56, 83, 60, 63, 84), PackedInt32Array(84, 63, 85, 86), PackedInt32Array(87, 86, 85, 25), PackedInt32Array(25, 59, 87), PackedInt32Array(33, 35, 38, 51, 34), PackedInt32Array(88, 16, 7), PackedInt32Array(88, 7, 52, 89), PackedInt32Array(48, 47, 89, 52, 55, 90), PackedInt32Array(90, 55, 34, 91), PackedInt32Array(92, 91, 34), PackedInt32Array(49, 92, 34), PackedInt32Array(51, 49, 34), PackedInt32Array(93, 31, 34), PackedInt32Array(94, 93, 34), PackedInt32Array(94, 34, 25, 95), PackedInt32Array(25, 85, 96, 97), PackedInt32Array(98, 80, 5), PackedInt32Array(98, 5, 64, 99), PackedInt32Array(62, 61, 99, 64, 67, 100), PackedInt32Array(100, 67, 97, 101), PackedInt32Array(96, 101, 97), PackedInt32Array(30, 102, 66, 65, 103, 27), PackedInt32Array(25, 97, 104), PackedInt32Array(95, 25, 104), PackedInt32Array(95, 104, 105), PackedInt32Array(30, 95, 105, 68), PackedInt32Array(30, 68, 70), PackedInt32Array(30, 70, 71), PackedInt32Array(30, 71, 73), PackedInt32Array(30, 73, 102), PackedInt32Array(106, 27, 103, 74), PackedInt32Array(106, 74, 76), PackedInt32Array(106, 76, 77), PackedInt32Array(106, 77, 79), PackedInt32Array(106, 79, 107), PackedInt32Array(106, 107, 4), PackedInt32Array(106, 4, 7), PackedInt32Array(106, 7, 15)])
@@ -349,7 +366,6 @@ cell_size = 16.0
 agent_radius = 8.0
 
 [node name="ArenaExterior" node_paths=PackedStringArray("Entities", "Areas", "Spawners", "Markers") groups=["navigation"] instance=ExtResource("1_ci4ij")]
-tile_set = ExtResource("2_m6h7j")
 Entities = NodePath("Entities")
 Areas = NodePath("Areas")
 Spawners = NodePath("Spawners")
@@ -384,7 +400,7 @@ tile_set = ExtResource("2_m6h7j")
 [node name="z-index 0 (walls)" parent="Layers" index="6"]
 tile_set = ExtResource("2_m6h7j")
 
-[node name="CanvasModulate" parent="." index="2"]
+[node name="CanvasModulate" parent="." index="1"]
 color = Color(0.5, 0.5, 0.5, 1)
 
 [node name="Static@Godrays" type="Node2D" parent="Props" index="0"]
@@ -1015,18 +1031,27 @@ Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
 
-[node name="CameraBounds" parent="Areas" index="0" node_paths=PackedStringArray("Trigger", "TopLeft", "BottomRight") instance=ExtResource("33_e4gty")]
-visible = false
-position = Vector2(576, 511)
-Trigger = NodePath("Area2D")
-TopLeft = NodePath("TopLeft")
-BottomRight = NodePath("BottomRight")
+[node name="EntranceCamera" type="Area2D" parent="Areas" index="0" node_paths=PackedStringArray("Camera")]
+position = Vector2(576, 504)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("39_50gr5")
+Camera = NodePath("PhantomCamera2D")
 
-[node name="TopLeft" parent="Areas/CameraBounds" index="1"]
-position = Vector2(-384, -192)
+[node name="PhantomCamera2D" type="Node2D" parent="Areas/EntranceCamera" index="0" node_paths=PackedStringArray("follow_path")]
+script = ExtResource("39_48cwk")
+follow_mode = 4
+follow_path = NodePath("../Path2D")
+zoom = Vector2(4, 4)
+tween_resource = SubResource("Resource_jfjid")
+draw_limits = true
 
-[node name="BottomRight" parent="Areas/CameraBounds" index="2"]
-position = Vector2(384, 384)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/EntranceCamera" index="1"]
+shape = SubResource("RectangleShape2D_htwu3")
+
+[node name="Path2D" type="Path2D" parent="Areas/EntranceCamera" index="2"]
+curve = SubResource("Curve2D_y7u3v")
 
 [node name="MainNav" type="NavigationRegion2D" parent="Areas" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_je8i8")
@@ -1054,4 +1079,3 @@ position = Vector2(576, 431)
 [editable path="Props/StaticBookshelf2"]
 [editable path="Props/StaticBookshelf3"]
 [editable path="Props/StaticBookshelf4"]
-[editable path="Areas/CameraBounds"]

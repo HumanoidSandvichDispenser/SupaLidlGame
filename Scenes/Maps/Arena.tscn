@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://b2x17su05ou5w"]
+[gd_scene load_steps=28 format=4 uid="uid://b2x17su05ou5w"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_ifiic"]
 [ext_resource type="TileSet" uid="uid://l61kbx31ug4p" path="res://Scenes/Maps/ArenaTileset.tres" id="2_x0mh7"]
@@ -9,8 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://d1ukste16yq6v" path="res://Assets/Sprites/Particles/player-light.png" id="7_y7j0e"]
 [ext_resource type="AudioStream" uid="uid://dy4qjflo1k28b" path="res://Assets/Sounds/calm-storm-ambient.mp3" id="8_wox7d"]
 [ext_resource type="Script" path="res://BoundingBoxes/ConnectorBox.cs" id="9_fg062"]
-[ext_resource type="PackedScene" uid="uid://malbos18dh7l" path="res://BoundingBoxes/CameraBounds.tscn" id="11_j2620"]
+[ext_resource type="Script" path="res://BoundingBoxes/CameraTrigger.cs" id="11_0u80h"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="11_q01ik"]
 [ext_resource type="Texture2D" uid="uid://c1a7lvb4uuwfy" path="res://Assets/Sprites/Particles/circle-16.png" id="11_yjp7m"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="12_ca3oh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i5p65"]
 resource_local_to_scene = true
@@ -52,7 +54,34 @@ turbulence_enabled = true
 size = Vector2(40, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iw8cv"]
-size = Vector2(64, 360)
+size = Vector2(32, 254)
+
+[sub_resource type="Resource" id="Resource_22hgm"]
+script = ExtResource("12_ca3oh")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_28nvi"]
+size = Vector2(1024, 512)
+
+[sub_resource type="Curve2D" id="Curve2D_0qfqo"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -256)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8id2f"]
+size = Vector2(256, 256)
+
+[sub_resource type="Resource" id="Resource_bv7so"]
+script = ExtResource("12_ca3oh")
+duration = 1.0
+transition = 0
+ease = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_idjmj"]
+size = Vector2(512, 384)
 
 [node name="Arena" node_paths=PackedStringArray("Entities", "Areas", "Spawners", "Markers") instance=ExtResource("1_ifiic")]
 Entities = NodePath("Entities")
@@ -207,24 +236,66 @@ ToConnector = "ArenaEntrance"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Entrance" index="0"]
 shape = SubResource("RectangleShape2D_2xagi")
 
-[node name="EntranceCameraBounds" parent="Areas" index="1" node_paths=PackedStringArray("Trigger", "TopLeft", "BottomRight") instance=ExtResource("11_j2620")]
-Trigger = NodePath("Area2D")
-TopLeft = NodePath("TopLeft")
-BottomRight = NodePath("BottomRight")
+[node name="EntranceCamera" type="Area2D" parent="Areas" index="1" node_paths=PackedStringArray("Camera")]
+position = Vector2(0, 384)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("11_0u80h")
+Camera = NodePath("Node/PhantomCamera2D")
 
-[node name="Area2D" parent="Areas/EntranceCameraBounds" index="0"]
-position = Vector2(0, 377)
-
-[node name="CollisionShape2D" parent="Areas/EntranceCameraBounds/Area2D" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/EntranceCamera" index="0"]
+position = Vector2(0, -129)
 shape = SubResource("RectangleShape2D_iw8cv")
+debug_color = Color(0.631373, 0.345098, 1, 0.419608)
 
-[node name="TopLeft" parent="Areas/EntranceCameraBounds" index="1"]
-position = Vector2(-256, 0)
+[node name="Node" type="Node" parent="Areas/EntranceCamera" index="1"]
 
-[node name="BottomRight" parent="Areas/EntranceCameraBounds" index="2"]
-position = Vector2(256, 384)
+[node name="PhantomCamera2D" type="Node2D" parent="Areas/EntranceCamera/Node" index="0" node_paths=PackedStringArray("follow_path")]
+position = Vector2(0, 248)
+script = ExtResource("11_q01ik")
+follow_mode = 4
+follow_path = NodePath("../../Path2D")
+zoom = Vector2(4, 4)
+tween_resource = SubResource("Resource_22hgm")
+tween_on_load = false
+draw_limits = true
+limit_left = -384
+limit_top = -400
+limit_right = 384
+limit_bottom = 400
+limit_target = NodePath("../CollisionShape2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/EntranceCamera/Node" index="1"]
+position = Vector2(0, 128)
+shape = SubResource("RectangleShape2D_28nvi")
+
+[node name="Path2D" type="Path2D" parent="Areas/EntranceCamera" index="2"]
+curve = SubResource("Curve2D_0qfqo")
+
+[node name="MiddleCamera" type="Area2D" parent="Areas" index="2" node_paths=PackedStringArray("Camera")]
+position = Vector2(0, -3)
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+script = ExtResource("11_0u80h")
+Camera = NodePath("Node/PhantomCamera2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/MiddleCamera" index="0"]
+shape = SubResource("RectangleShape2D_8id2f")
+debug_color = Color(0.631373, 0.345098, 1, 0.419608)
+
+[node name="Node" type="Node" parent="Areas/MiddleCamera" index="1"]
+
+[node name="PhantomCamera2D" type="Node2D" parent="Areas/MiddleCamera/Node" index="0"]
+script = ExtResource("11_q01ik")
+zoom = Vector2(3, 3)
+tween_resource = SubResource("Resource_bv7so")
+tween_on_load = false
+draw_limits = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/MiddleCamera/Node" index="1"]
+shape = SubResource("RectangleShape2D_idjmj")
 
 [node name="Entrance" type="Marker2D" parent="Markers" index="0"]
 position = Vector2(0, 352)
-
-[editable path="Areas/EntranceCameraBounds"]
