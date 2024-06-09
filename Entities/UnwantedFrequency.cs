@@ -59,7 +59,7 @@ public partial class UnwantedFrequency : Projectile, Utils.ITarget
         TrailPosition.Position = new Vector2(0, 4 * Mathf.Sin(radians));
         TrailPosition2.Position = -TrailPosition.Position;
 
-        if (CharacterTarget is not null)
+        if (CharacterTarget is not null && IsInstanceValid(CharacterTarget))
         {
             var pos = CharacterTarget.GlobalPosition;
             var desired = GlobalPosition.DirectionTo(pos);

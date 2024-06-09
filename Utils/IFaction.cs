@@ -7,6 +7,7 @@ public enum FactionName
 {
     Player = 1,
     Doc = 2,
+    Forest = 4,
 }
 
 public interface IFaction
