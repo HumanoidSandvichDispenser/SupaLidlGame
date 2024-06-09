@@ -59,7 +59,10 @@ public partial class DynamicDoor : StaticBody2D
             {
                 // rebake navmesh so NPCs can correctly travel conditionally
                 GD.Print("Dynamic door updated; rebaking navmeshes...");
-                navmesh.BakeNavigationPolygon();
+                if (!navmesh.IsBaking())
+                {
+                    navmesh.BakeNavigationPolygon();
+                }
             }
         }
     }

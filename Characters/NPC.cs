@@ -104,27 +104,25 @@ public partial class NPC : Character
     {
         float bestScore = float.MaxValue;
         Character bestChar = null;
-        // NOTE: this relies on all Characters being under the Entities node
-        foreach (Node node in GetParent().GetChildren())
+
+        foreach (var character in World.Instance.CurrentMap.GetCharacters())
         {
-            if (node is Character character)
+            bool isFriendly = ((IFaction)character).AlignsWith(this);
+            if (isFriendly || !character.IsAlive)
             {
-                bool isFriendly = character.Faction == Faction;
-                if (isFriendly || character.Health <= 0)
-                {
-                    continue;
-                }
+                continue;
+            }
 
-                float score = 0;
-                score -= Position.DistanceTo(character.Position);
+            float score = 0;
+            score += GlobalPosition.DistanceSquaredTo(character.GlobalPosition);
 
-                if (score < bestScore)
-                {
-                    bestScore = score;
-                    bestChar = character;
-                }
+            if (score < bestScore)
+            {
+                bestScore = score;
+                bestChar = character;
             }
         }
+
         return bestChar;
     }
 

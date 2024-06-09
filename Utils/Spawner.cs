@@ -53,7 +53,7 @@ public partial class Spawner : Node2D
 
             var chr = Character.Instantiate<Characters.Character>();
             chr.GlobalPosition = randPos;
-            this.GetAncestor<Scenes.Map>().Entities.AddChild(chr);
+            World.Instance.CurrentMap.Entities.AddChild(chr);
         }
     }
 }

@@ -1,9 +1,10 @@
 using Godot;
 using SupaLidlGame.Extensions;
+using System.Collections.Generic;
 
 namespace SupaLidlGame.Scenes;
 
-public partial class Map : TileMap
+public partial class Map : Node2D
 {
     [Export]
     public Node2D Entities { get; set; }
@@ -69,6 +70,17 @@ public partial class Map : TileMap
     {
         Godot.RenderingServer.SetDefaultClearColor(ClearColor);
         GetNode<Audio.AudioManager>("/root/AudioManager").PlayBackground(Music);
+    }
+
+    public IEnumerable<Characters.Character> GetCharacters()
+    {
+        foreach (var child in Entities.GetChildren())
+        {
+            if (child is Characters.Character c)
+            {
+                yield return c;
+            }
+        }
     }
 
     public Node SpawnEntity(PackedScene scene)

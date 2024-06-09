@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://b2254pup8k161"]
+[gd_scene load_steps=77 format=3 uid="uid://b2254pup8k161"]
 
 [ext_resource type="Script" path="res://Characters/Player.cs" id="1_flygr"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_ngsgt"]
@@ -33,6 +33,8 @@
 [ext_resource type="PackedScene" uid="uid://ce0ph4wk0ylra" path="res://UI/TargetTracer.tscn" id="22_hxi53"]
 [ext_resource type="Texture2D" uid="uid://bd8l8kafb42dt" path="res://Assets/Sprites/Particles/circle.png" id="22_uefct"]
 [ext_resource type="Texture2D" uid="uid://bcgm3r168qjn3" path="res://Assets/Sprites/Particles/cast-effect.png" id="24_njn4h"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="27_mndpv"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="28_6gq8l"]
 [ext_resource type="Script" path="res://Items/PlayerInventory.cs" id="30_y2wmw"]
 [ext_resource type="PackedScene" uid="uid://cgg0sfm2qeiwn" path="res://Items/Weapons/Bow.tscn" id="31_mofvy"]
 [ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="31_ql4as"]
@@ -43,6 +45,12 @@ shader = ExtResource("2_ngsgt")
 shader_parameter/color = Vector4(1, 1, 1, 1)
 shader_parameter/intensity = 0.0
 shader_parameter/alpha_modulate = 1.0
+
+[sub_resource type="Resource" id="Resource_535hq"]
+script = ExtResource("28_6gq8l")
+duration = 1.0
+transition = 0
+ease = 2
 
 [sub_resource type="Animation" id="Animation_imqdv"]
 length = 0.001
@@ -594,6 +602,14 @@ StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
 Faction = 1
 
+[node name="PCamera" type="Node2D" parent="."]
+script = ExtResource("27_mndpv")
+priority = 1
+follow_mode = 2
+zoom = Vector2(4, 4)
+tween_resource = SubResource("Resource_535hq")
+draw_limits = true
+
 [node name="Stats" type="Node" parent="."]
 script = ExtResource("4_06oya")
 
@@ -765,6 +781,7 @@ stream = ExtResource("12_vvem5")
 unique_name_in_owner = true
 
 [node name="Camera2D" parent="." instance=ExtResource("4_ym125")]
+enabled = false
 zoom = Vector2(4, 4)
 position_smoothing_speed = 8.0
 

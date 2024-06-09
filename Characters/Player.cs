@@ -37,6 +37,9 @@ public sealed partial class Player : Character
     public PlayerCamera Camera { get; set; }
 
     [Export]
+    public GodotObject PCamera { get; set; }
+
+    [Export]
     public Marker2D DirectionMarker { get; private set; }
 
     [Export]
@@ -73,6 +76,17 @@ public sealed partial class Player : Character
         };
 
         Inventory.SelectedIndex = 0;
+    }
+
+    public override void _EnterTree()
+    {
+        // HACK: instantly move camera to player when switching to a scene
+        // with another PhantomCamera2D
+        var tween = GetNode<GodotObject>("PCamera")
+            .Get("tween_resource")
+            .AsGodotObject();
+        tween.Set("duration", 0);
+        tween.SetDeferred("duration", 1);
     }
 
     public override void _Process(double delta)
@@ -238,7 +252,6 @@ public sealed partial class Player : Character
         switch (inputMethod)
         {
             case State.Global.InputMethod.Joystick:
-                GD.Print(joystick);
                 if (joystick.IsZeroApprox())
                 {
                     return Direction;

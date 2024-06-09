@@ -364,13 +364,11 @@ curve = SubResource("Curve_30p4b")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qdhau"]
 particle_flag_disable_z = true
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 32.0
 initial_velocity_max = 32.0
 angular_velocity_min = 90.0
 angular_velocity_max = 90.0
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 linear_accel_min = -64.0
 linear_accel_max = -32.0
 tangential_accel_min = 8.0
@@ -405,6 +403,7 @@ Sprite = NodePath("Sprites/Node2D/Character")
 Inventory = NodePath("Inventory")
 StateMachine = NodePath("StateMachine")
 Hurtbox = NodePath("Hurtbox")
+Faction = 2
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("InitialState", "Character")]
 script = ExtResource("3_lj2a2")
@@ -441,7 +440,6 @@ MaxDistanceToTarget = 128.0
 UseItemDistance = 128.0
 PassiveState = NodePath("../Pursue")
 PursueState = NodePath("../Pursue")
-PursueOnLineOfSight = false
 NPC = NodePath("../..")
 
 [node name="Idle" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("PursueState", "NavigationAgent", "NPC")]
@@ -450,7 +448,6 @@ PursueState = NodePath("../Pursue")
 MinTargetDistance = 32.0
 PursueOnLineOfSight = true
 MinLineOfSightDistance = 128.0
-ShouldReturnToOriginalPosition = true
 NavigationAgent = NodePath("../../NavigationAgent2D")
 NPC = NodePath("../..")
 
@@ -530,15 +527,17 @@ hframes = 6
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_bfqew")
 
-[node name="Inventory" type="Node2D" parent="."]
+[node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 position = Vector2(0, -4)
 script = ExtResource("17_sjq8t")
+Hotbar = []
 
-[node name="ProjectileSpawner" parent="Inventory" instance=ExtResource("17_dmlbb")]
+[node name="ProjectileSpawner" parent="Inventory" node_paths=PackedStringArray("StateMachine") instance=ExtResource("17_dmlbb")]
 Projectile = ExtResource("18_lwg36")
 ShouldOverrideProjectileDamage = false
 ShouldOverrideVelocity = false
 ShouldRotate = false
+StateMachine = NodePath("StateMachine")
 UseTime = 2.0
 
 [node name="Hurtbox" parent="." instance=ExtResource("18_ajs2x")]
