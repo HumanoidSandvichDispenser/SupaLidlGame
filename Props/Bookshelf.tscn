@@ -26,18 +26,17 @@ vframes = 2
 frame = 9
 
 [node name="TopLeft" type="Sprite2D" parent="."]
-position = Vector2(-16, -16)
+position = Vector2(-16, 0)
 texture = ExtResource("1_cnrpk")
 centered = false
-offset = Vector2(0, -16)
+offset = Vector2(0, -32)
 hframes = 8
 vframes = 2
 
 [node name="TopRight" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
 texture = ExtResource("1_cnrpk")
 centered = false
-offset = Vector2(0, -16)
+offset = Vector2(0, -32)
 hframes = 8
 vframes = 2
 frame = 1

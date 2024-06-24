@@ -268,8 +268,8 @@ scale_curve = SubResource("CurveTexture_5uulw")
 color = Color(1, 0, 0, 1)
 color_ramp = SubResource("GradientTexture1D_iyaih")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bfqew"]
-size = Vector2(8, 8)
+[sub_resource type="CircleShape2D" id="CircleShape2D_umi1b"]
+radius = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1gjgc"]
 size = Vector2(12, 16)
@@ -430,7 +430,7 @@ offset = Vector2(0, -12)
 hframes = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_bfqew")
+shape = SubResource("CircleShape2D_umi1b")
 
 [node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 script = ExtResource("17_5rur0")

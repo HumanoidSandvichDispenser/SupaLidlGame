@@ -226,7 +226,5 @@ locale/translations_pot_files=PackedStringArray("res://Assets/Dialogue/doc.dialo
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.301961, 0.301961, 0.301961, 1)
 viewport/hdr_2d=true
