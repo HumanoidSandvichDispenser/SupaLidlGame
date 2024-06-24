@@ -33,7 +33,7 @@ public partial class ProjectileSpawner : Ranged
         }
     }
 
-    protected virtual void SpawnProjectile(Scenes.Map map,
+    protected virtual Entities.Projectile SpawnProjectile(Scenes.Map map,
         Vector2 direction, float velocityModifier = 1)
     {
         var projectile = map.SpawnEntity<Entities.Projectile>(Projectile);
@@ -70,6 +70,7 @@ public partial class ProjectileSpawner : Ranged
             }
         }
 
+        return projectile;
     }
 
     public override void Attack()
