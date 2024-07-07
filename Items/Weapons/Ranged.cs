@@ -29,9 +29,21 @@ public abstract partial class Ranged : Weapon
         base.Use();
     }
 
+    public override void UseAlt()
+    {
+        StateMachine.UseAlt();
+        base.Use();
+    }
+
     public override void Deuse()
     {
         StateMachine.Deuse();
+        base.Deuse();
+    }
+
+    public override void DeuseAlt()
+    {
+        StateMachine.DeuseAlt();
         base.Deuse();
     }
 

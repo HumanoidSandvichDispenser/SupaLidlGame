@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cgg0sfm2qeiwn"]
+[gd_scene load_steps=28 format=3 uid="uid://cgg0sfm2qeiwn"]
 
 [ext_resource type="Texture2D" uid="uid://dam6aigkw8xs" path="res://Assets/Sprites/Items/bow-and-arrow.png" id="1_1ghvv"]
 [ext_resource type="Script" path="res://Items/Weapons/Bow.cs" id="1_ikgu2"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://State/Weapon/RangedIdleState.cs" id="3_uxif8"]
 [ext_resource type="Script" path="res://State/Weapon/RangedFireState.cs" id="4_moo4d"]
 [ext_resource type="Script" path="res://State/Weapon/RangedChargeState.cs" id="5_k8y6f"]
+[ext_resource type="Script" path="res://State/Weapon/BowAltState.cs" id="7_l73rl"]
 [ext_resource type="AudioStream" uid="uid://bkekgj4gu7fw4" path="res://Assets/Sounds/bow-draw.wav" id="7_t07v0"]
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="9_tk6lc"]
 [ext_resource type="AudioStream" uid="uid://cwy4giq8eod5g" path="res://Assets/Sounds/bow-release.wav" id="9_v051g"]
@@ -108,6 +109,77 @@ tracks/2/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_bejvb"]
+resource_name = "alt_fire"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Anchor/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 5, 0, 5, 0, 5, 0, 5, 0]
+}
+tracks/1/type = "audio"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.03,
+"stream": ExtResource("9_v051g")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.03,
+"stream": ExtResource("9_v051g")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.03,
+"stream": ExtResource("9_v051g")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.03,
+"stream": ExtResource("9_v051g")
+}, {
+"end_offset": 0.0,
+"start_offset": 0.03,
+"stream": ExtResource("9_v051g")
+}],
+"times": PackedFloat32Array(0, 0.1998, 0.3996, 0.5994, 0.7992)
+}
+tracks/1/use_blend = true
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Anchor/Flame:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(15, -8)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Anchor/Flame:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_8qr8x"]
 resource_name = "charge"
 length = 0.5
@@ -151,7 +223,7 @@ tracks/2/keys = {
 "values": [Vector2(15, -8), Vector2(14, -8), Vector2(13, -8), Vector2(12, -8), Vector2(11, -8), Vector2(9, -8)]
 }
 
-[sub_resource type="Animation" id="Animation_bejvb"]
+[sub_resource type="Animation" id="Animation_j5qtq"]
 resource_name = "fire"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -223,20 +295,23 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5vx8d"]
 _data = {
 "RESET": SubResource("Animation_h0fti"),
+"alt_fire": SubResource("Animation_bejvb"),
 "charge": SubResource("Animation_8qr8x"),
-"fire": SubResource("Animation_bejvb"),
+"fire": SubResource("Animation_j5qtq"),
 "idle": SubResource("Animation_riv7t")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6b356"]
 
-[node name="Bow" type="Node2D"]
+[node name="Bow" type="Node2D" node_paths=PackedStringArray("StateMachine")]
 y_sort_enabled = true
 script = ExtResource("1_ikgu2")
 Projectile = ExtResource("2_mvw0j")
 ChargeTime = 0.5
+StateMachine = NodePath("StateMachine")
 Damage = 20.0
 UseTime = 0.5
+UseAltTime = 0.2
 Knockback = 64.0
 InitialVelocity = 200.0
 ShouldFreezeAngleOnUse = false
@@ -246,11 +321,13 @@ PlayerLevelGain = 1.0
 script = ExtResource("3_pg4gy")
 InitialState = NodePath("Idle")
 UsedItemStates = Array[NodePath]([NodePath("Charge"), NodePath("Fire")])
+UsedItemAltStates = Array[NodePath]([NodePath("AltFire")])
 DeusedItemStates = Array[NodePath]([NodePath("Idle")])
 
-[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("FireState", "Weapon", "AnimationPlayer")]
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("FireState", "AltFireState", "Weapon", "AnimationPlayer")]
 script = ExtResource("3_uxif8")
 FireState = NodePath("../Charge")
+AltFireState = NodePath("../AltFire")
 Weapon = NodePath("../..")
 AnimationPlayer = NodePath("../../AnimationPlayer")
 AnimationKey = "idle"
@@ -269,6 +346,14 @@ Weapon = NodePath("../..")
 IdleState = NodePath("../Idle")
 AnimationPlayer = NodePath("../../AnimationPlayer")
 AnimationKey = "fire"
+
+[node name="AltFire" type="Node" parent="StateMachine" node_paths=PackedStringArray("Bow", "IdleState", "AnimationPlayer")]
+script = ExtResource("7_l73rl")
+Bow = NodePath("../..")
+IdleState = NodePath("../Idle")
+AnimationPlayer = NodePath("../../AnimationPlayer")
+AnimationKey = "alt_fire"
+AngleDeviation = 30.0
 
 [node name="Anchor" type="Node2D" parent="."]
 y_sort_enabled = true

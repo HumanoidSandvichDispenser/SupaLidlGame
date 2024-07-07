@@ -86,6 +86,12 @@ public partial class ProjectileSpawner : Ranged
 
         Vector2 target = Character.Target.Normalized();
 
+        if (AngleDeviation > 0)
+        {
+            float angle = (GD.Randf() - 0.5f) * AngleDeviation;
+            target = target.Rotated(Mathf.DegToRad(angle));
+        }
+
         if (CharacterRecoil > 0)
         {
             Character.ApplyImpulse(-target * CharacterRecoil);
