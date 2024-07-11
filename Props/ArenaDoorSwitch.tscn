@@ -111,6 +111,7 @@ offset_bottom = -8.0
 text = "Activate"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
 texture = ExtResource("3_pgkt4")
 centered = false
 offset = Vector2(-2, -8)

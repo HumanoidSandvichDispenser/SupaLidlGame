@@ -73,7 +73,7 @@ autoplay = "default"
 frame_progress = 0.337799
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-color = Color(1, 0.976471, 0.92549, 1)
+color = Color(1, 0.811765, 0.537255, 1)
 blend_mode = 2
 shadow_enabled = true
 shadow_filter_smooth = 3.0
