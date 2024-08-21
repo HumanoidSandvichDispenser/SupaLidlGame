@@ -69,6 +69,7 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
             // instantiating a new array will prevent characters from
             // sharing inventories
             Hotbar = new();
+            Hotbar.Resize(HotbarCapacity);
         }
 
         if (Items is null)
@@ -152,6 +153,35 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
         AddChild(item);
         GD.Print("Added " + item.Metadata.Name);
         return item;
+    }
+
+    public Item SetHotbarIndexToItem(int index, ItemMetadata metadata)
+    {
+        var oldItem = Hotbar[index];
+        Item newItem = null;
+
+        if (IsInstanceValid(oldItem))
+        {
+            oldItem?.QueueFree();
+        }
+
+        if (metadata is not null)
+        {
+            newItem = metadata.Instance.Instantiate<Item>();
+            AddChild(newItem);
+            Hotbar[index] = newItem;
+        }
+
+        if (SelectedIndex == index)
+        {
+            // equip item if the hotbar index we are setting is selected
+            EquipIndex(index);
+        }
+
+        var bus = Events.EventBus.Instance;
+        bus.EmitSignal(Events.EventBus.SignalName.PlayerInventoryUpdate, this);
+
+        return newItem;
     }
 
     public Item AddItem(Item item)

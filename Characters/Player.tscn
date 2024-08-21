@@ -36,9 +36,9 @@
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="27_mndpv"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="28_6gq8l"]
 [ext_resource type="Script" path="res://Items/PlayerInventory.cs" id="30_y2wmw"]
-[ext_resource type="PackedScene" uid="uid://cgg0sfm2qeiwn" path="res://Items/Weapons/Bow.tscn" id="31_mofvy"]
-[ext_resource type="PackedScene" uid="uid://dvqap2uhcah63" path="res://Items/Weapons/Sword.tscn" id="31_ql4as"]
-[ext_resource type="PackedScene" uid="uid://5y1acxl4j4n7" path="res://Items/Weapons/Pugio.tscn" id="32_6ffmm"]
+[ext_resource type="Resource" uid="uid://cl7jvdu2lnv2d" path="res://Items/Weapons/Sword.tres" id="33_3qyfl"]
+[ext_resource type="Resource" uid="uid://cjsh0dcgbfn77" path="res://Items/Weapons/Bow.tres" id="34_70ron"]
+[ext_resource type="Resource" uid="uid://iqe6rgnb3jur" path="res://Items/Weapons/Pugio.tres" id="35_4pap1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h78y7"]
 shader = ExtResource("2_ngsgt")
@@ -836,34 +836,13 @@ horizontal_alignment = 1
 [node name="Inventory" type="Node2D" parent="." node_paths=PackedStringArray("Hotbar")]
 y_sort_enabled = true
 script = ExtResource("30_y2wmw")
-Hotbar = [NodePath("Sword"), NodePath("Bow"), NodePath("Pugio")]
+Hotbar = [null, null, null]
+Items = Array[Object]([ExtResource("33_3qyfl"), ExtResource("34_70ron"), ExtResource("35_4pap1")])
 InventoryMap = {
 "equip_1": 0,
 "equip_2": 1,
 "equip_3": 2
 }
-
-[node name="Bow" parent="Inventory" node_paths=PackedStringArray("StateMachine") instance=ExtResource("31_mofvy")]
-visible = false
-StateMachine = NodePath("StateMachine")
-
-[node name="Sword" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("31_ql4as")]
-visible = false
-Hitbox = NodePath("Hitbox")
-AnimationPlayer = NodePath("AnimationPlayer")
-ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
-StateMachine = NodePath("State")
-Anchor = NodePath("Anchor")
-HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
-
-[node name="Pugio" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("32_6ffmm")]
-visible = false
-Hitbox = NodePath("Hitbox")
-AnimationPlayer = NodePath("AnimationPlayer")
-ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
-StateMachine = NodePath("State")
-Anchor = NodePath("Anchor")
-HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("9_avyu4")]
 visible = false

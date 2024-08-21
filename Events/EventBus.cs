@@ -37,6 +37,9 @@ public partial class EventBus : Node
     public delegate void PlayerStunEventHandler();
 
     [Signal]
+    public delegate void PlayerOpenInventoryEventHandler(Items.Inventory inventory);
+
+    [Signal]
     public delegate void RegisteredBossEventHandler(Characters.Boss boss);
 
     [Signal]
