@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.Items.Weapons;
 
@@ -30,7 +31,11 @@ public partial class Bow : ProjectileSpawner
         _ignitionArea = GetNode<Area2D>("IgnitionArea");
         var onAreaEntered = (Area2D area) =>
         {
-            GetNode<AnimatedSprite2D>("%Flame").Visible = true;
+            var flame = GetNode<AnimatedSprite2D>("%Flame");
+            flame.Visible = true;
+            flame.GetNode<AudioStreamPlayer2D>("Ignite")
+                .OnWorld()
+                .PlayOneShot();
             _isOnFire = true;
         };
         _ignitionArea.Connect(

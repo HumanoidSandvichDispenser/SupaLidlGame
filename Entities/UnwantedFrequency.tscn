@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://1y5r6sklwgrp"]
+[gd_scene load_steps=25 format=3 uid="uid://1y5r6sklwgrp"]
 
 [ext_resource type="Script" path="res://Entities/UnwantedFrequency.cs" id="1_6sbe0"]
 [ext_resource type="PackedScene" uid="uid://du5vhccg75nrq" path="res://BoundingBoxes/Hitbox.tscn" id="2_gxtvd"]
@@ -10,17 +10,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_30y8q"]
 size = Vector2(8, 8)
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dhurx"]
+light_mode = 1
+
 [sub_resource type="Curve" id="Curve_eu273"]
 _data = [Vector2(0.0618557, 0), 0.0, 0.0, 0, 0, Vector2(0.489691, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_dyqhb"]
 offsets = PackedFloat32Array(0.00662252, 0.715232, 1)
-colors = PackedColorArray(0.996078, 0, 0.164706, 0, 0.996045, 0, 0.166638, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.996078, 0, 0.164706, 0, 1.992, 0, 0.334, 1, 2, 2, 2, 1)
 
 [sub_resource type="Gradient" id="Gradient_m1y6u"]
 offsets = PackedFloat32Array(0.00662252, 0.715232, 1)
-colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 1)
 
 [sub_resource type="Gradient" id="Gradient_2q0ut"]
 offsets = PackedFloat32Array(0.525926, 0.740741, 1)
@@ -132,11 +135,14 @@ Knockback = 324.0
 shape = SubResource("RectangleShape2D_30y8q")
 
 [node name="TrailRotation" type="Node2D" parent="."]
+material = SubResource("CanvasItemMaterial_dhurx")
 
 [node name="TrailPosition" type="Node2D" parent="TrailRotation"]
+use_parent_material = true
 
 [node name="Trail" parent="TrailRotation/TrailPosition" instance=ExtResource("3_67uhs")]
 self_modulate = Color(2, 2, 2, 1)
+use_parent_material = true
 width = 2.0
 width_curve = SubResource("Curve_eu273")
 default_color = Color(1, 0.0862745, 0.207843, 1)
@@ -148,9 +154,11 @@ MaximumPoints = 64
 Frequency = 30
 
 [node name="TrailPosition2" type="Node2D" parent="TrailRotation"]
+use_parent_material = true
 
 [node name="Trail" parent="TrailRotation/TrailPosition2" instance=ExtResource("3_67uhs")]
 self_modulate = Color(2, 2, 2, 1)
+use_parent_material = true
 width = 2.0
 width_curve = SubResource("Curve_eu273")
 gradient = SubResource("Gradient_m1y6u")

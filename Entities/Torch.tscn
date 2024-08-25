@@ -1,59 +1,60 @@
-[gd_scene load_steps=12 format=3 uid="uid://c1w7t6irnohfx"]
+[gd_scene load_steps=13 format=3 uid="uid://c1w7t6irnohfx"]
 
-[ext_resource type="Texture2D" uid="uid://har1bd5u4dq3" path="res://Assets/Sprites/Misc/torch.png" id="1_14bgb"]
+[ext_resource type="Texture2D" uid="uid://cyfyelyq3o15s" path="res://Assets/Sprites/Misc/torch-fire.png" id="1_gnoxc"]
+[ext_resource type="Texture2D" uid="uid://bitpf645g0prl" path="res://Assets/Sprites/Misc/torch-base.png" id="2_cwgtj"]
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="2_hotvd"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_js1l1"]
-atlas = ExtResource("1_14bgb")
-region = Rect2(0, 0, 8, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_vnjya"]
+atlas = ExtResource("1_gnoxc")
+region = Rect2(0, 0, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gdxtl"]
-atlas = ExtResource("1_14bgb")
-region = Rect2(8, 0, 8, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2emm"]
+atlas = ExtResource("1_gnoxc")
+region = Rect2(8, 0, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_da7fw"]
-atlas = ExtResource("1_14bgb")
-region = Rect2(16, 0, 8, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_03weu"]
+atlas = ExtResource("1_gnoxc")
+region = Rect2(16, 0, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rpccx"]
-atlas = ExtResource("1_14bgb")
-region = Rect2(24, 0, 8, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fqw1"]
+atlas = ExtResource("1_gnoxc")
+region = Rect2(24, 0, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_crwu1"]
-atlas = ExtResource("1_14bgb")
-region = Rect2(32, 0, 8, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sj1bi"]
+atlas = ExtResource("1_gnoxc")
+region = Rect2(32, 0, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_r3kxc"]
-atlas = ExtResource("1_14bgb")
-region = Rect2(40, 0, 8, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xpxx"]
+atlas = ExtResource("1_gnoxc")
+region = Rect2(40, 0, 8, 8)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_225la"]
-atlas = ExtResource("1_14bgb")
-region = Rect2(48, 0, 8, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dxfgw"]
+atlas = ExtResource("1_gnoxc")
+region = Rect2(48, 0, 8, 8)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gf7ku"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_js1l1")
+"texture": SubResource("AtlasTexture_vnjya")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gdxtl")
+"texture": SubResource("AtlasTexture_l2emm")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_da7fw")
+"texture": SubResource("AtlasTexture_03weu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rpccx")
+"texture": SubResource("AtlasTexture_1fqw1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_crwu1")
+"texture": SubResource("AtlasTexture_sj1bi")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_r3kxc")
+"texture": SubResource("AtlasTexture_1xpxx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_225la")
+"texture": SubResource("AtlasTexture_dxfgw")
 }],
 "loop": true,
 "name": &"default",
@@ -64,19 +65,28 @@ animations = [{
 radius = 4.0
 
 [node name="Torch" type="Node2D"]
+y_sort_enabled = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-texture_filter = 1
-position = Vector2(0, -10)
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Sprites"]
+modulate = Color(3.5, 3.5, 3, 1)
+position = Vector2(0, -14)
 sprite_frames = SubResource("SpriteFrames_gf7ku")
 autoplay = "default"
 frame_progress = 0.337799
 
+[node name="Sprite2D" type="Sprite2D" parent="Sprites"]
+position = Vector2(0, -8)
+texture = ExtResource("2_cwgtj")
+
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(1, 0.811765, 0.537255, 1)
+energy = 1.2
 blend_mode = 2
 shadow_enabled = true
 shadow_filter_smooth = 3.0
+shadow_item_cull_mask = 8
 texture = ExtResource("2_hotvd")
 offset = Vector2(0, 2)
 texture_scale = 0.25
