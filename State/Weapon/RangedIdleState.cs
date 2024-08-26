@@ -9,6 +9,9 @@ public partial class RangedIdleState : WeaponState
     public WeaponState FireState { get; set; }
 
     [Export]
+    public WeaponState AltFireState { get; set; }
+
+    [Export]
     public Items.Weapons.Ranged Weapon { get; set; }
 
     [Export]
@@ -28,6 +31,12 @@ public partial class RangedIdleState : WeaponState
     public override WeaponState Use()
     {
         return FireState;
+    }
+
+    public override WeaponState UseAlt()
+    {
+        GD.Print("Alt fire");
+        return AltFireState;
     }
 
     public override void Exit(IState<WeaponState> nextState)
