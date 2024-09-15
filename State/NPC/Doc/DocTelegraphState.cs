@@ -33,8 +33,19 @@ public partial class DocTelegraphState : NPCState
 
         do
         {
-            float randX = GD.RandRange(-112, 112);
-            float randY = GD.RandRange(-112, 112);
+            float randX = GD.RandRange(32, 112);
+            float randY = GD.RandRange(32, 112);
+
+            if (GD.Randi() % 2 == 0)
+            {
+                randX = -randX;
+            }
+
+            if (GD.Randi() % 2 == 0)
+            {
+                randY = -randY;
+            }
+
             randVec = new Vector2(randX, randY);
         }
         while (randVec.DistanceSquaredTo(player.GlobalPosition) < 9216);
