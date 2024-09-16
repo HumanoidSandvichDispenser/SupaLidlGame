@@ -113,9 +113,8 @@ layout_mode = 2
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 
-[node name="Hotbar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Right" node_paths=PackedStringArray("_slots") instance=ExtResource("5_mmp18")]
+[node name="Hotbar" parent="SubViewportContainer/UIViewport/MainUILayer/Main/Top/Right" instance=ExtResource("5_mmp18")]
 layout_mode = 2
-_slots = [NodePath("InventorySlot"), NodePath("InventorySlot2"), NodePath("InventorySlot3")]
 
 [node name="BoxContainer" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
 layout_mode = 1
@@ -128,17 +127,15 @@ grow_horizontal = 0
 grow_vertical = 2
 alignment = 2
 
-[node name="ShopMenu" parent="SubViewportContainer/UIViewport/MainUILayer/Main/BoxContainer" node_paths=PackedStringArray("_inventoryGrid") instance=ExtResource("8_ep3ae")]
+[node name="ShopMenu" parent="SubViewportContainer/UIViewport/MainUILayer/Main/BoxContainer" instance=ExtResource("8_ep3ae")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-_inventoryGrid = NodePath("PanelContainer/VBoxContainer/ScrollContainer/InventoryGrid")
 
-[node name="InventoryMenu" parent="SubViewportContainer/UIViewport/MainUILayer/Main/BoxContainer" node_paths=PackedStringArray("_inventoryGrid") instance=ExtResource("10_5m8qa")]
+[node name="InventoryMenu" parent="SubViewportContainer/UIViewport/MainUILayer/Main/BoxContainer" instance=ExtResource("10_5m8qa")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-_inventoryGrid = NodePath("PanelContainer/VBoxContainer/ScrollContainer/InventoryGrid")
 
 [node name="Bottom" type="HBoxContainer" parent="SubViewportContainer/UIViewport/MainUILayer/Main"]
 layout_mode = 1

@@ -1,11 +1,11 @@
 [gd_resource type="Theme" load_steps=11 format=3 uid="uid://cksjbu3vrup5"]
 
 [ext_resource type="FontFile" uid="uid://6bvgjbmqovau" path="res://Assets/Fonts/calamity/calamity.ttf" id="1_334fe"]
-[ext_resource type="StyleBox" path="res://UI/Themes/InventorySlotButtonFocus.tres" id="2_3w5h1"]
+[ext_resource type="StyleBox" uid="uid://nvb4etac7ee2" path="res://UI/Themes/InventorySlotButtonFocus.tres" id="2_3w5h1"]
 [ext_resource type="Texture2D" uid="uid://b16461tjso0j7" path="res://Assets/Sprites/UI/hotbar-inactive.png" id="2_6sv27"]
-[ext_resource type="StyleBox" path="res://UI/Themes/Panel.tres" id="2_jlgx8"]
-[ext_resource type="StyleBox" path="res://UI/Themes/InventorySlotButtonNormal.tres" id="3_nuiio"]
-[ext_resource type="StyleBox" path="res://UI/Themes/InventorySlotButtonPressed.tres" id="4_mllnb"]
+[ext_resource type="StyleBox" uid="uid://bqhotx2ogucye" path="res://UI/Themes/Panel.tres" id="2_jlgx8"]
+[ext_resource type="StyleBox" uid="uid://cfqp0ycwvwx7c" path="res://UI/Themes/InventorySlotButtonNormal.tres" id="3_nuiio"]
+[ext_resource type="StyleBox" uid="uid://pqtn0115bqtp" path="res://UI/Themes/InventorySlotButtonPressed.tres" id="4_mllnb"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wk5ww"]
 content_margin_left = 4.0
