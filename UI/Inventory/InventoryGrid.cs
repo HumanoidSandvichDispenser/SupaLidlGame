@@ -6,14 +6,14 @@ namespace SupaLidlGame.UI.Inventory;
 
 public partial class InventoryGrid : GridContainer
 {
-    private SupaLidlGame.Items.IItemCollection _source;
+    private Items.IItemCollection _source;
 
     [Export]
     private PackedScene _slotScene;
 
     public ButtonGroup ButtonGroup { get; private set; }
 
-    public SupaLidlGame.Items.IItemCollection Source
+    public Items.IItemCollection Source
     {
         get => _source;
         set

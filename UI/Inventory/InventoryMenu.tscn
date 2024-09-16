@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://bg51duwdtyl8w"]
+
+[ext_resource type="PackedScene" uid="uid://7blvai53i2a0" path="res://UI/Inventory/BaseMenu.tscn" id="1_55ohh"]
+[ext_resource type="Script" path="res://UI/Inventory/InventoryMenu.cs" id="2_25pbk"]
+[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="2_jvsju"]
+
+[node name="Panel" node_paths=PackedStringArray("_inventoryGrid") instance=ExtResource("1_55ohh")]
+script = ExtResource("2_25pbk")
+_inventoryGrid = NodePath("PanelContainer/VBoxContainer/ScrollContainer/InventoryGrid")
+
+[node name="HBoxContainer" parent="PanelContainer/VBoxContainer" index="0"]
+visible = false
+
+[node name="SlotButton1" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2" index="0" groups=["SlotButtons"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_jvsju")
+text = "Slot 1"
+metadata/slot = 0
+
+[node name="SlotButton2" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2" index="1" groups=["SlotButtons"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_jvsju")
+text = "Slot 2
+"
+metadata/slot = 1
+
+[node name="SlotButton3" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2" index="2" groups=["SlotButtons"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_jvsju")
+text = "Slot 3
+"
+metadata/slot = 2

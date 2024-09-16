@@ -1,94 +1,96 @@
-[gd_scene load_steps=16 format=3 uid="uid://ceadk7pam7vab"]
+[gd_scene load_steps=18 format=3 uid="uid://ceadk7pam7vab"]
 
-[ext_resource type="Texture2D" uid="uid://cyldr0ck3yfrp" path="res://Assets/Sprites/Misc/torch-lamp.png" id="1_dlkl0"]
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="2_0xpf8"]
+[ext_resource type="Texture2D" uid="uid://c1garalf1clsp" path="res://Assets/Sprites/Misc/flame-large.png" id="2_a6lwn"]
+[ext_resource type="Texture2D" uid="uid://ca0htndnsb38k" path="res://Assets/Sprites/Misc/torch-lamp-base.png" id="2_bq1kw"]
+[ext_resource type="Texture2D" uid="uid://i5ksh8i0q48o" path="res://Assets/Sprites/Misc/torch-lamp-base-back.png" id="3_vh465"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ikvnd"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(0, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtmd3"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(0, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b7wal"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(12, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_irtpk"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(12, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_68y2k"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(24, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gb20"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(24, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eib4d"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(36, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_5uhdg"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(36, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7q5cd"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(48, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4moo"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(48, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k8jtr"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(60, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_soja6"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(60, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_egan1"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(72, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sn741"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(72, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eymjc"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(84, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_r825r"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(84, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_go3ky"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(96, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_75y5m"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(96, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rvq52"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(108, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8r4c"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(108, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cjdtb"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(120, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gxo8"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(120, 0, 12, 14)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vi5xh"]
-atlas = ExtResource("1_dlkl0")
-region = Rect2(132, 0, 12, 24)
+[sub_resource type="AtlasTexture" id="AtlasTexture_60wov"]
+atlas = ExtResource("2_a6lwn")
+region = Rect2(132, 0, 12, 14)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gf7ku"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ikvnd")
+"texture": SubResource("AtlasTexture_dtmd3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_b7wal")
+"texture": SubResource("AtlasTexture_irtpk")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_68y2k")
+"texture": SubResource("AtlasTexture_0gb20")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eib4d")
+"texture": SubResource("AtlasTexture_5uhdg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7q5cd")
+"texture": SubResource("AtlasTexture_e4moo")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k8jtr")
+"texture": SubResource("AtlasTexture_soja6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_egan1")
+"texture": SubResource("AtlasTexture_sn741")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eymjc")
+"texture": SubResource("AtlasTexture_r825r")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_go3ky")
+"texture": SubResource("AtlasTexture_75y5m")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rvq52")
+"texture": SubResource("AtlasTexture_l8r4c")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cjdtb")
+"texture": SubResource("AtlasTexture_7gxo8")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vi5xh")
+"texture": SubResource("AtlasTexture_60wov")
 }],
 "loop": true,
 "name": &"default",
@@ -97,19 +99,40 @@ animations = [{
 
 [node name="TorchLamp" type="Node2D"]
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = ExtResource("3_vh465")
+centered = false
+offset = Vector2(-6, -16)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(2.5, 2, 2, 1)
 y_sort_enabled = true
 texture_filter = 1
+position = Vector2(0, -6)
 sprite_frames = SubResource("SpriteFrames_gf7ku")
 autoplay = "default"
-frame = 9
-frame_progress = 0.966501
+frame_progress = 0.557817
 offset = Vector2(0, -12)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_bq1kw")
+centered = false
+offset = Vector2(-6, -16)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 color = Color(1, 0.811765, 0.537255, 1)
 energy = 1.2
 blend_mode = 2
+shadow_filter_smooth = 3.0
+texture = ExtResource("2_0xpf8")
+texture_scale = 0.25
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+visible = false
+color = Color(1, 0.811765, 0.537255, 1)
+energy = 1.2
+blend_mode = 2
+range_item_cull_mask = 8
 shadow_filter_smooth = 3.0
 texture = ExtResource("2_0xpf8")
 texture_scale = 0.25

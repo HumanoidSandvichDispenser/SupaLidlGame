@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cgg0sfm2qeiwn"]
+[gd_scene load_steps=29 format=3 uid="uid://cgg0sfm2qeiwn"]
 
 [ext_resource type="Texture2D" uid="uid://dam6aigkw8xs" path="res://Assets/Sprites/Items/bow-and-arrow.png" id="1_1ghvv"]
 [ext_resource type="Script" path="res://Items/Weapons/Bow.cs" id="1_ikgu2"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://coarr28adgo1u" path="res://Assets/Sprites/Particles/point-light.png" id="9_tk6lc"]
 [ext_resource type="AudioStream" uid="uid://cwy4giq8eod5g" path="res://Assets/Sounds/bow-release.wav" id="9_v051g"]
 [ext_resource type="Texture2D" uid="uid://dj1vsctgh1scr" path="res://Assets/Sprites/Misc/flame.png" id="9_xwcvy"]
+[ext_resource type="AudioStream" uid="uid://braj74by0oowo" path="res://Assets/Sounds/fire-burst-flash.wav" id="11_65ega"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5af70"]
 atlas = ExtResource("9_xwcvy")
@@ -94,7 +95,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(15, -8)]
+"values": [Vector2(15, -4)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -165,7 +166,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(15, -8)]
+"values": [Vector2(15, -4)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -220,7 +221,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(15, -8), Vector2(14, -8), Vector2(13, -8), Vector2(12, -8), Vector2(11, -8), Vector2(9, -8)]
+"values": [Vector2(15, -4), Vector2(14, -4), Vector2(13, -4), Vector2(12, -4), Vector2(11, -4), Vector2(9, -4)]
 }
 
 [sub_resource type="Animation" id="Animation_j5qtq"]
@@ -262,7 +263,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(15, -8)]
+"values": [Vector2(15, -4)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -370,14 +371,21 @@ hframes = 8
 [node name="Flame" type="AnimatedSprite2D" parent="Anchor"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(15, -8)
+modulate = Color(3, 3, 3, 1)
+position = Vector2(15, -4)
 sprite_frames = SubResource("SpriteFrames_b2khh")
 autoplay = "default"
+frame_progress = 0.1652
+offset = Vector2(0, -4)
 
 [node name="PointLight2D" type="PointLight2D" parent="Anchor/Flame"]
 color = Color(1, 0.8, 0.701961, 1)
+energy = 0.5
 texture = ExtResource("9_tk6lc")
 texture_scale = 0.13
+
+[node name="Ignite" type="AudioStreamPlayer2D" parent="Anchor/Flame"]
+stream = ExtResource("11_65ega")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

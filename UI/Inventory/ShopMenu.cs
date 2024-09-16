@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupaLidlGame.UI.Inventory;
 
-public partial class ShopMenu : Control, IModal
+public partial class ShopMenu : BaseMenu, IModal
 {
     private Items.IItemCollection<Items.ShopEntry> _source;
 
@@ -17,53 +17,24 @@ public partial class ShopMenu : Control, IModal
         }
     }
 
-    [Export]
-    private InventoryGrid _inventoryGrid;
-
-    private InventorySlot _selected;
-
-    public void ShowModal()
+    public override void ShowModal()
     {
         Show();
         var animPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
         animPlayer.Play("open");
     }
 
-    public void HideModal()
+    public override void HideModal()
     {
         Hide();
         _source = null;
     }
 
-    public async void Close()
-    {
-        var animPlayer = GetNode<AnimationPlayer>("%AnimationPlayer");
-        animPlayer.Play("close");
-        await ToSignal(animPlayer, AnimationPlayer.SignalName.AnimationFinished);
-        HideModal();
-    }
-
     public override void _Ready()
     {
-        _inventoryGrid.SlotFocused += (InventorySlot slot) =>
-        {
-            if (slot.Item is not null)
-            {
-                SetTooltipItem(slot);
-            }
-        };
+        base._Ready();
 
-        _inventoryGrid.SlotUnfocused += (InventorySlot slot) =>
-        {
-            SetTooltipItem(_selected);
-        };
-
-        _inventoryGrid.SlotSelected += (InventorySlot slot) =>
-        {
-            _selected = slot;
-            SetTooltipItem(slot);
-            GetNode<Button>("%BuyButton").GrabFocus();
-        };
+        _focusButtonOnSelect = GetNode<Button>("%BuyButton");
 
         GetNode<Button>("%BuyButton").GuiInput += (InputEvent @event) =>
         {
@@ -75,9 +46,9 @@ public partial class ShopMenu : Control, IModal
         };
     }
 
-    private void SetTooltipItem(InventorySlot slot)
+    protected override void SetTooltipItem(InventorySlot slot)
     {
-        GetNode<ItemTooltip>("%ItemTooltip").Item = slot?.Item;
+        base.SetTooltipItem(slot);
 
         if (slot == _selected)
         {
@@ -87,6 +58,11 @@ public partial class ShopMenu : Control, IModal
         {
             GetNode<Button>("%BuyButton").Disabled = true;
         }
+    }
+
+    public override void OnButtonPress(Button button)
+    {
+        throw new System.NotImplementedException("Not yet implemented.");
     }
 
     public override void _UnhandledInput(InputEvent @event)

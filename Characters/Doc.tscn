@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=71 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -38,6 +38,7 @@
 [ext_resource type="PackedScene" uid="uid://p7oijq6dbvvk" path="res://Items/Weapons/DocLance.tscn" id="24_2es2r"]
 [ext_resource type="AudioStream" uid="uid://cqj44je3mvk60" path="res://Assets/Sounds/rauuul.wav" id="26_js7p2"]
 [ext_resource type="PackedScene" uid="uid://dldnp8eunxj3q" path="res://BoundingBoxes/InteractionTrigger.tscn" id="33_08dyq"]
+[ext_resource type="AudioStream" uid="uid://bskrlh73x1sgp" path="res://Assets/Sounds/doc-summon.mp3" id="34_g57b0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7n7iy"]
 resource_local_to_scene = true
@@ -327,6 +328,21 @@ tracks/2/keys = {
 "update": 0,
 "values": [Vector2(1.5, 0.75), Vector2(1, 1)]
 }
+tracks/3/type = "audio"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../Effects/SummonCry")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"clips": [{
+"end_offset": 1.1,
+"start_offset": 0.4,
+"stream": ExtResource("34_g57b0")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/3/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rpply"]
 _data = {
@@ -760,6 +776,9 @@ attenuation = 0.5
 [node name="HurtSound" type="AudioStreamPlayer2D" parent="Effects"]
 stream = ExtResource("9_stm0e")
 
+[node name="SummonCry" type="AudioStreamPlayer2D" parent="Effects"]
+attenuation = 4.0
+
 [node name="Sprite" type="Sprite2D" parent="."]
 y_sort_enabled = true
 use_parent_material = true
@@ -785,14 +804,8 @@ script = ExtResource("8_r8ejq")
 Hotbar = []
 Items = []
 
-[node name="DocLance" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("24_2es2r")]
+[node name="DocLance" parent="Inventory" instance=ExtResource("24_2es2r")]
 unique_name_in_owner = true
-Hitbox = NodePath("Hitbox")
-AnimationPlayer = NodePath("AnimationPlayer")
-ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
-StateMachine = NodePath("State")
-Anchor = NodePath("Anchor")
-HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="InteractionTrigger" parent="." instance=ExtResource("33_08dyq")]
 

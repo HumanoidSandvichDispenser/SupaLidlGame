@@ -22,5 +22,23 @@ public partial class UIController : Control
             shopMenu.Source = shop;
             shopMenu.ShowModal();
         };
+
+        Events.EventBus.Instance.PlayerOpenInventory += (Items.Inventory inventory) =>
+        {
+            var inventoryMenu = GetNode<Inventory.InventoryMenu>("%InventoryMenu");
+            if (!inventoryMenu.IsPlayingAnimation)
+            {
+                inventoryMenu.Source = inventory;
+
+                if (inventoryMenu.Visible)
+                {
+                    inventoryMenu.Close();
+                }
+                else
+                {
+                    inventoryMenu.ShowModal();
+                }
+            }
+        };
     }
 }

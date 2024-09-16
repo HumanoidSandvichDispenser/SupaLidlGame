@@ -1,4 +1,5 @@
 using Godot;
+using SupaLidlGame.Extensions;
 
 namespace SupaLidlGame.Items.Weapons;
 
@@ -15,7 +16,14 @@ public partial class Bow : ProjectileSpawner
 
         if (_isOnFire)
         {
-            GetNode<AnimatedSprite2D>("%Flame").Visible = false;
+            var flame = GetNode<AnimatedSprite2D>("%Flame");
+
+            var newFlame = flame.Duplicate() as Node2D;
+            projectile.AddChild(newFlame);
+
+            newFlame.Position = Vector2.Zero;
+
+            flame.Visible = false;
             // TODO: instead of doing 1.5x damage, create an "On Fire" debuff
             projectile.Hitbox.Damage *= 1.5f;
             _isOnFire = false;
@@ -30,8 +38,15 @@ public partial class Bow : ProjectileSpawner
         _ignitionArea = GetNode<Area2D>("IgnitionArea");
         var onAreaEntered = (Area2D area) =>
         {
-            GetNode<AnimatedSprite2D>("%Flame").Visible = true;
-            _isOnFire = true;
+            if (!_isOnFire)
+            {
+                var flame = GetNode<AnimatedSprite2D>("%Flame");
+                flame.Visible = true;
+                flame.GetNode<AudioStreamPlayer2D>("Ignite")
+                    .OnWorld()
+                    .PlayOneShot();
+                _isOnFire = true;
+            }
         };
         _ignitionArea.Connect(
             Area2D.SignalName.AreaEntered,

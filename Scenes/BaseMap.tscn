@@ -10,7 +10,7 @@ physics_layer_1/collision_mask = 0
 [sub_resource type="Environment" id="Environment_pxx66"]
 background_mode = 3
 glow_enabled = true
-glow_hdr_threshold = 1.4
+glow_hdr_threshold = 1.2
 
 [node name="TileMap" type="Node2D" node_paths=PackedStringArray("Entities", "Areas", "Spawners", "Markers")]
 process_mode = 1

@@ -5,6 +5,9 @@ namespace SupaLidlGame.UI.Inventory;
 
 public partial class ItemTooltip : Control
 {
+    [Export]
+    public Button ActionButton { get; set; }
+
     private ItemMetadata _item;
 
     public ItemMetadata Item

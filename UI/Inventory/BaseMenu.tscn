@@ -1,13 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://cyggkyqosjk36"]
+[gd_scene load_steps=13 format=3 uid="uid://7blvai53i2a0"]
 
-[ext_resource type="StyleBox" uid="uid://bqhotx2ogucye" path="res://UI/Themes/Panel.tres" id="1_2ffty"]
-[ext_resource type="Script" path="res://UI/Inventory/ShopMenu.cs" id="1_8c1y7"]
-[ext_resource type="Shader" path="res://Shaders/WipeXY.gdshader" id="2_jqery"]
-[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="3_aj4jx"]
-[ext_resource type="PackedScene" uid="uid://bsheehtfcdwhh" path="res://UI/Inventory/ItemTooltip.tscn" id="4_n61n7"]
-[ext_resource type="PackedScene" uid="uid://chmokkxsy5vas" path="res://UI/Inventory/InventoryGrid.tscn" id="4_sl632"]
-[ext_resource type="PackedScene" uid="uid://baawkwo8aiwbu" path="res://UI/Inventory/ShopSlot.tscn" id="5_kfyl0"]
-[ext_resource type="Theme" uid="uid://cksjbu3vrup5" path="res://UI/Themes/supalidl.tres" id="7_rvp1r"]
+[ext_resource type="Shader" path="res://Shaders/WipeXY.gdshader" id="2_y0ues"]
+[ext_resource type="StyleBox" path="res://UI/Themes/Panel.tres" id="3_6elnp"]
+[ext_resource type="FontFile" uid="uid://cgwa8bjiyv534" path="res://Assets/Fonts/alagard.ttf" id="4_68gcu"]
+[ext_resource type="PackedScene" uid="uid://chmokkxsy5vas" path="res://UI/Inventory/InventoryGrid.tscn" id="5_u7ajr"]
+[ext_resource type="PackedScene" uid="uid://baawkwo8aiwbu" path="res://UI/Inventory/ShopSlot.tscn" id="6_onxvb"]
+[ext_resource type="PackedScene" uid="uid://bsheehtfcdwhh" path="res://UI/Inventory/ItemTooltip.tscn" id="7_nphc3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gm1xk"]
 bg_color = Color(0, 0, 0, 0.784314)
@@ -23,7 +21,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2hdh3"]
-shader = ExtResource("2_jqery")
+shader = ExtResource("2_y0ues")
 shader_parameter/x_amount = 1.0
 shader_parameter/y_amount = 0.5
 
@@ -154,7 +152,7 @@ _data = {
 "open": SubResource("Animation_fgj27")
 }
 
-[node name="Panel" type="PanelContainer" node_paths=PackedStringArray("_inventoryGrid")]
+[node name="Panel" type="PanelContainer"]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -166,13 +164,11 @@ offset_bottom = 175.5
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_gm1xk")
-script = ExtResource("1_8c1y7")
-_inventoryGrid = NodePath("PanelContainer/VBoxContainer/ScrollContainer/InventoryGrid")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 material = SubResource("ShaderMaterial_2hdh3")
 layout_mode = 2
-theme_override_styles/panel = ExtResource("1_2ffty")
+theme_override_styles/panel = ExtResource("3_6elnp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -182,7 +178,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_aj4jx")
+theme_override_fonts/font = ExtResource("4_68gcu")
 text = "Snus Dealer"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VBoxContainer"]
@@ -191,24 +187,17 @@ size_flags_vertical = 3
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="InventoryGrid" parent="PanelContainer/VBoxContainer/ScrollContainer" instance=ExtResource("4_sl632")]
+[node name="InventoryGrid" parent="PanelContainer/VBoxContainer/ScrollContainer" instance=ExtResource("5_u7ajr")]
 layout_mode = 2
 size_flags_vertical = 3
-_slotScene = ExtResource("5_kfyl0")
+_slotScene = ExtResource("6_onxvb")
 
-[node name="ItemTooltip" parent="PanelContainer/VBoxContainer" instance=ExtResource("4_n61n7")]
+[node name="ItemTooltip" parent="PanelContainer/VBoxContainer" instance=ExtResource("7_nphc3")]
 unique_name_in_owner = true
 layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
-
-[node name="BuyButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("7_rvp1r")
-text = "Buy"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
