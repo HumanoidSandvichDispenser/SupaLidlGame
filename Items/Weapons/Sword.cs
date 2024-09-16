@@ -206,6 +206,11 @@ public partial class Sword : Weapon, IParryable
                     this);
             }
         }
+
+        if (Hitbox.Hits.Count > 0)
+        {
+            Character.ApplyImpulse(-Character.Target.Normalized() * Knockback);
+        }
     }
 
     public void AttemptParry(Weapon otherWeapon)
