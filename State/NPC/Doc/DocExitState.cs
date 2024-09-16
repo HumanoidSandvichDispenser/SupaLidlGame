@@ -15,24 +15,39 @@ public partial class DocExitState : NPCState
 
     private double _currentDuration = 0;
 
+    private bool _hasPlayedExitAnim = false;
+
+    private bool _previouslyCouldAttack = false;
+
     public override NPCState Enter(IState<NPCState> previousState)
     {
         _currentDuration = Duration;
-        TelegraphAnimationPlayer.Play("exit_out");
         NPC.ShouldMove = false;
+        _hasPlayedExitAnim = false;
         return null;
     }
 
     public override void Exit(IState<NPCState> nextState)
     {
-
+        NPC.CanAttack = _previouslyCouldAttack;
     }
 
     public override NPCState Process(double delta)
     {
-        if ((_currentDuration -= delta) <= 0)
+        if (!NPC.Inventory.IsUsingItem)
         {
-            return TelegraphState;
+            if (!_hasPlayedExitAnim)
+            {
+                _hasPlayedExitAnim = true;
+                _previouslyCouldAttack = NPC.CanAttack;
+                NPC.CanAttack = false;
+                TelegraphAnimationPlayer.Play("exit_out");
+            }
+
+            if ((_currentDuration -= delta) <= 0)
+            {
+                return TelegraphState;
+            }
         }
         return null;
     }

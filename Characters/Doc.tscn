@@ -804,14 +804,8 @@ script = ExtResource("8_r8ejq")
 Hotbar = []
 Items = []
 
-[node name="DocLance" parent="Inventory" node_paths=PackedStringArray("Hitbox", "AnimationPlayer", "ParryParticles", "StateMachine", "Anchor", "HandAnchor") instance=ExtResource("24_2es2r")]
+[node name="DocLance" parent="Inventory" instance=ExtResource("24_2es2r")]
 unique_name_in_owner = true
-Hitbox = NodePath("Hitbox")
-AnimationPlayer = NodePath("AnimationPlayer")
-ParryParticles = NodePath("Anchor/Node2D/Sprite2D/ParryParticles")
-StateMachine = NodePath("State")
-Anchor = NodePath("Anchor")
-HandAnchor = NodePath("Anchor/Node2D/Sprite2D/Hand")
 
 [node name="InteractionTrigger" parent="." instance=ExtResource("33_08dyq")]
 
