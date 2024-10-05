@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dvqap2uhcah63"]
+[gd_scene load_steps=25 format=3 uid="uid://dvqap2uhcah63"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mlo73"]
 [ext_resource type="Resource" uid="uid://cl7jvdu2lnv2d" path="res://Items/Weapons/Sword.tres" id="2_atd4f"]
@@ -15,11 +15,6 @@
 [ext_resource type="Shape2D" uid="uid://dw4e4r2yxwk1b" path="res://Items/Weapons/SwordCollisionShape.tres" id="9_wsprl"]
 [ext_resource type="Texture2D" uid="uid://cmvh6pc71ir1m" path="res://Assets/Sprites/sword-swing-large.png" id="10_672jv"]
 [ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="10_mfnl7"]
-
-[sub_resource type="Environment" id="Environment_72txp"]
-background_mode = 3
-glow_enabled = true
-glow_hdr_threshold = 1.42
 
 [sub_resource type="Curve" id="Curve_4cxtp"]
 _data = [Vector2(0.00687286, 1), 0.0, 0.0, 0, 0, Vector2(0.879725, 0.190909), -2.93145, -2.93145, 0, 0, Vector2(1, 0.0454545), 0.0483926, 0.0, 0, 0]
@@ -379,9 +374,6 @@ AttackState = NodePath("../Attack")
 script = ExtResource("5_hmisb")
 Sword = NodePath("../..")
 IdleState = NodePath("../Idle")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_72txp")
 
 [node name="Anchor" type="Node2D" parent="."]
 y_sort_enabled = true

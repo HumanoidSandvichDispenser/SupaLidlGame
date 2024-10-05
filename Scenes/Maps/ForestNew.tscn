@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cumi1cbg6xfdd"]
+[gd_scene load_steps=20 format=4 uid="uid://cumi1cbg6xfdd"]
 
 [ext_resource type="PackedScene" uid="uid://clwv2owvk6abe" path="res://Scenes/BaseMap.tscn" id="1_oy3cp"]
 [ext_resource type="TileSet" uid="uid://dkis3rb4n62cu" path="res://Scenes/Maps/ForestTileset.tres" id="2_q0kvn"]
@@ -41,11 +41,22 @@ source_geometry_group_name = &"navigation"
 cell_size = 16.0
 agent_radius = 8.0
 
-[node name="TileMap" node_paths=PackedStringArray("Entities", "Areas", "Spawners", "Markers") groups=["navigation"] instance=ExtResource("1_oy3cp")]
-Entities = NodePath("Entities")
-Areas = NodePath("Areas")
-Spawners = NodePath("Spawners")
-Markers = NodePath("Markers")
+[sub_resource type="Gradient" id="Gradient_pc2cc"]
+offsets = PackedFloat32Array(0, 0.962085, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0.911833, 0.77, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_s5jwl"]
+gradient = SubResource("Gradient_pc2cc")
+
+[sub_resource type="Environment" id="Environment_usobl"]
+background_mode = 3
+glow_enabled = true
+glow_hdr_threshold = 1.2
+adjustment_enabled = true
+adjustment_saturation = 0.7
+adjustment_color_correction = SubResource("GradientTexture1D_s5jwl")
+
+[node name="TileMap" groups=["navigation"] instance=ExtResource("1_oy3cp")]
 AreaName = "Forest"
 MapName = "Forest"
 
@@ -441,12 +452,8 @@ position = Vector2(1272, 0)
 [node name="Campfire" parent="Entities" index="0" instance=ExtResource("3_ve4i2")]
 position = Vector2(-24, -8)
 
-[node name="SnusDealer" parent="Entities" index="1" node_paths=PackedStringArray("ThinkerStateMachine", "Sprite", "Inventory", "StateMachine") instance=ExtResource("12_eyny2")]
+[node name="SnusDealer" parent="Entities" index="1" instance=ExtResource("12_eyny2")]
 position = Vector2(79, -6)
-ThinkerStateMachine = NodePath("Thinker")
-Sprite = NodePath("Sprites/Sprite")
-Inventory = NodePath("Inventory")
-StateMachine = NodePath("StateMachine")
 
 [node name="Areas" parent="." index="4"]
 visible = false
@@ -456,3 +463,6 @@ navigation_polygon = SubResource("NavigationPolygon_al0u7")
 
 [node name="House" type="NavigationRegion2D" parent="Areas" index="1"]
 navigation_polygon = SubResource("NavigationPolygon_8xwo5")
+
+[node name="WorldEnvironment" parent="." index="7"]
+environment = SubResource("Environment_usobl")

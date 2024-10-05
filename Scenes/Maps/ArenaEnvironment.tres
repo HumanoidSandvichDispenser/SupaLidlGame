@@ -1,0 +1,16 @@
+[gd_resource type="Environment" load_steps=3 format=3 uid="uid://bl15544uvuppq"]
+
+[sub_resource type="Gradient" id="Gradient_u5tnr"]
+offsets = PackedFloat32Array(0, 0.933649, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.938186, 0.874428, 0.818076, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ri0vy"]
+gradient = SubResource("Gradient_u5tnr")
+
+[resource]
+background_mode = 3
+glow_enabled = true
+glow_intensity = 4.0
+adjustment_enabled = true
+adjustment_saturation = 0.75
+adjustment_color_correction = SubResource("GradientTexture1D_ri0vy")
