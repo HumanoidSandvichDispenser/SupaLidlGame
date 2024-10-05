@@ -21,7 +21,12 @@ public partial class ScenePath : ResourcePath
 
         // add scene to loaded to not have to reload scene when called again
         var scene = base.Load<PackedScene>();
-        _loaded.Add(Path, scene);
+
+        if (useCached)
+        {
+            _loaded.Add(Path, scene);
+        }
+
         return scene;
     }
 

@@ -72,6 +72,7 @@ public partial class InventoryGrid : GridContainer
 
                 ItemMetadata item = items.Current;
                 slot.Item = item;
+                slot.Index = i;
             }
 
             // make remaining slots display empty
@@ -80,6 +81,7 @@ public partial class InventoryGrid : GridContainer
                 InventorySlot slot = children[i] as InventorySlot;
 
                 slot.Item = null;
+                slot.Index = i;
             }
         }
 
