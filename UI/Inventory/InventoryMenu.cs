@@ -76,6 +76,6 @@ public partial class InventoryMenu : BaseMenu, IModal
     {
         int slot = button.GetMeta("slot").AsInt32();
         GD.Print("Equipping item at slot " + slot);
-        Source.SetHotbarIndexToItem(slot, _selected.Item);
+        Source.SetHotbarIndexToItemIndex(slot, _selected.Index);
     }
 }

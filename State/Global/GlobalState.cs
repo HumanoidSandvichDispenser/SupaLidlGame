@@ -76,6 +76,19 @@ public partial class GlobalState : Node
         Progression = save.Progression;
         MapState = save.MapState;
         Stats = save.Stats;
+
+        var inventory = World.Instance.CurrentPlayer.Inventory;
+        inventory.Items = Stats.Items;
+
+        for (int i = 0; i < Stats.HotbarToItemIndexMap.Count; i++)
+        {
+            int itemIndex = Stats.HotbarToItemIndexMap[i];
+
+            if (itemIndex >= 0)
+            {
+                inventory.SetHotbarIndexToItemIndex(i, itemIndex);
+            }
+        }
     }
 
     public void ExportToSave(Save save)
@@ -83,5 +96,9 @@ public partial class GlobalState : Node
         save.Progression = Progression;
         save.MapState = MapState;
         save.Stats = Stats;
+
+        var inventory = World.Instance.CurrentPlayer.Inventory;
+        Stats.Items = inventory.Items;
+        Stats.HotbarToItemIndexMap = inventory.HotbarToItemIndexMap;
     }
 }

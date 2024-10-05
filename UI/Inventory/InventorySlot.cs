@@ -33,6 +33,8 @@ public partial class InventorySlot : Button
 
     private static Texture2D _placeholderTexture;
 
+    public int Index { get; set; }
+
     private Items.ItemMetadata _item;
 
     public Items.ItemMetadata Item

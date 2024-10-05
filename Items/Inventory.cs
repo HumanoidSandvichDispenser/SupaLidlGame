@@ -11,10 +11,11 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
     [Export]
     public Array<Item> Hotbar { get; private set; }
 
-    [Export]
-    public Array<ItemMetadata> Items { get; private set; }
+    public Array<int> HotbarToItemIndexMap { get; set; } = new();
 
     [Export]
+    public Array<ItemMetadata> Items { get; set; }
+
     public Dictionary<string, int> InventoryMap { get; set; }
 
     [Signal]
@@ -61,6 +62,12 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
     }
 
     public bool IsUsingItem => SelectedItem?.IsUsing ?? false;
+
+    public Inventory()
+    {
+        HotbarToItemIndexMap.Resize(HotbarCapacity);
+        HotbarToItemIndexMap.Fill(-1);
+    }
 
     public override void _Ready()
     {
@@ -155,7 +162,19 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
         return item;
     }
 
-    public Item SetHotbarIndexToItem(int index, ItemMetadata metadata)
+    public Item SetHotbarIndexToItemIndex(int hotbarIndex, int itemIndex)
+    {
+        HotbarToItemIndexMap[hotbarIndex] = itemIndex;
+
+        if (itemIndex >= 0)
+        {
+            return SetHotbarIndexToItem(hotbarIndex, Items[itemIndex]);
+        }
+
+        return null;
+    }
+
+    private Item SetHotbarIndexToItem(int index, ItemMetadata metadata)
     {
         var oldItem = Hotbar[index];
         Item newItem = null;
