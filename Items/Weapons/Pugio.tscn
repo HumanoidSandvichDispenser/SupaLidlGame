@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://5y1acxl4j4n7"]
+[gd_scene load_steps=29 format=3 uid="uid://5y1acxl4j4n7"]
 
 [ext_resource type="Script" path="res://Items/Weapons/Sword.cs" id="1_mai31"]
 [ext_resource type="Script" path="res://State/Weapon/WeaponStateMachine.cs" id="2_5ramr"]
@@ -18,11 +18,6 @@
 [ext_resource type="Texture2D" uid="uid://417j1ckcjg2i" path="res://Assets/Sprites/Items/doc-shield.png" id="11_qpejo"]
 [ext_resource type="AudioStream" uid="uid://qvthq6tppp63" path="res://Assets/Sounds/whoosh.wav" id="12_a8o3x"]
 [ext_resource type="AudioStream" uid="uid://c4n7ioxpukdwi" path="res://Assets/Sounds/parry.wav" id="13_t5wmj"]
-
-[sub_resource type="Environment" id="Environment_72txp"]
-background_mode = 3
-glow_enabled = true
-glow_hdr_threshold = 1.42
 
 [sub_resource type="Animation" id="Animation_b7327"]
 length = 0.001
@@ -381,9 +376,6 @@ Sword = NodePath("../..")
 IdleState = NodePath("../Idle")
 UseState = NodePath("../Anticipate")
 BlockAnimKey = "block"
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_72txp")
 
 [node name="Anchor" type="Node2D" parent="."]
 y_sort_enabled = true
