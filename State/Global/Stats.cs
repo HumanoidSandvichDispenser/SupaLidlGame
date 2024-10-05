@@ -17,4 +17,7 @@ public partial class Stats : Resource
 
     [Export]
     public Array<Items.ItemMetadata> Items { get; set; } = new();
+
+    [Export]
+    public Array<int> HotbarToItemIndexMap { get; set; } = new();
 }
