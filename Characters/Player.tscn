@@ -838,11 +838,6 @@ y_sort_enabled = true
 script = ExtResource("30_y2wmw")
 Hotbar = [null, null, null]
 Items = Array[Object]([ExtResource("33_3qyfl"), ExtResource("34_70ron"), ExtResource("35_4pap1")])
-InventoryMap = {
-"equip_1": 0,
-"equip_2": 1,
-"equip_3": 2
-}
 
 [node name="Hurtbox" parent="." node_paths=PackedStringArray("InvincibilityTimer") instance=ExtResource("9_avyu4")]
 visible = false
