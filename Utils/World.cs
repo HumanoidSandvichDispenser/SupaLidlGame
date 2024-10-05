@@ -84,6 +84,13 @@ public partial class World : Node
         {
             throw new System.Exception("Another World instance is running.");
         }
+
+        Debug = new DebugCommands(this);
+    }
+
+    ~World()
+    {
+        Debug.Free();
     }
 
     public override void _Ready()
@@ -335,4 +342,23 @@ public partial class World : Node
     }
 
     public Node FindEntity(string name) => CurrentMap.Entities.GetNode(name);
+
+    internal DebugCommands Debug { get; set; }
+}
+
+internal partial class DebugCommands : GodotObject
+{
+    private World _world;
+
+    internal DebugCommands(World world)
+    {
+        _world = world;
+    }
+
+    internal void GiveItem(string item)
+    {
+        var itemMetadata = ResourceLoader
+            .Load<Items.ItemMetadata>($"res://Items/{item}.tres");
+        _world.CurrentPlayer.Inventory.Items.Add(itemMetadata);
+    }
 }

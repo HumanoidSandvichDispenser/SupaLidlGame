@@ -76,6 +76,8 @@ public partial class GlobalState : Node
         Progression = save.Progression;
         MapState = save.MapState;
         Stats = save.Stats;
+
+        World.Instance.CurrentPlayer.Inventory.Items = Stats.Items;
     }
 
     public void ExportToSave(Save save)
@@ -83,5 +85,7 @@ public partial class GlobalState : Node
         save.Progression = Progression;
         save.MapState = MapState;
         save.Stats = Stats;
+
+        Stats.Items = World.Instance.CurrentPlayer.Inventory.Items;
     }
 }

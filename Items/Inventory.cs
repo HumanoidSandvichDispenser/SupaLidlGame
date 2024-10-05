@@ -12,10 +12,7 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
     public Array<Item> Hotbar { get; private set; }
 
     [Export]
-    public Array<ItemMetadata> Items { get; private set; }
-
-    [Export]
-    public Dictionary<string, int> InventoryMap { get; set; }
+    public Array<ItemMetadata> Items { get; set; }
 
     [Signal]
     public delegate void UsedItemEventHandler(Item item);
@@ -128,21 +125,6 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
             GD.PushWarning("Trying to equip item not in the hot inventory.");
         }
         return EquipIndex(index);
-    }
-
-    [System.Obsolete]
-    public Item GetItemByMap(string keymap)
-    {
-        if (InventoryMap.ContainsKey(keymap))
-        {
-            int idx = InventoryMap[keymap];
-            if (idx < Hotbar.Count)
-            {
-                return Hotbar[InventoryMap[keymap]];
-            }
-        }
-        else GD.Print(keymap + " does not exist");
-        return null;
     }
 
     public Item AddToHotbar(ItemMetadata metadata)
