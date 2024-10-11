@@ -39,7 +39,6 @@ texture = ExtResource("1_0im1r")
 centered = false
 
 [node name="Hitbox" parent="." instance=ExtResource("3_f4lib")]
-priority = 5
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
 position = Vector2(0, -0.5)
