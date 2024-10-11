@@ -9,12 +9,47 @@ public partial class DashDefensive : AttackState
     protected bool _dashedAway = false;
     protected State.Character.CharacterDashState _dashState;
     protected float _originalDashModifier;
+    private Callable _dodgeCallable;
+
+    [Export]
+    public Area2D ProjectileDetection { get; set; }
 
     public override void _Ready()
     {
         _dashState = NPC.StateMachine.FindChildOfType<CharacterDashState>();
         _originalDashModifier = _dashState.VelocityModifier;
+        _dodgeCallable = new Callable(this, MethodName.DodgeProjectile);
+
         base._Ready();
+    }
+
+    public override IState<ThinkerState> Enter(IState<ThinkerState> prev)
+    {
+        ProjectileDetection?.Connect(Area2D.SignalName.AreaEntered,
+            _dodgeCallable);
+
+        return base.Enter(prev);
+    }
+
+    public override void Exit(IState<ThinkerState> prev)
+    {
+        ProjectileDetection?.Disconnect(Area2D.SignalName.AreaEntered,
+            _dodgeCallable);
+
+        base.Exit(prev);
+    }
+
+    private void DodgeProjectile(Area2D area)
+    {
+        if (area is BoundingBoxes.Hitbox hitbox)
+        {
+            if (hitbox.GetOwner() is Entities.Projectile projectile)
+            {
+                GD.Print("changing direction");
+                var direction = projectile.Direction;
+                DashTo(direction.Rotated(Mathf.Pi / 2));
+            }
+        }
     }
 
     public override ThinkerState Think()

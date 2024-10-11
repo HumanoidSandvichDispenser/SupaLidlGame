@@ -11,9 +11,6 @@ public partial class Doc : Boss
     public AnimationPlayer MiscAnimation { get; set; }
 
     [Export]
-    public Items.Weapons.Sword Lance { get; set; }
-
-    [Export]
     public override bool IsActive
     {
         get => base.IsActive;
@@ -109,7 +106,7 @@ public partial class Doc : Boss
             if (name == "Doc")
             {
                 IsActive = true;
-                Inventory.SelectedItem = Lance;
+                Inventory.SelectedItem = GetNode<Items.Item>("%DocLance");
             }
         };
 
@@ -122,7 +119,7 @@ public partial class Doc : Boss
             if (this.GetWorld().CurrentPlayer.IsAlive && !IsActive)
             {
                 IsActive = true;
-                Inventory.SelectedItem = Lance;
+                Inventory.SelectedItem = GetNode<Items.Item>("%DocLance");
             }
         };
     }

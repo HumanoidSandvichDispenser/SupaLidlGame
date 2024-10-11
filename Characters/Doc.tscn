@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://d2skjvvx6fal0"]
+[gd_scene load_steps=72 format=3 uid="uid://d2skjvvx6fal0"]
 
 [ext_resource type="Script" path="res://Characters/Doc.cs" id="2_3elet"]
 [ext_resource type="Shader" path="res://Shaders/Flash.gdshader" id="2_5jxom"]
@@ -568,14 +568,16 @@ size = Vector2(16, 19)
 [sub_resource type="CircleShape2D" id="CircleShape2D_8hwat"]
 radius = 16.0
 
-[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("Lance", "BossStateMachine", "DefaultSelectedItem", "ThinkerStateMachine", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_kap5k"]
+radius = 48.0
+
+[node name="Doc" type="CharacterBody2D" node_paths=PackedStringArray("BossStateMachine", "DefaultSelectedItem", "ThinkerStateMachine", "Stats", "Sprite", "Inventory", "StateMachine", "Hurtbox")]
 y_sort_enabled = true
 texture_filter = 3
 material = SubResource("ShaderMaterial_7n7iy")
 collision_layer = 10
 collision_mask = 17
 script = ExtResource("2_3elet")
-Lance = NodePath("Inventory/DocLance")
 BossStateMachine = NodePath("BossStateMachine")
 BossName = "Doc, The Two-Time"
 Music = ExtResource("3_qnxmu")
@@ -698,8 +700,9 @@ InitialState = NodePath("Attack")
 script = ExtResource("21_ij3bp")
 NPC = NodePath("../..")
 
-[node name="DashDefensive" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("NPC")]
+[node name="DashDefensive" type="Node" parent="ThinkerStateMachine" node_paths=PackedStringArray("ProjectileDetection", "NPC")]
 script = ExtResource("20_12htp")
+ProjectileDetection = NodePath("../../ProjectileDetection")
 MaxDistanceToTarget = 256.0
 UseItemDistance = 64.0
 NPC = NodePath("../..")
@@ -819,6 +822,14 @@ offset_bottom = -14.0
 
 [node name="Label" parent="InteractionTrigger/Popup" index="0"]
 text = "Duel"
+
+[node name="ProjectileDetection" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileDetection"]
+shape = SubResource("CircleShape2D_kap5k")
 
 [editable path="Hurtbox"]
 [editable path="InteractionTrigger"]
