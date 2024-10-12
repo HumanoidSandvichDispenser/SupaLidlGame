@@ -47,7 +47,10 @@ public partial class DashDefensive : AttackState
             {
                 GD.Print("changing direction");
                 var direction = projectile.Direction;
-                DashTo(direction.Rotated(Mathf.Pi / 2));
+                var dirToChar = projectile.GlobalPosition
+                    .DirectionTo(NPC.GlobalPosition);
+                var lateralDirection = Mathf.Sign(direction.Cross(dirToChar));
+                DashTo(direction.Rotated(lateralDirection * Mathf.Pi / 2));
             }
         }
     }
