@@ -65,4 +65,15 @@ public abstract partial class Item : Node2D
     {
 
     }
+
+    public virtual void Remove()
+    {
+        if (IsUsing)
+        {
+            Deuse();
+        }
+
+        Unequip(CharacterOwner);
+        QueueFree();
+    }
 }

@@ -239,6 +239,21 @@ public partial class Inventory : Node2D, IItemCollection<ItemMetadata>
 
     public bool Remove(ItemMetadata item)
     {
+        int indexInInventory = Items.IndexOf(item);
+        if (indexInInventory < 0)
+        {
+            return false;
+        }
+
+        // remove instances of item from hotbar
+        int indexInHotbar = HotbarToItemIndexMap.IndexOf(indexInInventory);
+        if (indexInHotbar >= 0)
+        {
+            HotbarToItemIndexMap[indexInHotbar] = -1;
+            Hotbar[indexInHotbar].QueueFree();
+        }
+
+        Items[indexInInventory] = null;
         return Items.Remove(item);
     }
 
