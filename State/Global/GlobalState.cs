@@ -3,7 +3,7 @@ using SupaLidlGame.Utils;
 
 namespace SupaLidlGame.State.Global;
 
-public partial class GlobalState : Node
+public partial class GlobalState : Node, ISave
 {
     [Export]
     public Progression Progression { get; set; }
