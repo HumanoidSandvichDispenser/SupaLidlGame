@@ -40,6 +40,7 @@ public partial class PlayerStats : CharacterStats
 
         _xpDecayTimer = new Timer();
         _xpDecayTimer.Timeout += () => _shouldDecayXP = true;
+        _xpDecayTimer.OneShot = true;
         _xpDecayTimer.Stop();
         AddChild(_xpDecayTimer);
 
