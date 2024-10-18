@@ -1,4 +1,5 @@
 using Godot;
+using IEnumerableNode = System.Collections.Generic.IEnumerable<Godot.Node>;
 
 namespace SupaLidlGame.Extensions;
 
@@ -54,5 +55,14 @@ public static class NodeExtensions
     {
         return node.GetNode<UI.UIController>("/root/BaseUI/" +
             "SubViewportContainer/UIViewport/CanvasLayer/MainUILayer/Main");
+    }
+
+    public static IEnumerableNode GetChildrenEnumerable(this Node node)
+    {
+        int childCount = node.GetChildCount();
+        for (int i = 0; i < childCount; i++)
+        {
+            yield return node.GetChild(i);
+        }
     }
 }
