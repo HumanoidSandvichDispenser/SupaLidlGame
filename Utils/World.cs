@@ -68,6 +68,8 @@ public partial class World : Node
 
     private string _currentMapResourcePath;
 
+    internal DebugCommands Debug { get; }
+
     //private Entities.Campfire _lastCampfire = null;
 
     private const string PLAYER_PATH = "res://Characters/Player.tscn";
@@ -84,6 +86,13 @@ public partial class World : Node
         {
             throw new System.Exception("Another World instance is running.");
         }
+
+        Debug = new(this);
+    }
+
+    ~World()
+    {
+        Debug.Free();
     }
 
     public override void _Ready()
@@ -335,4 +344,22 @@ public partial class World : Node
     }
 
     public Node FindEntity(string name) => CurrentMap.Entities.GetNode(name);
+}
+
+internal partial class DebugCommands : Godot.GodotObject
+{
+    private World _world;
+
+    internal DebugCommands(World world)
+    {
+        _world = world;
+    }
+
+    internal Items.ItemMetadata GiveItem(string item)
+    {
+        var itemMetadata = ResourceLoader
+            .Load<Items.ItemMetadata>($"res://Items/{item}.tres");
+        _world.CurrentPlayer.Inventory.Add(itemMetadata);
+        return itemMetadata;
+    }
 }
