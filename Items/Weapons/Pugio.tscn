@@ -412,7 +412,6 @@ libraries = {
 }
 
 [node name="Hitbox" parent="." instance=ExtResource("9_qimey")]
-priority = 5
 IsDisabled = true
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]

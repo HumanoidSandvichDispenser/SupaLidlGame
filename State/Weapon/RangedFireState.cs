@@ -17,9 +17,17 @@ public partial class RangedFireState : WeaponState
     [Export]
     public string AnimationKey { get; set; }
 
-    public float VelocityModifier { get; set; }
+    public float VelocityModifier { get; set; } = 1;
+
+    [Export]
+    public float InitialVelocityModifier { get; set; } = 1;
 
     private double _timeLeft = 0;
+
+    public override void _Ready()
+    {
+        VelocityModifier = InitialVelocityModifier;
+    }
 
     public override IState<WeaponState> Enter(IState<WeaponState> prev)
     {

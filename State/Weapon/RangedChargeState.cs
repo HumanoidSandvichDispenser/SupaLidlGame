@@ -56,7 +56,8 @@ public partial class RangedChargeState : WeaponState
             return IdleState;
         }
 
-        FireState.VelocityModifier = (float)(1 - progress);
+        FireState.VelocityModifier = (float)(1 - progress) *
+            FireState.InitialVelocityModifier;
         return FireState;
     }
 }
