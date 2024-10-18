@@ -13,10 +13,14 @@ public partial class Save : Resource, ISave
     [Export]
     public State.Global.Stats Stats { get; set; }
 
+    [Export]
+    public ulong TimeElapsed { get; set; }
+
     public Save()
     {
         Progression = new();
         MapState = new();
         Stats = new();
+        TimeElapsed = 0;
     }
 }

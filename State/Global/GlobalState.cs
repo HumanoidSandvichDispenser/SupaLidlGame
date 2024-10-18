@@ -14,6 +14,10 @@ public partial class GlobalState : Node, ISave
     [Export]
     public Stats Stats { get; set; }
 
+    private ulong _saveTimeElapsed = 0;
+
+    public ulong TimeElapsed => _saveTimeElapsed + Godot.Time.GetTicksMsec();
+
     public static GlobalState Instance { get; private set; }
 
     [Export]
@@ -76,6 +80,7 @@ public partial class GlobalState : Node, ISave
         Progression = save.Progression;
         MapState = save.MapState;
         Stats = save.Stats;
+        _saveTimeElapsed = save.TimeElapsed; // use as offset
 
         var inventory = World.Instance.CurrentPlayer.Inventory;
         inventory.Items = Stats.Items;
@@ -96,6 +101,7 @@ public partial class GlobalState : Node, ISave
         save.Progression = Progression;
         save.MapState = MapState;
         save.Stats = Stats;
+        save.TimeElapsed = TimeElapsed; // update time elapsed when saving
 
         var inventory = World.Instance.CurrentPlayer.Inventory;
         Stats.Items = inventory.Items;
